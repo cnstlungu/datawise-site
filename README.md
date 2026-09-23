@@ -81,3 +81,7 @@ The build fails if frontmatter is missing or wrong (schema in `src/content.confi
 
 Rollback: switch the nameservers back to Namecheap BasicDNS and check the records from the
 screenshot are there.
+
+## License
+
+Code is MIT; the posts and their images are all rights reserved. See [LICENSE](LICENSE).

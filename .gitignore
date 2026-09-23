@@ -4,3 +4,9 @@ dist/
 .export-cache/
 .wrangler/
 .DS_Store
+
+# Local secrets for future integrations (real values live in Cloudflare / GitHub secrets)
+.dev.vars*
+.env
+.env.*
+!.env.example
