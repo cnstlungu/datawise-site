@@ -10,3 +10,8 @@ dist/
 .env
 .env.*
 !.env.example
+
+# WebP copies generated at build time by scripts/webp.mjs
+public/images/**/*.png.webp
+public/images/**/*.jpg.webp
+public/images/**/*.jpeg.webp

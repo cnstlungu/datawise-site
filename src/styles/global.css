@@ -88,6 +88,9 @@ img {
   max-width: 100%;
   height: auto;
 }
+picture {
+  display: contents; /* the <img> inside keeps its own layout rules */
+}
 
 .wrap {
   max-width: var(--wrap);

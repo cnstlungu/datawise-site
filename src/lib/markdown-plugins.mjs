@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { imageSize } from 'image-size';
+import { MAX_WIDTH, webpFor } from './webp.mjs';
 
 const root = new URL('../../', import.meta.url);
 const headingIds = JSON.parse(readFileSync(new URL('src/data/heading-ids.json', root), 'utf8'));
@@ -36,7 +37,7 @@ export function hashnodeHeadingIds(ctx) {
 }
 
 // Images live in public/images/<slug>/. Give them intrinsic sizes (no layout shift), load
-// them lazily and have Pagefind index their alt text.
+// them lazily, serve the WebP copy when there is one, and have Pagefind index their alt text.
 const sizeCache = new Map();
 function sizeOf(src) {
   if (!sizeCache.has(src)) {
@@ -82,7 +83,12 @@ export const imageAttributes = {
         .filter(([, v]) => v != null)
         .map(([k, v]) => `${k}="${escapeAttr(v)}"`)
         .join(' ');
-      ctx.replaceNode(node, { type: 'raw', value: `<img ${html}>` });
+      const webp = webpFor(src);
+      const img = `<img ${html}>`;
+      let value = webp ? `<picture><source srcset="${escapeAttr(webp)}" type="image/webp">${img}</picture>` : img;
+      // The WebP copy of a very wide screenshot is scaled down; link to the original for reading the detail.
+      if (webp && size && size.width > MAX_WIDTH) value = `<a href="${escapeAttr(src)}" title="Open full-size image">${value}</a>`;
+      ctx.replaceNode(node, { type: 'raw', value });
     },
   },
 };

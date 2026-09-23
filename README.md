@@ -33,14 +33,15 @@ The build fails if frontmatter is missing or wrong (schema in `src/content.confi
 |---|---|
 | `npm install` | Install dependencies |
 | `npm run dev` | Local dev server with live reload (search doesn't work here) |
-| `npm run build` | Build to `dist/` and index it for search (Pagefind) |
+| `npm run build` | Make WebP copies of new images, build to `dist/` and index it for search (Pagefind) |
 | `npm run preview` | Serve `dist/` with Cloudflare's runtime, so redirects and URLs behave as in production |
 | `npm run check` | Compare `dist/` with the old Hashnode site, page by page |
 
 ## What's where
 
 - `src/content/posts/` – the posts
-- `public/images/` – post images and covers
+- `public/images/` – post images and covers; `scripts/webp.mjs` adds a smaller WebP copy of each
+  (`1.png.webp`, gitignored) that pages serve when it saves at least 10%
 - `src/data/` – series, tags, comments archived from Hashnode, Hashnode's heading ids
 - `public/_redirects`, `public/_headers` – Cloudflare redirects and headers
 - `wrangler.jsonc` – Cloudflare config

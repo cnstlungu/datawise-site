@@ -5,6 +5,7 @@ import PostList from '../components/PostList.astro';
 import Base from '../layouts/Base.astro';
 import { AUTHOR, SITE } from '../consts';
 import { allPosts, formatDate, type Post, postPath, readingMinutes, seriesInfo, tagName } from '../lib/posts';
+import { webpFor } from '../lib/webp.mjs';
 import { relatedPosts } from '../lib/related';
 
 export async function getStaticPaths() {
@@ -38,6 +39,7 @@ const updated = d.dateUpdated && d.dateUpdated > d.datePublished ? d.dateUpdated
 const byDate = (a: any, b: any) => a.dateAdded.localeCompare(b.dateAdded);
 const postComments = [...((comments as Record<string, any[]>)[post.id] ?? [])].sort(byDate);
 const image = d.cover ? new URL(d.cover, SITE.url).href : undefined;
+const coverWebp = d.cover ? webpFor(d.cover) : null;
 
 const jsonLd: object[] = [
   {
@@ -111,7 +113,10 @@ const jsonLd: object[] = [
 
     {d.cover && (
       <figure class="cover">
-        <img src={d.cover} alt="" width="1600" height="840" fetchpriority="high" />
+        <picture>
+          {coverWebp && <source srcset={coverWebp} type="image/webp" />}
+          <img src={d.cover} alt="" width="1600" height="840" fetchpriority="high" />
+        </picture>
         {d.coverCredit && (
           <figcaption>
             Photo by <a href={d.coverCredit.url}>{d.coverCredit.name}</a> on Unsplash
