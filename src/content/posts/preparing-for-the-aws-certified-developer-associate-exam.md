@@ -7,7 +7,7 @@ dateUpdated: 2026-03-02T10:52:34.109Z
 cover: "/images/preparing-for-the-aws-certified-developer-associate-exam/cover.jpg"
 coverCredit:
   name: "Andrew Neel"
-  url: "https://unsplash.com/ko/@andrewtneel"
+  url: "https://unsplash.com/@andrewtneel"
 series: "my-data-journey"
 hashnodeCuid: "clfmnoksb000409mb30wh704m"
 ---

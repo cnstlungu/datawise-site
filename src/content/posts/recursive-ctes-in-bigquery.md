@@ -7,7 +7,7 @@ dateUpdated: 2026-03-02T10:16:37.564Z
 cover: "/images/recursive-ctes-in-bigquery/cover.jpg"
 coverCredit:
   name: "Adrien Olichon"
-  url: "https://unsplash.com/ja/@adrienolichon"
+  url: "https://unsplash.com/@adrienolichon"
 series: "practical-sql"
 hashnodeCuid: "clgaxwfx8000d0amgaaq13gy9"
 ---

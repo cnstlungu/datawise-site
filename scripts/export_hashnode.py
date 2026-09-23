@@ -340,7 +340,10 @@ def main(argv):
             "datePublished": post["publishedAt"],
             "dateUpdated": post.get("updatedAt") if post.get("updatedAt") != post["publishedAt"] else None,
             "cover": cover_local,
-            "coverCredit": {"name": cover.get("photographer"), "url": cover.get("attribution")}
+            # Hashnode stored some profile links with a locale (unsplash.com/ja/@name).
+            "coverCredit": {"name": cover.get("photographer"),
+                            "url": re.sub(r"(unsplash\.com)/[a-z]{2}(?:-[A-Za-z]{2,4})?/@", r"\1/@",
+                                          cover.get("attribution") or "")}
             if cover.get("photographer") and not cover.get("isAttributionHidden") else None,
             "series": (post.get("series") or {}).get("slug"),
             "tags": [t["slug"] for t in post.get("tags") or []],
