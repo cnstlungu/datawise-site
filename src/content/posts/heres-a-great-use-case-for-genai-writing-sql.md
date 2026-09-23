@@ -34,6 +34,6 @@ Sometimes, it’s about knowing when and where to use the tools at your disposal
 
 What’s your experience? Do you use tools like ChatGPT regularly for your Data Engineering tasks?
 
-![](/images/heres-a-great-use-case-for-genai-writing-sql/1.jpg)
+![BigQuery SQL with WITH RECURSIVE combinations generating every combination of the letters a to i: the base case UNNESTs the array, the recursive case CROSS JOINs it with CONCAT and WHERE e \> SPLIT(c.combination, ',') at OFFSET(c.size - 1); the result has 511 rows, ending with a,b,c,d,e,f,g,h,i.](/images/heres-a-great-use-case-for-genai-writing-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

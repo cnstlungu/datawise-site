@@ -27,7 +27,7 @@ Alternatively, we can just apply LAST\_VALUE separately to each individual field
 
 If you're new to STRUCTs, see [one of my previous posts](/understanding-structs-in-bigquery).
 
-![](/images/using-lastvalue-with-structs/1.jpg)
+![BigQuery SQL where LAST\_VALUE(event IGNORE NULLS) on a STRUCT fails, since an all-NULL struct is not NULL and 2025-01-10 gets null fields, then three fixes: CASE WHEN event.a IS NULL AND event.b IS NULL THEN NULL, NULLIF(TO\_JSON\_STRING(event), ...) and REGEXP\_CONTAINS, all carrying 123 and 235 forward.](/images/using-lastvalue-with-structs/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

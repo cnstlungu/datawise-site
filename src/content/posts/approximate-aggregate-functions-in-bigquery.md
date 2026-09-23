@@ -20,7 +20,7 @@ When would I use one? This would be suitable where we can live with an uncertain
 
 Let's look at a practical example. Suppose we have the following data:
 
-![](/images/approximate-aggregate-functions-in-bigquery/1.png)
+![BigQuery console preview of the sample data for approximate aggregates, with columns id, value and ds\_date; the first 10 rows are all dated 2020-12-18 and have single-digit values such as 1, 8, 6, 4 and 0.](/images/approximate-aggregate-functions-in-bigquery/1.png)
 
 `APPROX_TOP_COUNT` will compute the approx top N elements and their value counts
 
@@ -30,7 +30,7 @@ SELECT
 FROM `learning.data_source`
 ```
 
-![](/images/approximate-aggregate-functions-in-bigquery/2.png)
+![BigQuery console result of APPROX\_TOP\_COUNT(value, 5): one row holding an array of value and count pairs, 4 with 40258, 0 with 40057, 5 with 40051, 3 with 39979 and 9 with 39944.](/images/approximate-aggregate-functions-in-bigquery/2.png)
 
 `APPROX_COUNT_DISTINCT` will compute the approx distinct count (also can be grouped)
 
@@ -40,7 +40,7 @@ SELECT
 FROM `learning.data_source`
 ```
 
-![](/images/approximate-aggregate-functions-in-bigquery/3.png)
+![BigQuery console result of APPROX\_COUNT\_DISTINCT(value): a single row in the approx\_distinct\_value\_count column, header truncated, with the value 11.](/images/approximate-aggregate-functions-in-bigquery/3.png)
 
 You can discover more approximate aggregate functions in the [documentation](https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions).
 

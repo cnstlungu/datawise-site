@@ -12,7 +12,7 @@ series: "my-data-journey"
 hashnodeCuid: "clfmmuiyh000h0amlcts7cy82"
 ---
 
-![](/images/analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6/1.png)
+![Scala code running Spark SQL through ss.sql with a stripMargin multi-line string: SELECT author, COUNT(score), AVG(score) FROM submissions filtered to subreddit 'worldnews', GROUP BY author, ORDER BY 2 DESC, LIMIT 10, printed with .show().](/images/analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6/1.png)
 
 *A SQL query we can run against Reddit data thanks to Spark-SQL*
 
@@ -122,7 +122,7 @@ ss.sql(
 |""".stripMargin).show()
 ```
 
-![](/images/analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6/2.png)
+![Spark show() console output of submissions joined to comments for worldnews post 7uktsn: the submission columns (id, created\_utc, author, score 185, subreddit) repeat on every row beside comment columns author, truncated body, score, parent\_id and link\_id t3\_7uktsn.](/images/analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6/2.png)
 
 We can visit this post on the website by accessing the following URL.
 

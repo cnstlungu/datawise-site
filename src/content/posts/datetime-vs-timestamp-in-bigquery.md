@@ -30,6 +30,6 @@ You can of course convert between the two, but you will NEED to provide a timezo
 
 See below an illustration of how it's done.
 
-![](/images/datetime-vs-timestamp-in-bigquery/1.jpg)
+![BigQuery SQL converting between DATETIME and TIMESTAMP: CURRENT\_DATETIME for Europe/Bucharest and America/New\_York, CURRENT\_TIMESTAMP(), TIMESTAMP(datetime, 'America/New\_York') and DATETIME(CURRENT\_TIMESTAMP(), 'Europe/Bucharest'); results show 18:09 Bucharest, 11:09 New York and 16:09 UTC.](/images/datetime-vs-timestamp-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

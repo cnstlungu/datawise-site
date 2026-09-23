@@ -24,6 +24,6 @@ As seen in [one of my previous posts](/accessing-array-elements-in-bigquery) abo
 
 `OFFSET(CAST(ARRAY_LENGTH(available_options)*RAND()-0.5 AS INT64))`
 
-![](/images/generating-a-random-number-in-bigquery/1.jpg)
+![BigQuery SQL that builds an available\_options array of Option 1 to Option 20 with ARRAY\_AGG, CONCAT and GENERATE\_ARRAY, cross joins 100 participants and picks one per row with OFFSET(CAST(ARRAY\_LENGTH(available\_options)\*RAND()-0.5 AS INT64)); results list each participant\_id with a random selected\_option.](/images/generating-a-random-number-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*

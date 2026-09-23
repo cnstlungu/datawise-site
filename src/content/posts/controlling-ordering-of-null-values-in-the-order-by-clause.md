@@ -21,7 +21,7 @@ While these are entirely optional, they're actually already happening behind the
 🔹 ORDER BY \[column\] ASC (which is the default) uses NULLS FIRST if unspecified  
 🔹 ORDER BY \[column\] DESC uses NULLS LAST if unspecified
 
-![](/images/controlling-ordering-of-null-values-in-the-order-by-clause/1.jpg)
+![BigQuery SQL on six orders, two with NULL order\_amount, sorted with ORDER BY order\_amount DESC NULLS FIRST; the results list orders 3 and 5 (null) first, then 100, 90, 90 and 50.](/images/controlling-ordering-of-null-values-in-the-order-by-clause/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

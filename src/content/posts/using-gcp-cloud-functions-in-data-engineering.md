@@ -28,15 +28,15 @@ Now, there are of course a lot of things to think about when setting up such ser
 \- avoiding cold starts  
 \- reusing heavy computations across invocations
 
-![](/images/using-gcp-cloud-functions-in-data-engineering/1.png)
+![Google Cloud console screenshot of the Cloud Functions welcome page, describing it as a lightweight, event-based compute solution, with a Create Function button and cards for local development, testing, how-to guides, tips, tutorials and billing.](/images/using-gcp-cloud-functions-in-data-engineering/1.png)
 
-![](/images/using-gcp-cloud-functions-in-data-engineering/2.png)
+![Google Cloud console screenshot of the Cloud Functions Create function configuration: 2nd gen environment, test-cloud-function in europe-west1, HTTPS trigger with Require authentication, 256 MiB memory, 60 s timeout, concurrency 1, autoscaling 0 to 100 instances, service account dev-tf-sa.](/images/using-gcp-cloud-functions-in-data-engineering/2.png)
 
-![](/images/using-gcp-cloud-functions-in-data-engineering/3.png)
+![Google Cloud Functions console Code step with Python 3.11 runtime, entry point hello\_http and the inline editor showing main.py: a @functions\_framework.http function that reads name from request.get\_json or request.args, defaults to World and returns 'Hello {}!'.format(name).](/images/using-gcp-cloud-functions-in-data-engineering/3.png)
 
-![](/images/using-gcp-cloud-functions-in-data-engineering/4.png)
+![Google Cloud Functions console Configure pre-deployment test panel: the triggering event is the JSON body {"name": "fellow earthlings"}, HTTP method POST, with a Run Test button and a last test on Oct 5, 2023 that returned HTTP status 200.](/images/using-gcp-cloud-functions-in-data-engineering/4.png)
 
-![](/images/using-gcp-cloud-functions-in-data-engineering/5.png)
+![Cloud Functions pre-deployment test log: builder steps run pip check with no broken requirements, then Function is ready to test, followed by execution responses Hello Greetings, fellow earthlings!! and Hello fellow earthlings!](/images/using-gcp-cloud-functions-in-data-engineering/5.png)
 
 But overall, it felt like the setup was pretty straightforward and the first time I tried it, I was able to get off the ground pretty quickly. You can of course test the function on your local machine (until you're happy with it) and automate its deployment with Terraform.
 

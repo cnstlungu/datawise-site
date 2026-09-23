@@ -18,7 +18,7 @@ While the performance gain when using these *unenforced* PK/FK constraints in ge
 
 For a refresher on what these constraints are, see [my previous post](/bigquery-primary-key-foreign-key-constraints).
 
-![](/images/cross-dataset-foreign-key-relationships-in-bigquery/1.jpg)
+![BigQuery SQL creating learning.order\_lines and auxiliary.products, then ALTER TABLE ADD PRIMARY KEY(order\_id, product\_id) NOT ENFORCED and ADD FOREIGN KEY(product\_id) REFERENCES auxiliary.products(id) NOT ENFORCED across datasets; the table details list the primary keys.](/images/cross-dataset-foreign-key-relationships-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

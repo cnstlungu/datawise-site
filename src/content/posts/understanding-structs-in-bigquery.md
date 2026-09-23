@@ -27,7 +27,7 @@ For STRUCT, you can totally ORDER BY or GROUP BY one of the fields in the STRUCT
 
 When to use each? Let's look an example.
 
-![](/images/understanding-structs-in-bigquery/1.jpg)
+![BigQuery SQL creating learning.customer\_data with a STRUCT address, an ARRAY of instruments and an ARRAY of STRUCTs for certifications; arrows map them to schema types RECORD NULLABLE, STRING REPEATED and RECORD REPEATED, and the result shows nested columns like address.city and certifications.name.](/images/understanding-structs-in-bigquery/1.jpg)
 
 STRUCT = a bundle of fields that relate to the same "thing" - say your current address - city, street name, postal\_code etc. Helps with a cleaner, more intuitive schema. `TYPE = RECORD, MODE = NULLABLE`
 

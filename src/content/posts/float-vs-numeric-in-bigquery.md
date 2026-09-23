@@ -45,6 +45,6 @@ When to use it:
 
 P.S. There's also BIGNUMERIC (alias for BIGDECIMAL) if you need even larger range, but that takes 32 logical bytes.
 
-![](/images/float-vs-numeric-in-bigquery/1.jpg)
+![BigQuery SQL adding CAST(0.1 AS FLOAT64) and CAST(0.2 AS FLOAT64) and casting 'NaN', '-inf' and 'inf' to FLOAT64; the JSON result shows float\_sum 0.30000000000000004 plus NaN, -Infinity and Infinity values.](/images/float-vs-numeric-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

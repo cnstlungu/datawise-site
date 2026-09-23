@@ -26,7 +26,7 @@ Now, the blog post is already more than 2 years old and some things might have c
 
 The results have shown almost no difference between the two approaches (across several attempts), but another reason might be the table is just not big enough for me to see a difference.
 
-![](/images/does-order-of-expressions-in-the-where-clause-matter/1.jpg)
+![BigQuery console screenshots of one query on google\_trends.international\_top\_terms with the WHERE conditions swapped, term LIKE '%ATP%' AND region\_code = 'RO-B' and the reverse: 441 ms and 6 sec of slot time versus 538 ms and 7 sec, both shuffling 18.29 KB.](/images/does-order-of-expressions-in-the-where-clause-matter/1.jpg)
 
 In any case, I'll keep this in mind next time I'm working with a very big table and check it out again.
 

@@ -52,7 +52,7 @@ FROM `region-eu`.INFORMATION_SCHEMA.JOBS,
 UNNEST(referenced_tables) AS referenced_table
 ```
 
-![](/images/the-power-of-bigquery-informationschema-views/1.png)
+![BigQuery results from INFORMATION\_SCHEMA.JOBS with columns creation\_time, job\_type, query, total\_bytes\_billed, total\_bytes\_processed, total\_slot\_ms and referenced\_table\_name, listing an INSERT INTO and two FOR SYSTEM\_TIME AS OF queries on test\_time\_travel.](/images/the-power-of-bigquery-informationschema-views/1.png)
 
 ## **COLUMNS**
 
@@ -93,11 +93,11 @@ unpivot
 
 FROM:
 
-![](/images/the-power-of-bigquery-informationschema-views/2.png)
+![BigQuery results of the Customer\_Data table before unpivoting: one row per customer with columns CustomerId, FirstName, LastName, Country and FirstOrderDate, e.g. 2, Michelle, Dubois, FR, 2021-06-01.](/images/the-power-of-bigquery-informationschema-views/2.png)
 
 TO:
 
-![](/images/the-power-of-bigquery-informationschema-views/3.png)
+![BigQuery results after the dynamic UNPIVOT: columns CustomerId, value and keys, with four rows per customer holding FirstName, LastName, Country and FirstOrderDate, e.g. 2, Michelle, FirstName and 2, FR, Country.](/images/the-power-of-bigquery-informationschema-views/3.png)
 
 ## CONSTRAINT COLUMN USAGE
 
@@ -109,7 +109,7 @@ SELECT * EXCEPT(table_catalog, constraint_catalog)
 FROM testing.INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE;
 ```
 
-![](/images/the-power-of-bigquery-informationschema-views/4.png)
+![BigQuery results from INFORMATION\_SCHEMA.CONSTRAINT\_COLUMN\_USAGE in dataset testing: columns table\_schema, table\_name, column\_name, constraint\_schema, constraint\_name, showing primary keys lookup\_table.pk$ and data\_source.pk$ and foreign key data\_source.fk$1.](/images/the-power-of-bigquery-informationschema-views/4.png)
 
 ## TABLE STORAGE
 
@@ -119,7 +119,7 @@ Looking to dive into table storage, including physical and logical storage, so y
 SELECT * FROM region-eu.INFORMATION_SCHEMA.TABLE_STORAGE;
 ```
 
-![](/images/the-power-of-bigquery-informationschema-views/5.png)
+![BigQuery results from INFORMATION\_SCHEMA.TABLE\_STORAGE showing per-table active and long-term logical bytes, total, active and long-term physical bytes, time-travel physical bytes, storage\_last\_modified\_time, deleted and table\_type BASE TABLE.](/images/the-power-of-bigquery-informationschema-views/5.png)
 
 ## But there's more!
 

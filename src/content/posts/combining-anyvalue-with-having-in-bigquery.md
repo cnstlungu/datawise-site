@@ -29,6 +29,6 @@ With ANY\_VALUE of a single value being always that value, we can filter the res
 
 As almost always with SQL, there are of course plenty of other ways to achieve the same result.
 
-![](/images/combining-anyvalue-with-having-in-bigquery/1.jpg)
+![BigQuery SQL on an input\_data CTE of order\_id and order\_line that groups by order\_id and filters with HAVING COUNT(order\_line) = 1 AND ANY\_VALUE(order\_line) IN ('grapes', 'oranges'); the result keeps order 2 with grapes and order 3 with oranges, each with count\_order\_lines 1.](/images/combining-anyvalue-with-having-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

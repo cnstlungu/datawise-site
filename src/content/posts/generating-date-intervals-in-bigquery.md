@@ -27,6 +27,6 @@ If you need something more granular, there is the very similar GENERATE\_TIMESTA
 
 Friendly reminder to not mix and match DATETIME and TIMESTAMP without properly converting between them beforehand - see [my previous post](/datetime-vs-timestamp-in-bigquery).
 
-![](/images/generating-date-intervals-in-bigquery/1.jpg)
+![BigQuery SQL selecting valid\_date FROM UNNEST(GENERATE\_DATE\_ARRAY('2021-01-01', '2021-01-31', INTERVAL 1 DAY)) AS valid\_date; the console result lists 31 rows, one per day from 2021-01-01 to 2021-01-31.](/images/generating-date-intervals-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

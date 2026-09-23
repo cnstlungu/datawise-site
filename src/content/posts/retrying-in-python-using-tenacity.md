@@ -22,7 +22,7 @@ Otherwise it's important to leverage great packages like these in our workflows 
 
 Check out a quick example of it in action below.
 
-![](/images/retrying-in-python-using-tenacity/1.jpg)
+![Python retrying.py using the tenacity @retry decorator with retry\_if\_exception\_type(IOError) and wait\_exponential(multiplier=2, min=4, max=12) on a function that randomly raises IOError; terminal output shows retries about 4, 4, 8, 12 and 12 seconds apart before All good!](/images/retrying-in-python-using-tenacity/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -18,25 +18,25 @@ Here's a quick tour of BigQuery's row-level security features.
 
 Suppose you have the following BigQuery table. Each sales representative should only have access to the data for the country they are catering to.
 
-![](/images/row-level-access-security-in-bigquery/1.png)
+![Sample BigQuery Customers table with columns CustomerId, Age, FirstName, LastName, Country, Salary and FirstOrderDate, holding four customers: John Doe (US), Jane Springer (UK), Bianca Moretti (IT) and Michelle Dubois (FR).](/images/row-level-access-security-in-bigquery/1.png)
 
 Let's define a **Row-level access policy**.
 
-![](/images/row-level-access-security-in-bigquery/2.png)
+![BigQuery SQL CREATE ROW ACCESS POLICY us\_uk\_country\_filter ON learning.Customers, with GRANT TO a service account (test-access-control@REDACTED.iam.gserviceaccount.com) and FILTER USING (country IN ('US', 'UK')) so that account only sees US and UK rows.](/images/row-level-access-security-in-bigquery/2.png)
 
 This service account would now only be able to see rows where the country is the US or UK.
 
-![](/images/row-level-access-security-in-bigquery/3.png)
+![BigQuery query result for the service account covered by the row access policy: the Customers table (CustomerId, Age, FirstName, LastName, Country, Salary, FirstOrderDate) now returns only two rows, John Doe from the US and Jane Springer from the UK.](/images/row-level-access-security-in-bigquery/3.png)
 
 Other users (without a Row-level access policy) would see the following:
 
-![](/images/row-level-access-security-in-bigquery/4.png)
+![BigQuery console running SELECT \* FROM REDACTED.learning.Customers LIMIT 1000 as a user without a row access policy: no rows come back, with the notices 'Your query results may be limited because you do not have access to certain rows' and 'There is no data to display'.](/images/row-level-access-security-in-bigquery/4.png)
 
 **Deleting a Row-level access policy**
 
 This can be done using the following commands:
 
-![](/images/row-level-access-security-in-bigquery/5.png)
+![BigQuery SQL to remove row-level security: DROP ROW ACCESS POLICY us\_uk\_country\_filter ON learning.Customers deletes one specific policy, while DROP ALL ROW ACCESS POLICIES ON learning.Customers deletes every policy on the table.](/images/row-level-access-security-in-bigquery/5.png)
 
 Thanks for reading!
 

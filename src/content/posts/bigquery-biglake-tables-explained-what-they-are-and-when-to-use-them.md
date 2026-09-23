@@ -58,25 +58,25 @@ The cache has a staleness window you control, and you choose between automatic o
 
 Say we have some sales data in Google Cloud Storage as follows
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/1.png)
+![Preview of an orders CSV file from the order\_date=2026-04-01, country=DE partition, with columns order\_id, customer\_id, channel, amount, discount\_amount and created\_at, and web, marketplace and store orders such as O20260401DE0000 at 156.71.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/1.png)
 
 It is Hive partitioned Date -> Country.
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/2.png)
+![Google Cloud Storage console screenshot of the datawise-biglake-hive-demo bucket with a Hive-partitioned layout: orders/order\_date=2026-04-01 through 2026-04-10, each with country=DE, GB, RO and US folders; the country=DE folder holds a single 1.6 KB orders.csv.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/2.png)
 
 In order to create a BigLake table we need to do the following:
 
 Create a BQ Connection
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/3.png)
+![BigQuery console screenshot of the Connections page, with Connections highlighted in the left explorer panel, listing demo-biglake-connection and test-bigquery-connection, both in the eu location.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/3.png)
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/4.png)
+![BigQuery console screenshot of the External data source form for a new connection: type Vertex AI remote models, remote functions, Lakehouse and Spanner (Cloud Resource), Connection ID demo-biglake-connection, EU multi-region, description Connection for BigLake Table.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/4.png)
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/5.png)
+![BigQuery console screenshot of the Connection info page for demo-biglake-connection: data location eu, Cloud Resource connection type, description Connection for BigLake Table, and a service account id ending in gcp-sa-bigquery-condel.iam.gserviceaccount.com, with project details hidden.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/5.png)
 
 Now, we need to grant this service account access to the GCS bucket
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/6.png)
+![Google Cloud Storage console screenshot of the Edit access dialog for the datawise-biglake-hive-demo bucket, granting the connection's bqc service account at gcp-sa-bigquery-condel.iam.gserviceaccount.com the Storage Object Viewer role.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/6.png)
 
 We can now create the BigLake table:
 
@@ -118,7 +118,7 @@ A few things to note:
 
 The table is now created and can be queried like any other BigQuery table.
 
-![](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/7.png)
+![BigQuery console screenshot: SELECT \* FROM learning.orders\_biglake returns orders plus partition columns order\_date and country, and the Details tab shows a partitioned Lakehouse table over CSV files at gs://datawise-biglake-hive-demo/orders/\* with Hive partitioning mode CUSTOM.](/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/7.png)
 
 ### **Before you go**
 

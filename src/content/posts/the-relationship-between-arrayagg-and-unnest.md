@@ -24,7 +24,7 @@ Check my previous posts on the topic:
     
 * [Using ARRAY\_AGG in BigQuery](/using-array-agg-in-bigquery)
     
-    ![](/images/the-relationship-between-arrayagg-and-unnest/1.jpg)
+    ![BigQuery SQL round trip drawn as a cycle: ARRAY\_AGG(STRUCT(order\_id, product)) AS orders with GROUP BY customer\_id nests four flat order rows into one row per customer, and LEFT JOIN UNNEST(orders) AS \_order flattens them back into the same four rows.](/images/the-relationship-between-arrayagg-and-unnest/1.jpg)
     
     *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

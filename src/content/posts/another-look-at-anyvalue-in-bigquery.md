@@ -25,6 +25,6 @@ Otherwise, when do I use it? A couple of cases, and it's not only for the thrill
 \- aggregation after pseudo-pivoting with CASE WHEN value = x, same as we used to do with MIN or MAX before  
 \- other aggregations of string values based on a rule
 
-![](/images/another-look-at-anyvalue-in-bigquery/1.jpg)
+![BigQuery SQL using ANY\_VALUE(product\_id HAVING MAX price), ANY\_VALUE(product\_id HAVING MIN is\_banana) and ANY\_VALUE(product\_id HAVING MIN best\_before\_date) with GROUP BY order\_id; order 1 returns Mango, Mango and Banana, order 2 returns Pears for all three.](/images/another-look-at-anyvalue-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

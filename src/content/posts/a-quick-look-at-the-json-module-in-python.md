@@ -28,7 +28,7 @@ You can save that prettified json into another file, as follows:
 
 `python -m json.tool ugly_format.json pretty_format.json`
 
-![](/images/a-quick-look-at-the-json-module-in-python/1.jpg)
+![Python json\_demo.py next to a data.json file of users: json.loads parses a string and json.load(open('data.json')) a file into dicts, then json.dumps turns a\_dict into a str and json.dump writes it to exported\_data.json, shown open with the x, y, z data.](/images/a-quick-look-at-the-json-module-in-python/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

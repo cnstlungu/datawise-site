@@ -45,7 +45,7 @@ Here’s how it works in practice:
 • Cucumbers → No past sales, no Vegetables subcategory data → Uses Food category → AVG(quantity) = 4.67  
 • Washing Machine → No sales data, no relevant category → Uses overall average → AVG(quantity) = 6
 
-![](/images/revisiting-group-by-rollup-with-a-more-realistic-example/1.jpg)
+![BigQuery SQL building calculated\_averages from sales\_data with ROUND(AVG(quantity),2) and GROUP BY ROLLUP (category, subcategory, product\_id), then LEFT JOINs and COALESCE for a fallback average; results give Mangoes 4.67 from Fruits, Cucumbers 4.67 from Food and Washing Machine 6.0 overall.](/images/revisiting-group-by-rollup-with-a-more-realistic-example/1.jpg)
 
 𝐈𝐧 𝐥𝐢𝐞𝐮 𝐨𝐟 𝐚 𝐜𝐨𝐧𝐜𝐥𝐮𝐬𝐢𝐨𝐧
 

@@ -23,6 +23,6 @@ Here's a couple of examples:
 
 Check out below an example with slot\_ms (returns slot time in millis), bytes\_billed and creation\_date.
 
-![](/images/system-variables-in-bigquery/1.jpg)
+![BigQuery SQL script that runs a COUNT(DISTINCT value) GROUP BY ds\_date query on learning.data\_source, then selects system variables @@project\_id, @@script.slot\_ms, @@script.bytes\_billed and @@script.creation\_time; results show 636839 slot ms and 10485760 bytes billed.](/images/system-variables-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

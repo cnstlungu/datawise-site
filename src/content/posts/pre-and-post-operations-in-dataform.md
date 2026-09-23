@@ -27,4 +27,4 @@ In practice it enables you to cleanly:
 
 What's the most interesting use case you've seen for pre\_operations / post\_operations (or pre\_hook / post\_hook if you're on dbt)?
 
-![](/images/pre-and-post-operations-in-dataform/1.png)
+![Dataform SQLX incremental table with uniqueKey order\_id: pre\_operations DECLAREs max\_date DEFAULT COALESCE(MAX(order\_date), DATE('2000-01-01')) FROM ${self()}, the SELECT loads orders WHERE order\_date \> max\_date, and post\_operations INSERTs the run into pipeline\_audit with CURRENT\_TIMESTAMP().](/images/pre-and-post-operations-in-dataform/1.png)

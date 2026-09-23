@@ -22,7 +22,7 @@ Now, one can refer to a lookup table and use that in conjunction with the SESSIO
 
 The result is the same, but this adds a degree of simplicity and easiness when managing row-level access security in BigQuery.
 
-![](/images/using-subqueries-with-row-level-security-in-bigquery/1.jpg)
+![BigQuery SQL comparing CREATE ROW ACCESS POLICY with a static FILTER USING (country IN ('US', 'UK')) to the preview version whose FILTER USING subquery reads lookup\_table, UNNESTs country\_list and matches user\_principal = SESSION\_USER(); both let the service account see only the UK and US customers.](/images/using-subqueries-with-row-level-security-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

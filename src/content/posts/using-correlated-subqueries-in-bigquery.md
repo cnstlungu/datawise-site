@@ -84,7 +84,7 @@ FROM `learning.Customers`
 
 Both produce the same result:
 
-![](/images/using-correlated-subqueries-in-bigquery/1.png)
+![BigQuery result grid with columns CustomerId, Salary and AverageSalary: four customers with salaries 75000, 88000, 78000 and 150000, each row showing the same AverageSalary of 97750.0 computed across all customers.](/images/using-correlated-subqueries-in-bigquery/1.png)
 
 ## Filter using a correlated subquery
 
@@ -126,7 +126,7 @@ FROM orders o
 QUALIFY order_total > AVG(order_total) OVER(PARTITION BY customer_id)
 ```
 
-![](/images/using-correlated-subqueries-in-bigquery/2.png)
+![BigQuery result grid with a single row, customer\_id 1, order\_id 1003 and order\_total 150: the only order above that customer's average order value, as kept by the filtering query.](/images/using-correlated-subqueries-in-bigquery/2.png)
 
 # Things to pay attention to
 
@@ -136,7 +136,7 @@ Let's compare the two following approaches. They are both looking to create a bi
 
 They work with the same input data and produce the same result below.
 
-![](/images/using-correlated-subqueries-in-bigquery/3.png)
+![BigQuery result grid with columns product\_id, order\_date and has\_had\_offer (header cut off): product 1 ordered on 2021-01-01 is true, product 1 on 2021-03-01 is false and product 2 on 2022-01-01 is false.](/images/using-correlated-subqueries-in-bigquery/3.png)
 
 The first approach uses a correlated subquery to unnest the `offer_validity` on the fly.
 
@@ -207,11 +207,11 @@ Here's how their performance compares:
 
 Correlated Subquery:
 
-![](/images/using-correlated-subqueries-in-bigquery/4.png)
+![BigQuery Execution Details panel for the correlated subquery version: elapsed time 296 ms, slot time consumed 219 ms, bytes shuffled 231 B and bytes spilled to disk 0 B.](/images/using-correlated-subqueries-in-bigquery/4.png)
 
 Without correlated subquery.
 
-![](/images/using-correlated-subqueries-in-bigquery/5.png)
+![BigQuery Execution Details panel for the version without a correlated subquery: elapsed time 273 ms, slot time consumed 210 ms, bytes shuffled 231 B and bytes spilled to disk 0 B, nearly identical at this small scale.](/images/using-correlated-subqueries-in-bigquery/5.png)
 
 While the results with this scale might look similar, the benchmark when working with a significant amount of data might be very different, hence the need to compare multiple approaches and their performance.
 

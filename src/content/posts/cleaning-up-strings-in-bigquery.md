@@ -27,6 +27,6 @@ Take string columns for instance. In [hashtag#BigQuery, as with ot](https://www.
 
 The main goal here is to bring everything to a common denominator, being able to tell which observations belong together and which data can be considered "missing".
 
-![](/images/cleaning-up-strings-in-bigquery/1.jpg)
+![BigQuery SQL on city values containing empty strings, whitespace and a NULL: SELECT DISTINCT city returns 7 variants, while SELECT DISTINCT NULLIF(TRIM(city),'') AS city, annotated to remove whitespace and make empty strings NULL, returns only null, New York and Athens.](/images/cleaning-up-strings-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

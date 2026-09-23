@@ -13,7 +13,7 @@ In a [previous article](/how-i-set-up-my-first-hadoop-spark-cluster-preparation)
 
 Now, to give you some context, my setup is made by a laptop (which will serve both as a name node and a data node) and Raspberry Pis as another two data nodes, as follows:
 
-![](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/1.png)
+![Diagram of the cluster setup: a laptop hosts the master and Node 1, while two Raspberry Pis, rpi-3 and rpi-4, act as Node 2 and Node 3.](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/1.png)
 
 Note that I will be running Spark 2.4.5 and Hadoop 3.2.1.
 
@@ -66,7 +66,7 @@ Let’s try again now:
 hadoop version
 ```
 
-![](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/2.png)
+![Terminal on ubuntu@rpi-3 where hadoop version now succeeds, printing Hadoop 3.2.1, the source repository commit, compile details including protoc 2.5.0, and that it ran using /opt/hadoop/share/hadoop/common/hadoop-common-3.2.1.jar.](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/2.png)
 
 Works! Moving forward.
 
@@ -108,7 +108,7 @@ The next error on our list took me a good evening to debug. So when trying to st
 
 The correct answer was in fact to set it to my name node server’s address (in **core-site.xml**) AND to make sure there isn’t an entry in **/etc/hosts** tying that to 127.0.0.1 or localhost. Hadoop doesn’t like that, and I’ve [been warned](https://dev.to/awwsmm/building-a-raspberry-pi-hadoop-spark-cluster-8b2).
 
-![](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/3.png)
+![Hadoop core-site.xml configuration setting the fs.defaultFS property to hdfs://XPS-15-9560:9000, pointing HDFS at the name node's hostname XPS-15-9560 on port 9000.](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/3.png)
 
 ### Nodes not showing up
 
@@ -122,7 +122,7 @@ There are several web interfaces exposed in a typical Hadoop stack. Two of them 
 
 Jps is a Java tool, but you can use it to see which Hadoop services are up on a particular machine.
 
-![](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/4.png)
+![Terminal output of the jps command listing running Java processes with their PIDs: Jps, NodeManager, SecondaryNameNode, ResourceManager, DataNode and NameNode, showing the Hadoop HDFS and YARN services are up on this machine.](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/4.png)
 
 Is the DataNode up on the given node? Let’s move forward.
 
@@ -164,7 +164,7 @@ Read more about it [here](https://stackoverflow.com/questions/56457685/how-to-fi
 
 When starting a spark-shell or submitting a Spark job, a spark context Web UI is made available at port 4040 on the namenode. In my case, the issue was that the UI had a broken interface, which made using it impossible.
 
-![](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/5.png)
+![Spark 2.4.5 web UI for the Spark shell application rendered without any CSS: plain unstyled links for Jobs, Stages, Storage, Environment and Executors, a Spark Jobs heading with user, Total Uptime 11 s and Scheduling Mode FIFO, and an Enable zooming checkbox.](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/5.png)
 
 Once again, StackOverflow was my friend. To sort this one, one would need to start a spark-shell and run the following command:
 

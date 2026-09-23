@@ -21,7 +21,7 @@ In order to solve it, we:
 \- since the flags can have the NULL value, we'd need to filter them out before passing them to the arrays constructor (which doesn't like nulls)  
 \- create the array using the ARRAY () constructor
 
-![](/images/sometimes-you-have-to-use-subqueries/1.jpg)
+![BigQuery SQL building an errors ARRAY per order with the ARRAY() constructor over a scalar subquery that UNION ALLs payment\_error, delivery\_error and fulfilment\_error with labels, filtered WHERE has\_error; order 1 gets Payment and Delivery, order 2 an empty array (0 rows).](/images/sometimes-you-have-to-use-subqueries/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
 

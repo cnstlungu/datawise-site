@@ -22,6 +22,6 @@ We use there rows then to retrieve the event occurring second - sorting decreasi
   
 The output is then ORDER BY the second\_to\_last\_order\_update\_ts decreasingly.
 
-![](/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1.jpg)
+![BigQuery SQL on order events (order\_id, event\_ts, order\_status) that filters WHERE order\_status = 'order\_updated' and then QUALIFY ROW\_NUMBER() OVER(PARTITION BY order\_id ORDER BY event\_ts DESC) = 2; results give order 2 at 13:15 and order 1 at 11:30, the highlighted second-to-last updates.](/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

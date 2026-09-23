@@ -19,17 +19,17 @@ The year was 2016 and I was looking to design and build an **Enterprise Performa
 
 After a good six months of late-night coding and learning by doing, I came up with the following:
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/1.png)
+![Apollo Enterprise Performance Management web app home page in Firefox, with menus for Performance Management, Ad-Hoc Query and Master Data, listing Business Intelligence features (Cubes analysis, drill-down, slicing, dicing, ad-hoc analysis) and EPM features (budgeting, controlling, data management).](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/1.png)
 
 This marvel of engineering was built using Python 2 with [Web2py](http://www.web2py.com/) as the web framework, MySQL using Infobright Community Edition engine as the Analytical Database, the [Cubes](http://cubes.databrewery.org/) Python framework to run OLAP queries and [Pygal](https://www.pygal.org/en/stable/) for charts and graphs. So what could one do with it?
 
 You could select a store name to see sales charts.
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/2.png)
+![Apollo web app Stores page with a store picker and Submit button above three charts: Store Sales as a line chart in EUR, Salesperson Performance as a multi-line chart for five salespeople, and Categories breakdown as stacked bars for Kids, Women and Men.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/2.png)
 
 It would compute the Profit & Loss Statement, including Planned (which was also entered in the portal) and Actual.
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/3.png)
+![Apollo web app Profit \& Loss Statements page with side-by-side summaries for prior year 2014, actual 2015 and plan 2015, each listing Turnover, COGS, Gross Margin, Administrative, Distribution, Marketing and Sales-related expenses and EBITDA, e.g. actual EBITDA EUR 91.1M vs plan EUR 106M.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/3.png)
 
 There was functionality to run ad-hoc OLAP queries.
 
@@ -69,17 +69,17 @@ The Company currently runs a transactional system that manages all the sales it 
 
 #### The OLTP database
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/4.png)
+![Entity-relationship diagram of the company's OLTP database: a transactions table (transaction\_id, customer\_id, product\_id, amount, qty, channel\_id, bought\_date) linked to channels, customers and products tables, plus a standalone resellers table with reseller\_id, reseller\_name and commission\_pct.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/4.png)
 
 The Company’s transactional database
 
 > *The data is fictional and automatically generated. Any similarities with existing persons, entities, products or businesses are purely coincidental.*
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/5.png)
+![CSV file from a reseller with the header Transaction ID, Product name, Quantity, Total amount, Sales Channel, Customer First Name, Customer Last Name, Customer Email, Series City, Created Date, and five postcard sales rows dated 2019-01-01, such as 6x11 Come visit me in Helsinki.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/5.png)
 
 CSV data received from the resellers
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/6.png)
+![XML file from a reseller: a transaction element with date and reseller-id attributes holding transactionId, productName, qty, totalAmount, salesChannel, a nested customer element (firstname, lastname, email), dateCreated and seriesCity for one postcard sale via mobile app.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/6.png)
 
 XML data received from the resellers
 
@@ -87,7 +87,7 @@ XML data received from the resellers
 
 How does one tackle such a task nowadays? To get from the above to this:
 
-![](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/7.png)
+![BI dashboard titled Sales dashboard with six panels: a Day of Week Trends pivot of SUM(total\_qty) by city, a Channel sales evolution line chart for 2019 to 2020, a Commission paid table by reseller and year, Average order size of 9.1 USD, a Sales by month table and a Sales per country map.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/7.png)
 
 we would need quite several tools to work together:
 

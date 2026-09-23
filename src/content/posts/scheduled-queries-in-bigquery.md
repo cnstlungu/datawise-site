@@ -22,7 +22,7 @@ Instead of manually initiating a query each day or week, BigQuery can do it for 
 
 A scheduled query can be created manually using the **Schedule button** in the Query window.
 
-![](/images/scheduled-queries-in-bigquery/1.png)
+![BigQuery console query editor with the Schedule button highlighted in red, above the query SELECT GENERATE\_UUID() AS unique\_identifier, CURRENT\_TIMESTAMP() AS ingestion\_timestamp and its one-row result.](/images/scheduled-queries-in-bigquery/1.png)
 
 A dialog box is presented where we are prompted to provide the following information:
 
@@ -45,9 +45,9 @@ A dialog box is presented where we are prompted to provide the following informa
 * notification options
     
 
-![](/images/scheduled-queries-in-bigquery/2.png)
+![BigQuery New scheduled query dialog: custom repeat frequency every day 22:00 with a help popup of schedule syntax examples, start now and end never, and a destination table example\_table in dataset learning with Append to table or Overwrite table.](/images/scheduled-queries-in-bigquery/2.png)
 
-![](/images/scheduled-queries-in-bigquery/3.png)
+![Lower half of the BigQuery New scheduled query dialog: EU multi-region location, Google-managed or customer-managed (CMEK) encryption, a service account field annotated Service account to run query as, and email or Pub/Sub notification options.](/images/scheduled-queries-in-bigquery/3.png)
 
 ### Creating a scheduled query using Terraform
 
@@ -101,15 +101,15 @@ Viewing the scheduled query can be done by Accessing the 'Scheduled queries' opt
 
 It will display a list of queries, their schedule, region, destination (if any) and next run time.
 
-![](/images/scheduled-queries-in-bigquery/4.png)
+![BigQuery Scheduled queries page listing tf\_table\_query, source Scheduled Query, schedule every saturday 05:00 UTC, region europe, destination dataset learning, next run September 2, 2023; an annotation says clicking it lets you view all runs.](/images/scheduled-queries-in-bigquery/4.png)
 
 Click on a particular query would present a Run history and its output. There is also an option for scheduling a backfill (which we can use for a Manual Run).
 
-![](/images/scheduled-queries-in-bigquery/5.png)
+![BigQuery Scheduled query details for tf\_table\_query on the Run history tab, listing two successful transfer runs from August 30, 2023; annotations point to the Configuration tab and to Schedule backfill for a manual run.](/images/scheduled-queries-in-bigquery/5.png)
 
 Clicking on the **Configuration** tab would display the configurations used to create the query.
 
-![](/images/scheduled-queries-in-bigquery/6.png)
+![BigQuery Scheduled query details Configuration tab for tf\_table\_query: schedule every saturday 05:00 UTC, destination dataset learning, query string SELECT CURRENT\_TIMESTAMP() AS ingestion\_timestamp, GENERATE\_UUID() AS unique\_identifier into tf\_table with WRITE\_APPEND; resource name and user are redacted.](/images/scheduled-queries-in-bigquery/6.png)
 
 In conclusion, BigQuery Scheduled queries can be a useful tool in your toolset, as a quick and easy way to do light orchestration of SQL tasks.
 

@@ -8,6 +8,8 @@ export const GET: APIRoute = async () =>
     title: SITE.title,
     description: SITE.description,
     site: SITE.url,
+    // Post URLs have no trailing slash; the default would add one to every link.
+    trailingSlash: false,
     items: (await listedPosts()).map((post) => ({
       title: post.data.title,
       link: postPath(post),

@@ -21,7 +21,7 @@ See below an illustration of it in action.
 Also, given we use the native JSON datatype, notice how we can just access the first (\[0\]) element in an ARRAY or a field directly by dot notation.  
 This you cannot do with a JSON-like STRING (not without parsing). Check out my [previous post about JSON vs JSON-like string](/json-datatype-vs-json-like-string-in-bigquery).
 
-![](/images/determining-json-types-in-bigquery/1.jpg)
+![BigQuery SQL that declares a JSON array of people (city, age, name, registered\_footballer) and calls JSON\_TYPE on json\_data, its first element via index 0, and that element's name, age and registered\_footballer, returning array, object, string, number and boolean.](/images/determining-json-types-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -26,6 +26,6 @@ Now, let's focus this `last modified time` as it is quite useful when building i
 
 Such a feature should help you in cases when you don't have a reliable watermark column to determine what changed since your last run.
 
-![](/images/the-partitions-view-in-informationschema/1.jpg)
+![BigQuery SQL selecting \* EXCEPT(table\_catalog) from learning.INFORMATION\_SCHEMA.PARTITIONS for table data\_source ORDER BY last\_modified\_time DESC; results list partition\_id, total\_rows, bytes, last\_modified\_time and storage\_tier, with partition 20221112 modified 2024-05-31 ACTIVE and older ones LONG\_TERM.](/images/the-partitions-view-in-informationschema/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

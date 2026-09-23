@@ -22,7 +22,7 @@ Why this happens? Well the allergies and grades have no relationship between eac
 
 Take this into account when you're working with nested data.
 
-![](/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1.jpg)
+![BigQuery SQL for student Joe Doe with a grades ARRAY of 4 values and an allergies ARRAY of 3; unnesting both with LEFT JOIN UNNEST(grades) AS grade and LEFT JOIN UNNEST(allergies) AS food\_allergy returns 12 rows, pairing every grade with every allergy.](/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -28,7 +28,7 @@ Take this as a cautionary tale against using ROW\_NUMBER() OVER(PARTITION BY …
 
 Tucked into a table somewhere, it haunted me and wreaked havoc. I don’t know if there’s a real use case for it like that — but expect surprises.
 
-![](/images/beware-of-rownumber-without-order-by/1.jpg)
+![Scooby-Doo unmasking meme: Fred asks why the report keeps changing at random, then pulls the mask off the ghost to reveal the villain, labelled ROW\_NUMBER with stochastic vibes.](/images/beware-of-rownumber-without-order-by/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

@@ -29,7 +29,7 @@ First, I wanted to go the real hardware route as opposed to setting up a fleet o
 
 While there are better options for network performance and look ([PoE](https://en.wikipedia.org/wiki/Power_over_Ethernet)), since my devices have WiFi connectivity I’ve decided to let them communicate via wireless and be charged using standard (phone-like) chargers. Both have a 16GB microSD card as storage.
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/1.png)
+![Diagram of the cluster plan: the laptop acts as master and also hosts Node 1, while Raspberry Pis rpi-3 and rpi-4 serve as Node 2 and Node 3.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/1.png)
 
 Plan for my cluster
 
@@ -37,13 +37,13 @@ Plan for my cluster
 
 Next, setting up the Pis. While they do come with [Noobs](https://www.raspberrypi.org/downloads/noobs/) — an easy operating system installer — which allows installing [Raspbian](https://www.raspberrypi.org/downloads/raspbian/), a Debian-based Linux which is the most popular choice for Raspberry Pis, I’ve decided to go with Ubuntu for this platform. I downloaded the [Ubuntu server image](https://ubuntu.com/download/raspberry-pi) and burned it to a microSD on my PC using an SD adapter with the [Pi Imager](https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/) — a straightforward process that took about 3 minutes.
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/2.png)
+![Raspberry Pi Imager v1.2 application window with the Raspberry Pi logo and three controls: Choose OS under Operating System, Choose SD Card under SD Card, and a Write button that is still disabled.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/2.png)
 
 Raspberry Pi Imager
 
 Then, I set up the wireless connectivity for my newly set up Raspberry Pi using the instructions [available here](https://askubuntu.com/questions/1143287/how-to-setup-of-raspberry-pi-3-onboard-wifi-for-ubuntu-server-18-04).
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/3.png)
+![Terminal output of cat /etc/netplan/50-cloud-init.yaml on rpi-3: a netplan config with ethernets eth0 (dhcp4 true, optional true) and wifis wlan0 with access-points whose SSID and password are redacted, dhcp4 true and version 2.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/3.png)
 
 */etc/netplan/50-cloud-init.yaml*
 
@@ -51,7 +51,7 @@ Then, I set up the wireless connectivity for my newly set up Raspberry Pi using 
 
 Next, I’ve set up hostnames and hosts on each machine.
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/4.png)
+![Terminal on rpi-3 showing cat /etc/hostname returning rpi-3 and cat /etc/hosts mapping 127.0.0.1 to localhost, 192.168.100.47 to rpi-4 and 192.168.100.6 to the laptop XPS-15-9560, followed by the default IPv6 entries.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/4.png)
 
 */etc/hostname* and */etc/hosts* for one of the Pis
 
@@ -84,7 +84,7 @@ ssh-keygen
 
 This will generate a public and a private key, with the default location being ***~/.ssh***.
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/5.png)
+![Terminal on the laptop XPS-15-9560 running ls .ssh, which lists the generated key pair id\_rsa and id\_rsa.pub alongside authorized\_keys, config, known\_hosts and known\_hosts.old.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/5.png)
 
 We’ll now append our **public key** to the slaves’ authorized\_keys
 
@@ -108,7 +108,7 @@ IdentityFile ~/.ssh/id_rsa
 
 Now, connecting to another machine via SSH is as simple as:
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/6.png)
+![Terminal on the laptop running ssh rpi-3, which connects straight to the Raspberry Pi without a password prompt and lands at the ubuntu@rpi-3 prompt; the last login details are blanked out.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/6.png)
 
 #### Security and utility
 
@@ -126,7 +126,7 @@ function clustercmd {
 }
 ```
 
-![](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/7.png)
+![Terminal on the laptop testing the custom shell functions: otherpis prints rpi-3 and rpi-4, and clustercmd cat /etc/hostname runs the command on each Pi over SSH, returning rpi-3 and rpi-4.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/7.png)
 
 #### Conclusion
 

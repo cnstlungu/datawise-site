@@ -18,7 +18,7 @@ I'm talking about the NULL-safe operators IS DISTINCT FROM and IS NOT DISTINCT F
 
 Works on BigQuery too, so I guess less need of adding IFNULLs / COALESCE for safety.
 
-![](/images/null-safe-comparison-is-distinctnot-distinct-from/1.jpg)
+![BigQuery SQL comparing 'a' \<\> and = CAST(NULL AS STRING) with IS DISTINCT FROM and IS NOT DISTINCT FROM; the JSON result shows a\_different\_null and a\_equals\_null are null, while a\_distinct\_null is true and a\_not\_distinct\_null is false.](/images/null-safe-comparison-is-distinctnot-distinct-from/1.jpg)
 
 PS This choice of keyword "FROM", together with the one in EXTRACT(HOUR FROM DATETIME '2021-01-01'), feels pretty weird.
 

@@ -29,6 +29,6 @@ so that, as in the below example, ("Card", "Cash") and ("Cash", "Card") both pro
 
 Any interesting aggregation function that you use in your SQL dialect?
 
-![](/images/a-closer-look-at-stringagg-in-bigquery/1.jpg)
+![BigQuery SQL using STRING\_AGG(DISTINCT payment\_method, '\~' ORDER BY payment\_method) grouped by customer\_id; results are Card\~Cash\~Gift\_card for customer 1, Card\~Gift\_card for 2 and Cash\~Gift\_card for 3, with duplicates removed and values sorted.](/images/a-closer-look-at-stringagg-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

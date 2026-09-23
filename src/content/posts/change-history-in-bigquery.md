@@ -25,7 +25,7 @@ Unlike APPENDS (which works right out of the box), you need to enable change his
 To illustrate how it all works I've:  
 1️⃣ Created a table 2️⃣ Inserted a row 3️⃣ Updated a row
 
-![](/images/change-history-in-bigquery/1.jpg)
+![BigQuery SQL comparing the APPENDS and CHANGES table functions on learning.customers after enable\_change\_history = TRUE, an INSERT of George and an UPDATE SET country = 'UAE' WHERE id = 4; APPENDS returns only inserts, while CHANGES also shows Ahmed as an UPDATE (UAE) and a DELETE (Egypt).](/images/change-history-in-bigquery/1.jpg)
 
 As you will be able to see:  
 ✅ APPENDS captures new rows only.  

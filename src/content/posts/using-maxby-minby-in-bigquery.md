@@ -20,7 +20,7 @@ So, what does it do? It fetches the value from one column based on the minimum o
 
 Here's a quick example of how it works.
 
-![](/images/using-maxby-minby-in-bigquery/1.png)
+![BigQuery results of the sample employees CTE with columns first\_name, last\_name, gross\_salary and hire\_date: Jane Doe 75000 2020-01-01, Callum Blake 55000 2022-06-01, Jack Dew 77000 2019-03-01, Emily Scott 80000 2021-01-01.](/images/using-maxby-minby-in-bigquery/1.png)
 
 ```sql
 WITH employees AS (
@@ -57,7 +57,7 @@ FROM employees
 
 This would produce the following output:
 
-![](/images/using-maxby-minby-in-bigquery/2.png)
+![BigQuery result row comparing MAX\_BY and MIN\_BY with ANY\_VALUE HAVING: employee\_with\_highest\_gross\_salary and also\_employee\_with\_highest\_gross\_salary are both Emily Scott; employee\_hired\_earliest and also\_employee\_hired\_earliest are both Jack Dew.](/images/using-maxby-minby-in-bigquery/2.png)
 
 In our field, every day is a learning journey. Stay tuned for more insights on Analytics, SQL, Python and BigQuery. Follow along!
 

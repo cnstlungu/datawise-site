@@ -22,7 +22,7 @@ By comparing the total number of rows in a group against the distinct count of t
 
 This was a quick exercise but use this with care. Depending on your SQL implementation, data volumes and context, results may vary.
 
-![](/images/table-grain-quick-validation-with-sql/1.jpg)
+![BigQuery SQL checking table grain with GROUP BY ALL, comparing COUNT(FARM\_FINGERPRINT(TO\_JSON\_STRING(i))) with its COUNT(DISTINCT ...); order\_id, product\_name is an incorrect grain, while adding order\_status is correct but reveals duplicate Plums rows (count\_duplicates 2, count\_grain 1).](/images/table-grain-quick-validation-with-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

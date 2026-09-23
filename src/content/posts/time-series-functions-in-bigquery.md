@@ -18,6 +18,6 @@ We now have `DATE_BUCKET`, `DATETIME_BUCKET` and `TIMESTAMP_BUCKET` which will h
   
 In the example below, we're specifying the bucket size to be 15 minutes and the function groups each of our event\_timestamps into their respective bucket.
 
-![](/images/time-series-functions-in-bigquery/1.jpg)
+![BigQuery SQL using TIMESTAMP\_BUCKET(event\_timestamp, INTERVAL 15 MINUTE) AS event\_timestamp\_bucket; results map eight 2021-01-01 events to 15-minute buckets, for example 10:13:20 to 10:00:00, 10:22:15 to 10:15:00 and 10:59:12 to 10:45:00.](/images/time-series-functions-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

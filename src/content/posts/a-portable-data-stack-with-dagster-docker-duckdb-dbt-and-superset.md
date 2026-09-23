@@ -43,6 +43,6 @@ Eager to dive in? See the [Github repository](https://github.com/cnstlungu/porta
 
 Your insights and feedback are golden—do share! ✨
 
-![Apache Superset](/images/a-portable-data-stack-with-dagster-docker-duckdb-dbt-and-superset/1.png)
+![Apache Superset Sales dashboard from the portable data stack: Sales per region table (Eastern Europe leads at 6.56k), Sales per country world map, Channel sales evolution line chart for 2019-2020, average order size of 8.99 USD, Sales by month table and a Day of Week Trends table by city.](/images/a-portable-data-stack-with-dagster-docker-duckdb-dbt-and-superset/1.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

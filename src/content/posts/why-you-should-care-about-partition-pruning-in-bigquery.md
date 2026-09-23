@@ -22,7 +22,7 @@ There's an example below with this happening when converting the date to a diffe
 
 Check the number of rows read from the table in the examples below.
 
-![](/images/why-you-should-care-about-partition-pruning-in-bigquery/1.jpg)
+![BigQuery console execution graphs for two queries on learning.data\_source: filtering WHERE ds\_date = 2022-02-21 reads 100 records, while wrapping the partition column as DATE(TIMESTAMP(ds\_date, 'Asia/Tokyo')) = 2022-02-20 reads 399,803 records. Records read is highlighted in both.](/images/why-you-should-care-about-partition-pruning-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

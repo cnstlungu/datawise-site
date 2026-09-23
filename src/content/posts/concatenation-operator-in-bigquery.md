@@ -20,6 +20,6 @@ In fact, it's the ANSI SQL standard concatenation operator so in theory it shoul
 
 In BigQuery, it does the same thing as `CONCAT()` for STRINGs and `ARRAY_CONCAT()` for ARRAYs .
 
-![](/images/concatenation-operator-in-bigquery/1.jpg)
+![BigQuery SQL showing the || concatenation operator next to its function equivalents: joining two integer arrays with || and with ARRAY\_CONCAT both return 1 to 6, and 'Hello ' || 'World' and CONCAT('Hello ', 'World') both return Hello World.](/images/concatenation-operator-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

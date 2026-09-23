@@ -28,7 +28,7 @@ In the example below, we're going to order the results by the absolute value (AB
 
 This way, we can start our investigation from the biggest differences, regardless of which system shows 'bigger' values and also take into account missing values between the two.
 
-![](/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1.jpg)
+![BigQuery SQL comparing daily total\_sales per department in System A and System B with FULL OUTER JOIN USING (department, sales\_date) and ORDER BY ABS(IFNULL(sales\_a, 0) - IFNULL(sales\_b, 0)) DESC; shoes on 2021-01-01, missing in A, tops the list with a difference of 3000.](/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

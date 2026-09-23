@@ -90,7 +90,7 @@ FULL OUTER JOIN weekly_attributes w ON w.id = d.id and w.weekstart = d.weekstart
 
 Now, the result set will contain a (STRUCT) column called 'audit\_column', which will contain two STRUCTS - one for weekly and one for daily metadata, each with information about the date used, the event timestamp and event id that was used.
 
-![](/images/using-structs-for-audit-fields-in-bigquery/1.png)
+![BigQuery result grid with the audit\_column STRUCT expanded into daily\_metadata fields (attribute\_date, event\_timestamp, event\_id) and weekly\_metadata fields (weekstart, event\_timestamp, event\_id), e.g. attribute\_date 2023-12-22 with weekstart 2023-12-17; event\_id UUIDs are truncated.](/images/using-structs-for-audit-fields-in-bigquery/1.png)
 
 This is perhaps even better reflected when looking at the data structure.
 

@@ -22,7 +22,7 @@ We're talking about:
 \- orchestrate using MageAI  
 \- displaying it all in a Superset dashboard.
 
-![](/images/a-portable-data-analytics-stack-using-docker-mage-dbt-core-duckdb-and-superset/1.png)
+![Apache Superset Sales dashboard screenshot with a sales per region table, a sales per country map, a channel sales evolution line chart for 2019 to 2020, an average order size of 8.99 USD, sales by month and a day-of-week trends pivot by city.](/images/a-portable-data-analytics-stack-using-docker-mage-dbt-core-duckdb-and-superset/1.png)
 
 Each of the components is in a separate Docker container, tied all together with docker-compose.
 

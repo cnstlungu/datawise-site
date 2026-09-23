@@ -15,6 +15,9 @@ export default defineConfig({
       wrap: true,
     },
     processor: satteri({
+      // Keep quotes straight: SQL like WHERE category = 'fruit' in prose and alt text must stay
+      // copy-pasteable.
+      features: { smartPunctuation: false },
       hastPlugins: [hashnodeHeadingIds, imageAttributes],
     }),
   },

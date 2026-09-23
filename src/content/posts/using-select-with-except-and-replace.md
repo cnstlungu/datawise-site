@@ -23,7 +23,7 @@ Also, since `SELECT DISTINCT *` won't work when you have a `STRUCT` column, you 
 
 Let's look at an example. Say we'd like to select all the columns but exclude the Salary and modify the CustomerId.
 
-![](/images/using-select-with-except-and-replace/1.png)
+![Table of the Customers input data with columns CustomerId, Age, FirstName, LastName, Country, Salary and FirstOrderDate for four customers: John Doe (CA, 150000), Bianca Moretti (IT, 75000), Jane Springer (UK, 88000) and Michelle Dubois (FR, 78000).](/images/using-select-with-except-and-replace/1.png)
 
 Here's how the code would look:
 
@@ -39,7 +39,7 @@ FROM `learning.Customers`
 
 This would produce the following output!
 
-![](/images/using-select-with-except-and-replace/2.png)
+![Output table of SELECT \* EXCEPT(Salary) REPLACE(...) on the Customers data: the Salary column is gone and CustomerId values are rewritten as SystemA-1, SystemA-3, SystemA-4 and SystemA-2, while Age, FirstName, LastName, Country and FirstOrderDate are unchanged.](/images/using-select-with-except-and-replace/2.png)
 
 Thanks for reading!
 

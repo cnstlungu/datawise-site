@@ -27,6 +27,6 @@ Upon trying insert or update data that will violated this constraint, the statem
   
 Overall, setting the right MODE for your field helps enforce your expectations about the data that should be inserted or updated in a particular table.
 
-![](/images/the-not-null-constraint-in-bigquery/1.jpg)
+![BigQuery SQL creating learning.customers with first\_name STRING NOT NULL, the console Schema tab showing first\_name Mode REQUIRED and phone\_number NULLABLE, and an INSERT with NULL AS first\_name that fails with the error Required field first\_name cannot be null.](/images/the-not-null-constraint-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

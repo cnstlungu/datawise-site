@@ -20,7 +20,7 @@ ARRAY\_AGG allows us to aggregate multiple rows into a single array, based on a 
 
 For example, let's analyze the following input table.
 
-![](/images/using-array-agg-in-bigquery/1.png)
+![BigQuery result grid of the input orders table with columns customer\_id, order\_id and order\_total: six rows, customer 1 with orders 1001, 1002, 1003 (totals 200, 150, 50) and customer 2 with orders 2001, 2002, 2003 (totals 250, 100, 400).](/images/using-array-agg-in-bigquery/1.png)
 
 Let's say we'd like to aggregate the order data into an ARRAY of STRUCTs, grouped by customer\_id. Let's also order the resulting array decreasingly by the order\_total .
 
@@ -40,7 +40,7 @@ GROUP BY customer_id
 
 Here's how the processed data looks like:
 
-![](/images/using-array-agg-in-bigquery/2.png)
+![BigQuery result grid after ARRAY\_AGG(STRUCT(order\_id, order\_total) ORDER BY order\_total DESC): two rows, one per customer\_id, each with a nested order array sorted by total, customer 1 as 1001 (200), 1002 (150), 1003 (50) and customer 2 as 2003 (400), 2001 (250), 2002 (100).](/images/using-array-agg-in-bigquery/2.png)
 
 We can now see that instead of the 6 initial rows, we have 2 rows - 1 per customer\_id and an array of STRUCTS with order details.
 

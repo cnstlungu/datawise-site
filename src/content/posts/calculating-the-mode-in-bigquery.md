@@ -20,21 +20,21 @@ By the way, if you have a huge dataset and can bear some lack of precision, take
 
 Say we have the following input data:
 
-![](/images/calculating-the-mode-in-bigquery/1.png)
+![Input table for calculating the mode, with columns country, value and value\_date: US and UK rows twice a month from 2023-01-01 to 2023-03-15 with values 1 or 2, and empty NULL values on 2023-02-15 and 2023-03-15.](/images/calculating-the-mode-in-bigquery/1.png)
 
 Now here's how we can compute them otherwise:  
 \- filter out NULLS (if we want to ignore them) or do nothing if we want to keep them  
 \- compute value counts for our desired grain  
 \- take the most frequent one per our grain using QUALIFY + RANK
 
-![](/images/calculating-the-mode-in-bigquery/2.png)
+![BigQuery SQL computing the mode per country: SELECT country, value, COUNT(1) AS times\_seen FROM input\_data WHERE value IS NOT NULL (a comment says to remove it to include NULLs), GROUP BY country, value, then QUALIFY RANK() OVER(PARTITION BY country ORDER BY times\_seen DESC) = 1.](/images/calculating-the-mode-in-bigquery/2.png)
 
 Here's how the output would look with NULLS excluded.
 
-![](/images/calculating-the-mode-in-bigquery/3.png)
+![Mode query output with NULLs excluded, columns country, value and times\_seen: UK has mode 1 and US has mode 2, each seen 2 times.](/images/calculating-the-mode-in-bigquery/3.png)
 
 And with them included:
 
-![](/images/calculating-the-mode-in-bigquery/4.png)
+![Mode query output with NULLs included, columns country, value and times\_seen: UK returns 1 and NULL, US returns 2 and NULL, all tied at 2 occurrences, so RANK keeps two rows per country.](/images/calculating-the-mode-in-bigquery/4.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

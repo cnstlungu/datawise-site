@@ -16,7 +16,7 @@ Window functions are powerful. But they can also help us fill in missing data in
 
 Let's say you have a sensor that records temperature and humidity. Unfortunately, it is quite unreliable, so sometimes it might not send one or both readings. You'd like to retain the last known reading for a measurement.
 
-![](/images/filling-up-missing-values-with-lastvalue/1.png)
+![BigQuery console result of sensor readings with columns sensor\_id, temperature, humidity\_percentage and at\_timestamp for sensor 1: temperature is null at 00:06 and 01:33 on 2023-01-02, and humidity is null at 01:33 and 02:26.](/images/filling-up-missing-values-with-lastvalue/1.png)
 
 Here's how we can solve it:
 
@@ -46,7 +46,7 @@ FROM input_data
 ORDER BY at_timestamp
 ```
 
-![](/images/filling-up-missing-values-with-lastvalue/2.png)
+![BigQuery console result after filling gaps with LAST\_VALUE IGNORE NULLS: new columns tr\_temperature and tr\_humidity carry the last known reading forward, so the null temperatures become 27.8 and the null humidity values become 45.](/images/filling-up-missing-values-with-lastvalue/2.png)
 
 Previously, I've written [another blog post solving a similar problem](/practical-bigquery-filling-in-missing-data) by leveraging `NTH_VALUE` .
 

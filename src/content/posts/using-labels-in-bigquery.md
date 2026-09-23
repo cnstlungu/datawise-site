@@ -21,7 +21,7 @@ In the examples shared, we demonstrate how to label BigQuery jobs within a query
 1️⃣ Expense Breakdown - With labels, you can categorize your BigQuery  
 expenses by department, project, or any other segment, promoting clear billing.
 
-![](/images/using-labels-in-bigquery/1.jpg)
+![BigQuery SQL in the console: SET @@query\_label = "cost\_center:demo" labels a query on learning.data\_source, then a query on region-eu INFORMATION\_SCHEMA.JOBS with UNNEST(labels) AS label WHERE label.key = 'cost\_center' returns that job with key cost\_center, value demo and its bytes billed.](/images/using-labels-in-bigquery/1.jpg)
 
 2️⃣ Efficient Resource Handling - Recognize and handle resources based on their labels, facilitating a tidy and systematic workspace.
 

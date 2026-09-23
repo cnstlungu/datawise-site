@@ -18,6 +18,6 @@ If you like BQ errors so much that you've decided to create your own, or if you'
 
 If will raise an error that you specify whenever executed. Plus you can also combine it with FORMAT to see what was the value that generated the issue.
 
-![](/images/raising-errors-in-bigquery/1.jpg)
+![BigQuery SQL using ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)) inside WHERE IF(IFNULL(surface,0) \> 0, TRUE, ...) and in a CASE WHEN divisor to guard population/surface; the queries fail reporting surface 0 and NULL for the bad rows.](/images/raising-errors-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

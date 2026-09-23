@@ -48,7 +48,7 @@ This will show you the path of the active interpreter.
 
 P.S. Activate/deactivate scripts can do interesting things like assigning an environment variable upon activation.
 
-![](/images/using-virtual-environments-in-python/1.webp)
+![Terminal session in \~/repos/test: source .venv/bin/activate adds a (test) prompt prefix, Python 3.10.12 imports pandas and builds a DataFrame, which python points to /repos/test/.venv/bin/python, and deactivate returns to the normal prompt.](/images/using-virtual-environments-in-python/1.webp)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

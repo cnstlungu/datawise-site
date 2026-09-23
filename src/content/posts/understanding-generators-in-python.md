@@ -24,7 +24,7 @@ In short: generators are:
 \- immutable (the sequence produced cannot be modified)  
 \- single-use (you can iterate through it only once)
 
-![](/images/understanding-generators-in-python/1.jpg)
+![Python comparison: get\_first\_n\_squares\_gen(n) uses yield i \* i to produce squares lazily, consumed by a list comprehension, while get\_first\_n\_squares(n) builds a squares list with append and returns it; both print 0, 1, 4, 9, 16 for n = 5.](/images/understanding-generators-in-python/1.jpg)
 
 TL;DR When handling large, streaming or single-use collections, consider using generators. 💡
 

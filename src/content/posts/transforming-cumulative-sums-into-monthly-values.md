@@ -32,7 +32,7 @@ Things to watch out for:
 ➡️ Gaps in the data: How do they impact the calculation? Are we okay with that?  
 ➡️ Grain considerations: Do we need to do this per department? Per country? If so, adjust the PARTITION BY accordingly.
 
-![](/images/transforming-cumulative-sums-into-monthly-values/1.jpg)
+![BigQuery SQL turning cumulative fiscal-year sales into monthly values: a temp function GET\_FINANCIAL\_YEAR\_START (July to June), LAG(cumulative\_fy\_sales,1) per fiscal year, and cumulative\_fy\_sales minus IFNULL(LAG(...),0) AS current\_month\_sales; 1100 cumulative in 2021-01 becomes 300.](/images/transforming-cumulative-sums-into-monthly-values/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

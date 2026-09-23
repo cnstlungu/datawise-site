@@ -29,19 +29,19 @@ Let's see an example of them in action. Say we have the following two inputs:
 
 Input A:
 
-![Rowset A](/images/intersect-and-except-in-bigquery/1.png)
+![BigQuery result grid for input A with columns customer\_id and order\_id: three rows, customer 1 with order 1001, customer 2 with order 1002 and customer 3 with order 1003.](/images/intersect-and-except-in-bigquery/1.png)
 
 Input B:
 
-![](/images/intersect-and-except-in-bigquery/2.png)
+![BigQuery result grid for input B with columns customer\_id and order\_id: three rows, customer 1 with order 1001, customer 5 with order 1010 and customer 6 with order 1012.](/images/intersect-and-except-in-bigquery/2.png)
 
 Here's what the output of INTERSECT would look like:
 
-![](/images/intersect-and-except-in-bigquery/3.png)
+![BigQuery SQL building CTEs input\_a and input\_b from SELECT rows joined with UNION ALL, then combining SELECT customer\_id, order\_id from each with INTERSECT DISTINCT; the result has one row, customer\_id 1 and order\_id 1001, the only pair present in both inputs.](/images/intersect-and-except-in-bigquery/3.png)
 
 And EXCEPT:
 
-![](/images/intersect-and-except-in-bigquery/4.png)
+![BigQuery SQL with the same input\_a and input\_b CTEs, selecting customer\_id, order\_id from input\_b EXCEPT DISTINCT the rows of input\_a; the result has two rows, customer 5 with order 1010 and customer 6 with order 1012, the pairs found only in input\_b.](/images/intersect-and-except-in-bigquery/4.png)
 
 Thanks for reading!
 

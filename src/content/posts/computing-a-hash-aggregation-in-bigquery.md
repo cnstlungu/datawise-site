@@ -23,6 +23,6 @@ Here's how we can do it:
 \- STRING\_AGG to aggregate all the json strings into a single value per group (or the entire table)  
 \- FARM\_FINGERPRINT, a hashing function that will product the same output given only the exact same input, check my comment for more info
 
-![](/images/computing-a-hash-aggregation-in-bigquery/1.jpg)
+![BigQuery SQL computing one hash per group: FARM\_FINGERPRINT(STRING\_AGG(TO\_JSON\_STRING(t))) AS group\_hash over input\_data rows (id, event\_date, number\_value, text\_value) with GROUP BY id; the result gives a long integer group\_hash for id 1 and id 2.](/images/computing-a-hash-aggregation-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

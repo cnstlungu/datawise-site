@@ -1,0 +1,698 @@
+{
+ "/images/using-where-inside-aggregate-functions/1.png": {
+  "language": "sql",
+  "code": "SELECT\n    -- 1. No condition: include every row.\n    SUM(amount) AS total_sales,\n\n    -- 2. One condition: each aggregate selects its own category.\n    SUM(amount WHERE category = 'fruit') AS fruit_all_time_sales,\n    SUM(amount WHERE category = 'vegetable') AS vegetable_all_time_sales,\n\n    -- 3. Two conditions: restrict both category and year.\n    SUM(amount WHERE category = 'fruit' AND year = 2025) AS fruit_sales_2025,\n    SUM(amount WHERE category = 'fruit' AND year = 2026) AS fruit_sales_2026,\n\n    -- 4. IN selects several countries; AND also restricts the category.\n    SUM(amount WHERE category = 'fruit' AND country IN ('FR', 'NL')) AS fr_nl_fruit_all_time_sales,\n\n    -- 5. The same matching rows can feed different aggregates.\n    -- These four expressions all select the amounts 20 and 21.\n    SUM(amount WHERE category = 'vegetable' AND country = 'NL') AS nl_vegetable_all_time_sales,\n    MAX(amount WHERE category = 'vegetable' AND country = 'NL') AS highest_yearly_nl_vegetable_sales\nFROM sales;"
+ },
+ "/images/pre-and-post-operations-in-dataform/1.png": {
+  "language": "sqlx",
+  "code": "config {\n  type: \"incremental\",\n  uniqueKey: [\"order_id\"]\n}\n\npre_operations {\n  DECLARE max_date DATE\n  DEFAULT (\n    SELECT COALESCE(MAX(order_date), DATE('2000-01-01'))\n    FROM ${self()}\n  );\n}\n\nSELECT *\nFROM ${ref(\"orders\")}\nWHERE order_date > max_date\n\npost_operations {\n\n  -- Track every run in your audit log\n  INSERT INTO ${ref(\"pipeline_audit\")} (table_name, loaded_at)\n  VALUES (\"${self()}\", CURRENT_TIMESTAMP());\n}"
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/3.png": {
+  "language": "sql",
+  "code": "-- 1. Create the object table\nCREATE OR REPLACE EXTERNAL TABLE `learning.animals`\nWITH CONNECTION `projects/PROJECT_ID/locations/eu/connections/demo-biglake-connection`\nOPTIONS (\n  object_metadata = 'SIMPLE',\n  uris = ['gs://object-tables-demo-animals/*.jpg']\n);"
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/5.png": {
+  "language": "sql",
+  "code": "SELECT * FROM `learning.animals`"
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/6.png": {
+  "language": "sql",
+  "code": "-- 1. Create a remote model pointing at Gemini\nCREATE OR REPLACE MODEL `PROJECT_ID.learning.gemini_flash`\n  REMOTE WITH CONNECTION `projects/PROJECT_ID/locations/eu/connections/demo-biglake-connection`\n  OPTIONS (endpoint = 'gemini-2.5-flash');"
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/7.png": {
+  "language": "sql",
+  "code": "-- 2. Run inference over the object table\nSELECT\n  uri,\n  ml_generate_text_llm_result AS animal_detected\nFROM\n  ML.GENERATE_TEXT(\n    MODEL `PROJECT_ID.learning.gemini_flash`,\n    TABLE `PROJECT_ID.learning.animals`,\n    STRUCT(\n      'What animal is depicted in this image? Reply with just the animal name.' AS prompt,\n      TRUE AS flatten_json_output\n    )\n  );"
+ },
+ "/images/parameters-in-bigquery/1.png": {
+  "language": "sql",
+  "code": "SELECT\n  word,\n  word_count\nFROM\n  `bigquery-public-data.samples.shakespeare`\nWHERE\n  corpus = @corpus\n\nORDER BY\n  word_count DESC;\n\nDECLARE corpus_var STRING DEFAULT 'sonnets';\n\nSELECT\n  word,\n  word_count\nFROM\n  `bigquery-public-data.samples.shakespeare`\nWHERE\n  corpus = corpus_var\n\nORDER BY\n  word_count DESC;"
+ },
+ "/images/flattening-json-arrays-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT JSON_FLATTEN(JSON '[1, [2,3,4],[[5,6],[7,8]]]' )"
+ },
+ "/images/using-lastvalue-with-structs/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  event_date,\n  LAST_VALUE(event IGNORE NULLS) OVER (ORDER BY event_date\n                                       ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_event\nFROM cte\n\nORDER BY event_date\n\nSELECT event_date,\n    LAST_VALUE(CASE WHEN event.a IS NULL AND event.b IS NULL THEN NULL ELSE event END IGNORE NULLS)\n          OVER (ORDER BY event_date\n                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_event_struct,\n\n    LAST_VALUE(NULLIF(TO_JSON_STRING(event),'{\"a\":null,\"b\":null}') IGNORE NULLS)\n          OVER (ORDER BY event_date\n                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_event_json,\n\n    LAST_VALUE(CASE WHEN NOT REGEXP_CONTAINS(TO_JSON_STRING(event), r':(true|false|\"|[0-9\\-]|\\[|\\{)') THEN NULL ELSE event END IGNORE NULLS)\n          OVER (ORDER BY event_date\n                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS last_known_event_regex\n\nFROM cte"
+ },
+ "/images/table-grain-quick-validation-with-sql/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\n  order_id,\n  product_name,\n  COUNT(FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_duplicates,\n  COUNT(DISTINCT FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_grain\n\nFROM input_data i\n\nGROUP BY ALL\n\nHAVING count_duplicates > 1 OR count_grain > 1\n\nSELECT\n\n  order_id,\n  product_name,\n  order_status,\n  COUNT(FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_duplicates,\n  COUNT(DISTINCT FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_grain\n\nFROM input_data i\n\nGROUP BY ALL\n\nHAVING count_duplicates > 1 OR count_grain > 1"
+ },
+ "/images/with-expressions-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "-- WITH clause\nWITH input_data AS (\n  SELECT 1 AS product_id, 5 AS quantity, 100 AS base_price, 0.15 AS discount_rate, 0.21 AS tax_rate\n  UNION ALL\n  SELECT 2 AS product_id, 3 AS quantity, 80 AS base_price, 0.12 AS discount_rate, 0.21 AS tax_rate\n  UNION ALL\n  SELECT 3 AS product_id, 2 AS quantity, 75 AS base_price, 0.10 AS discount_rate, 0.21 AS tax_rate\n)\n\n\n\n--WITH expression\nSELECT\n\nproduct_id,\n\nWITH(\n  discounted_price AS base_price * (1 - discount_rate), -- variable 1\n  price_incl_tax AS discounted_price * (1 + tax_rate), -- variable 2\n  quantity * price_incl_tax) AS sales_amount           -- result\n\n\nFROM input_data"
+ },
+ "/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH anchor_dates AS (\n\nSELECT id, valid_from AS valid_date FROM input_data\nUNION DISTINCT\nSELECT id, valid_to AS valid_date FROM input_data),\n\ndate_ranges AS (\nSELECT\n  id,\n  valid_date AS valid_from,\n  LEAD(valid_date) OVER (PARTITION BY id ORDER BY valid_date) AS valid_to\nFROM anchor_dates\n)\n\nSELECT\n  dr.id,\n  dr.valid_from,\n  dr.valid_to,\n  ARRAY_AGG(STRUCT(dt.key, dt.value)) AS attributes\n\nFROM date_ranges dr\nLEFT JOIN input_data dt ON dr.id = dt.id  AND dr.valid_from < dt.valid_to AND dr.valid_to > dt.valid_from\n\nWHERE dr.valid_to IS NOT NULL\n\nGROUP BY dr.id,  dr.valid_from, dr.valid_to\n\nORDER BY id,  valid_from"
+ },
+ "/images/cross-dataset-foreign-key-relationships-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "CREATE OR REPLACE TABLE `learning.order_lines` AS\n\nSELECT 1001 AS order_id, 1 AS product_id UNION ALL\nSELECT 1002 AS order_id, 2 AS product_id UNION ALL\nSELECT 1003 AS order_id, 3 AS product_id;\n\nALTER TABLE `learning.order_lines` ADD PRIMARY KEY(order_id, product_id) NOT ENFORCED;\n\nALTER TABLE `learning.order_lines` ADD FOREIGN KEY(product_id) REFERENCES `auxiliary.products`(id) NOT ENFORCED;\n\nCREATE OR REPLACE TABLE `auxiliary.products` AS\n\nSELECT 1 AS id, 'Apple' AS product_name UNION ALL\nSELECT 2 AS id, 'Pear' AS product_name UNION ALL\nSELECT 3 AS id, 'Mango' AS product_name;\n\n\nALTER TABLE `auxiliary.products` ADD PRIMARY KEY(id) NOT ENFORCED;"
+ },
+ "/images/compacting-date-intervals-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH prepare_output AS (\n  SELECT\n    product_id,\n    country_name,\n    valid_from,\n    valid_to,\n    flag_a,\n    flag_b,\n    FARM_FINGERPRINT(CONCAT(TO_JSON_STRING(flag_a),\n                            TO_JSON_STRING(flag_b))) AS hash_val\n  FROM input_data\n),\nprepare_segments AS (\n  SELECT\n    product_id,\n    country_name,\n    valid_from,\n    valid_to,\n    flag_a,\n    flag_b,\n    CASE WHEN LAG(hash_val) OVER country_item = hash_val AND\n              valid_from = LAG(valid_to) OVER country_item\n         THEN 0 ELSE 1  END AS is_new_segment\n  FROM prepare_output\n  WINDOW country_item AS (PARTITION BY product_id, country_name\n                          ORDER BY valid_from)\n),\ndefine_segments AS (\n  SELECT\n    product_id,\n    country_name,\n    valid_from,\n    valid_to,\n    flag_a,\n    flag_b,\n    SUM(is_new_segment) OVER (PARTITION BY product_id, country_name\n                              ORDER BY valid_from\n                              ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n                              ) AS segment_id\n  FROM prepare_segments\n)\nSELECT\n  product_id,\n  country_name,\n  MIN(valid_from) AS valid_from,\n  MAX(valid_to) AS valid_to,\n  ANY_VALUE(flag_a) AS flag_a,\n  ANY_VALUE(flag_b) AS flag_b\nFROM define_segments\nGROUP BY product_id, country_name, segment_id"
+ },
+ "/images/null-safe-comparison-is-distinctnot-distinct-from/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  'a' <> CAST(NULL AS STRING) AS a_different_null,\n  'a' = CAST(NULL AS STRING) AS a_equals_null,\n  'a' IS DISTINCT FROM CAST(NULL AS STRING) AS a_distinct_null,\n  'a' IS NOT DISTINCT FROM CAST(NULL AS STRING) AS a_not_distinct_null"
+ },
+ "/images/transforming-cumulative-sums-into-monthly-values/1.jpg": {
+  "language": "sql",
+  "code": "-- computes the start of the respective financial year\n-- (July 1st -> June 30th), given a date\nCREATE TEMP FUNCTION GET_FINANCIAL_YEAR_START(input_date DATE)\nRETURNS DATE\nAS (\nDATE(IF(EXTRACT(MONTH FROM input_date) >= 7,\n     EXTRACT(YEAR FROM input_date),\n     EXTRACT(YEAR FROM input_date) - 1), 7, 1)\n);\n\nSELECT\n\n  month_start_date,\n\n  -- computes the first day of the fiscal year\n  GET_FINANCIAL_YEAR_START(month_start_date) AS fiscal_year_start,\n\n  cumulative_fy_sales,\n\n\n  -- retrieves the previous month's cumulative sales\n  LAG(cumulative_fy_sales,1) OVER (PARTITION BY GET_FINANCIAL_YEAR_START(month_start_date)\n                                   ORDER BY month_start_date) AS previous_cumulative_sales,\n\n  -- calculates the sales for this particular month\n  cumulative_fy_sales - IFNULL(LAG(cumulative_fy_sales,1) OVER (PARTITION BY GET_FINANCIAL_YEAR_START(month_start_date)\n                                                                ORDER BY month_start_date),0) AS current_month_sales\n\nFROM input_data"
+ },
+ "/images/a-quick-walkthrough-bigquery-remote-functions/1.png": {
+  "language": "python",
+  "code": "    try:\n        # Read request JSON (BigQuery sends input in \"calls\" array)\n        request_json = request.get_json()\n        calls = request_json.get(\"calls\", [])\n\n        responses = []  # This will store the results\n\n        today = datetime.date.today()\n        year = today.year\n\n        for call in calls:\n            try:\n                country_code = call[0].upper()  # Extract country_code from input\n                country_holidays = holidays.country_holidays(country_code, years=[year, year + 1])\n\n                # Find the next upcoming holiday\n                next_holiday = next(\n                    ((str(date), name) for date, name in sorted(country_holidays.items()) if date >= today),\n                    None\n                )\n\n                if next_holiday:\n                    response = f\"Next holiday is on {next_holiday[0]} and is called {next_holiday[1]}\"\n                else:\n                    response = f\"No upcoming holidays found for {country_code} in {year}.\"\n\n            except KeyError:\n                response = f\"Error: Invalid or unsupported country code: {call[0]}\"\n\n            responses.append(response)\n\n        return jsonify({\"replies\": responses})  # Send the list of replies\n\n    except Exception as e:\n        return jsonify({\"errorMessage\": str(e)})"
+ },
+ "/images/a-quick-walkthrough-bigquery-remote-functions/5.png": {
+  "language": "sql",
+  "code": "CREATE FUNCTION learning.get_next_public_holidays(country_code STRING) RETURNS STRING\n\nREMOTE WITH CONNECTION `YOUR_PROJECT.eu.test-bigquery-connection`\n\nOPTIONS (endpoint = 'https://YOUR_ENDPOINT_URL.europe-west1.run.app')"
+ },
+ "/images/a-quick-walkthrough-bigquery-remote-functions/6.png": {
+  "language": "sql",
+  "code": "WITH input AS (\n\n  SELECT 'RO' AS country_code UNION ALL\n  SELECT 'BE' AS country_code UNION ALL\n  SELECT 'VN' AS country_code\n)\n\nSELECT country_code, learning.get_next_public_holidays(country_code)\n\n\nFROM input"
+ },
+ "/images/change-history-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "INSERT learning.customers\n\nSELECT 9 AS id,\n       'George' AS first_name,\n       'Matthews' AS last_name,\n       'Australia' AS country;\n\nUPDATE learning.customers\n\nSET country = 'UAE'\n\nWHERE id = 4;\n\nALTER TABLE learning.customers SET OPTIONS (enable_change_history = TRUE);\n\nSELECT * FROM APPENDS (\n  TABLE `learning.customers`,\n  TIMESTAMP '2025-03-06 14:06:45',\n  CURRENT_TIMESTAMP())\n\nSELECT * FROM CHANGES (\n  TABLE `learning.customers`,\n  TIMESTAMP '2025-03-06 14:06:45',\n  TIMESTAMP '2025-03-06 14:11:00') -- needs to be >10 minutes before NOW\n  ORDER BY _CHANGE_TIMESTAMP"
+ },
+ "/images/a-quick-overview-of-bigquery-functions/1.png": {
+  "language": "sql",
+  "code": "CREATE TEMP FUNCTION double_minus_five(x NUMERIC)\nAS (\n  x*2-5\n);\nSELECT double_minus_five(val) AS results FROM UNNEST([1,2,3,4,5]) val;\n\n-- +---------+\n-- | results |\n-- +---------+\n-- | -3      |\n-- | -1      |\n-- | 1       |\n-- | 3       |\n-- | 5       |\n-- +---------+\n\n\nCREATE TEMP AGGREGATE FUNCTION sum_only_even(val NUMERIC)\nRETURNS NUMERIC\nAS (\n  SUM(CASE WHEN MOD(val, 2) = 0 THEN val ELSE 0 END)\n);\n\nSELECT sum_only_even(val) FROM UNNEST([1,2,3,4,5]) val;\n\n-- 6\n\n\nCREATE TABLE FUNCTION learning.get_top_cities(country_code STRING)\nAS (\n\nSELECT city_name, population FROM\n(\n    -- USA\n    SELECT 'US' AS country, 'New York' AS city_name, 10000000 AS population UNION ALL\n    SELECT 'US', 'Los Angeles', 4000000 UNION ALL\n    SELECT 'US', 'Chicago', 2700000 UNION ALL\n    -- France\n    SELECT 'FR', 'Paris', 2200000 UNION ALL\n    SELECT 'FR', 'Marseille', 870000 UNION ALL\n    SELECT 'FR', 'Lyon', 520000\n) data WHERE  data.country =  country_code\n\n);\n\nSELECT * FROM learning.get_top_cities('FR')\n\n-- +-----------+------------+\n-- | city_name | population |\n-- +-----------+------------+\n-- | Paris     | 2200000    |\n-- | Marseille | 870000     |\n-- | Lyon      | 520000     |\n-- +-----------+------------+"
+ },
+ "/images/expressing-multiple-repeated-joins-as-a-correlated-subquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  nd.product_id,\n  nd.subcategory,\n  nd.category,\n  COALESCE(cap.average_qty,\n           cas.average_qty,\n           cac.average_qty,\n           ct.average_qty) AS average_qty\n\nFROM new_data nd\nLEFT JOIN calculated_averages cap ON nd.product_id = cap.product_id --per product\nLEFT JOIN calculated_averages cas ON nd.subcategory = cas.subcategory AND\n                                     cas.product_id IS NULL --per subcategory\nLEFT JOIN calculated_averages cac ON nd.category = cac.category AND\n                                     cac.subcategory IS NULL --per category\nLEFT JOIN calculated_averages ct ON ct.category IS NULL --for all products\n\nSELECT\n  nd.product_id,\n  (SELECT ca.average_ordered_quantity\n   FROM calculated_averages ca\n   WHERE\n      (nd.product_id = ca.product_id)\n      OR (nd.subcategory = ca.subcategory AND ca.product_id IS NULL)\n      OR (nd.category = ca.category AND ca.subcategory IS NULL)\n      OR (ca.category IS NULL)\n   ORDER BY\n      CASE\n        WHEN nd.product_id = ca.product_id THEN 1\n        WHEN nd.subcategory = ca.subcategory AND ca.product_id IS NULL THEN 2\n        WHEN nd.category = ca.category AND ca.subcategory IS NULL THEN 3\n        ELSE 4\n      END\n   LIMIT 1) AS average_ordered_quantity\n\nFROM new_data nd"
+ },
+ "/images/revisiting-group-by-rollup-with-a-more-realistic-example/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  category,\n  subcategory,\n  product_id,\n  ROUND(AVG(quantity),2) AS average_qty\n\nFROM sales_data\n\nGROUP BY ROLLUP (category, subcategory, product_id)\n\nSELECT\n  nd.product_id,\n  nd.subcategory,\n  nd.category,\n  COALESCE(cap.average_qty,\n           cas.average_qty,\n           cac.average_qty,\n           ct.average_qty) AS average_qty\n\nFROM new_data nd\nLEFT JOIN calculated_averages cap ON nd.product_id = cap.product_id --per product\nLEFT JOIN calculated_averages cas ON nd.subcategory = cas.subcategory AND\n                                     cas.product_id IS NULL --per subcategory\nLEFT JOIN calculated_averages cac ON nd.category = cac.category AND\n                                     cac.subcategory IS NULL --per category\nLEFT JOIN calculated_averages ct ON ct.category IS NULL --for all products"
+ },
+ "/images/a-closer-look-at-stringagg-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH customer_data AS\n(\n  SELECT 1 AS customer_id, 1001 AS order_id, 'Card' AS payment_method\n  UNION ALL\n  SELECT 1 AS customer_id, 1002 AS order_id, 'Cash' AS payment_method\n  UNION ALL\n  SELECT 1 AS customer_id, 1003 AS order_id, 'Gift_card' AS payment_method\n  UNION ALL\n  SELECT 1 AS customer_id, 1004 AS order_id, 'Card' AS payment_method\n  UNION ALL\n  SELECT 2 AS customer_id, 2001 AS order_id, 'Gift_card' AS payment_method\n  UNION ALL\n  SELECT 2 AS customer_id, 2002 AS order_id, 'Card' AS payment_method\n  UNION ALL\n  SELECT 2 AS customer_id, 2003 AS order_id, 'Card' AS payment_method\n  UNION ALL\n  SELECT 3 AS customer_id, 3001 AS order_id, 'Cash' AS payment_method\n  UNION ALL\n  SELECT 3 AS customer_id, 3002 AS order_id, 'Gift_card' AS payment_method\n)\nSELECT\n  customer_id,\n  STRING_AGG(DISTINCT payment_method, '~' ORDER BY payment_method) AS payment_method_agg\nFROM customer_data\nGROUP BY customer_id"
+ },
+ "/images/heres-a-great-use-case-for-genai-writing-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH RECURSIVE combinations AS (\n  -- Base case: Start with each element as a single combination\n  SELECT\n      element,\n      CAST(element AS STRING) AS combination,\n      1 AS size\n  FROM UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS element\n\n  UNION ALL\n\n  -- Recursive case: Add elements to existing combinations\n  SELECT\n      e AS element,\n      CONCAT(c.combination, ',', e) AS combination,\n      c.size + 1 AS size\n  FROM combinations c\n  CROSS JOIN UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS e\n  WHERE e > SPLIT(c.combination, ',')[\n      OFFSET(c.size - 1)\n  ] -- Ensure uniqueness and order\n)\nSELECT combination\nFROM combinations\nORDER BY size, combination;"
+ },
+ "/images/using-exists-with-logicalor-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 1 AS order_id, '2021-01-01' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL\n  SELECT 1 AS order_id, '2021-01-02' AS update_date, [0,0,0,0,1]  AS indicators UNION ALL\n  SELECT 1 AS order_id, '2021-01-03' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL\n  SELECT 1 AS order_id, '2021-01-04' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL\n  SELECT 1 AS order_id, '2021-01-05' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL\n  SELECT 2 AS order_id, '2021-01-06' AS update_date, [9,9,9,9,9]  AS indicators\n),\n\ncompute_flags AS (\n\nSELECT\n  order_id,\n  EXISTS(SELECT indicator FROM UNNEST(indicators) as indicator WHERE indicator = 1) AS flag_was_true\nFROM\n  input_data id)\n\n SELECT\n  order_id,\n  LOGICAL_OR(flag_was_true) AS order_had_flag\n\n FROM compute_flags\n\n GROUP BY order_id"
+ },
+ "/images/extended-data-type-support-for-bigquery-search-indexes/1.jpg": {
+  "language": "sql",
+  "code": "CREATE SEARCH INDEX `test_index`\n\nON `auxiliary.sample_logs`(event_details, json_payload)\n\nOPTIONS (data_types = ['STRING', 'INT64', 'TIMESTAMP'])\n\nSELECT table_name, index_name, ddl, coverage_percentage, analyzer\nFROM auxiliary.INFORMATION_SCHEMA.SEARCH_INDEXES\nWHERE index_status = 'ACTIVE';"
+ },
+ "/images/sometimes-you-have-to-use-subqueries/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n  SELECT 1 AS order_id, TRUE AS payment_error, FALSE AS fulfilment_error, TRUE AS delivery_error UNION ALL\n  SELECT 2 AS order_id, FALSE AS payment_error, FALSE AS fulfilment_error, FALSE AS delivery_error UNION ALL\n  SELECT 3 AS order_id, FALSE AS payment_error, TRUE AS fulfilment_error, NULL AS delivery_error UNION ALL\n  SELECT 4 AS order_id, TRUE AS payment_error, TRUE AS fulfilment_error, NULL AS delivery_error\n)\n\nSELECT\n\n  order_id,\n  ARRAY(\n    SELECT error_type\n\n    FROM (\n        SELECT payment_error AS has_error, \"Payment\" AS error_type\n        UNION ALL\n        SELECT delivery_error AS has_error, \"Delivery\" AS error_type\n        UNION ALL\n        SELECT fulfilment_error AS has_error, \"Fulfilment\" AS error_type\n    ) errors\n\n    WHERE has_error\n  ) AS errors\n\nFROM input_data"
+ },
+ "/images/not-all-nulls-are-the-same/1.jpg": {
+  "language": "sql",
+  "code": "--No matching signature for operator != for argument types: INT64, STRING. Supported signature: ANY != ANY at [4:8]\n\n--SELECT CAST(NULL AS INT64) <> CAST(NULL AS STRING)\n\n\n\n-- If not specified, the NULL is considered an INT\nCREATE OR REPLACE TABLE `learning.my_table` AS\nSELECT NULL AS my_column;\n\n--null\nSELECT my_column <> CAST(NULL AS INT64) FROM learning.my_table;"
+ },
+ "/images/extracting-keys-from-json-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "DECLARE json_data  DEFAULT JSON  \"\"\"\n      {\"name\": \"John Doe\",\n      \"city\": \"New York\",\n      \"sports\": [{\"name\": \"football\", \"since\": 2020, \"club\": \"Liberty FC\"},\n                 {\"name\": \"snooker\", \"since\": 2019, \"club\": \"Snooker Champions\"},\n                 {\"name\": \"tennis\", \"since\": 2015, \"club\":\"Tennis Stars\"}\n                ]\n      }\n  \"\"\";\n\nSELECT JSON_KEYS(json_data, mode => 'lax') AS json_keys"
+ },
+ "/images/computing-a-hash-aggregation-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 1 AS id , DATE '2021-01-01' AS event_date, 10 AS number_value, NULL AS text_value UNION ALL\n  SELECT 1 AS id, DATE '2021-01-02' AS event_date, 11 AS number_value, 'def' AS text_value UNION ALL\n  SELECT 1 AS id, DATE '2021-01-03' AS event_date, 12 AS number_value, 'fgh' AS text_value UNION ALL\n  SELECT 2 AS id , DATE '2021-01-03' AS event_date, 8 AS number_value, 'lmn' AS text_value UNION ALL\n  SELECT 2 AS id, DATE '2021-01-04' AS event_date, 8 AS number_value, 'opq' AS text_value UNION ALL\n  SELECT 2 AS id, DATE '2021-01-05' AS event_date, NULL AS number_value, 'rst' AS text_value\n)\nSELECT\n\n  id,\n  FARM_FINGERPRINT(STRING_AGG(TO_JSON_STRING(t))) AS group_hash\n\nFROM input_data t\n\nGROUP BY id"
+ },
+ "/images/another-look-at-anyvalue-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS\n(\n  SELECT 1 AS order_id, 'Banana' AS product_id, 7.00 AS price, '2024-01-01' AS best_before_date\n  UNION ALL\n  SELECT 1 AS order_id, 'Mango' AS product_id, 8.00 AS price, '2024-01-10' AS best_before_date\n  UNION ALL\n  SELECT 2 AS order_id, 'Pears' AS product_id, 10.00 AS price, '2024-01-05' AS best_before_date\n),\n\nprocessing AS (\n\n  SELECT order_id, product_id, price, product_id = 'Banana' AS is_banana, best_before_date FROM input_data\n)\n\nSELECT\n  order_id,\n  ANY_VALUE(product_id HAVING MAX price ) AS most_expensive_product,\n  ANY_VALUE(product_id HAVING MIN is_banana) AS any_product_except_banana,\n  ANY_VALUE(product_id HAVING MIN best_before_date) AS first_expiring_product\nFROM processing\nGROUP BY order_id"
+ },
+ "/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1.png": {
+  "language": "sql",
+  "code": "SELECT *\nFROM `learning.orders_per_store` s\nJOIN `learning.order_amounts_unpartitioned` a\nUSING (order_id)\n\nSELECT *\nFROM `learning.orders_per_store` s\nJOIN `learning.order_amounts` a\nUSING (order_date, order_id)\n\nSELECT *\nFROM `learning.orders_per_store` s\nJOIN `learning.order_amounts` a\nUSING (order_id)"
+ },
+ "/images/using-rangebucket-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  num,\n  RANGE_BUCKET(num,[0,5,10,20,100]) AS bucket\nFROM\n  UNNEST([-1,2,5,9,10,14,14,15,40,NULL]) AS num"
+ },
+ "/images/calculating-the-median-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  1 AS id,\n  PERCENTILE_CONT(x, 0.5 IGNORE NULLS) OVER() AS median_cont,\n  PERCENTILE_DISC(x, 0.5 IGNORE NULLS) OVER() AS median_disc\nFROM\n  UNNEST([1,2,2,3,4,NULL]) as x\nLIMIT 1;\n\nSELECT\n  1 AS id,\n  APPROX_QUANTILES(value, 100)[OFFSET(50)] AS median\nFROM UNNEST([1,2,2,3,4,NULL]) AS value\nGROUP BY id"
+ },
+ "/images/dynamically-extracting-json-data-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 1 AS id, '{\"key_1\":\"1\", \"key_3\":\"3\"}' AS data UNION ALL\n  SELECT 2 AS id, '{\"key_99\":\"2\", \"key_4\":\"4\"}' AS data\n)\nSELECT\n  id,\n  REGEXP_EXTRACT(kv, r'\\s*([^:]+)\\s*') AS key,\n  NULLIF(REGEXP_EXTRACT(kv, r':\\s*(.*)\\s*'), 'null') AS value\nFROM input_data t\nLEFT JOIN UNNEST(SPLIT(REGEXP_REPLACE(data, r'[{}\"]', ''))) kv;"
+ },
+ "/images/using-tempfile-module-in-python/1.jpg": {
+  "language": "python",
+  "code": "import tempfile\nimport os\n\nwith tempfile.NamedTemporaryFile(mode='w+t') as temp_file:\n    temp_file.write('Hello world!')\n    print(f\"Temporary file created at {temp_file.name}\")\n# Temporary file created at /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmp8nqm3qa1\n\n\nwith tempfile.TemporaryFile(mode='w+t') as temp_file:\n    temp_file.write('Hello world!')\n    temp_file.seek(0)\n    content = temp_file.read()\n    print(f'Content of the file: {content}')\n# Content of the file: Hello world!\n\n\nwith tempfile.TemporaryDirectory() as temp_dir:\n    print(f\"Temporary directory created at: {temp_dir}\")\n    temp_file_path = os.path.join(temp_dir, 'tempfile.txt')\n    with open(temp_file_path, 'w') as temp_file:\n        temp_file.write(\"Hello, World!\")\n        print(temp_file.name)\n        print(f\"Temporary file created at {temp_file.name}\")\n# Temporary directory created at: /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmp4yh5u33m\n# Temporary file created at /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmprgxjwmsj/tempfile.txt"
+ },
+ "/images/a-quick-look-at-the-json-module-in-python/1.jpg": {
+  "language": "python",
+  "code": "import json\n\n# Loading JSON data\n\nobject_from_json_string = json.loads('{\"a\":1, \"b\":2, \"c\":[1,2,3]}')\n# <class 'dict'> {'a': 1, 'b': 2, 'c': [1, 2, 3]}\n\nobject_from_file = json.load(open('data.json'))\n# <class 'dict'> {'users': [{'id': 1, 'name': 'John Doe', 'email': 'johndoe@example.com'},\n#                           {'id': 2, 'name': 'Jane Smith', 'email': 'janesmith@example.com'},\n#                           {'id': 3, 'name': 'Bob Johnson', 'email': 'bobjohnson@example.com'}]}\n\n\n# Exporting (dumping) JSON data\n\na_dict = {'x': 1, 'y': 2, 'z': [1,2,3] }\n\njson_string = json.dumps(a_dict)\n# <class 'str'> {\"x\": 1, \"y\": 2, \"z\": [1, 2, 3]}\n\njson.dump(a_dict, open('exported_data.json', 'w'))"
+ },
+ "/images/retrying-in-python-using-tenacity/1.jpg": {
+  "language": "python",
+  "code": "import random\nfrom datetime import datetime, timezone\nfrom tenacity import retry, retry_if_exception_type, wait_exponential\n\n\n@retry(retry=retry_if_exception_type(IOError),\n       wait=wait_exponential(multiplier=2, min=4, max=12))\ndef retrieve_data():\n    print(f\"{datetime.now(timezone.utc)}: running ...\")\n    if random.randint(0, 10) > 1:\n        print(\"An error has occurred.\")\n        raise IOError(\"Something went wrong.\")\n    else:\n        print(\"All good!\")\n\nretrieve_data()"
+ },
+ "/images/sortedlist-vs-listsorted-in-python/1.jpg": {
+  "language": "python",
+  "code": "numbers = [2,3,1,4,5,5]\n\nprint(sorted(numbers))\n# returns a new, sorted list\n# [1, 2, 3, 4, 5, 5]\n\nprint(numbers)\n# the original list was not affected\n# [2, 3, 1, 4, 5, 5]\n\nnumbers.sort()\n# sorts the original list in-place\n\nprint(numbers)\n# check that the original list is sorted\n# [1, 2, 3, 4, 5, 5]"
+ },
+ "/images/using-virtual-environments-in-python/1.webp": {
+  "language": "bash",
+  "code": "source .venv/bin/activate\npython\n>>> import pandas as pd\n>>> pd.DataFrame([{'a':1, 'b':2}])\n>>> exit()\nwhich python\ndeactivate"
+ },
+ "/images/installing-python-packages-with-pip/1.jpg": {
+  "language": "python",
+  "code": "import pandas as pd\n\ndata = [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}]\n\ndf = pd.DataFrame(data)\n\ndf.head()\n\nnumpy==2.0.0\npandas==2.2.2\npython-dateutil==2.9.0.post0\npytz==2024.1\nsix==1.16.0\ntzdata==2024.1"
+ },
+ "/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH alerts_aggregated AS (\n\n  SELECT city_id, ARRAY_AGG(STRUCT(alert_name, valid_from, valid_to)) AS alerts\n\n  FROM weather_alerts\n\n  GROUP BY city_id\n),\n\ncompute_event_weather_flags AS (\n\nSELECT\n\n  event_name,\n  event_date,\n\n  (\n  SELECT\n\n    STRUCT(\n      COUNTIF( ABS(DATE_DIFF(event_date, alert.valid_to, DAY)) <= 7 ) AS had_alert_before_or_after,\n      COUNTIF(alert.alert_name = 'Heatwave Alert' AND\n              alert.valid_to BETWEEN  DATE_SUB(event_date, INTERVAL 7 DAY) AND event_date) > 0 AS had_heatwave_prior,\n      COUNT(DISTINCT CASE WHEN alert.valid_to BETWEEN  DATE_SUB(event_date, INTERVAL 365 DAY) AND event_date THEN alert_name END) AS count_alert_type_year_prior\n    )\n  FROM UNNEST(aa.alerts) AS alert\n  ) AS event_weather_flags\n\nFROM events e\nFULL OUTER JOIN alerts_aggregated aa USING (city_id)\n)\n\nSELECT\n  event_name,\n  event_date,\n  event_weather_flags.had_alert_before_or_after,\n  event_weather_flags.had_heatwave_prior,\n  event_weather_flags.count_alert_type_year_prior\n\nFROM compute_event_weather_flags"
+ },
+ "/images/query-parameters-in-bigquery/1.jpg": {
+  "language": "bash",
+  "code": "bq query --use_legacy_sql=false \\\n--parameter=input_value:INT64:1 \\\n--parameter=input_date:DATE:2020-12-18 \\\n'SELECT id FROM learning.data_source WHERE value=@input_value AND ds_date=@input_date'"
+ },
+ "/images/system-variables-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT ds_date,\n       COUNT(DISTINCT value) AS count_values\n\nFROM `learning.data_source`\n\nGROUP BY ds_date;\n\nSELECT\n  @@project_id AS project_id,\n  @@script.slot_ms AS script_slot_ms,\n  @@script.bytes_billed AS script_bytes_billed,\n  @@script.creation_time AS script_creation_time"
+ },
+ "/images/ingestion-time-partitioning-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "CREATE OR REPLACE TABLE learning.weather_measurements (location_id INT64,\n                                                       location_name STRING,\n                                                       temperature NUMERIC,\n                                                       humidity INT64 )\nPARTITION BY DATE(_PARTITIONTIME);\n\n\n\nINSERT INTO learning.weather_measurements(location_id, location_name, temperature, humidity)\n\nSELECT 1, 'New York', NUMERIC '25.4', 65;\n\nSELECT 2, 'Rome', NUMERIC '34.2', 27;\n\nSELECT 3, 'Madrid', NUMERIC '23.1', 41;\n\nSELECT *, _PARTITIONDATE, _PARTITIONTIME FROM `learning.weather_measurements`"
+ },
+ "/images/declare-and-set-variables-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "DECLARE start_timestamp DEFAULT CURRENT_TIMESTAMP(); -- declare with default value, implicit type\n\nDECLARE fruits DEFAULT (\n  SELECT [STRUCT('apple' AS name, 'sweet' AS taste  ), STRUCT('lemon','sour')]\n); --- declare with implicit type from subquery\n   --- ARRAY<STRUCT<STRING name, STRING taste>>\n\nDECLARE another_timestamp TIMESTAMP; -- declare with explicit type\n\nDECLARE a, b, c DEFAULT 0; -- declare multiple values at once with a single default\n\nSET another_timestamp = TIMESTAMP '2021-01-01 17:00:00'; -- set a previous declared variable\n\n\nSELECT start_timestamp, another_timestamp, fruits;"
+ },
+ "/images/comments-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH orderline_updates AS (\n\n  SELECT 1 AS order_id, 'Apples' AS product, 10 AS quantity, '2021-01-01 12:00:12' AS last_updated UNION ALL\n  SELECT 1 AS order_id, 'Grapes' AS product, 3 AS quantity, '2021-01-01 12:00:12' AS last_updated UNION ALL\n  SELECT 2 AS order_id, 'Mangoes' AS product, 1 AS quantity, '2021-01-02 10:00:19' AS last_updated UNION ALL\n  SELECT 2 AS order_id, 'Kiwi' AS product, 6 AS quantity, '2021-01-03 12:24:33' AS last_updated\n)\n-- single line comment, taking the entire line\n\nSELECT\n  order_id, -- inline comment\n  product, # also an inline comment\n  quantity /* also an inline comment, but you can write code after it */ AS total_quantity,\n  last_updated\n/*\ncomment spanning multiple lines:\na multi-line comment\n*/\nFROM orderline_updates"
+ },
+ "/images/non-equi-joins-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  o.order_id,\n  o.order_date,\n  c.name AS campaign_name,\n  o.amount AS list_price_amount,\n  d.discount_percentage,\n  (1-discount_percentage)*amount AS paid_amount\nFROM orders o\nJOIN campaign c ON o.order_date BETWEEN c.valid_from AND c.valid_to\nJOIN discounts d ON o.amount >= value_from AND o.amount < value_to"
+ },
+ "/images/lax-json-conversion-functions-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "DECLARE json_data ARRAY<JSON> DEFAULT\n[\n JSON '{\"name\": \"apple\", \"pack_size\": 4, \"price\": \"7.1\",\"type\": \"pome fruit\", \"is_local\": \"TRUE\", \"is_sweet\": 1 }',\n JSON '{\"name\": \"lemon\", \"pack_size\": 5, \"price\": \"12.5\", \"type\": \"citrus\", \"is_local\": \"false\", \"is_sweet\": 0 }',\n JSON '{\"name\": \"orange\",\"pack_size\": 3, \"price\": \"9.99\", \"type\": \"citrus\", \"is_local\": \"\", \"is_sweet\": 1}'\n];\n\nSELECT\n  LAX_STRING(fruit.name) AS fruit_name,\n  LAX_BOOL(fruit.is_sweet) AS is_sweet,\n  LAX_BOOL(fruit.is_local) AS is_local,\n  LAX_FLOAT64(fruit.price) AS price,\n  LAX_INT64(fruit.pack_size) AS pack_size\n\nFROM UNNEST(json_data) AS fruit"
+ },
+ "/images/determining-json-types-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "DECLARE json_data  DEFAULT JSON\n\"\"\"\n[\n {\"city\": \"New York\", \"age\": 25,\"name\": \"John Doe\", \"registered_footballer\": true },\n {\"city\": \"London\", \"age\": 21, \"name\": \"Jane Dew\", \"registered_footballer\": false},\n {\"city\": \"Berlin\", \"age\": 30, \"name\": \"Joanna Dow\", \"registered_footballer\": true},\n {\"city\": \"Prague\", \"age\": 28, \"name\": \"Johann Duw\", \"registered_footballer\": false}\n]\n\"\"\";\n\nSELECT\n\n  JSON_TYPE(json_data), -- array,\n  JSON_TYPE(json_data[0]), -- object,\n  JSON_TYPE(json_data[0].name), -- string,\n  JSON_TYPE(json_data[0].age), -- number,\n  JSON_TYPE(json_data[0].registered_footballer) --boolean"
+ },
+ "/images/natural-join-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH stores AS (\nSELECT 1 AS store_id, 'Flagship store - NY' AS store_name UNION ALL\nSELECT 2 AS store_id, 'Main St. - LA' AS store_name UNION ALL\nSELECT 3 AS store_id, 'Michigan Ave. - Chicago' AS store_name ),\n\nemployees AS (\nSELECT 1 AS employee_id, 1 AS store_id UNION ALL\nSELECT 2 AS employee_id, 2 AS store_id UNION ALL\nSELECT 3 AS employee_id, 3 AS store_id\n)\n\nSELECT employee_id, store_id, store_name\nFROM stores\nNATURAL JOIN employees"
+ },
+ "/images/semi-joins-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH products AS (\n  SELECT 1 AS product_id, 'Cherries' AS product_name UNION ALL\n  SELECT 2 AS product_id, 'Tomatoes' AS product_name UNION ALL\n  SELECT 3 AS product_id, 'Squash' AS product_name\n),\n\norders AS (\n  SELECT 1001 AS order_id, 1 AS product_id, 3 AS quantity UNION ALL\n  SELECT 1001 AS order_id, 2 AS product_id, 4 AS quantity UNION ALL\n\n  SELECT 1002 AS order_id, 1 AS product_id, 4 AS quantity UNION ALL\n  SELECT 1002 AS order_id, 2 AS product_id, 1 AS quantity)\n\n\nSELECT * FROM products p\n\nWHERE EXISTS (\n\nSELECT 1\n    FROM orders o\n    WHERE p.product_id = o.product_id\n\n)"
+ },
+ "/images/anti-joins-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH product_details AS (\n  SELECT 1 AS product_id, 'shoes' AS product_name   UNION ALL\n  SELECT 2 AS product_id, 'hat' AS product_name     UNION ALL\n  SELECT 3 AS product_id, 'jacket' AS product_name  UNION ALL\n  SELECT 4 AS product_id, 'sweater' AS product_name\n),\nprices AS (\n  SELECT 1 AS product_id, 100 AS price UNION ALL\n  SELECT 2 AS product_id, 30 AS price  UNION ALL\n  SELECT 3 AS product_id, 90 AS price\n)\n\nSELECT pd.product_id, pd.product_name, p.price\nFROM product_details pd\nLEFT JOIN prices p ON pd.product_id = p.product_id\nWHERE p.product_id IS NULL"
+ },
+ "/images/self-joins-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  emp.employee_id,\n  emp.name AS employee_name,\n  man.employee_id AS manager_id,\n  man.name AS manager_name\n\nFROM employees emp\n\nLEFT JOIN employees man ON emp.manager_id = man.employee_id"
+ },
+ "/images/the-relationship-between-arrayagg-and-unnest/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  customer_id,\n  ARRAY_AGG(STRUCT(order_id,\n                   product)) AS orders\nFROM unnested_data\nGROUP BY customer_id\n\nSELECT\n  customer_id,\n  _order.order_id,\n  _order.product\nFROM array_data\nLEFT JOIN UNNEST(orders) AS _order"
+ },
+ "/images/a-couple-of-fun-things-about-null-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH source_a AS (\n\n  SELECT 1 AS order_id, 'UK' AS country\n  UNION ALL\n  SELECT 2 AS order_id, 'US' AS country\n  UNION ALL\n  SELECT NULL AS order_id, 'FR' AS country\n),\nsource_b AS (\n\n  SELECT 1 AS order_id, 'apples' AS product\n  UNION ALL\n  SELECT 2 AS order_id, 'peaches' AS product\n  UNION ALL\n  SELECT NULL AS order_id, 'grapes' AS products\n\n)\nSELECT\norder_id, country, product\n\nFROM source_a\nFULL OUTER JOIN source_b USING(order_id)"
+ },
+ "/images/float-vs-numeric-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n    SELECT\n        CAST(0.1 AS FLOAT64) AS float_a,\n        CAST(0.2 AS FLOAT64) AS float_b\n)\n\nSELECT\n    float_a + float_b AS float_sum,\n    CAST('NaN' AS FLOAT64) AS not_a_number_float,\n    CAST('-inf' AS FLOAT64) AS minus_infinity,\n    CAST('inf' AS FLOAT64) AS plus_infinity\nFROM input_data"
+ },
+ "/images/the-partitions-view-in-informationschema/1.jpg": {
+  "language": "sql",
+  "code": "SELECT * EXCEPT(table_catalog)\nFROM `learning.INFORMATION_SCHEMA.PARTITIONS`\n\nWHERE table_name = 'data_source'\n\nORDER BY last_modified_time DESC"
+ },
+ "/images/heres-how-group-by-works-differently-across-sql-dialects/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  ISNULL(country, 'N/A') AS country,\n  SUM(amount) AS total_amount\nFROM input_data\nGROUP BY ISNULL(country, 'N/A')\n\nSELECT\n  ISNULL(country, 'N/A') AS country,\n  SUM(amount) AS total_amount\nFROM input_data\nGROUP BY country\n\nSELECT\n  IFNULL(country, 'N/A') AS country,\n  SUM(amount) AS total_amount\nFROM input_data\nGROUP BY country\n\nSELECT\n  IFNULL(country, 'N/A') AS country,\n  SUM(amount) AS total_amount\nFROM input_data\nGROUP BY IFNULL(country, 'N/A')"
+ },
+ "/images/controlling-ordering-of-null-values-in-the-order-by-clause/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n  SELECT 1 AS order_id, 100 AS order_amount, 'Customer 1' AS customer_id UNION ALL\n  SELECT 2 AS order_id, 50 AS order_amount, 'Customer 2' AS customer_id UNION ALL\n  SELECT 3 AS order_id, NULL AS order_amount, 'Customer 3' AS customer_id UNION ALL\n  SELECT 4 AS order_id, 90 AS order_amount, 'Customer 4' AS customer_id UNION ALL\n  SELECT 5 AS order_id, NULL AS order_amount, 'Customer 5' AS customer_id UNION ALL\n  SELECT 6 AS order_id, 90 AS order_amount, 'Customer 6' AS customer_id\n\n)\nSELECT order_id, order_amount, customer_id\n\nFROM input_data\n\nORDER BY order_amount DESC NULLS FIRST"
+ },
+ "/images/joining-with-using-vs-on-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  o.order_id,\n  product_id,\n  variant,\n  o.country_code,\n  o.quantity,\n  p.color,\n  p.size\n\nFROM orders o\n\nLEFT JOIN products p USING (product_id, variant)\n\nSELECT\n  o.order_id,\n  o.product_id,\n  o.variant,\n  o.country_code,\n  o.quantity,\n  p.color,\n  p.size\n\nFROM orders o\n\nLEFT JOIN products p ON o.product_id = p.product_id AND\n                        o.variant = p.variant"
+ },
+ "/images/another-look-at-logicaland-logicalor-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  customer_id,\n  LOGICAL_AND(is_paid) AS all_orders_paid,\n  LOGICAL_OR(NOT is_shipped) AS outstanding_orders,\n  LOGICAL_OR(product_id = 'olives' AND\n             order_date > DATE_SUB(CURRENT_DATE(),\n                                   INTERVAL 3 MONTH)) AS ordered_olives_last_3_months\nFROM input_data\n\nGROUP BY customer_id"
+ },
+ "/images/the-first-thing-i-do-when-analyzing-a-sql-table/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  is_paid IS NULL AS is_paid_null,\n  product_id IS NULL AS product_id_null,\n  COUNT(1) AS occurences\nFROM input_data\nGROUP BY ALL"
+ },
+ "/images/how-limit-helps-you-save-time-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n    order_id,\n    COUNT(1) AS times_seen\nFROM input_data\n\nGROUP BY order_id\n\nHAVING COUNT(1) > 1\n\nLIMIT 10;"
+ },
+ "/images/combining-anyvalue-with-having-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n  SELECT 1 AS order_id, 'apples' AS order_line\n  UNION ALL\n  SELECT 1 AS order_id, 'pears' AS order_line\n  UNION ALL\n  SELECT 1 AS order_id, 'grapes' AS order_line\n  UNION ALL\n  SELECT 2 AS order_id, 'grapes' AS order_line\n  UNION ALL\n  SELECT 3 AS order_id, 'oranges' AS order_line\n  UNION ALL\n  SELECT 4 AS order_id, 'kiwi' AS order_line\n)\n\nSELECT\n  order_id,\n  COUNT(order_line) AS count_order_lines,\n  ANY_VALUE(order_line) AS product_name\n\nFROM input_data\n\nGROUP BY order_id\n\nHAVING COUNT(order_line) = 1 AND\n       ANY_VALUE(order_line) IN ('grapes', 'oranges')"
+ },
+ "/images/using-the-bq-cli-utility-with-bigquery/1.jpg": {
+  "language": "bash",
+  "code": "bq query --use_legacy_sql=false \"SELECT * FROM learning.employee_data\""
+ },
+ "/images/why-you-should-use-parentheses-with-and-or-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 1 AS order_id, TRUE AS is_paid, FALSE AS is_shipped, TRUE AS customer_is_on_contract, TRUE AS is_first_time_buyer\n  UNION ALL\n  SELECT 2 AS order_id, FALSE AS is_paid, TRUE AS is_shipped, TRUE AS customer_is_on_contract, TRUE AS is_first_time_buyer\n  UNION ALL\n  SELECT 3 AS order_id, FALSE AS is_paid, FALSE AS is_shipped, TRUE AS customer_is_on_contract, FALSE AS is_first_time_buyer\n)\n\nSELECT *\n\nFROM input_data\n\nWHERE\n      --is_paid AND is_shipped OR customer_is_on_contract AND is_first_time_buyer\n      --resolved as:\n     (is_paid AND is_shipped) OR (customer_is_on_contract AND is_first_time_buyer)"
+ },
+ "/images/the-not-null-constraint-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "CREATE OR REPLACE TABLE learning.customers (id INT64 NOT NULL,\n                                            first_name STRING NOT NULL,\n                                            last_name STRING NOT NULL,\n                                            phone_number STRING );\n\nINSERT INTO `learning.customers`\n\nSELECT 1 AS id, 'John' AS first_name, 'Doe' AS last_name, '555-12345' AS phone_number\n\nUNION ALL\n\nSELECT 2 AS id, NULL AS first_name, 'Doe' AS last_name, '555-12345' AS phone_number"
+ },
+ "/images/generating-a-random-number-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_options AS (\n  SELECT\n    ARRAY_AGG(CONCAT('Option ', id)) AS available_options, -- Generate ARRAY of Options [Option1 ... Option20]\n  FROM UNNEST(GENERATE_ARRAY(1, 20,1)) AS id\n),\n\nparticipants AS (\n  SELECT participant_id FROM UNNEST(GENERATE_ARRAY(1,100,1)) AS participant_id -- Generate 100 participants\n)\n\n\nSELECT\n  participants,\n  available_options[OFFSET(CAST(ARRAY_LENGTH(available_options)*RAND()-0.5 AS INT64))] AS selected_option --pick a random option for each participant\nFROM participants\nCROSS JOIN input_options"
+ },
+ "/images/using-subqueries-with-row-level-security-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "CREATE ROW ACCESS POLICY us_uk_policy ON `learning.customer_data`\n\nGRANT TO ('serviceAccount:test-rowlevel-security@<redacted>.iam.gserviceaccount.com')\n\nFILTER USING (country IN ('US', 'UK'));\n\nCREATE ROW ACCESS POLICY us_uk_policy ON `learning.customer_data`\n\nGRANT TO ('serviceAccount:test-rowlevel-security@<redacted>.iam.gserviceaccount.com')\n\nFILTER USING (country IN (\n    SELECT\n      country\n    FROM\n      `<redacted>.learning.lookup_table`\n    LEFT JOIN UNNEST(country_list) AS country\n    WHERE\n      user_principal = SESSION_USER()));"
+ },
+ "/images/the-order-in-which-you-round-matters-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n  SELECT 1.2 AS quantity, 'UK' AS country\n  UNION ALL\n  SELECT 1.4 AS quantity, 'UK' AS country\n  UNION ALL\n  SELECT 2.2 AS quantity, 'UK' AS country\n  UNION ALL\n  SELECT 1.8 AS quantity, 'US' AS country\n  UNION ALL\n  SELECT 1.5 AS quantity, 'US' AS country\n  UNION ALL\n  SELECT 2.6 AS quantity, 'US' AS country\n)\n\nSELECT\n  country,\n  SUM(ROUND(quantity,0)) AS sum_rounded_quantities, -- rounds, them sums\n  ROUND(SUM(quantity),0) AS round_sum_of_quantities -- sums, then rounds\n\nFROM input_data\n\nGROUP BY country"
+ },
+ "/images/order-of-precedence-in-sql-where-vs-having/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  country,\n  SUM(quantity) AS quantity\n\nFROM input_data\n\nGROUP BY country\n\nHAVING quantity > 0\n\nSELECT\n  country,\n  SUM(quantity) AS quantity\n\nFROM input_data\n\nWHERE quantity > 0\n\nGROUP BY country"
+ },
+ "/images/transactions-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "BEGIN\n\n  BEGIN TRANSACTION;\n  -- ALL OR NOTHING: Operations inside transaction happen successfully as a whole,\n  -- or are being rolled back to previous state\n  INSERT INTO learning.some_table\n    VALUES (1, 'New York', 'USA');\n\n  -- An operation that produces an error.\n  SELECT ERROR(\"Some VERY unexpected error\");\n  COMMIT TRANSACTION;\n\nEXCEPTION WHEN ERROR THEN\n  -- Rollback the transaction and the changes happening inside it\n  SELECT @@error.message;\n  ROLLBACK TRANSACTION;\nEND;"
+ },
+ "/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  order_id,\n  event_ts AS second_to_last_order_update_ts,\n  order_status\n\nFROM input_data\n\nWHERE order_status = 'order_updated'\n\nQUALIFY ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY event_ts DESC) = 2\n\nORDER BY second_to_last_order_update_ts DESC"
+ },
+ "/images/using-gapsfill-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  dates.transaction_date\n\nFROM GAP_FILL (\n  TABLE learning.dates_with_gaps,\n  'transaction_date',\n  INTERVAL 1 DAY\n) dates\n\nWITH bounds AS (\n  SELECT\n    MIN(transaction_date) AS start_date,\n    MAX(transaction_date) AS end_date\n  FROM `learning.dates_with_gaps`\n)\n\nSELECT filled_date AS transaction_date\nFROM bounds\nJOIN UNNEST(GENERATE_DATE_ARRAY(start_date, end_date, INTERVAL 1 DAY)) AS filled_date\nLEFT JOIN `learning.dates_with_gaps` dates ON filled_date = dates.transaction_date"
+ },
+ "/images/time-series-functions-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  event_id,\n  event_timestamp,\n  TIMESTAMP_BUCKET(event_timestamp, INTERVAL 15 MINUTE) AS event_timestamp_bucket\n\nFROM input_data"
+ },
+ "/images/json-datatype-vs-json-like-string-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "DECLARE native_json DEFAULT  JSON\n\"\"\"\n{\"key\": \"value\"}\n\"\"\"\n;\n\nDECLARE json_formatted_string STRING DEFAULT \"{\\\"key\\\": \\\"value\\\"\";\n\n\n\nSELECT\n  JSON_VALUE(native_json, '$.key') AS value_from_native,\n  JSON_VALUE(json_formatted_string, '$.key') AS value_from_json_like_string"
+ },
+ "/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  department,\n  sales_date,\n  a.total_sales AS sales_a,\n  b.total_sales AS sales_b,\n  ABS(IFNULL(a.total_sales, 0) - IFNULL(b.total_sales, 0)) AS difference\n\nFROM sales_system_a a\nFULL OUTER JOIN sales_system_b b USING (department, sales_date)\n\nORDER BY ABS(IFNULL(sales_a, 0) - IFNULL(sales_b, 0)) DESC"
+ },
+ "/images/the-json-datatype-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\nSELECT\n\n  JSON \"\"\"\n      {\"name\": \"John Doe\",\n      \"city\": \"New York\",\n      \"sports\": [\"football\", \"snooker\", \"tennis\"]}\n  \"\"\"\n  AS json_native,\n\n  \"{\\\"name\\\": \\\"John Doe\\\", \\\"city\\\": \\\"New York\\\", \\\"sports\\\": [\\\"football\\\", \\\"snooker\\\", \\\"tennis\\\"]}\" AS json_string,\n\n  \"John Doe\" AS name,\n  \"New York\" AS city,\n  [\"football\", \"snooker\", \"tennis\"] AS sports\n)\n\nSELECT\n  json_native,\n  PARSE_JSON(json_string) AS parsed_json_from_string,\n  TO_JSON(STRUCT(name, city, sports)) AS json_from_key_values,\n  JSON_OBJECT('name', name, 'city', city, 'sports', sports) AS json_object_from_key_value_pairs,\n  JSON_ARRAY(sports) AS json_array_from_array\n\nFROM  input_data"
+ },
+ "/images/sessionuser-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT SESSION_USER()"
+ },
+ "/images/concatenation-operator-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\n  [1,2,3] || [4,5,6] AS  concat_array ,\n\n  ARRAY_CONCAT([1,2,3],[4,5,6]) AS  also_concat_array ,\n\n  'Hello ' || 'World' AS concat_string,\n\n  CONCAT('Hello ', 'World') AS also_concat_string"
+ },
+ "/images/using-formatdate-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH schedule AS (\n  SELECT 'MON' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time\n    UNION ALL\n  SELECT 'TUE' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time\n    UNION ALL\n  SELECT 'WED' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time\n    UNION ALL\n  SELECT 'THU' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time\n    UNION ALL\n  SELECT 'FRI' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time\n    UNION ALL\n  SELECT 'SAT' AS day, TIME '11:00:00' AS opening_time, TIME '20:00:00' AS closing_time\n    UNION ALL\n  SELECT 'SUN' AS day, TIME '11:00:00' AS opening_time, TIME '16:00:00' AS closing_time\n),\ndates AS (\n  SELECT calendar_date FROM UNNEST(GENERATE_DATE_ARRAY(DATE '2023-04-01', DATE '2023-04-30')) AS calendar_date\n)\nSELECT\n  calendar_date,\n  FORMAT_DATE('%a', d.calendar_date) AS day_of_week,\n  s.day,\n  s.opening_time,\n  s.closing_time\nFROM dates d\nJOIN schedule s ON UPPER(FORMAT_DATE('%a', d.calendar_date)) = s.day"
+ },
+ "/images/raising-errors-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT population/surface AS population_density\nFROM input_data\nWHERE IF(IFNULL(surface,0) > 0,\n         TRUE,\n         ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)));\n\nSELECT population / CASE WHEN IFNULL(surface,0) > 0 THEN surface\n                    ELSE ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)) END AS population_density\n\nFROM input_data"
+ },
+ "/images/cleaning-up-strings-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT '' AS city --empty string\nUNION ALL\nSELECT ' ' AS city --whitespace\nUNION ALL\nSELECT 'New York' AS city\nUNION ALL\nSELECT 'Athens' AS city\nUNION ALL\nSELECT ' New York' AS city --whitespace before\nUNION ALL\nSELECT 'New York ' AS city -- whitespace after\nUNION ALL\nSELECT NULL AS city       -- NULL value\n\nSELECT DISTINCT city FROM input_data\n\nSELECT DISTINCT NULLIF(TRIM(city),'') AS city FROM input_data"
+ },
+ "/images/using-instr-in-bigquery/1.png": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 1 AS user_id, 'apple,grapes,melon' AS fruits\n  UNION ALL\n  SELECT 2 AS user_id, 'pear;mango;kiwi'\n  UNION ALL\n  SELECT 3 AS user_id, 'banana'\n)\n\nSELECT\n\n  user_id,\n  fruits,\n  INSTR(fruits,',') AS comma_first_position,\n  INSTR(fruits,';') AS semicolon_first_position,\n\n  CASE WHEN INSTR(fruits,';') > 0 THEN SPLIT(fruits,',')\n       ELSE SPLIT(fruits,',') END AS fruits_array,\n\nFROM input_data"
+ },
+ "/images/cross-dataset-foreign-key-referencing-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "ALTER TABLE learning.data_source ADD PRIMARY KEY (id, ds_date) NOT ENFORCED,\nADD FOREIGN KEY(id) references auxiliary.ids(id) NOT ENFORCED;\n\nCREATE OR REPLACE TABLE `learning.ids` CLONE `auxiliary.ids`;\n\n\nALTER TABLE `learning.ids` ADD PRIMARY KEY (id) NOT ENFORCED;\n\nALTER TABLE learning.data_source ADD PRIMARY KEY (id, ds_date) NOT ENFORCED,\n\nADD FOREIGN KEY(id) REFERENCES learning.ids(id) NOT ENFORCED;"
+ },
+ "/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  'Joe Doe' AS name,\n  [90, 58, 50, 100] AS grades,\n  ['gluten','milk', 'eggs'] AS allergies\n\nSELECT\n  name,\n  grade,\n  food_allergy\nFROM input_data\n\nLEFT JOIN UNNEST(grades) AS grade\nLEFT JOIN UNNEST(allergies) AS food_allergy"
+ },
+ "/images/using-structs-for-quick-analysis-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 'Catie Doe' AS name, 'UK' AS country, false AS has_paid, 'Premium' AS plan, 'TV' AS service\n  UNION ALL\n  SELECT 'Martin Bekker' AS name, 'DE' AS country, true AS has_paid, 'Premium' AS plan, 'TV' AS service\n  UNION ALL\n  SELECT 'Jerry Taylor' AS name, 'US' AS country, true AS has_paid, 'Basic' AS plan, 'Internet' AS service\n  UNION ALL\n  SELECT 'Francesca Duchamp' AS name, 'FR' AS country, false AS has_paid, 'Basic' AS plan, 'Internet' AS service\n  UNION ALL\n  SELECT 'Paolo Rossi' AS name, 'IT' AS country, true AS has_paid, 'Premium' AS plan, 'Internet' AS service\n)\n\nSELECT name, country, has_paid, plan, service FROM input_data\n\n-- Retrive UK customers on a TV Premium Plan or FR customers on Internet Basic plan that haven't paid yet\n\nWHERE STRUCT(country, has_paid, plan, service) IN (STRUCT('UK', FALSE, 'Premium', 'TV'),\n                                                   STRUCT('FR', FALSE, 'Basic', 'Internet'))\n\n--- alternative to:\n-- WHERE\n\n-- (country = 'FR' AND plan='Basic' AND NOT has_paid AND service = 'Internet') OR\n-- (country = 'UK' AND plan='Premium' AND NOT has_paid AND service = 'TV')"
+ },
+ "/images/understanding-structs-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "CREATE OR REPLACE TABLE `learning.customer_data` AS\n\nSELECT\n\n  \"Joe\" AS first_name,\n\n  \"Doe\" AS last_name,\n\n  STRUCT('New York' AS city,\n         'Wall St.' AS street_name,\n         '9A' AS street_number ) AS address,\n\n  ['guitar', 'piano', 'saxophone'] AS instruments,\n\n  [STRUCT('Certified Football coach' AS name,\n          DATE '2021-01-01' AS from_date ),\n   STRUCT('Certified Golf Instructor' AS name,\n          DATE '2022-02-01' AS from_date )] AS certifications"
+ },
+ "/images/comparing-tables-with-full-outer-join/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\n  COUNTIF (prod.term IS NULL AND dev.term IS NOT NULL) AS cnt_missing_prod,\n  COUNT (DISTINCT CASE WHEN prod.term IS NULL AND dev.term IS NOT NULL THEN dev.term END) AS distinct_terms_missing_from_prod,\n\n  COUNTIF (dev.term IS NULL AND prod.term IS NOT NULL) AS cnt_missing_dev,\n  COUNT (DISTINCT CASE WHEN dev.term IS NULL AND prod.term IS NOT NULL THEN prod.term END) AS distinct_terms_missing_from_dev,\n\n  COUNT(1) AS total_rows,\n  COUNT(DISTINCT COALESCE(prod.term, dev.term)) AS total_distinct_terms,\n\n  COUNTIF(FARM_FINGERPRINT(TO_JSON_STRING(prod))  <> FARM_FINGERPRINT(TO_JSON_STRING(dev))) AS rows_different\n\n\nFROM `learning_us.trends_us_prod` prod\n\nFULL OUTER JOIN `learning_us.trends_us_dev` dev ON prod.refresh_date = dev.refresh_date AND\n                                                  prod.week = dev.week AND\n                                                  prod.dma_id = dev.dma_id AND\n                                                  prod.term = dev.term"
+ },
+ "/images/splitting-a-string-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  SPLIT('a, b, c', ', ')[0] AS first_element,\n  SPLIT('a, b, c', ', ')[1] AS second_element,\n  SPLIT('a, b, c', ', ')[2] AS third_element"
+ },
+ "/images/extract-all-pattern-occurrences-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT  \"\"\"Occurences on 2021-01-01, 2021-01-02, 2021-01-03, 2021-01-04\"\"\" AS raw_data\n)\n\nSELECT\n  REGEXP_EXTRACT_ALL(raw_data, r'\\d{4}-\\d{2}-\\d{2}') AS extracted_dates\nFROM input_data"
+ },
+ "/images/why-you-should-use-union-distinct-sparingly/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  dma_name AS region_name,\n  term,\n  week,\n  score,\n  rank,\n  refresh_date,\n  'US' AS country_code\nFROM `bigquery-public-data.google_trends.top_terms` --US terms\n\nUNION DISTINCT\n\nSELECT\n  region_name,\n  term,\n  week,\n  score,\n  rank,\n  refresh_date,\n  country_code\nFROM `bigquery-public-data.google_trends.international_top_terms` --international terms excl US\n\nSELECT\n  dma_name AS region_name,\n  term,\n  week,\n  score,\n  rank,\n  refresh_date,\n  'US' AS country_code\nFROM `bigquery-public-data.google_trends.top_terms` --US terms\n\nUNION ALL\n\nSELECT\n  region_name,\n  term,\n  week,\n  score,\n  rank,\n  refresh_date,\n  country_code\nFROM `bigquery-public-data.google_trends.international_top_terms` --international terms excl US"
+ },
+ "/images/order-by-expressions-in-sql/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 'US' AS country, 100 AS sales, 'direct' AS channel\n  UNION ALL\n  SELECT 'US' AS country, 125 AS sales, 'partners' AS channel\n  UNION ALL\n  SELECT 'FR' AS country, 170 AS sales, 'direct' AS channel\n  UNION ALL\n  SELECT 'FR' AS country, 200 AS sales, 'partners' AS channel\n  UNION ALL\n  SELECT 'IT' AS country, 150 AS sales, 'direct' AS channel\n  UNION ALL\n  SELECT 'IT' AS country, 100 AS sales, 'partners' AS channel\n)\n\nSELECT\n  country,\n  sales,\n  channel\nFROM input_data\n\nORDER BY CASE WHEN channel = 'direct' THEN 1 ELSE 0 END DESC, sales DESC"
+ },
+ "/images/accessing-array-elements-in-bigquery/1.png": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n\n  SELECT ['a','b','c','d','e'] AS letters\n)\n\nSELECT\n\n  letters[ORDINAL(2)] AS second_with_ordinal, -- 1 based\n\n  letters[1]  second_with_index, -- 0-based\n\n  letters[OFFSET(1)] second_with_offest, --0-based\n\n  letters[SAFE_OFFSET(5)]  AS sixth_with_safe_offset, -- 0-based, safe: returns NULL when out of bounds\n\n  letters[SAFE_ORDINAL(6)] AS sixth_with_safe_ordinal -- 1-based, safe: returns NULL when out of bounds\n\nFROM input_data"
+ },
+ "/images/enumerating-array-elements-in-bigquery-using-with-offset/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT 1 AS customer_id, 100 AS order_id, 'order_created' AS event_type, TIMESTAMP '2021-01-01 10:00:00' AS event_time\n  UNION ALL\n  SELECT 1 AS customer_id, 100 AS order_id, 'order_paid' AS event_type, '2021-01-01 10:01:05' AS event_time\n  UNION ALL\n  SELECT 1 AS customer_id, 100 AS order_id, 'order_shipped' AS event_type, '2021-01-01 18:30:00' AS event_time\n  UNION ALL\n  SELECT 2 AS customer_id, 200 AS order_id, 'order_created' AS event_type, TIMESTAMP '2021-02-01 11:01:00' AS event_time\n  UNION ALL\n  SELECT 2 AS customer_id, 200 AS order_id, 'order_paid' AS event_type, '2021-02-01 11:01:45' AS event_time\n  UNION ALL\n  SELECT 2 AS customer_id, 200 AS order_id, 'order_shipped' AS event_type, '2021-02-01 14:35:00' AS event_time\n), nested_data AS (\nSELECT\n  customer_id,\n  order_id,\n  ARRAY_AGG(event_type ORDER BY event_time) AS status_updates\nFROM input_data\nGROUP BY customer_id, order_id)\n\nSELECT customer_id, order_id, status_update, offset\n\nFROM nested_data\n\nLEFT JOIN UNNEST(status_updates) AS status_update\n\nWITH OFFSET AS offset"
+ },
+ "/images/unnesting-arrays-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  member,\n  activity.name AS activity_name,\n  activity.registered_on AS activity_registered_on\n\nFROM input_data\nLEFT JOIN UNNEST(activities) AS activity"
+ },
+ "/images/boolean-data-type-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT\n    1 AS val_a,\n    2 AS val_b\n),\n\nbool_flags AS (\n  SELECT\n    val_a,\n    val_b,\n    val_b > val_a AS is_val_b_higher\n  FROM\n    input_data\n)\n\nSELECT val_a, val_b , is_val_b_higher\n\nFROM bool_flags\n\nWHERE is_val_b_higher\n\nWITH input_data AS (\n  SELECT\n    1 AS val_a,\n    2 AS val_b\n),\n\nbool_flags AS (\n  SELECT\n    val_a,\n    val_b,\n    --   val_b > val_a AS is_val_b_higher -- NOT POSSIBLE, ERROR\n  CAST(IIF(val_b > val_a, 1, 0) AS BIT) AS is_val_b_higher\n\n  FROM\n    input_data\n)\n\nSELECT val_a, val_b , is_val_b_higher\n\nFROM bool_flags\n\nWHERE\n    --is_val_b_higher -- ALSO NOT POSSIBLE, ERROR\n    is_val_b_higher = 1"
+ },
+ "/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n  SELECT\n    CAST(NULL AS STRING) AS value_a,\n    CAST(NULL AS STRING) AS value_b,\n    'default value' AS default_value,\n    '' AS maybe_empty_string\n)\n\nSELECT\n\n  IFNULL(value_a, default_value) AS ifnull_example, --if a IS NULL then another value\n  COALESCE(value_a, value_b, default_value) AS coalesce_example, --first non-null value among multiple options (if any)\n  NULLIF(maybe_empty_string, '') AS nullif_example, -- replaces a value with a NULL\n\nFROM input_data"
+ },
+ "/images/greatest-least-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n\n  SELECT 10 AS val_a, 20 AS val_b, 30 AS val_c\n)\n\nSELECT\n\nGREATEST(val_a, val_b) AS highest,\n\nIF(val_a>=val_b, val_a, val_b) AS also_highest,\n\nLEAST(val_a, val_b) AS lowest,\n\nIF(val_a <= val_b, val_a, val_b) AS also_lowest,\n\nGREATEST(val_a, val_b, val_c) AS greatest_of_all\n\nFROM input_data"
+ },
+ "/images/range-data-type-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS (\n  SELECT\n    RANGE(DATE '2021-01-01', DATE'2021-04-01') AS range_a,\n    RANGE(DATE '2021-03-01', DATE'2021-09-01') AS range_b,\n    RANGE(DATE '2021-02-01', DATE'2021-03-01') AS range_c\n)\n\nSELECT\n\n  range_a,\n  range_b,\n  range_c,\n  RANGE_OVERLAPS(range_a, range_b) AS do_ranges_a_b_overlap,\n  RANGE_INTERSECT(range_a, range_b) AS ranges_a_b_intersection,\n  RANGE_START(range_a) AS range_a_start,\n  RANGE_END(range_a) AS range_a_end,\n  RANGE_CONTAINS(range_a, range_c) AS range_a_contains_c,\n  RANGE_CONTAINS(range_a, '2021-01-15') AS range_a_contains_date\n\nFROM input_data"
+ },
+ "/images/delete-insert-vs-merge-in-bigquery/1.png": {
+  "language": "sql",
+  "code": "DELETE FROM learning.data_source WHERE ds_date >= \"2023-09-02\";\nINSERT INTO learning.data_source\nSELECT * FROM learning.data_source_staging;\n\nMERGE `learning.data_source` AS t\nUSING `learning.data_source_staging` AS s ON t.id = s.id AND t.ds_date = s.ds_date\nWHEN NOT MATCHED THEN INSERT (id,value,ds_date) VALUES(id,value,ds_date)\nWHEN MATCHED THEN UPDATE SET t.value = s.value"
+ },
+ "/images/calculating-the-mode-in-bigquery/2.png": {
+  "language": "sql",
+  "code": "SELECT country, value, COUNT(1) AS times_seen\n\nFROM input_data\n\n-- comment this if you want to include NULLS\nWHERE value IS NOT NULL\n\nGROUP BY country, value\n\nQUALIFY RANK() OVER(PARTITION BY country\n                    ORDER BY times_seen DESC) = 1"
+ },
+ "/images/watch-out-when-using-safecast-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP)\n\nSELECT SAFE_CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP)"
+ },
+ "/images/generating-date-intervals-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\n  valid_date\n\nFROM UNNEST(GENERATE_DATE_ARRAY('2021-01-01', '2021-01-31', INTERVAL 1 DAY)) AS valid_date"
+ },
+ "/images/datetime-vs-timestamp-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\nCURRENT_DATETIME('Europe/Bucharest') AS local_time_bucharest,\n\nCURRENT_DATETIME('America/New_York') AS local_time_new_york,\n\nCURRENT_TIMESTAMP() AS utc_timestamp,\n\nTIMESTAMP(CURRENT_DATETIME('America/New_York'),'America/New_York') AS\ntimestamp_converted_from_datetime,\n\nDATETIME( CURRENT_TIMESTAMP(), 'Europe/Bucharest') AS bucharest_datetime_from_timestamp"
+ },
+ "/images/using-range-in-window-functions-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n  athlete_name,\n  finish_time,\n  birth_year,\n  AVG(finish_time) OVER (ORDER BY birth_year\n                         RANGE BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS neighbours_average,\n  AVG(finish_time) OVER (ORDER BY birth_year\n                         ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS neighbours_average_wrong\nFROM input_data"
+ },
+ "/images/computing-a-cumulative-sum-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\ncustomer_id,\norder_id,\norder_total,\norder_date,\n\nSUM(order_total) OVER (PARTITION BY customer_id\n                       ORDER BY order_date\n                       ROWS BETWEEN UNBOUNDED PRECEDING\n                                    AND CURRENT ROW) AS cumulative_sum\n\nFROM input_data"
+ },
+ "/images/decorators-in-python/1.jpg": {
+  "language": "python",
+  "code": "def polite(function):\n    def wrapper():\n            print('Dear passengers!')\n            original_output = function()\n            print(f'Please {original_output}')\n            print('Thank you for traveling with us!')\n    return wrapper\n\n@polite\ndef issue_offboarding_warning():\n    return \"mind the gap between the train and the platform.\"\n\n@polite\ndef issue_platform_warning():\n    return \"maintain a safe distance from the edge of the platform.\"\n\n\nissue_offboarding_warning()\n# Dear passengers!\n# Please mind the gap between the train and the platform.\n# Thank you for traveling with us!\n\nissue_platform_warning()\n# Dear passengers!\n# Please maintain a safe distance from the edge of the platform.\n# Thank you for traveling with us!"
+ },
+ "/images/using-countif-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SELECT\n\n  country,\n  COUNTIF(Salary > 80000)  AS count_salaries_over_80k\n\nFROM `learning.Customers`\n\nGROUP BY country"
+ },
+ "/images/partial-functions-in-python/1.jpg": {
+  "language": "python",
+  "code": "from functools import partial\n\n# Raises the number to a power\ndef power(base, exponent):\n    return base ** exponent\n\n# Making specialized versions for squaring and cubing\nsquare = partial(power, exponent = 2)\n\ncube = partial(power, exponent = 3)\n\nprint(square(5))  # Output: 25\n\nprint(cube(5))    # Output: 125"
+ },
+ "/images/comprehensions-in-python/1.jpg": {
+  "language": "python",
+  "code": "### Number squares - Python comprehensions examples\n\ninput_list = [1,2,3,4,5,6,7,8,9,10]\n\n## List comprehension\noutput_list = []\nfor i in input_list:\n    output_list.append(i**2)\n\n[i**2 for i in input_list]\n# both would print out: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\n\n# a list comprehension for only squares of even numbers\n[i**2 for i in input_list if i%2==0]\n# prints: [4, 16, 36, 64, 100]\n\n## Dictionary comprehension\noutput_dict = {}\nfor i in input_list:\n    output_dict[i] =  i**2\n\n{ k: k**2 for k in input_list}\n# both print out:\n# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100}\n\n\n## Set comprehension\ninput_list_with_dups = [1,2,3,4,5,6,7,8,9,10,10]\n\noutput_set = set()\n\nfor i in input_list_with_dups:\n    output_set.add(i**2)\n\n{i**2 for i in input_list_with_dups}\n# both print out something like {64, 1, 4, 36, 100, 9, 16, 49, 81, 25}\n# Sets are unordered and have unique members!\n\n## NO TUPLE COMPREHENSIONS\n\n## Generator comprehension\ndef generate_squares(list_of_numbers):\n    for i in list_of_numbers:\n        yield i**2\n\n(i**2 for i in input_list)\n# both produce a generator that will yield one by one\n# [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]"
+ },
+ "/images/select-as-struct-and-select-as-value/1.png": {
+  "language": "sql",
+  "code": "SELECT AS VALUE order_line\n\nFROM input_data\nLEFT JOIN UNNEST(order_lines) AS order_line\n\nSELECT AS STRUCT order_line\n\nFROM input_data\nLEFT JOIN UNNEST(order_lines) AS order_line"
+ },
+ "/images/de-duplicating-with-rownumber-vs-arrayagg/2.png": {
+  "language": "sql",
+  "code": "SELECT * FROM `learning.data_source`\n\nQUALIFY ROW_NUMBER() OVER (PARTITION BY id ORDER BY ds_date DESC ) = 1"
+ },
+ "/images/de-duplicating-with-rownumber-vs-arrayagg/3.png": {
+  "language": "sql",
+  "code": "WITH last_events AS (\n\nSELECT AS VALUE ARRAY_AGG(t ORDER BY t.ds_date DESC LIMIT 1)[OFFSET(0)]\n\nFROM `learning.data_source` t\n\nGROUP BY id\n)\n\nSELECT * FROM last_events"
+ },
+ "/images/intersect-and-except-in-bigquery/3.png": {
+  "language": "sql",
+  "code": "WITH input_a AS (\nSELECT 1 AS customer_id, 1001 AS order_id\nUNION ALL\nSELECT 2 AS customer_id, 1002 AS order_id\nUNION ALL\nSELECT 3 AS customer_id, 1003 AS order_id\n),\n\ninput_b AS (\n\nSELECT 1 AS customer_id, 1001 AS order_id\nUNION ALL\nSELECT 5 AS customer_id, 1010 AS order_id\nUNION ALL\nSELECT 6 AS customer_id, 1012 AS order_id\n)\n\nSELECT customer_id, order_id from input_b\n\nINTERSECT DISTINCT\n\nSELECT customer_id, order_id FROM input_a"
+ },
+ "/images/intersect-and-except-in-bigquery/4.png": {
+  "language": "sql",
+  "code": "WITH input_a AS (\nSELECT 1 AS customer_id, 1001 AS order_id\nUNION ALL\nSELECT 2 AS customer_id, 1002 AS order_id\nUNION ALL\nSELECT 3 AS customer_id, 1003 AS order_id\n),\n\ninput_b AS (\n\nSELECT 1 AS customer_id, 1001 AS order_id\nUNION ALL\nSELECT 5 AS customer_id, 1010 AS order_id\nUNION ALL\nSELECT 6 AS customer_id, 1012 AS order_id\n)\n\nSELECT customer_id, order_id from input_b\n\nEXCEPT DISTINCT\n\nSELECT customer_id, order_id FROM input_a"
+ },
+ "/images/table-sampling-in-bigquery/3.png": {
+  "language": "sql",
+  "code": "SELECT *\nFROM `learning.data_source`\nWHERE ds_date = \"2022-01-01\""
+ },
+ "/images/importing-google-sheets-into-bigquery/5.png": {
+  "language": "sql",
+  "code": "SELECT * FROM `learning.example_table` LIMIT 1000"
+ },
+ "/images/importing-google-sheets-into-bigquery/6.jpg": {
+  "language": "sql",
+  "code": "SELECT\n table_name, ddl\nFROM `learning.INFORMATION_SCHEMA.TABLES`\n\nWHERE table_name = 'example_table';"
+ },
+ "/images/using-bigquery-hashing-functions/2.png": {
+  "language": "sql",
+  "code": "SELECT t.*, FARM_FINGERPRINT(TO_JSON_STRING(t)) AS row_hash\nFROM learning.Customers AS t;"
+ },
+ "/images/linting-bigquery-sql-with-sqlfluff/1.png": {
+  "language": "bash",
+  "code": "sqlfluff lint test_sql_query.sql --dialect bigquery"
+ },
+ "/images/linting-bigquery-sql-with-sqlfluff/2.png": {
+  "language": "bash",
+  "code": "sqlfluff fix test_sql_query.sql --dialect bigquery"
+ },
+ "/images/linting-bigquery-sql-with-sqlfluff/3.png": {
+  "language": "bash",
+  "code": "sqlfluff lint test_sql_query.sql --dialect bigquery"
+ },
+ "/images/context-managers-in-python/1.png": {
+  "language": "python",
+  "code": "class ExampleContextManager():\n\n    def __init__(self, host, port):\n        print('Initializing Context Manager')\n        self.host = host\n        self.port = port\n        self.connection = None\n\n    def __enter__(self):\n        print('Setting up the connection')\n        self.connection = DatabaseConnection(self.host, self.port)\n        return self.connection\n\n    def __exit__(self, exc_type, exc_value, exc_traceback):\n        self.connection.close()\n\nwith ExampleContextManager('example_host', '1000') as manager:\n    print('Do something with the connection')"
+ },
+ "/images/using-gcp-cloud-functions-in-data-engineering/3.png": {
+  "language": "python",
+  "code": "import functions_framework\n\n@functions_framework.http\ndef hello_http(request):\n    \"\"\"HTTP Cloud Function.\n    Args:\n        request (flask.Request): The request object.\n        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>\n    Returns:\n        The response text, or any set of values that can be turned into a\n        Response object using `make_response`\n        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.\n    \"\"\"\n    request_json = request.get_json(silent=True)\n    request_args = request.args\n\n    if request_json and 'name' in request_json:\n        name = request_json['name']\n    elif request_args and 'name' in request_args:\n        name = request_args['name']\n    else:\n        name = 'World'\n    return 'Hello {}!'.format(name)"
+ },
+ "/images/swapping-partitions-in-bigquery/1.png": {
+  "language": "sql",
+  "code": "SELECT MIN(ds_date), MAX(ds_date) FROM `learning.data_source_staging`"
+ },
+ "/images/swapping-partitions-in-bigquery/2.png": {
+  "language": "sql",
+  "code": "SELECT MAX(ds_date) FROM `learning.data_source`"
+ },
+ "/images/swapping-partitions-in-bigquery/3.png": {
+  "language": "bash",
+  "code": "bq cp -f '<redacted>:learning.data_source_staging$20230928' '<redacted>:learning.data_source$20230928'\nbq cp -f '<redacted>:learning.data_source_staging$20230929' '<redacted>:learning.data_source$20230929'\nbq cp -f '<redacted>:learning.data_source_staging$20230930' '<redacted>:learning.data_source$20230930'"
+ },
+ "/images/using-labels-in-bigquery/1.jpg": {
+  "language": "sql",
+  "code": "SET @@query_label = \"cost_center:demo\";\n\n\nSELECT id, max(ds_date) AS max_date\n\nFROM learning.data_source\n\nGROUP BY id\n\nSELECT creation_time, job_type, query, label.key, label.value, total_bytes_billed, total_bytes_processed, total_slot_ms\n\nFROM `region-eu`.INFORMATION_SCHEMA.JOBS,\n\nUNNEST(labels) AS label\n\nWHERE label.key = 'cost_center'"
+ },
+ "/images/python-showdown-namedtuple-vs-simplenamespace-vs-dataclass/1.jpg": {
+  "language": "python",
+  "code": "from collections import namedtuple\n\nPerson = namedtuple('Person', ['name', 'age'])\ngeorge = Person(name=\"George\", age=30)\n\nprint(george.name)  # Output: George\nprint(george.age)   # Output: 30\n\n# Immutable, so you can only create a new instance\n# Create a new instance with a modified age\ngeorge_new = george._replace(age=31)\nprint(george_new.age)  # Output: 31\n\nfrom types import SimpleNamespace\n\nken = SimpleNamespace(name=\"Ken\", age=30)\n\nprint(ken.name)  # Output: Ken\nprint(ken.age)   # Output: 30\n\n# Modify the age attribute\nken.age = 31\nprint(ken.age)   # Output: 31\n\n# Add a new attribute dynamically\nken.height = 180\nprint(ken.height) # Output: 180\n\nfrom dataclasses import dataclass\n\n@dataclass(frozen=False) #frozen by default False\nclass Person:\n    name: str\n    age: int\n\npeter = Person(name=\"Peter\", age=30)\n\nprint(peter.name)  # Output: Peter\nprint(peter.age)   # Output: 30\n\n# Modify the age attribute\npeter.age = 31\nprint(peter.age)   # Output: 31\n\n# Add a new attribute dynamically\npeter.height = 180\nprint(peter.height) # Output: 180"
+ },
+ "/images/understanding-generators-in-python/1.jpg": {
+  "language": "python",
+  "code": "def get_first_n_squares_gen(n):\n\n    for i in range(n):\n        yield i * i\n\nprint([square for square in get_first_n_squares_gen(5)])  # 0, 1, 4, 9, 16\n\ndef get_first_n_squares(n):\n\n    squares = []\n    for i in range(n):\n        squares.append(i * i)\n    return squares\n\nprint(get_first_n_squares(5))  # [0, 1, 4, 9, 16]"
+ },
+ "/images/hands-on-with-duckdb/1.jpg": {
+  "language": "sql",
+  "code": "CREATE TABLE ecommerce_demo AS  SELECT * FROM './repos/duckdb-demo/export.csv';\nSHOW ecommerce_demo;"
+ },
+ "/images/hands-on-with-duckdb/2.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS\n(\nSELECT\n    CAST(f_orderdate AS DATE) AS order_date,\n    SUM(f_NetAmountEUR) AS sum_net_amount,\n    SUM(f_GrossAmountEUR) AS sum_gross_amount\nFROM main.ecommerce_demo\nGROUP BY\n    CAST(f_orderdate AS DATE)\n)\n\nSELECT\n    order_date,\n    sum_net_amount,\n    sum_gross_amount\nFROM input_data;"
+ },
+ "/images/hands-on-with-duckdb/3.jpg": {
+  "language": "sql",
+  "code": "WITH input_data AS\n(\nSELECT\n    CAST(f_orderdate AS DATE) AS order_date,\n    SUM(f_NetAmountEUR) AS sum_net_amount,\n    SUM(f_GrossAmountEUR) AS sum_gross_amount\nFROM export\nGROUP BY\n    CAST(f_orderdate AS DATE)\n)\n\nSELECT\n    order_date,\n    sum_net_amount,\n    sum_gross_amount\nFROM input_data;\n\nSELECT COUNT(1) FROM main.\"export\";"
+ },
+ "/images/merge-on-false-in-bigquery/2.jpg": {
+  "language": "sql",
+  "code": "-- NO PK/FK constraints  on the target table\n\nMERGE `learning.data_source`  AS target\n\nUSING (\n\nSELECT 44 AS id, 10 AS value, DATE('2023-09-01') AS ds_date\n\nUNION ALL\n\nSELECT 1000 AS id, 11 AS  value, DATE('2023-09-02') AS ds_date\n\n) AS source\n\nON FALSE\n\nWHEN NOT MATCHED BY TARGET THEN\n\nINSERT ROW\n\nWHEN MATCHED THEN\n\nUPDATE SET target.value = source.value\n\n-- NO PK/FK constraints  on the target table\n\nMERGE `learning.data_source`  AS target\n\nUSING (\n\nSELECT 33 AS id, 7 AS value, DATE('2015-02-11') AS ds_date\n\nUNION ALL\n\nSELECT 999 AS id, 10 AS  value, DATE('2023-09-16') AS ds_date\n\n) AS source\n\nON source.id = target.id AND source.ds_date = target.ds_date\n\nWHEN NOT matched BY TARGET THEN\n\nINSERT (id,ds_date,value)\n\nVALUES (source.id, source.ds_date, source.value)\n\nWHEN MATCHED THEN\n\nUPDATE SET target.value = source.value"
+ },
+ "/images/merge-on-false-in-bigquery/3.jpg": {
+  "language": "sql",
+  "code": "WITH test_cases AS (\n\n\nSELECT 33 AS id, 7 AS value, DATE('2015-02-11') AS ds_date\n\nUNION ALL\n\nSELECT 999 AS id, 10 AS  value, DATE('2023-09-16') AS ds_date\n\nUNION ALL\n\nSELECT 44 AS id, 10 AS value, DATE('2023-09-01') AS ds_date\n\nUNION ALL\n\nSELECT 1000 AS id, 11 AS  value, DATE('2023-09-02') AS ds_date\n)\n\nSELECT ds.* FROM learning.data_source ds\n\nJOIN test_cases t USING (id, ds_date)"
+ },
+ "/images/merge-on-false-in-bigquery/4.jpg": {
+  "language": "sql",
+  "code": "-- PK/FK constraints  on the target table\n\nMERGE `testing.data_source`  AS target\n\nUSING (\n\nSELECT 44 AS id, 10 AS value, DATE('2023-09-01') AS ds_date\n\nUNION ALL\n\nSELECT 1000 AS id, 11 AS  value, DATE('2023-09-02') AS ds_date\n\n) AS source\n\nON FALSE\n\nWHEN NOT MATCHED BY TARGET THEN\n\nINSERT ROW\n\nWHEN MATCHED THEN\n\nUPDATE SET target.value = source.value\n\n-- PK/FK constraints  on the target table\n\nMERGE `testing.data_source`  AS target\n\nUSING (\n\nSELECT 33 AS id, 7 AS value, DATE('2015-02-11') AS ds_date\n\nUNION ALL\n\nSELECT 999 AS id, 10 AS  value, DATE('2023-09-16') AS ds_date\n\n) AS source\n\nON source.id = target.id AND source.ds_date = target.ds_date\n\nWHEN NOT matched BY TARGET THEN\n\nINSERT (id,ds_date,value)\n\nVALUES (source.id, source.ds_date, source.value)\n\nWHEN MATCHED THEN\n\nUPDATE SET target.value = source.value"
+ },
+ "/images/bigquery-primary-key-foreign-key-constraints/3.jpg": {
+  "language": "sql",
+  "code": "-- WITH CONSTRAINTS\n\nSELECT id, MAX(ds_date), MIN(ds_date)\n\nFROM testing.data_source d\nJOIN testing.lookup_table l USING (id)\n\n\nGROUP BY id\n\n-- WITHOUT CONSTRAINTS\n\nSELECT id, MAX(ds_date), MIN(ds_date)\n\nFROM learning.data_source d\nJOIN learning.lookup_table l USING (id)\n\n\nGROUP BY id"
+ },
+ "/images/row-level-access-security-in-bigquery/2.png": {
+  "language": "sql",
+  "code": "CREATE ROW ACCESS POLICY us_uk_country_filter\n\nON `learning.Customers`\n\nGRANT TO ('serviceAccount:test-access-control@REDACTED.iam.gserviceaccount.com')\n\nFILTER USING (country IN ('US', 'UK'));"
+ },
+ "/images/row-level-access-security-in-bigquery/4.png": {
+  "language": "sql",
+  "code": "SELECT * FROM `REDACTED.learning.Customers` LIMIT 1000"
+ },
+ "/images/row-level-access-security-in-bigquery/5.png": {
+  "language": "sql",
+  "code": "-- Deleting a specific policy on this table\nDROP ROW ACCESS POLICY us_uk_country_filter ON learning.Customers;\n\n-- Deleting ALL policies on this table\nDROP ALL ROW ACCESS POLICIES ON learning.Customers;"
+ },
+ "/images/using-bigquery-time-travel/2.png": {
+  "language": "sql",
+  "code": "SELECT * FROM `learning.test_time_travel`"
+ },
+ "/images/using-bigquery-time-travel/3.png": {
+  "language": "sql",
+  "code": "SELECT * FROM learning.test_time_travel\n\nFOR SYSTEM_TIME AS OF TIMESTAMP('2023-04-02 11:00:00.000 UTC')"
+ },
+ "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/5.png": {
+  "language": "csv",
+  "code": "date,order_id,product_id,price,quantity,amount\n2022-09-01,1,100,4.5,2,9\n2022-09-01,1,101,5,1,5\n2022-09-01,1,102,3.75,1,3.75\n2022-09-01,2,100,4.5,1,4.5\n2022-09-01,2,102,3.75,3,11.25\n2022-09-01,3,103,6.25,5,32.25\n2022-09-01,4,105,8,2,16\n2022-09-01,4,100,4.5,2,9\n2022-09-01,5,104,2.95,1,2.95"
+ },
+ "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11.png": {
+  "language": "yaml",
+  "code": "# This is a sample workflow to test or replace with your source code.\n#\n# This workflow passes the current day of the week to the Wikipedia API and\n# returns a list of related Wikipedia articles.\n# The current day of the week (in GMT) is retrieved from a Cloud Function\n# unless you input your own search term (for example, {\"searchTerm\": \"Monday\"}).\nmain:\n    params: [input]\n    steps:\n    - checkSearchTermInInput:\n        switch:\n            - condition: ${\"searchTerm\" in input}\n              assign:\n                - searchTerm: ${input.searchTerm}\n              next: readWikipedia\n    - getCurrentTime:\n        call: http.get\n        args:\n            url: https://us-central1-workflowsample.cloudfunctions.net/datetime\n        result: currentDateTime\n    - setFromCallResult:\n        assign:\n            - searchTerm: ${currentDateTime.body.dayOfTheWeek}\n    - readWikipedia:\n        call: http.get\n        args:\n            url: https://en.wikipedia.org/w/api.php\n            query:\n                action: opensearch\n                search: ${searchTerm}\n        result: wikiResult\n    - returnOutput:\n            return: ${wikiResult.body[1]}"
+ },
+ "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15.png": {
+  "language": "sql",
+  "code": "SELECT\n\n  date AS SalesDate,\n  count(distinct order_id) AS CountOrders,\n  sum(Amount) as TotalAmount\n\nFROM\n  `**REDACTED**.sales_data.sales`\n\nGROUP BY\n  date"
+ },
+ "/images/analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6/1.png": {
+  "language": "scala",
+  "code": "ss.sql(\n  \"\"\"\n    |SELECT author, COUNT(score), AVG(score)\n    |FROM submissions s\n    |WHERE subreddit='worldnews'\n    |GROUP BY author\n    |ORDER BY 2 DESC\n    |LIMIT 10\n    |\n    |\"\"\".stripMargin).show()"
+ },
+ "/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/5.png": {
+  "language": "csv",
+  "code": "Transaction ID,Product name,Quantity,Total amount,Sales Channel,Customer First Name,Customer Last Name,Customer Email,Series City,Created Date\n0,6x11 Come visit me in Helsinki ,1,4.3,mobile app,Megan,Freeman,Megan.Freeman@example.com,Helsinki,2019-01-01\n1,6x11 Come visit me in Sarajevo ,4,17.2,web,Charles,Steinbeck,Charles.Steinbeck@example.com,Sarajevo,2019-01-01\n2,4x6 Merry Christmas from Novosibirsk ,4,14.0,web,David,Tucker,David.Tucker@example.com,Novosibirsk,2019-01-01\n3,6x11 Come visit me in Milano (Milan) ,3,6.300000000000001,web,Mary,Valdez,Mary.Valdez@example.com,Milano (Milan),2019-01-01\n4,4.25x6 Just settled in Saratov ,6,17.4,mobile app,Jim,Cooper,Jim.Cooper@example.com,Saratov,2019-01-01"
+ },
+ "/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/6.png": {
+  "language": "xml",
+  "code": "<transaction date=\"20190101\" reseller-id=\"1001\">\n    <transactionId>0</transactionId>\n    <productName>5.5x8.5 Come visit me in Orenburg </productName>\n    <qty>3</qty>\n    <totalAmount>4.5</totalAmount>\n    <salesChannel>mobile app</salesChannel>\n    <customer>\n        <firstname>Jason</firstname>\n        <lastname>Sagredo</lastname>\n        <email>Jason.Sagredo@example.com</email>\n    </customer>\n    <dateCreated>20190101</dateCreated>\n    <seriesCity>Orenburg</seriesCity>\n</transaction>"
+ },
+ "/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/3.png": {
+  "language": "xml",
+  "code": "<configuration>\n  <property>\n    <name>fs.defaultFS</name>\n    <value>hdfs://XPS-15-9560:9000</value>\n  </property>\n</configuration>"
+ },
+ "/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/3.png": {
+  "language": "yaml",
+  "code": "# This file is generated from information provided by the datasource.  Changes\n# to it will not persist across an instance reboot.  To disable cloud-init's\n# network configuration capabilities, write a file\n# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:\n# network: {config: disabled}\nnetwork:\n    ethernets:\n        eth0:\n            dhcp4: true\n            optional: true\n    wifis:\n        wlan0:\n            optional: true\n            access-points:\n               \"<redacted>\":\n                   password: \"<redacted>\"\n            dhcp4: true\n    version: 2"
+ },
+ "/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/4.png": {
+  "language": "console",
+  "code": "ubuntu@rpi-3:~$ cat /etc/hostname\nrpi-3\nubuntu@rpi-3:~$ cat /etc/hosts\n127.0.0.1 localhost\n192.168.100.47 rpi-4\n192.168.100.6 XPS-15-9560\n\n# The following lines are desirable for IPv6 capable hosts\n::1 ip6-localhost ip6-loopback\nfe00::0 ip6-localnet\nff00::0 ip6-mcastprefix\nff02::1 ip6-allnodes\nff02::2 ip6-allrouters\nff02::3 ip6-allhosts"
+ },
+ "/images/analyzing-twitter-data-using-python/1.png": {
+  "language": "python",
+  "code": "locs = df['user.location'].value_counts()\nlocs[locs>=10]"
+ },
+ "/images/analyzing-twitter-data-using-python/2.png": {
+  "language": "python",
+  "code": "mapping = {'London' : 'London, UK',\n 'London, England': 'London, UK'  ,\n 'United Kingdom' : 'United Kingdom',\n 'England, United Kingdom': 'England' ,\n 'UK': 'United Kingdom',\n 'England': 'England',\n 'Europe' : 'Europe' ,\n 'South East, England': 'South East England',\n 'Scotland, United Kingdom' : 'Scotland',\n 'Scotland': 'Scotland',\n 'Ireland' : 'Ireland',\n 'North West, England' : 'North West England',\n 'London, UK': 'London, UK',\n 'Manchester, England': 'Manchester, UK',\n 'European Union': 'European Union',\n 'North East, England': 'North East England',\n 'Glasgow, Scotland': 'Glasgow, UK',\n 'London ': 'London',\n 'European Union 🇪🇺' : 'European Union',\n 'Wales, United Kingdom': 'Wales',\n 'Rutland': 'Rutland, UK',"
+ },
+ "/images/analyzing-twitter-data-using-python/3.png": {
+  "language": "python",
+  "code": "locs = df['user.location'].value_counts()\nlocs = locs[locs >= 10]\n\nlocs"
+ },
+ "/images/analyzing-twitter-data-using-python/5.png": {
+  "language": "python",
+  "code": "locations.head(10)"
+ },
+ "/images/analyzing-twitter-data-using-python/8.png": {
+  "language": "python",
+  "code": "sent_clasification.value_counts()"
+ },
+ "/images/analyzing-twitter-data-using-python/12.png": {
+  "language": "python",
+  "code": "hashtags.head(10)"
+ },
+ "/images/analyzing-twitter-data-using-python/15.png": {
+  "language": "python",
+  "code": "words.head(10)"
+ },
+ "/images/analyzing-twitter-data-using-python/17.png": {
+  "language": "python",
+  "code": "bigrams.head(10)"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/1.png": {
+  "language": "python",
+  "code": "df.shape"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/2.png": {
+  "language": "python",
+  "code": "df.shape"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/3.png": {
+  "language": "python",
+  "code": "swords"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/4.png": {
+  "language": "python",
+  "code": "df['stemmed'].head(n=10)"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/5.png": {
+  "language": "python",
+  "code": "df[['processed_text','sentiment_score']].head(n=10)"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/6.png": {
+  "language": "python",
+  "code": "df['sentiment_score'].apply(lambda x: round(x,)).value_counts()"
+ },
+ "/images/intro-nlp-sentiment-analysis-python/7.png": {
+  "language": "python",
+  "code": "df['user_audience_category'].head()"
+ },
+ "/images/extracting-twitter-data-using-python/2.png": {
+  "language": "python",
+  "code": "results[0]"
+ },
+ "/images/extracting-twitter-data-using-python/3.png": {
+  "language": "python",
+  "code": "df.head()"
+ },
+ "/images/extracting-twitter-data-using-python/4.png": {
+  "language": "python",
+  "code": "df.shape"
+ },
+ "/images/extracting-twitter-data-using-python/5.png": {
+  "language": "python",
+  "code": "df.columns"
+ },
+ "/images/extracting-twitter-data-using-python/6.png": {
+  "language": "python",
+  "code": "df[['created_at', 'user.screen_name', 'text']].head()"
+ }
+}

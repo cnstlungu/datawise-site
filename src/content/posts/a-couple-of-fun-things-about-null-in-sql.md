@@ -29,7 +29,7 @@ You can handle NULLS with:
 🔹 IFNULL/ISNULL: if null, use a backup value  
 🔹 NULLIF: replace this value with a NULL
 
-![](/images/a-couple-of-fun-things-about-null-in-sql/1.jpg)
+![BigQuery SQL doing a FULL OUTER JOIN source\_b USING(order\_id) where each source has one NULL order\_id; orders 1 and 2 match (UK apples, US peaches), but the NULL keys do not, giving separate rows for FR with null product and grapes with null country.](/images/a-couple-of-fun-things-about-null-in-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

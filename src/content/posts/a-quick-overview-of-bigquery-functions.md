@@ -50,7 +50,7 @@ For complex processing requirements, BigQuery offers remote functions, which all
 
 This opens access to the vast ecosystem of libraries in languages like Python.
 
-![](/images/a-quick-overview-of-bigquery-functions/1.png)
+![BigQuery SQL showing three function types: temp scalar function double\_minus\_five (x\*2-5) returning -3 to 5, CREATE TEMP AGGREGATE FUNCTION sum\_only\_even with SUM(CASE WHEN MOD(val, 2) = 0 ...) returning 6, and CREATE TABLE FUNCTION learning.get\_top\_cities('FR') returning Paris, Marseille and Lyon.](/images/a-quick-overview-of-bigquery-functions/1.png)
 
 ### Their Place in Modern **SQL**
 

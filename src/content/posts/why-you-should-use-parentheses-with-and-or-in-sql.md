@@ -30,7 +30,7 @@ is equivalent to
 
 It should also be noted that for comparison operators parentheses are required in order to resolve ambiguity since they are not associative like NOT/AND/OR.
 
-![](/images/why-you-should-use-parentheses-with-and-or-in-sql/1.jpg)
+![BigQuery SQL filtering an input\_data CTE of boolean flags with WHERE (is\_paid AND is\_shipped) OR (customer\_is\_on\_contract AND is\_first\_time\_buyer), with comments noting the unparenthesised version resolves the same way; orders 1 and 2 are returned, order 3 is not.](/images/why-you-should-use-parentheses-with-and-or-in-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

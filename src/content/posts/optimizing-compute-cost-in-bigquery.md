@@ -28,7 +28,7 @@ So how does optimizing for compute look like for a regular user? When trying out
 
 Now, they typically correlate, but there might be cases where you pick between a lower slot time or a lower amount of data processed.
 
-![](/images/optimizing-compute-cost-in-bigquery/1.png)
+![BigQuery console running a QUALIFY ROW\_NUMBER() query on bigquery-public-data.google\_trends.top\_terms for Los Angeles CA, with two metrics highlighted: the estimate of 81.57 MB to be processed and 8 sec of slot time consumed under Execution details.](/images/optimizing-compute-cost-in-bigquery/1.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

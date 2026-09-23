@@ -99,7 +99,7 @@ FROM input_datas
 
 This will compute a hash value from our attributes, allowing us to discern between an actual update and a redundant one.
 
-![](/images/generating-a-compact-temporal-table-in-bigquery/1.png)
+![Text query output of the hashed input with columns id, value\_text, value\_int, update\_date and row\_hash for nine updates of id 1; repeated values produce identical hashes, e.g. b/25 on 2022-02-01 and 2022-04-01, and e/20 on 2022-12-01 and 2023-03-01.](/images/generating-a-compact-temporal-table-in-bigquery/1.png)
 
 We can now compact the input. We’re going to use a LEAD window function to get, for each row, the value of the next hash (at our grain). Subsequent rows with the same hash values are deemed redundant. We’ll use qualify to exclude the redundant rows.
 
@@ -122,7 +122,7 @@ QUALIFY row_hash <> IFNULL(next_hash, -1)
 
 This will yield the following data.
 
-![](/images/generating-a-compact-temporal-table-in-bigquery/2.png)
+![Text query output after LEAD and QUALIFY, with columns id, value\_text, value\_int, update\_date, row\_hash and next\_hash: seven rows remain, the redundant duplicates are gone, keeping b/25 on 2022-04-01 and the final e/20 row on 2023-03-01 whose next\_hash is empty.](/images/generating-a-compact-temporal-table-in-bigquery/2.png)
 
 We can now generate our temporary table. We’ll start with our update\_date as our **valid\_from**, then use the LEAD function the get the next update\_date as our **valid\_to**.
 

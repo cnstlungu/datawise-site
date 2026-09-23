@@ -22,7 +22,7 @@ Just note that even JSON-like string won't work as an input, it only works for t
 
 As usual, watch out because these conversion functions might work differently as how you'd expect. SAFE\_CAST('1' AS BOOL) =&gt; NULL but SAFE\_CAST(1 AS BOOL) =&gt; TRUE.
 
-![](/images/lax-json-conversion-functions-in-bigquery/1.jpg)
+![BigQuery SQL declaring an ARRAY\<JSON\> of fruits with loosely typed fields and reading them via UNNEST with LAX\_STRING, LAX\_BOOL, LAX\_FLOAT64 and LAX\_INT64; string "7.1" becomes 7.1, 1/0 and "TRUE"/"false" become booleans, and an empty string is\_local gives null.](/images/lax-json-conversion-functions-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

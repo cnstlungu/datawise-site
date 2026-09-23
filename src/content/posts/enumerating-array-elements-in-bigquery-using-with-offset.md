@@ -18,7 +18,7 @@ Quite important to mention, ARRAYS are ordered collections (like lists in Python
 
 In order to retrieve the order in which an element was in an array before UNNESTING (apart from ordering again by something in the array like a timestamp) you can use `WITH OFFSET`, which will yield an additional column, showing the 0-based index of the element in the original array.
 
-![](/images/enumerating-array-elements-in-bigquery-using-with-offset/1.jpg)
+![BigQuery SQL that builds a status\_updates array per order with ARRAY\_AGG(event\_type ORDER BY event\_time), then flattens it with LEFT JOIN UNNEST(status\_updates) AS status\_update WITH OFFSET AS offset; results show order\_created, order\_paid and order\_shipped at offsets 0, 1 and 2.](/images/enumerating-array-elements-in-bigquery-using-with-offset/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

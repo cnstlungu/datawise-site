@@ -29,17 +29,17 @@ But with ON FALSE in the merge\_condition? [BigQuery docs](https://cloud.google.
 
 I tested this on some data, especially after my previous post on [Primary and Foreign Keys](/bigquery-primary-key-foreign-key-constraints). The outcomes are looking super promising.
 
-![](/images/merge-on-false-in-bigquery/1.jpg)
+![BigQuery console Schema tab for table data\_source: fields id INTEGER with key PK/FK, value INTEGER with no key, and ds\_date DATE with key PK, all NULLABLE, showing the primary and foreign key constraints on the table.](/images/merge-on-false-in-bigquery/1.jpg)
 
-![](/images/merge-on-false-in-bigquery/2.jpg)
+![BigQuery SQL side by side on learning.data\_source without PK/FK constraints: MERGE ... ON FALSE with WHEN NOT MATCHED BY TARGET THEN INSERT ROW took 1 sec, 12 sec slot time, 2.72 KB shuffled, versus a MERGE matching on id and ds\_date at 5 sec, 14 min 13 sec slot time, 31.06 MB.](/images/merge-on-false-in-bigquery/2.jpg)
 
 Testing that the expected changes happened.
 
-![](/images/merge-on-false-in-bigquery/3.jpg)
+![BigQuery SQL checking the MERGE results: a test\_cases CTE of four rows built with UNION ALL is joined to learning.data\_source USING (id, ds\_date); all four rows come back, ids 1000, 44, 33 and 999 with their value and ds\_date.](/images/merge-on-false-in-bigquery/3.jpg)
 
 Using the table version that has Primary Key and Foreign Key constraints has yielded even more impressive results.
 
-![](/images/merge-on-false-in-bigquery/4.jpg)
+![BigQuery SQL side by side on testing.data\_source with PK/FK constraints: MERGE ... ON FALSE with INSERT ROW took 1 sec, 2 sec slot time, 84 B shuffled, versus the MERGE matching on id and ds\_date at 2 sec, 11 sec slot time, 56.02 MB shuffled.](/images/merge-on-false-in-bigquery/4.jpg)
 
 Thanks for reading!
 

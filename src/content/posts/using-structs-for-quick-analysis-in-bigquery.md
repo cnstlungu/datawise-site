@@ -18,7 +18,7 @@ Since changing filter values for different test cases / observations you are int
 
 Not a game changer but makes life a bit easier 😁
 
-![](/images/using-structs-for-quick-analysis-in-bigquery/1.jpg)
+![BigQuery SQL filtering customers with WHERE STRUCT(country, has\_paid, plan, service) IN (STRUCT('UK', FALSE, 'Premium', 'TV'), STRUCT('FR', FALSE, 'Basic', 'Internet')) as a shorter alternative to chained AND/OR conditions; it returns Catie Doe (UK) and Francesca Duchamp (FR).](/images/using-structs-for-quick-analysis-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

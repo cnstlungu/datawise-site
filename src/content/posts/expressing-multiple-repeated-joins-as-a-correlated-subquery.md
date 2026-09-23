@@ -22,7 +22,7 @@ To avoid multiple joins, you can use a correlated subquery to fetch all possible
 
 A word of caution: correlated subqueries execute once per row, which can impact performance, especially with large datasets. However, they’re a valuable tool in your SQL tool belt, particularly when other elegant solutions aren’t available.
 
-![](/images/expressing-multiple-repeated-joins-as-a-correlated-subquery/1.jpg)
+![BigQuery SQL rewrite: four LEFT JOINs to calculated\_averages (per product, subcategory, category and all products) merged with COALESCE become one correlated subquery with OR conditions, ORDER BY CASE WHEN priorities 1 to 4 and LIMIT 1, returning average\_ordered\_quantity.](/images/expressing-multiple-repeated-joins-as-a-correlated-subquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

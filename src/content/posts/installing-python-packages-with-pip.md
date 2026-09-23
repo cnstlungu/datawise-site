@@ -32,7 +32,7 @@ Here's a quick list of common use cases:
 
 `➡ pip freeze > requirements.txt # saves the list of installed packages to a file so you can recreate the environment with the same packages next time you need it`
 
-![](/images/installing-python-packages-with-pip/1.jpg)
+![VS Code with program.py (import pandas as pd, build a DataFrame from a list of dicts, df.head()) and a requirements.txt pinning numpy==2.0.0, pandas==2.2.2, python-dateutil, pytz, six and tzdata; the terminal shows source .venv/bin/activate and deactivate.](/images/installing-python-packages-with-pip/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

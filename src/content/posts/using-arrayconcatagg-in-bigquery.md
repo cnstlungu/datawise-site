@@ -38,7 +38,7 @@ FROM example_table
 
 Let's see a practical example. Suppose our input data looks as follows.
 
-![](/images/using-arrayconcatagg-in-bigquery/1.png)
+![BigQuery console result of the ARRAY\_CONCAT\_AGG input: four rows, one per region (US-East, US-West, CA-West, CA-East), each with a country and a nested offices array of city\_name and staff\_count, such as New York 1000, Boston 500 and Washington 300.](/images/using-arrayconcatagg-in-bigquery/1.png)
 
 We'd like to combine offices by country into a single array (they are currently stored in one array per region).
 
@@ -64,7 +64,7 @@ WITH input_data  AS (
 
 Here's what the result would look like:
 
-![](/images/using-arrayconcatagg-in-bigquery/2.png)
+![BigQuery console result after ARRAY\_CONCAT\_AGG(offices) with GROUP BY country: two rows, US with six offices from New York to San Francisco and CA with six from Calgary to Toronto, listed in offices.city\_name and offices.staff\_count.](/images/using-arrayconcatagg-in-bigquery/2.png)
 
 Thanks for reading!
 

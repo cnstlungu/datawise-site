@@ -16,7 +16,7 @@ Have you ever used ANY\_VALUE in BigQuery?
 
 It's an aggregate function like SUM or AVG, but it returns a non-deterministic (not random) row from the group. I've been using it in scenarios where there's one value anyway, such as when PIVOTing.
 
-![](/images/using-anyvalue-in-bigquery/1.png)
+![BigQuery console result of the input data for ANY\_VALUE with PIVOT: columns Region, quarter and sales, with Europe and MEA sales for Q1 to Q4, such as Europe Q1 250000 and MEA Q3 300000.](/images/using-anyvalue-in-bigquery/1.png)
 
 ```sql
 WITH input_data AS (
@@ -42,13 +42,13 @@ SELECT * FROM input_data
 PIVOT(ANY_VALUE(sales) as sales FOR quarter IN ('Q1', 'Q2', 'Q3', 'Q4'));
 ```
 
-![](/images/using-anyvalue-in-bigquery/2.png)
+![BigQuery console result of PIVOT with ANY\_VALUE(sales) FOR quarter: one row per Region with columns sales\_Q1 to sales\_Q4, Europe 250000, 225000, 275000, 290000 and MEA 190000, 210000, 300000, 220000.](/images/using-anyvalue-in-bigquery/2.png)
 
 Upon documenting myself for this post, I found an interesting thing - it supports the HAVING clause, allowing us to restrict the rows this function is aggregating, either by a MIN or MAX of a given expression.
 
 Let's look at how it works. Say we have the following data:
 
-![](/images/using-anyvalue-in-bigquery/3.png)
+![BigQuery console result of sample sales data with columns country, product\_id, quantity and price: Germany productA 200 at 5.0, productB 75 at 100.0, productC 100 at 120.0; Spain productA 300 at 5.0, productD 250 at 20.0, productE 100 at 15.0.](/images/using-anyvalue-in-bigquery/3.png)
 
 We're going to compute the product that has sold the highest by value and the product that has sold the least by quantity in each of the countries.
 
@@ -77,7 +77,7 @@ GROUP BY country
 
 Here's what the results would look like:
 
-![](/images/using-anyvalue-in-bigquery/4.png)
+![BigQuery console result of ANY\_VALUE with HAVING MAX and HAVING MIN, grouped by country: Germany has highest\_selling\_by\_value productC and lowest\_selling\_by\_quantity productB, while Spain has productD and productE.](/images/using-anyvalue-in-bigquery/4.png)
 
 Thanks for reading!
 

@@ -16,7 +16,7 @@ Long time, no see! Here's a quick SQL exercise that illustrates some important m
 
 So, we're given a list of updates per each order, and at each point in time we have some flags. Our goal here is to check for each order if there was any point in time when any of the flags had the value of 1.
 
-![](/images/using-exists-with-logicalor-in-bigquery/1.jpg)
+![BigQuery SQL where input\_data holds per-order updates with an indicators ARRAY; a compute\_flags CTE uses EXISTS(SELECT indicator FROM UNNEST(indicators) WHERE indicator = 1), then LOGICAL\_OR(flag\_was\_true) with GROUP BY order\_id; results show order 1 true, order 2 false.](/images/using-exists-with-logicalor-in-bigquery/1.jpg)
 
 We solve this by:
 

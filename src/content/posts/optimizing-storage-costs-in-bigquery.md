@@ -42,7 +42,7 @@ Here's what you can do to help bring these costs down:
 
 Hope these tips are useful!
 
-![](/images/optimizing-storage-costs-in-bigquery/1.jpg)
+![BigQuery console Storage info panel for a table with 399,803 rows and 4,000 partitions: 9.15 MB total logical bytes, 9.08 MB of it long-term, versus 6.42 MB total physical bytes, 6.37 MB of it long-term, and 0 B time travel.](/images/optimizing-storage-costs-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

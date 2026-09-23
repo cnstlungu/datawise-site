@@ -70,7 +70,7 @@ In the above query, we start by selecting ID = 1 as our base case —  ‘an
 
 Notice the **WHERE id &lt; 10** . This is very important as it tells when to stop the recursion.
 
-![](/images/recursive-ctes-in-bigquery/1.png)
+![BigQuery query result from the recursive CTE number generator: a single id column holding the consecutive integers 1 through 10, one per row, in rows 1 to 10.](/images/recursive-ctes-in-bigquery/1.png)
 
 The same can be done to say generate a list of 100 consecutive days. In practice though, the same can be achieved using functions such as [GENERATE\_ARRAY or GENERATE\_DATE\_ARRAY.](https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions)
 
@@ -82,7 +82,7 @@ Consider the following data. We have a list of employees and the ID of the manag
 
 One way to do it would be to self-join the table multiple times. But how would you know how many times you’d need to self-join or what if there is a new hierarchical level down the line?
 
-![](/images/recursive-ctes-in-bigquery/2.png)
+![BigQuery employees table with employee\_id, first\_name, last\_name and manager\_id: John Smith (1) has a null manager\_id, Jane Doe and Bob Johnson report to 1, Alice Lee and Tom Wilson to 2, Mike Brown and Sarah Kim to 3, and David Lee and Emily Davis to 4.](/images/recursive-ctes-in-bigquery/2.png)
 
 Here’s what using a recursive CTE to solve this would look like.
 
@@ -132,7 +132,7 @@ FROM hierarchy
 
 We start with the anchor record (top-level employee, our CEO) and then traverse the employee hierarchy by joining the manager\_id with the employee\_id. We’ve also created a new ‘level’ column to show the hierarchical level — the distance between the employee and the CEO.
 
-![](/images/recursive-ctes-in-bigquery/3.png)
+![BigQuery result of the recursive CTE, adding level, manager\_first\_name and manager\_last\_name to each employee: John Smith is level 0 with null manager, Jane Doe and Bob Johnson are level 1 under John Smith, Alice, Tom, Sarah and Mike are level 2, and Emily Davis and David Lee are level 3 under Alice Lee.](/images/recursive-ctes-in-bigquery/3.png)
 
 ## Performance considerations
 

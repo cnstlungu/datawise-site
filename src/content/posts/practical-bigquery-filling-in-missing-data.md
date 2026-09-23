@@ -67,7 +67,7 @@ WHERE store_id = 'DE1004'
 ORDER BY event_time DESC
 ```
 
-![](/images/practical-bigquery-filling-in-missing-data/1.png)
+![BigQuery result of the LAG query for store DE1004 (country DE), ordered by event\_time descending, with attribute1 and previous\_value; attribute1 is often null and previous\_value returns the prior row even when it is null, e.g. omicron on 2023-02-16 gets null.](/images/practical-bigquery-filling-in-missing-data/1.png)
 
 Now, there is a couple of problems with the above approach.
 

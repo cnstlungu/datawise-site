@@ -47,7 +47,7 @@ FROM `learning.input_data`
 ORDER BY id, valid_from
 ```
 
-![](/images/combining-structs-with-window-functions-in-bigquery/1.png)
+![BigQuery result grid with id, value\_int, value\_text, valid\_from, valid\_to plus separate next\_value\_int, next\_value\_text, prev\_value\_int and prev\_value\_text columns from individual LEAD and LAG calls; e.g. id 1 from 2022-02-01 has 25 b, next 11 a, previous 12 a, with nulls at each id's edges.](/images/combining-structs-with-window-functions-in-bigquery/1.png)
 
 Okay, but what if you have a dozen attributes? Instead of writing tens of LEAD or LAG functions, leverage STRUCT and look up an entire STRUCT of attributes.
 
@@ -78,7 +78,7 @@ WITH input_data AS (
 ORDER BY id, valid_from
 ```
 
-![](/images/combining-structs-with-window-functions-in-bigquery/2.png)
+![BigQuery result grid from the STRUCT approach: prev\_value and next\_value are STRUCT columns with nested value\_int and value\_text fields holding the same values as the separate LAG and LEAD columns, e.g. id 1 from 2022-02-01 has prev\_value 12 a and next\_value 11 a.](/images/combining-structs-with-window-functions-in-bigquery/2.png)
 
 This way, you can use LEAD or LAG only once, regardless of how many attributes you need to look up.
 

@@ -46,9 +46,9 @@ Practical example:
 
 Probably the most common use case for me is dynamically UNPIVOTING columns. One would need to know the columns in a table at runtime to be able to build the UNPIVOT clause. You may write the columns by hand when you have a handful of them, but what if there are dozens?
 
-![](/images/using-dynamic-sql-in-bigquery/1.png)
+![BigQuery result grid of a wide customers table with columns CustomerId, FirstName, LastName, Country and FirstOrderDate for four customers (Michelle Dubois, Jane Springer, Bianca Moretti, John Doe), the columns to be unpivoted.](/images/using-dynamic-sql-in-bigquery/1.png)
 
-![](/images/using-dynamic-sql-in-bigquery/2.png)
+![BigQuery result grid of the unpivoted output with columns customer\_id, key and value: each customer becomes one row per attribute, e.g. customer 2 has FirstName Michelle, LastName Dubois, Country FR and FirstOrderDate 2021-06-01.](/images/using-dynamic-sql-in-bigquery/2.png)
 
 Here is where Dynamic SQL can help.
 

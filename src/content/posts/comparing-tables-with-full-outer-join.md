@@ -24,7 +24,7 @@ Once you have aligned them to the same grain, you can now join on the respective
 
 You could also leverage a hashing function + TO\_JSON\_ARRAY ([check my previous post](/using-bigquery-hashing-functions)) to see which rows are different in the two tables.
 
-![](/images/comparing-tables-with-full-outer-join/1.jpg)
+![BigQuery SQL comparing trends\_us\_prod and trends\_us\_dev with a FULL OUTER JOIN on refresh\_date, week, dma\_id and term, using COUNTIF, COUNT(DISTINCT CASE WHEN ...) and FARM\_FINGERPRINT(TO\_JSON\_STRING(...)); results show 3954227 rows missing from prod, 3956293 missing from dev and 7910520 rows\_different of 43514223.](/images/comparing-tables-with-full-outer-join/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -18,7 +18,7 @@ But it turns out we have the option to specify the INCLUDE NULLS with UNPIVOT, t
 
 Let's look at an example.
 
-![](/images/using-include-nulls-with-unpivot-in-bigquery/1.png)
+![BigQuery console result showing the wide input table for UNPIVOT, with columns measurement\_date, water\_level, temperature and pressure for 2021-01-01 to 2021-01-03, a null water\_level on 2021-01-01 and a null temperature on 2021-01-02.](/images/using-include-nulls-with-unpivot-in-bigquery/1.png)
 
 This is how it would look if UNPIVOTed as usual:
 
@@ -31,7 +31,7 @@ FROM input
 UNPIVOT INCLUDE NULLS (value FOR measurement IN (water_level, temperature, pressure))
 ```
 
-![](/images/using-include-nulls-with-unpivot-in-bigquery/2.png)
+![BigQuery console result of a regular UNPIVOT into columns measurement\_date, value and measurement: only 7 rows, because the null water\_level for 2021-01-01 and the null temperature for 2021-01-02 are dropped.](/images/using-include-nulls-with-unpivot-in-bigquery/2.png)
 
 As you notice, we don't have the rows where the measurement values are NULL.
 
@@ -46,7 +46,7 @@ FROM input
 UNPIVOT INCLUDE NULLS (value FOR measurement IN (water_level, temperature, pressure))
 ```
 
-![](/images/using-include-nulls-with-unpivot-in-bigquery/3.png)
+![BigQuery console result of UNPIVOT INCLUDE NULLS with columns measurement\_date, value and measurement: all 9 rows appear, including null values for water\_level on 2021-01-01 and temperature on 2021-01-02.](/images/using-include-nulls-with-unpivot-in-bigquery/3.png)
 
 Voila! The NULL entries are here now.
 

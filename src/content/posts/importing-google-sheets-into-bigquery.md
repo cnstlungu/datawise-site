@@ -37,15 +37,15 @@ Let's see an example of how to set it up.
 
 ### Setting up a Google Sheet as an External Table
 
-![](/images/importing-google-sheets-into-bigquery/1.png)
+![Google Sheets screenshot of ExampleFile with header row FirstName, LastName, City, Country and three data rows: Jane Doe, New York, USA; Max Muller, Munich, Germany; Amelie Johnson, London, UK.](/images/importing-google-sheets-into-bigquery/1.png)
 
 We start by adding a new data source.
 
-![](/images/importing-google-sheets-into-bigquery/2.png)
+![Google Cloud BigQuery console screenshot of the Explorer panel with the + ADD button highlighted in yellow, the starting point for adding a new data source.](/images/importing-google-sheets-into-bigquery/2.png)
 
 We pick the **Google Drive** as the source.
 
-![](/images/importing-google-sheets-into-bigquery/3.jpg)
+![BigQuery console Add dialog listing popular sources (Local file, Google Cloud Storage, Connections to external data sources) and additional sources such as Analytics Hub and Amazon S3, with the Google Drive option circled in yellow.](/images/importing-google-sheets-into-bigquery/3.jpg)
 
 We provide the necessary configuration:
 
@@ -58,11 +58,11 @@ We provide the necessary configuration:
 * We provided the number of header rows to be skipped
     
 
-![](/images/importing-google-sheets-into-bigquery/4.jpg)
+![BigQuery console Create table form: source Drive with a Google Sheets URI (partly redacted), file format Google Sheet, sheet range A1:D4, dataset learning, table example\_table, table type External table, four STRING fields FirstName, LastName, City, Country, and 1 header row to skip.](/images/importing-google-sheets-into-bigquery/4.jpg)
 
 After we hit ***Create Table*** the external table is created. We can verify that the data has been properly created.
 
-* ![](/images/importing-google-sheets-into-bigquery/5.png)
+* ![BigQuery SQL SELECT \* FROM learning.example\_table LIMIT 1000 querying the new external table; results show FirstName, LastName, City and Country for Jane Doe (New York, USA), Max Muller (Munich, Germany) and Amelie Johnson (London, UK), matching the sheet.](/images/importing-google-sheets-into-bigquery/5.png)
     
 
 ### Viewing the DDL of an (external) table
@@ -78,7 +78,7 @@ FROM
  learning.INFORMATION_SCHEMA.TABLES;
 ```
 
-![](/images/importing-google-sheets-into-bigquery/6.jpg)
+![BigQuery SQL selecting table\_name and ddl from learning.INFORMATION\_SCHEMA.TABLES WHERE table\_name = 'example\_table'; the result's ddl column starts with CREATE EXTERNAL TABLE followed by a partly redacted project name and .learning.example\_table.](/images/importing-google-sheets-into-bigquery/6.jpg)
 
 ```sql
 CREATE EXTERNAL TABLE `learning.example_table`

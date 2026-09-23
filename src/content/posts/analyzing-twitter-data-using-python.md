@@ -22,13 +22,13 @@ The first interesting way to look at tweets is to better understand the audience
 
 We’re looking at the 50 most common declared user locations for our dataset. It needs a little mapping exercise first.
 
-![](/images/analyzing-twitter-data-using-python/1.png)
+![Python pandas in Jupyter: value\_counts() on the user.location column, filtered to locations with at least 10 tweets; the output shows messy variants such as London 198, London, England 187, United Kingdom 184, England, United Kingdom 173 and UK 145.](/images/analyzing-twitter-data-using-python/1.png)
 
 *Locations occurring at least 10 times in our dataset*
 
 We’re going to map these entries so we can group similar entries.
 
-![](/images/analyzing-twitter-data-using-python/2.png)
+![Python dictionary named mapping that normalises Twitter user locations, e.g. 'London, England' to 'London, UK', 'England, United Kingdom' to 'England', 'UK' to 'United Kingdom' and 'Glasgow, Scotland' to 'Glasgow, UK'; the list is cut off at the bottom.](/images/analyzing-twitter-data-using-python/2.png)
 
 The mapping dictionary that we created
 
@@ -40,7 +40,7 @@ df['user.location'] =  df['user.location'].apply(lambda x: mapping[x] if x in ma
 
 Here’s how the locations will look now.
 
-![](/images/analyzing-twitter-data-using-python/3.png)
+![Python pandas in Jupyter recomputing value\_counts() on user.location after the mapping and keeping counts of 10 or more; merged locations now lead with London, UK 465, United Kingdom 329, England 246, Scotland 67 and Europe 40.](/images/analyzing-twitter-data-using-python/3.png)
 
 *Locations after processing*
 
@@ -66,7 +66,7 @@ geolocated.drop('latlong',axis=1, inplace=True)
 
 Here’s what the output looks like. We’ll use it as a lookup table.
 
-![](/images/analyzing-twitter-data-using-python/4.png)
+![Jupyter output of a pandas DataFrame used as a lookup table, with columns locat, lat and lon holding geocoded coordinates for 20 locations, e.g. London, UK at 51.489334, -0.144055 and Europe at 51.0, 10.0.](/images/analyzing-twitter-data-using-python/4.png)
 
 ### Plotting on a map
 
@@ -78,7 +78,7 @@ mapdata = pd.merge(df,geolocated, how='inner', left_on='user.location', right_on
        .sort_values(ascending=False)
 ```
 
-![](/images/analyzing-twitter-data-using-python/5.png)
+![Python pandas locations.head(10) output: tweet counts grouped by locat, lat and lon, led by London, UK with 465, United Kingdom 329, England 246, Scotland 67 and South East England 38.](/images/analyzing-twitter-data-using-python/5.png)
 
 Time for a map. We’ll use [Matplotlib](https://matplotlib.org/) and [Cartopy](https://scitools.org.uk/cartopy/docs/v0.16/) to display our data. In this simple example, we’re going to plot individual locations (can be seen as red dots on the map), as well as blue circles whose radius varies by how many tweets came from that particular place.
 
@@ -113,7 +113,7 @@ for i,x in locations.iteritems():
 plt.show()
 ```
 
-![](/images/analyzing-twitter-data-using-python/6.png)
+![Map of north-western Europe drawn with Matplotlib and Cartopy: red dots mark geocoded tweet locations and blue circles sized by tweet count, clustered heavily over England, especially London, with a few over Scotland, Wales, Ireland and France.](/images/analyzing-twitter-data-using-python/6.png)
 
 *The output of our code. Brexit is a very UK-centered issue.*
 
@@ -121,7 +121,7 @@ plt.show()
 
 Let’s continue exploring our data using the power of [Matplotlib](https://matplotlib.org/). Remember the sentiment score we computed? Let’s plot it.
 
-![](/images/analyzing-twitter-data-using-python/7.png)
+![Matplotlib histogram of tweet sentiment\_score values ranging roughly from -1.6 to 1.8; the tallest bin, about 3,200 tweets, sits just below zero, followed by about 1,550 just above zero and about 950 between -1 and -0.5.](/images/analyzing-twitter-data-using-python/7.png)
 
 *The sentiment in the tweets we’re looking at is skewed towards negative*
 
@@ -135,11 +135,11 @@ sent_clasification = pd.cut(df['sentiment_score'],\
           labels=['strongly negative', 'negative', 'positive', 'strongly positive'])
 ```
 
-![](/images/analyzing-twitter-data-using-python/8.png)
+![Python pandas value\_counts() on the binned sent\_clasification series: negative 3958, positive 2250, strongly negative 105 and strongly positive 75 tweets.](/images/analyzing-twitter-data-using-python/8.png)
 
 Results
 
-![](/images/analyzing-twitter-data-using-python/9.png)
+![Matplotlib bar chart of tweet counts per sentiment category: negative about 3,950, positive about 2,250, and strongly negative and strongly positive both around 100 or fewer.](/images/analyzing-twitter-data-using-python/9.png)
 
 *Let’s try plotting them one more time — same information but from a different perspective.*
 
@@ -152,7 +152,7 @@ plt.grid(False)
 plt.tight_layout()
 ```
 
-![](/images/analyzing-twitter-data-using-python/10.png)
+![Matplotlib pie chart of the sentiment\_score categories: negative takes roughly 60 percent, positive about a third, and strongly negative and strongly positive are thin slivers.](/images/analyzing-twitter-data-using-python/10.png)
 
 #### Word Cloud
 
@@ -171,7 +171,7 @@ plt.axis('off')
 plt.imshow(wordcloud)
 ```
 
-![](/images/analyzing-twitter-data-using-python/11.png)
+![Word cloud of processed Brexit tweet text, dominated by brexit, deal, johnson, boris, parliament, eu, uk, people, say and stop, with smaller words such as corbyn, labour, vote, trump, government and british.](/images/analyzing-twitter-data-using-python/11.png)
 
 *The output of our Word Cloud efforts*
 
@@ -189,7 +189,7 @@ hashtags = df['text'].apply(lambda x: pd.value_counts(re.findall('(#\w+)', x.low
 hashtags.columns = ['hashtag','occurences']
 ```
 
-![](/images/analyzing-twitter-data-using-python/12.png)
+![Python pandas hashtags.head(10) output with hashtag and occurences columns: #brexit 639, #blockthecoup 84, #eu 64, #revokea50 54, #stopbrexit 40, #liarjohnson 35, #peoplesvote 32, #borisjohnson 30, #fbpe 26, #nodeal 24.](/images/analyzing-twitter-data-using-python/12.png)
 
 ```python
 hashtags[:10].plot(kind='bar',y='occurences',x='hashtag')
@@ -198,7 +198,7 @@ plt.grid(False)
 plt.suptitle('Top 10 Hashtags for keyword: Brexit, language: English', fontsize=14)
 ```
 
-![](/images/analyzing-twitter-data-using-python/13.png)
+![Matplotlib bar chart titled Top 10 Hashtags for keyword: BREXIT, locale: EN, where #brexit at about 640 occurrences dwarfs #blockthecoup, #eu, #revokea50, #stopbrexit and the rest, all under 100.](/images/analyzing-twitter-data-using-python/13.png)
 
 #### Users Mentioned
 
@@ -215,7 +215,7 @@ plt.suptitle('Top 10 Users for keyword: BREXIT, locale: EN', fontsize=14)df['tex
           .plot(kind='bar')
 ```
 
-![](/images/analyzing-twitter-data-using-python/14.png)
+![Matplotlib bar chart titled Top 10 Users for keyword: BREXIT, locale: EN: @BorisJohnson is mentioned about 315 times and @joswinson about 190, followed by @Femi, @jeremycorbyn, @Doozy, @Peston, @SkyNews, @PaulBrandITV, @DavidLammy and @brexit, each under 80.](/images/analyzing-twitter-data-using-python/14.png)
 
 No surprises here really
 
@@ -243,9 +243,9 @@ words = df['processed_text'].dropna()\
 words.columns = ['word','occurences']
 ```
 
-![](/images/analyzing-twitter-data-using-python/15.png)
+![Python pandas words.head(10) output with word and occurences columns: brexit 1490, deal 483, johnson 354, eu 272, uk 186, boris 184, get 166, people 154, mps 138 and would 133.](/images/analyzing-twitter-data-using-python/15.png)
 
-![](/images/analyzing-twitter-data-using-python/16.png)
+![Matplotlib bar chart titled Top 10 Words for keyword: BREXIT, locale: EN: brexit leads with about 1,490 occurrences, then deal about 480, johnson 350 and eu 270, with uk, boris, get, people, mps and would between roughly 130 and 190.](/images/analyzing-twitter-data-using-python/16.png)
 
 *Top 10 words used*
 
@@ -261,14 +261,14 @@ bigramseries = pd.Series([word for sublist in df['processed_text'].dropna()\
                     .value_counts()
 ```
 
-![](/images/analyzing-twitter-data-using-python/17.png)
+![Python pandas bigrams.head(10) output of the most common word pairs: (deal, brexit) 532, (boris, johnson) 364, (brexit, deal) 102, (abuse, power) 96, (gravest, abuse) 96, down to (power, living) 80.](/images/analyzing-twitter-data-using-python/17.png)
 
 ```python
 plt.suptitle('Top 10 Bigrams for keyword: BREXIT, locale: EN', fontsize=18)
 bigramseries[:10].plot(kind='bar')
 ```
 
-![](/images/analyzing-twitter-data-using-python/18.png)
+![Matplotlib bar chart titled Top 10 Bigrams for keyword: BREXIT, locale: EN: (deal, brexit) at about 530 and (boris, johnson) at about 365 far exceed the rest, such as (brexit, deal), (abuse, power) and (shutting, parliament), all between 80 and 100.](/images/analyzing-twitter-data-using-python/18.png)
 
 ### Conclusion
 

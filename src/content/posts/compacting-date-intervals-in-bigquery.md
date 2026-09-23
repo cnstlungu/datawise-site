@@ -18,7 +18,7 @@ Problem statement: compacting a SCD-2 table, essentially finding intervals that 
 
 This particular input data guarantees these intervals cannot overlap (at the same grain), but there can be gaps. We're also talking about \[left-inclusive, right-exclusive) intervals.
 
-![](/images/compacting-date-intervals-in-bigquery/1.jpg)
+![BigQuery SQL compacting SCD-2 intervals in four steps: FARM\_FINGERPRINT of the flags as hash\_val, LAG over a named WINDOW to flag is\_new\_segment, a running SUM as segment\_id, then MIN(valid\_from) and MAX(valid\_to) per segment; adjacent rows with equal flags merge, e.g. into 2021-01-12 to 2021-01-25.](/images/compacting-date-intervals-in-bigquery/1.jpg)
 
 Here's a breakdown of how it all works:
 

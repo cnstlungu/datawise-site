@@ -34,7 +34,7 @@ Based on what columns you've indexed, you can leverage the search index to searc
 
 Check the 'Job Information' of your BigQuery. This will tell if you if an index was used, and if not, what was the reason.
 
-![](/images/search-indexes-in-bigquery/1.jpg)
+![BigQuery console Job information for SELECT \* FROM learning\_us.top\_search\_terms\_us WHERE STARTS\_WITH(term, 'Gray') before and after CREATE SEARCH INDEX term\_search\_index on term: bytes processed drop from 11.45 GB to 368.81 MB, slot ms from 7408 to 980, and Index Usage Mode goes from UNUSED to FULLY\_USED.](/images/search-indexes-in-bigquery/1.jpg)
 
 ### Further reading
 

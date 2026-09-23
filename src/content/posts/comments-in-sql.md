@@ -28,6 +28,6 @@ With regards to the notation, we have:
 
 How much are you using comments in your SQL code and in what situations?
 
-![](/images/comments-in-sql/1.jpg)
+![BigQuery SQL on an orderline\_updates CTE demonstrating comment styles: a full-line -- comment, inline -- and # comments after columns, an inline /\* \*/ comment followed by AS total\_quantity, and a multi-line /\* \*/ block before FROM; the query returns four order lines normally.](/images/comments-in-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

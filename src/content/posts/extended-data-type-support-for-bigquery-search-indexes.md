@@ -24,6 +24,6 @@ I’ve played a bit with it but still haven’t managed to get the index to be u
 
 Does anyone use this feature in the real world?
 
-![](/images/extended-data-type-support-for-bigquery-search-indexes/1.jpg)
+![BigQuery SQL CREATE SEARCH INDEX test\_index on auxiliary.sample\_logs(event\_details, json\_payload) with OPTIONS data\_types STRING, INT64, TIMESTAMP; job details show Index Usage Mode UNUSED (data too small), and INFORMATION\_SCHEMA.SEARCH\_INDEXES shows coverage\_percentage 0, LOG\_ANALYZER.](/images/extended-data-type-support-for-bigquery-search-indexes/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*

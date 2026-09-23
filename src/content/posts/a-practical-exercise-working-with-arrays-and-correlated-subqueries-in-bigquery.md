@@ -18,7 +18,7 @@ Say we have a table events that represents some events, together with the city a
 
 We'd like to look up some meteorological information in a separate table, holding information about weather alerts (type and their duration). We would want to compute a variety of metrics with that.
 
-![](/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1.jpg)
+![BigQuery SQL on weather\_alerts and events tables: ARRAY\_AGG(STRUCT(alert\_name, valid\_from, valid\_to)) GROUP BY city\_id, then a correlated subquery over UNNEST(aa.alerts) returns a STRUCT of COUNTIF and COUNT(DISTINCT CASE WHEN) metrics per event, e.g. Pop Concert had\_heatwave\_prior true.](/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1.jpg)
 
 Simply joining the two won't cut it - each metric can have a complex calculation logic. Maybe join the weather\_alerts table multiple times? But what if we have 10 different metrics?
 

@@ -18,6 +18,6 @@ This should help quite a bit if you're working with data distributed across mult
 
 A couple of years ago, when facing the same task, I had to resort to setting up recurring BigQuery Transfer Service jobs to move data across regions.
 
-![](/images/replicating-datasets-across-regions-in-bigquery/1.jpg)
+![BigQuery console Dataset replicas (Preview) screens: the Create replica panel for dataset learning in EU with Multi-region US selected as replica location, and the Replicas list afterwards showing a US Secondary replica from June 11, 2024 next to the EU Primary.](/images/replicating-datasets-across-regions-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -30,6 +30,6 @@ One can of course do the same with a CASE WHEN statement, but this way looks pre
 
 Check out a representative example below.
 
-![](/images/using-rangebucket-in-bigquery/1.jpg)
+![BigQuery SQL applying RANGE\_BUCKET(num, ...) with boundaries 0, 5, 10, 20, 100 to an UNNEST of numbers from -1 to 40 plus NULL; results: -1 goes to bucket 0, 2 to 1, 5 and 9 to 2, 10, 14 and 15 to 3, 40 to 4, and NULL gives a NULL bucket.](/images/using-rangebucket-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

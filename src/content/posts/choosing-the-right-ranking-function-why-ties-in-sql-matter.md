@@ -22,7 +22,7 @@ Check out [my previous post](/comparing-ranking-functions-in-bigquery) a quick o
 
 Now, let me share a scenario.
 
-![](/images/choosing-the-right-ranking-function-why-ties-in-sql-matter/1.png)
+![Tables comparing the first event per user\_id: User1 has events A and B both at 2024-02-12 08:00:00, so ROW\_NUMBER returns one row per user (User1 A, User2 A) and hides the tie, while DENSE\_RANK returns User1 A, User1 B and User2 A.](/images/choosing-the-right-ranking-function-why-ties-in-sql-matter/1.png)
 
 We want to find the first event type for each user. Simple enough, right?  
 But in this case we can have two events happening at the exact same time.

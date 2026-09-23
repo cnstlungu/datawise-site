@@ -45,6 +45,6 @@ GROUP BY cntry
 
 Lesson learned (for now).
 
-![](/images/heres-how-group-by-works-differently-across-sql-dialects/1.jpg)
+![SQL Server vs BigQuery GROUP BY on input\_data (amount, country NULL, UK, N/A): BigQuery GROUP BY country uses the IFNULL(country, 'N/A') alias, giving N/A 4 and UK 2, as does grouping by the expression, while SQL Server GROUP BY country uses the raw column and returns N/A twice, 3 and 1.](/images/heres-how-group-by-works-differently-across-sql-dialects/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

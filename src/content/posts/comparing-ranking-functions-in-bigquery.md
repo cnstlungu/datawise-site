@@ -36,7 +36,7 @@ FROM input_data
 WINDOW country_sales AS (PARTITION BY country ORDER BY sales_usd DESC)
 ```
 
-![](/images/comparing-ranking-functions-in-bigquery/1.png)
+![Result table comparing ranking functions for French stores ordered by sales\_usd: FR01 and FR03 tie at 150000 and get row\_no 3 and 4 but dense\_rnk 3 and rnk 3 each; the next store, FR05, gets row\_no 5, dense\_rnk 4 and rnk 5, showing the gap RANK leaves after ties.](/images/comparing-ranking-functions-in-bigquery/1.png)
 
 Thanks for reading!
 

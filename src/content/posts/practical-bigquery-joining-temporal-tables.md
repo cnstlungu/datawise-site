@@ -109,7 +109,7 @@ Let’s try and decompose this problem. In the below representation, I’ve mark
 
 For instance, the value ***a1*** has full overlap with value ***c1*** , but limited overlap with values ***b1*** and ***c2*.**
 
-![](/images/practical-bigquery-joining-temporal-tables/1.png)
+![Diagram of validity intervals in three tables on a shared timeline: table\_a has a1 and a2 and ends early, table\_b starts later with b1, b2 and b3, and table\_c spans the whole range as c1, c2 and c3; red markers show the interval boundaries do not line up across tables.](/images/practical-bigquery-joining-temporal-tables/1.png)
 
 Graphical representation of the issue
 

@@ -23,7 +23,7 @@ In the a quick walk-through below, we're looking at the following functions:
 
 Notice how we're using the inside context managers (the 'with' block , check out the comments for a quick intro on them). This means the file will be automatically cleaned up upon exiting (default behavior), unless we specify delete=False at creation.
 
-![](/images/using-tempfile-module-in-python/1.jpg)
+![Python tempfile\_demo.py using with blocks for tempfile.NamedTemporaryFile(mode='w+t'), tempfile.TemporaryFile with seek(0) and read(), and tempfile.TemporaryDirectory() plus os.path.join to write tempfile.txt; comments show the generated paths under /var/folders and the file content Hello world!](/images/using-tempfile-module-in-python/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

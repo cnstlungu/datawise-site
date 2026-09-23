@@ -18,6 +18,6 @@ Splitting a string in BigQuery works pretty much the same as in Excel.
 
 You can access them using the 0-based index or check out [my previous post](/accessing-array-elements-in-bigquery) on more options for accessing array elements in BigQuery.
 
-![](/images/splitting-a-string-in-bigquery/1.jpg)
+![BigQuery SQL using SPLIT('a, b, c', ', ') with 0-based indexes 0, 1 and 2 to return first\_element a, second\_element b and third\_element c, shown beside Excel, where a TEXTSPLIT formula splits the same text into cells a, b and c.](/images/splitting-a-string-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

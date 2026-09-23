@@ -35,6 +35,6 @@ I make use of LOGICAL\_AND and LOGICAL\_OR for that.
 As usual, one can achieve the same results using MIN and MAX, since:  
 \- MIN(\[TRUE,..., FALSE\]) = FALSE AND MAX(\[TRUE,..., FALSE\]) = MAX.
 
-![](/images/another-look-at-logicaland-logicalor-in-bigquery/1.jpg)
+![BigQuery SQL on customer orders (is\_paid, is\_shipped) with GROUP BY customer\_id: LOGICAL\_AND(is\_paid) AS all\_orders\_paid, LOGICAL\_OR(NOT is\_shipped) AS outstanding\_orders, and LOGICAL\_OR on olives ordered after DATE\_SUB(CURRENT\_DATE(), INTERVAL 3 MONTH); Customer 1 is true for all three.](/images/another-look-at-logicaland-logicalor-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*https://www.notjustsql.com*](https://www.notjustsql.com/)*.*

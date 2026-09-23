@@ -19,15 +19,15 @@ The explanation given is that the `ORDER BY` is allowed to drop everything excep
 
 Sure enough, I did give it a try on some sample data.
 
-![](/images/de-duplicating-with-rownumber-vs-arrayagg/1.png)
+![BigQuery result grid of the sample data used for the de-duplication test, with columns id, value and ds\_date: 25 rows of random ids such as 37, 75 and 2 with single-digit values, all dated 2020-12-18.](/images/de-duplicating-with-rownumber-vs-arrayagg/1.png)
 
 In the below example, we'd like to pick the latest date available per id. The `ROW_NUMBER` example is pretty straightforward - we partition by id and order by `ds_date` decreasingly, then use the `QUALIFY` clause to keep only the record we want.
 
-![](/images/de-duplicating-with-rownumber-vs-arrayagg/2.png)
+![BigQuery SQL de-duplicating learning.data\_source with QUALIFY ROW\_NUMBER() OVER (PARTITION BY id ORDER BY ds\_date DESC) = 1; the Execution Details tab shows 3 sec elapsed, 20 min 19 sec slot time consumed and 8.77 MB bytes shuffled.](/images/de-duplicating-with-rownumber-vs-arrayagg/2.png)
 
 The `ARRAY_AGG` example, while looking a bit more intimidating, does the same thing.
 
-![](/images/de-duplicating-with-rownumber-vs-arrayagg/3.png)
+![BigQuery SQL de-duplicating with a last\_events CTE using SELECT AS VALUE ARRAY\_AGG(t ORDER BY t.ds\_date DESC LIMIT 1) with OFFSET(0) FROM learning.data\_source GROUP BY id; Execution Details show 2 sec elapsed, 8 min 8 sec slot time consumed and 33.94 MB bytes shuffled.](/images/de-duplicating-with-rownumber-vs-arrayagg/3.png)
 
 It turns out that the recommendation holds - slot time for the ARRAY\_AGG version was only 40% of the ROW\_NUMBER. Another day, another lesson learned.
 

@@ -20,4 +20,4 @@ This is also the engine behind BigQuery's caching behavior: if you run the exact
 
 **One caveat worth knowing:** if your result set exceeds **10 GB** (that's the output, not the data scanned), it won't be cached. So for very large result sets, you'll want to write results to a permanent table explicitly.
 
-![](/images/bigquery-saves-your-query-results-here-s-how-to-find-them/1.png)
+![BigQuery console screenshot: a GROUP BY ALL query on learning\_us.trends\_us\_prod lists Destination table as Temporary table under Job information, and an arrow leads to querying that anonymous \_a85a60... dataset table, which processes 0 B and returns the same dma\_name results.](/images/bigquery-saves-your-query-results-here-s-how-to-find-them/1.png)

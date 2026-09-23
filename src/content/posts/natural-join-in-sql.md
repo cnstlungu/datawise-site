@@ -18,7 +18,7 @@ So what's special about it? Well, it joins the tables based on columns that have
 
 Watch out because if there are no columns with the same name and datatype, it defaults to a Cartesian product is produced (which is what CROSS JOIN does).
 
-![](/images/natural-join-in-sql/1.jpg)
+![SQL with stores (store\_id, store\_name) and employees (employee\_id, store\_id) CTEs joined via NATURAL JOIN with no ON clause, matching on the shared store\_id column; the result pairs employees 1, 2, 3 with Flagship store - NY, Main St. - LA and Michigan Ave. - Chicago.](/images/natural-join-in-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

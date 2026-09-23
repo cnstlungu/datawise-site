@@ -70,7 +70,7 @@ LAG(attribute_hash) OVER (PARTITION BY ID ORDER BY Snapshot_Date) <> attribute_h
 FROM compute_hash
 ```
 
-![](/images/using-bigquery-hashing-functions/1.png)
+![BigQuery result grid with ID, Name, City, Salary, Snapshot\_Date and a truncated ChangedSinceLastSnapshot flag: null on each ID's first snapshot, true when John Doe moves from Berlin to New York, false for an unchanged Jessica Taylor row and true when she moves from Paris to London.](/images/using-bigquery-hashing-functions/1.png)
 
 3\. Ever had to write a MERGE statement where you need to compare 12 different attributes between source and target? Concatenate the attributes and pass them on to a function like FARM\_FINGERPRINT and compare the outputs to see if there was any change. Even better if you have a hash like that already computed in each of the tables (staging source and target).
 
@@ -134,7 +134,7 @@ SELECT t.*, FARM_FINGERPRINT(TO_JSON_STRING(t)) AS row_hash
 FROM learning.Customers AS t;
 ```
 
-![](/images/using-bigquery-hashing-functions/2.png)
+![BigQuery SQL hashing entire rows with SELECT t.\*, FARM\_FINGERPRINT(TO\_JSON\_STRING(t)) AS row\_hash FROM learning.Customers AS t; results list the four customers with an extra row\_hash column of large signed integers, shown truncated.](/images/using-bigquery-hashing-functions/2.png)
 
 Thanks for reading!
 

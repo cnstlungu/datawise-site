@@ -22,7 +22,7 @@ What are they and when to use them?
 
 See below a representative example.
 
-![](/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1.jpg)
+![BigQuery SQL comparing IFNULL(value\_a, default\_value), COALESCE(value\_a, value\_b, default\_value) and NULLIF(maybe\_empty\_string, '') on NULL strings and an empty string; ifnull\_example and coalesce\_example return default value, while nullif\_example returns null.](/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

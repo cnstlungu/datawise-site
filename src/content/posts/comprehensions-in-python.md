@@ -22,7 +22,7 @@ See below a quick worksheet with examples of common comprehensions in Python, ap
 
 Thanks for reading!
 
-![](/images/comprehensions-in-python/1.jpg)
+![Python worksheet of comprehensions for squaring numbers, each beside its for-loop equivalent: a list comprehension, one filtered with if i%2==0, a dictionary comprehension, a set comprehension on a list with duplicates, a note that there are no tuple comprehensions, and a generator expression versus a yield function.](/images/comprehensions-in-python/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

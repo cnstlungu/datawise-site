@@ -19,4 +19,4 @@ WHERE is now supported in preview (yes, I'm the tenth person posting it). It fil
   
 Sure, you could solve most of this before with SUM(CASE WHEN ... END), a classic SQL interview question. To me, a WHERE like this is more intuitive and pleasing to the eye. Very BigQuery!
 
-![](/images/using-where-inside-aggregate-functions/1.png)
+![BigQuery SQL on a sales table (year, country, amount, category) with WHERE inside each aggregate: SUM(amount WHERE category = 'fruit'), AND and IN ('FR', 'NL') conditions, and MAX(amount WHERE ...); the JSON result shows total\_sales 161, fruit\_all\_time\_sales 78 and highest\_yearly\_nl\_vegetable\_sales 21.](/images/using-where-inside-aggregate-functions/1.png)

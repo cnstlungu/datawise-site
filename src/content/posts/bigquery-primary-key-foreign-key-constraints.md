@@ -20,7 +20,7 @@ However, after some research, I found a [blog post](https://cloud.google.com/blo
 
 I decided to test this. Using a data\_source table (~400k rows) partitioned by date and clustered by id, I needed to look up a unique identifier from another table.
 
-![](/images/bigquery-primary-key-foreign-key-constraints/1.jpg)
+![BigQuery console Preview tabs of two tables side by side: lookup\_table with columns id and unique\_identifier (UUID strings) and data\_source with columns id, value and ds\_date, in the sample rows every id is 1.](/images/bigquery-primary-key-foreign-key-constraints/1.jpg)
 
 ```python
 ALTER TABLE testing.lookup_table ADD PRIMARY KEY (id) NOT ENFORCED;
@@ -28,11 +28,11 @@ ALTER TABLE testing.data_source ADD PRIMARY KEY (id, ds_date) NOT ENFORCED,
 ADD FOREIGN KEY(id) references testing.lookup_table(id) NOT ENFORCED;
 ```
 
-![](/images/bigquery-primary-key-foreign-key-constraints/2.jpg)
+![BigQuery console Schema tabs side by side: data\_source has id INTEGER keyed PK/FK, value INTEGER and ds\_date DATE keyed PK, while lookup\_table has id INTEGER keyed PK and unique\_identifier STRING, all NULLABLE.](/images/bigquery-primary-key-foreign-key-constraints/2.jpg)
 
 I compared query results from two tables without constraints (learning dataset) to their replicas with constraints (testing dataset), ensuring cached results were disabled.
 
-![](/images/bigquery-primary-key-foreign-key-constraints/3.jpg)
+![BigQuery SQL side by side, cache disabled: SELECT id, MAX(ds\_date), MIN(ds\_date) joining data\_source to lookup\_table USING (id) GROUP BY id. With constraints (testing) it took 212 ms, 91 ms slot time, 3.55 KB shuffled; without (learning) 2 sec, 18 min 9 sec, 7.19 MB.](/images/bigquery-primary-key-foreign-key-constraints/3.jpg)
 
 From my tests, the queries using tables with constraints showed a significant efficiency boost. While they're not a one-size-fits-all solution, it's evident that Primary and Foreign Key constraints can influence performance (as showcased in the aforementioned article).
 

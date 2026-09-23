@@ -26,7 +26,7 @@ Well, WITH expressions have the potential to help in the same way — but for no
 When working with complex formulas, you can’t reference (within the same SELECT) a column you just defined. The usual workaround is to push it into another CTE — which works, but feels verbose. I still opted to do it since it's important that the code stayed readable and maintainable.  
 Now WITH expressions give us a cleaner option and help avoid those 7-operand expressions. I, for one, plan on trying them out ASAP.
 
-![](/images/with-expressions-in-bigquery/1.jpg)
+![BigQuery SQL using a WITH expression inside SELECT to define discounted\_price and price\_incl\_tax as local variables, then compute quantity \* price\_incl\_tax AS sales\_amount from input\_data; results are 514.25, 255.552 and 163.35 for products 1 to 3.](/images/with-expressions-in-bigquery/1.jpg)
 
 Has anyone here used them already? Any thoughts? Docs [here](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression).
 

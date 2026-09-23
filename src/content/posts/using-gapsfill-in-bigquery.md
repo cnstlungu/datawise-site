@@ -29,6 +29,6 @@ Since it's a table-valued function, it acts like a table so you select FROM it.
 
 Obligatory remark that this is in 'Preview' for now.
 
-![](/images/using-gapsfill-in-bigquery/1.jpg)
+![BigQuery SQL filling a transaction\_date column with gaps (2021-01-01, 01-03, 01-05) two ways: the GAP\_FILL table function with TABLE learning.dates\_with\_gaps, 'transaction\_date' and INTERVAL 1 DAY, and a bounds CTE with GENERATE\_DATE\_ARRAY and LEFT JOIN; both return all five dates.](/images/using-gapsfill-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*

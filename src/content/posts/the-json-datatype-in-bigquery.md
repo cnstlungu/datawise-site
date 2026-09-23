@@ -31,7 +31,7 @@ Defining our JSON objects as such will allow us to use JSON functions with them 
 
 Stay tuned for the next posts on this topic.
 
-![](/images/the-json-datatype-in-bigquery/1.jpg)
+![BigQuery SQL creating the same JSON object five ways: a JSON literal in triple quotes, PARSE\_JSON on an escaped string, TO\_JSON(STRUCT(name, city, sports)), JSON\_OBJECT with key-value pairs and JSON\_ARRAY(sports); the results show identical name, city and sports objects plus a nested array.](/images/the-json-datatype-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

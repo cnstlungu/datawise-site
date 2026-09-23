@@ -28,7 +28,7 @@ We'll use the AVG aggregation function with a window function call, ORDER BY bir
 
 To illustrate why the ROWS would not work here, look at the results for 1991. Since there's two athletes born in 1991, the ROWS clause would include only the previous row (also born in 1991) and the next row (born in 1992), thus missing the mark. Check the result in neighbours\_average vs neighbours\_average\_wrong.
 
-![](/images/using-range-in-window-functions-in-bigquery/1.jpg)
+![BigQuery SQL on athlete finish times comparing AVG(finish\_time) OVER (ORDER BY birth\_year RANGE BETWEEN 1 PRECEDING AND 1 FOLLOWING) with the same frame using ROWS; for the two athletes born in 1991, neighbours\_average is 117.5 while neighbours\_average\_wrong gives 120.0 and 116.67.](/images/using-range-in-window-functions-in-bigquery/1.jpg)
 
 RANGE comes with a limitation though - you can only order by a single numerical column.
 

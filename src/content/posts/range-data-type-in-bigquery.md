@@ -36,6 +36,6 @@ Again, since this is still in preview it is not yet ready to use used in product
 
 See below an illustration of how it is used.
 
-![](/images/range-data-type-in-bigquery/1.jpg)
+![BigQuery SQL building three date RANGE values and applying RANGE\_OVERLAPS, RANGE\_INTERSECT, RANGE\_START, RANGE\_END and RANGE\_CONTAINS; the JSON result shows range\_a and range\_b overlap with intersection 2021-03-01 to 2021-04-01, and range\_a contains range\_c and 2021-01-15.](/images/range-data-type-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

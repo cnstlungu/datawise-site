@@ -19,57 +19,57 @@ In this quick exercise, we’re going to illustrate a simple use case — lo
 
 Let’s set up the appropriate accounts and permissions. For this job, we’ve created a service account and assigned it the role “Big Query Job User”
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/1.png)
+![Google Cloud IAM project roles screenshot showing the service account mini-sa granted the BigQuery Job User role, which it needs to run BigQuery load jobs.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/1.png)
 
 Project roles for our service account
 
 We’re also granted permission to the same service account to the Google Cloud Storage bucket from where we intend to load data from.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/2.png)
+![Google Cloud Storage bucket permissions for the service account mini-sa, which holds the Storage Legacy Bucket Reader and Storage Legacy Object Reader roles on the source bucket.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/2.png)
 
 Bucket permissions for the service account
 
 Next, we need to create a destination BigQuery dataset and provide the service account “Big Query Data Editor” role on it. Note that the dataset needs to be in the same GCP region (or multi-region) as the bucket load our data into.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/3.png)
+![BigQuery Dataset Permissions panel for the destination dataset, with Show inherited permissions switched on and the BigQuery Data Editor role (2) granted to Editors of project and the mini-sa service account.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/3.png)
 
 BigQuery Destination dataset permissions
 
 Now, let’s have a look at our file — a regular comma-delimited CSV, with the first row being the header row.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/4.png)
+![Spreadsheet import preview of the orders CSV with columns date, order\_id, product\_id, price, quantity and amount: nine rows dated 2022-09-01 for order\_id 1 to 5, e.g. product 100 at price 4.5, quantity 2, amount 9.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/4.png)
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/5.png)
+![CSV file in a text editor: header row date,order\_id,product\_id,price,quantity,amount followed by nine comma-delimited sales rows dated 2022-09-01, such as 2022-09-01,1,100,4.5,2,9.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/5.png)
 
 By our legend, this file follows the below naming convention, with the first part being the date of the sale.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/6.png)
+![Google Cloud Storage bucket listing with two CSV files named by sale date, 20220901\_orders.csv and 20220902\_orders.csv, showing the date-prefixed naming convention.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/6.png)
 
 All good, now let’s get to the workflow itself.
 
 #### Creating the workflow
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/7.png)
+![Google Cloud console Workflows page in project learning-by-doing-gcp with no workflows yet: the No workflows to display message, CREATE and START TUTORIAL buttons, and a New feature: Parallel Steps preview banner.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/7.png)
 
 In the dialog box we are presented, we give our workflow a name, pick the region and a service account (same as the one that we granted permissions above) to run the workflow under.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/8.png)
+![Cloud Workflows create form: workflow name load-gcs-data, region europe-west6 (Zurich) and service account mini-sa, with an empty description and optional Labels and Triggers sections offering Add label and Add new trigger.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/8.png)
 
 If, let’s say, we’d like to read the file every day, that is — run the workflow on a particular schedule, we can create a Cloud Scheduler Trigger. This would automatically run the workflows at the given cadence.
 
 Note that the project-level role “Workflows Invoker” needs to be attached to the service account triggering the Workflow.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/9.png)
+![Google Cloud Create a Cloud Scheduler job dialog for the workflow trigger: name daily-12am-utc, region europe-west6 (Zurich), frequency 0 12 \* \* \* in unix-cron format, timezone UTC, workflow argument {}, No logs call level and service account mini-sa.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/9.png)
 
 A workflow with a trigger would look as follows
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/10.png)
+![Cloud Workflows create form for load-gcs-data (europe-west6, service account mini-sa) with a Cloud Scheduler trigger added: daily-12am-utc on schedule 0 12 \* \* \*, timezone Etc/UTC, region europe-west6, above the Next button.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/10.png)
 
 #### Creating the steps
 
 We now have the Workflow development window, where we can write the definition for our workflow in YAML-esque syntax. If you aren’t familiar with Workflow syntax, a good place to start is the [Workflows tutorials page](https://cloud.google.com/functions/docs/tutorials). Also, note the pane on the right side, illustrating our control flow
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11.png)
+![Cloud Workflows editor with the default sample workflow in YAML (steps checkSearchTermInInput with a switch, getCurrentTime and readWikipedia using http.get, setFromCallResult, returnOutput) and the Visualization pane drawing those steps as a flowchart from START.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11.png)
 
 We now need the build the workflow logic. For this exercise, we’ll need to check the configuration options we can set up for the BigQuery job, documented at the following link
 
@@ -124,7 +124,7 @@ The below code will:
 
 BigQuery has auto-detected the column types and loaded the data.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/12.png)
+![BigQuery schema tab of the sales\_autodetect table loaded with schema auto-detection: date DATE, order\_id INTEGER, product\_id INTEGER, price FLOAT, quantity INTEGER and amount FLOAT, all NULLABLE.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/12.png)
 
 If we were to choose to provide the schema to the job, we can do the following:
 
@@ -174,7 +174,7 @@ If we were to choose to provide the schema to the job, we can do the following:
 
 Upon execution, this produces the following result.
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/13.png)
+![BigQuery query result of the table loaded with a provided schema: columns date, order\_id, product\_id, price, quantity and amount across nine 2022-09-02 rows, e.g. order 6 buying product 100 at price 4.5, quantity 3, amount 13.5.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/13.png)
 
 What if we have a slightly more advanced use case, and would like to read hundreds of files, which can be quite big, into a partitioned table? The code could look something like the one below.
 
@@ -233,9 +233,9 @@ Notice the following:
 
 We now have a partitioned table
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/14.png)
+![BigQuery sales table page with the notice This is a partitioned table; the schema tab lists date DATE, order\_id INTEGER, product\_id INTEGER, price NUMERIC, quantity INTEGER and amount NUMERIC, all NULLABLE.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/14.png)
 
-![](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15.png)
+![BigQuery SQL on the partitioned sales\_data.sales table selecting date AS SalesDate, count(distinct order\_id) AS CountOrders and sum(Amount) AS TotalAmount, GROUP BY date; results show 2022-09-02 with 5 orders and 135.8, and 2022-09-01 with 5 orders and 93.7.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15.png)
 
 #### Conclusion
 

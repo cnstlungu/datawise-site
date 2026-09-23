@@ -14,7 +14,7 @@ hashnodeCuid: "clo75i491000509mj221s3n2x"
 
 It should be no surprise that understanding your data is very important when working with it. The initial step in my approach to a new dataset always involves examining the data closely. Although the `Schema Tab` reveals the data schema, to grasp the contents, identify missing data, spot potential issues, and review the cardinality of values, taking a look at the data is unavoidable.
 
-![Schema tab for a table in BigQuery](/images/table-sampling-in-bigquery/1.png)
+![BigQuery console screenshot of the Schema tab for the partitioned table data\_source, listing three NULLABLE fields: id INTEGER, value INTEGER and ds\_date DATE, next to the Details, Preview, Lineage, Data Profile and Data Quality tabs.](/images/table-sampling-in-bigquery/1.png)
 
 Then comes the issue of cost.
 
@@ -26,13 +26,13 @@ There are a couple of ways around that.
 
 The simplest is the `PREVIEW` button, which allows us to see a subset of rows from this particular table. This does not incur any charges.
 
-![Preview Tab](/images/table-sampling-in-bigquery/2.png)
+![BigQuery console screenshot of the Preview tab for the partitioned data\_source table, showing a free, scrollable subset of rows (rows 67 to 88 visible) with columns id, value and ds\_date, all dated 2020-12-18.](/images/table-sampling-in-bigquery/2.png)
 
 ### Partitioning
 
 Another way would be leveraging partitions in a partitioned table. By selecting one particular partition in such a table we will achieve partition elimination - BigQuery will ignore all other partitions (dates) and process only the one we are providing, achieving a cost saving for us.
 
-![Reading one partition from a partitioned table](/images/table-sampling-in-bigquery/3.png)
+![BigQuery SQL selecting all columns from learning.data\_source with a WHERE filter on ds\_date = 2022-01-01 so only one partition is read; the results grid lists rows with id, value and ds\_date, every row dated 2022-01-01.](/images/table-sampling-in-bigquery/3.png)
 
 ### Sampling
 
@@ -50,9 +50,9 @@ TABLESAMPLE SYSTEM (1 PERCENT)
 
 Using this, from my table of ~400k rows the query returned 4k rows.
 
-![](/images/table-sampling-in-bigquery/4.png)
+![BigQuery console Storage info panel for the table, showing Number of rows 399,803, the roughly 400k-row table used to test table sampling.](/images/table-sampling-in-bigquery/4.png)
 
-![](/images/table-sampling-in-bigquery/5.png)
+![BigQuery console results pager showing Results per page 50 and 1 to 50 of 4000, meaning the TABLESAMPLE SYSTEM (1 PERCENT) query returned 4,000 rows from the roughly 400k-row table.](/images/table-sampling-in-bigquery/5.png)
 
 To summarize, employing these three strategies — Preview, Partition Filtering, and Sampling — together, significantly saves time, computational resources, and consequently, money during the exploratory stage, especially when handling big tables.
 

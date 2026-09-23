@@ -22,7 +22,7 @@ The above will return an "index out of range" error if they are out of bounds, s
 
 If you'd like to see what position each elements resides at in the array, check [WITH OFFSET](/enumerating-array-elements-in-bigquery-using-with-offset).
 
-![](/images/accessing-array-elements-in-bigquery/1.png)
+![BigQuery SQL reading elements of a letters array (a to e) with ORDINAL(2), a plain index 1, OFFSET(1), SAFE\_OFFSET(5) and SAFE\_ORDINAL(6); the first three all return b, while both safe accessors return null instead of an out-of-bounds error.](/images/accessing-array-elements-in-bigquery/1.png)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

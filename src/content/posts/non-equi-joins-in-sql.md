@@ -25,7 +25,7 @@ Moreover, sometimes we might use both equality and other operators for joining t
 
 Let's look at a simple non-equi join scenario below.
 
-![](/images/non-equi-joins-in-sql/1.jpg)
+![SQL non-equi joins from orders to campaign ON o.order\_date BETWEEN c.valid\_from AND c.valid\_to and to discounts ON o.amount \>= value\_from AND o.amount \< value\_to, computing (1-discount\_percentage)\*amount AS paid\_amount; e.g. order 3 (151, Summer 2022) gets 0.2 off and pays 120.8.](/images/non-equi-joins-in-sql/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -28,7 +28,7 @@ So yes, USING is pretty much syntactic sugar for a fairly common type of join, b
 It's worth pointing out that with USING, the columns in the clause do not need an alias for disambiguation (making clear which one of the two tables we take the column from), effectively doing the same a COALESCE of the columns in the two tables would do.  
 This helps you a little bit with FULL OUTER JOINS for example. Of course, for other columns, if there are clashes in the namespace, you do need to specify where do you want them sourced from.
 
-![](/images/joining-with-using-vs-on-in-bigquery/1.jpg)
+![BigQuery SQL joining orders to products (size, color, product\_id, variant) two ways: LEFT JOIN products p USING (product\_id, variant) lets product\_id and variant be selected unqualified, while ON o.product\_id = p.product\_id AND o.variant = p.variant needs o. prefixes; both return the same rows.](/images/joining-with-using-vs-on-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -39,7 +39,7 @@ Ultimately, this reinforced the importance of validating assumptions through rea
 
 The resource consumption varied significantly across runs (so avoid thinking in terms of precise percentages), but the relative performance rankings remained consistent. It should be also noted that these results might be different based on the querying patterns and needs.
 
-![](/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1.png)
+![BigQuery comparison of three joins from orders\_per\_store (partitioned on order\_date, clustered by order\_id): to unpartitioned order\_amounts\_unpartitioned USING (order\_id) takes 10 min 13 sec slot time, to partitioned order\_amounts USING (order\_date, order\_id) 27 min 13 sec, USING (order\_id) 41 min 47 sec.](/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

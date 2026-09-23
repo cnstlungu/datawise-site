@@ -28,7 +28,7 @@ To do this, we:
 
 We can now see that, for example, for the period between \[2023-01-05, 2023-01-08), for id = 2, B was true and A was false.
 
-![](/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1.jpg)
+![BigQuery SQL merging SCD-2 attribute timelines: anchor dates via UNION DISTINCT, date ranges via LEAD(valid\_date) OVER (PARTITION BY id ORDER BY valid\_date), a LEFT JOIN on overlapping intervals and ARRAY\_AGG(STRUCT(dt.key, dt.value)); for id 2 from 2023-01-05 to 2023-01-08, B is true and A false.](/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

@@ -28,33 +28,33 @@ Let's now walk through a practical example.
   
 First, we're going to start with a Google Cloud Storage bucket.
 
-![](/images/bigquery-object-tables-a-practical-introduction/1.png)
+![Google Cloud Storage console screenshot of the object-tables-demo-animals bucket (eu multi-region) on the Objects tab, listing four JPEG thumbnails such as NZP-20070705-593MM\_thumb.jpg, each about 38 to 43 KB with type image/jpeg.](/images/bigquery-object-tables-a-practical-introduction/1.png)
 
 These are images of animals sourced [Open Access Animals](https://www.si.edu/spotlight/open-access-animals) collection.
 
-![](/images/bigquery-object-tables-a-practical-introduction/2.png)
+![Four animal thumbnail images from the bucket shown as files: a giant panda eating bamboo, a lion cub, a tiger standing in grass and an elephant spraying water, named NZP-20070705-593MM\_thumb.jpg to NZP-20180628-596SB\_thumb.jpg.](/images/bigquery-object-tables-a-practical-introduction/2.png)
 
 Next, just like in the [BigLake tutorial](/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them) we'd need a BigQuery connection created with its service account being granted **both** `storage.objectViewer` on the bucket *and* `Vertex AI User` on the project.
 
   
 We can now create the object table:
 
-![](/images/bigquery-object-tables-a-practical-introduction/3.png)
+![BigQuery SQL creating an object table: CREATE OR REPLACE EXTERNAL TABLE learning.animals WITH CONNECTION to the eu demo-biglake-connection (project ID hidden), OPTIONS object\_metadata = 'SIMPLE' and uris gs://object-tables-demo-animals/\*.jpg; the console confirms a new table named animals.](/images/bigquery-object-tables-a-practical-introduction/3.png)
 
 Here are the fields exposed:
 
-![](/images/bigquery-object-tables-a-practical-introduction/4.png)
+![BigQuery console screenshot of the Schema tab for the animals object table (Lakehouse), listing the fields uri, generation, content\_type, size, md5\_hash and updated, plus metadata as a REPEATED RECORD and ref as a RECORD.](/images/bigquery-object-tables-a-practical-introduction/4.png)
 
-![](/images/bigquery-object-tables-a-practical-introduction/5.png)
+![BigQuery SQL SELECT \* FROM learning.animals on the object table, processing 0 B; the results have columns uri, generation, content\_type, size, md5\_hash and updated, with four gs://object-tables-demo-animals rows of type image/jpeg sized 37558 to 43079 bytes.](/images/bigquery-object-tables-a-practical-introduction/5.png)
 
 We can now create the model that we will be passing these images to.
 
-![](/images/bigquery-object-tables-a-practical-introduction/6.png)
+![BigQuery SQL creating a remote model pointing at Gemini: CREATE OR REPLACE MODEL learning.gemini\_flash REMOTE WITH CONNECTION to the eu demo-biglake-connection, with OPTIONS (endpoint = 'gemini-2.5-flash'); the project ID is blanked out.](/images/bigquery-object-tables-a-practical-introduction/6.png)
 
   
 We're going to use ML.GENERATE\_TEXT function, providing the object table to the model we've previously created to identify what animal is depicted on each image.
 
-![](/images/bigquery-object-tables-a-practical-introduction/7.png)
+![BigQuery SQL running inference over the object table with ML.GENERATE\_TEXT, passing MODEL learning.gemini\_flash, TABLE learning.animals and a STRUCT with a prompt asking what animal is depicted; ml\_generate\_text\_llm\_result AS animal\_detected returns Lion cub, Tiger, Panda and Elephant.](/images/bigquery-object-tables-a-practical-introduction/7.png)
 
 As you can see, the model correctly identified each of the animals.
 

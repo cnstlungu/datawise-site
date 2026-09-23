@@ -35,8 +35,8 @@ export function hashnodeHeadingIds(ctx) {
   };
 }
 
-// Images live in public/images/<slug>/. Give them intrinsic sizes (no layout shift) and
-// load them lazily.
+// Images live in public/images/<slug>/. Give them intrinsic sizes (no layout shift), load
+// them lazily and have Pagefind index their alt text.
 const sizeCache = new Map();
 function sizeOf(src) {
   if (!sizeCache.has(src)) {
@@ -55,20 +55,34 @@ function sizeOf(src) {
   return sizeCache.get(src);
 }
 
+const escapeAttr = (v) =>
+  String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 export const imageAttributes = {
   name: 'image-attributes',
   element: {
     filter: ['img'],
     visit(node, ctx) {
-      const src = node.properties?.src;
+      const { src, alt, title } = node.properties ?? {};
       if (typeof src !== 'string' || !src.startsWith('/images/')) return;
-      ctx.setProperty(node, 'loading', 'lazy');
-      ctx.setProperty(node, 'decoding', 'async');
       const size = sizeOf(decodeURI(src));
-      if (size && node.properties.width == null) {
-        ctx.setProperty(node, 'width', size.width);
-        ctx.setProperty(node, 'height', size.height);
-      }
+      const attrs = {
+        src,
+        alt: alt ?? '',
+        title,
+        loading: 'lazy',
+        decoding: 'async',
+        width: size?.width,
+        height: size?.height,
+        // Site search indexes the alt text, which describes the SQL in the image.
+        // Sätteri drops data-* set via setProperty, hence the raw node.
+        'data-pagefind-index-attrs': 'alt',
+      };
+      const html = Object.entries(attrs)
+        .filter(([, v]) => v != null)
+        .map(([k, v]) => `${k}="${escapeAttr(v)}"`)
+        .join(' ');
+      ctx.replaceNode(node, { type: 'raw', value: `<img ${html}>` });
     },
   },
 };

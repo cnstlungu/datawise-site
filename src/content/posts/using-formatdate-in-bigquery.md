@@ -25,6 +25,6 @@ Here's how a BigQuery solution could look like:
 
 How would your solution to such a problem look like?
 
-![](/images/using-formatdate-in-bigquery/1.jpg)
+![BigQuery SQL joining a weekly schedule CTE (day, opening\_time, closing\_time) to April 2023 dates from GENERATE\_DATE\_ARRAY ON UPPER(FORMAT\_DATE('%a', d.calendar\_date)) = s.day; results show 2023-04-01 as Sat, open 11:00 to 20:00, and weekdays 10:00 to 22:00.](/images/using-formatdate-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

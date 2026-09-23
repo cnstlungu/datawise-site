@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "rm -rf .astro node_modules/.astro && astro build && pagefind --site dist",
     "preview": "wrangler dev --port 8788",
     "check": "python3 scripts/check_parity.py"
   },

@@ -79,7 +79,7 @@ We’re going to transform this:
 
 into this:
 
-![](/images/converting-json-to-bigquery-array-and-struct/1.png)
+![BigQuery result of JSON converted to nested STRUCT and ARRAY: one row with data.team\_name teamAlpha, data.location USA, NY, New York, and repeated data.members member1 to member4 with language\_code FR, EN, DE, ES, age, and an abilities array such as football, cricket, chess.](/images/converting-json-to-bigquery-array-and-struct/1.png)
 
 For that, we’ll need to:
 
@@ -205,7 +205,7 @@ FROM UNNEST(JSON_EXTRACT_ARRAY(member, '$.abilities')) AS ability
 
 If we were to save our results to a table, the schema would look as follows:
 
-![](/images/converting-json-to-bigquery-array-and-struct/2.png)
+![BigQuery table schema of the nested result: a data RECORD holding team\_name STRING, a location RECORD (name, state, city), and a REPEATED members RECORD with member\_name, language\_code, age INTEGER and abilities as REPEATED STRING.](/images/converting-json-to-bigquery-array-and-struct/2.png)
 
 Under the right conditions — the absence of a schema drift in the source, volumes big enough to be worth the hassle, multiple nested attributes with arrays, and users trained to interact with nested data — this structure would be more efficient for storage and querying while also allowing for more discoverability of the data. One would not need to study the JSON schema anymore to understand the shape of the data, a simple look at the above schema would suffice.
 

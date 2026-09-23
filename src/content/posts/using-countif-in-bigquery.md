@@ -23,6 +23,6 @@ Of course, this would be pretty much the same as combining COUNT + CASE WHEN.
 
 See a quick example below.
 
-![](/images/using-countif-in-bigquery/1.jpg)
+![BigQuery SQL using COUNTIF(Salary \> 80000) AS count\_salaries\_over\_80k on learning.Customers with GROUP BY country; the console results show CA 1, IT 0, UK 1 and FR 0.](/images/using-countif-in-bigquery/1.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

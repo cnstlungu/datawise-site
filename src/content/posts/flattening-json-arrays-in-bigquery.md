@@ -25,7 +25,7 @@ Where I would not use it?
 
 👉 Don’t use it when the hierarchy matters. Flattening removes structural context, so you lose information about where an element came from.
 
-![](/images/flattening-json-arrays-in-bigquery/1.jpg)
+![BigQuery SQL calling JSON\_FLATTEN on a JSON literal with arrays nested up to three levels deep (1, then 2,3,4, then 5,6 and 7,8); the single result row is one flat array of the values 1 through 8.](/images/flattening-json-arrays-in-bigquery/1.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 
