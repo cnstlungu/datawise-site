@@ -437,6 +437,36 @@ picture {
 .prose pre code {
   font-family: inherit;
 }
+.code-block {
+  position: relative;
+}
+.copy-code {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font: 500 0.75rem/1.4 var(--font-sans);
+  padding: 0.2rem 0.6rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.code-block:hover .copy-code,
+.copy-code:focus-visible {
+  opacity: 1;
+}
+.copy-code:hover {
+  color: var(--text);
+}
+/* No hover on touch screens: keep the button visible. */
+@media (hover: none) {
+  .copy-code {
+    opacity: 1;
+  }
+}
 
 .tag-list {
   display: flex;
