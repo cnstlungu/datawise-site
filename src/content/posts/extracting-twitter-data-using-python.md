@@ -1,7 +1,7 @@
 ---
 title: "Extracting Twitter data using Python"
 seoTitle: "Extracting Twitter Data using Python"
-seoDescription: "Learn to extract Twitter data using Python in this tutorial"
+seoDescription: "Pull tweets with Python: set up Twitter developer credentials, search tweets with the TwitterSearch package and flatten the JSON into a pandas DataFrame."
 datePublished: 2019-08-19T21:17:27.284Z
 dateUpdated: 2026-03-02T10:51:33.587Z
 cover: "/images/extracting-twitter-data-using-python/cover.jpg"

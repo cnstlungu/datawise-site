@@ -1,7 +1,7 @@
 ---
 title: "Why you should care about partition pruning in BigQuery"
 seoTitle: "BigQuery Partition Pruning: MERGE and _PARTITIONTIME Gotchas"
-seoDescription: "DATE(_PARTITIONTIME) and MERGE ON clauses silently disable partition pruning in BigQuery, forcing a full table scan. Learn which filter patterns are safe and which ones kill your cost savings."
+seoDescription: "Filtering on DATE(_PARTITIONTIME) or inside a MERGE ON clause can silently disable partition pruning in BigQuery. See which filter patterns keep scans cheap."
 datePublished: 2024-02-22T10:05:10.891Z
 dateUpdated: 2026-04-28T08:37:15.243Z
 cover: "/images/why-you-should-care-about-partition-pruning-in-bigquery/cover.jpg"

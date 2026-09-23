@@ -2,7 +2,7 @@
 title: "BigQuery Saves Your Query Results — Here's How to Find Them"
 subtitle: ""
 seoTitle: "Where BigQuery Saves Query Results: Temporary Tables Explained"
-seoDescription: "BigQuery writes query results to temporary tables unless you choose a destination. Learn where to find them, how long they persist, and what changes when you save results explicitly."
+seoDescription: "BigQuery keeps every query result in a temporary table for 24 hours. Here's where to find it, how it powers free cached results, and the 10 GB cache limit."
 datePublished: 2026-03-05T07:34:36.444Z
 dateUpdated: 2026-04-05T20:11:28.403Z
 cover: "/images/bigquery-saves-your-query-results-here-s-how-to-find-them/cover.jpg"

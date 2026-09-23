@@ -1,7 +1,7 @@
 ---
 title: "Using Correlated Subqueries in BigQuery"
 seoTitle: "BigQuery 'Correlated Subqueries Not Supported' - How to Fix"
-seoDescription: "Fix the BigQuery error: 'correlated subqueries that reference other tables are not supported unless they can be de-correlated'. Rewrite them as joins, lateral joins, or window functions with practical examples."
+seoDescription: "Fix BigQuery's 'correlated subqueries that reference other tables are not supported' error by rewriting them as joins, window functions or LEFT JOIN UNNEST."
 datePublished: 2023-11-06T13:25:35.390Z
 dateUpdated: 2026-04-28T08:37:13.609Z
 cover: "/images/using-correlated-subqueries-in-bigquery/cover.jpg"
@@ -16,7 +16,7 @@ There are several interesting concepts in BigQuery once you get past the basics.
 
 One such concept is a correlated subquery. In this short walkthrough, we're going to look at what they are and where are they used, as well as things to pay attention to.
 
-# What are subqueries?
+## What are subqueries?
 
 When working with SQL, you might have encountered a construct like that:
 
@@ -59,11 +59,11 @@ SELECT
 FROM us_sales
 ```
 
-# What makes a subquery correlated?
+## What makes a subquery correlated?
 
 There are several scenarios for correlated subqueries, but what they have in common is the fact that it's a subquery typically executed once per row. The query optimizer can, in theory, optimize some aspects, but it remains problematic in terms of performance.
 
-## Scalar correlated subquery
+### Scalar correlated subquery
 
 Here's a **scalar correlated subquery** i.e. one that should produce one single scalar (value) since it's used in the SELECT clause.
 
@@ -86,7 +86,7 @@ Both produce the same result:
 
 ![BigQuery result grid with columns CustomerId, Salary and AverageSalary: four customers with salaries 75000, 88000, 78000 and 150000, each row showing the same AverageSalary of 97750.0 computed across all customers.](/images/using-correlated-subqueries-in-bigquery/1.png)
 
-## Filter using a correlated subquery
+### Filter using a correlated subquery
 
 Another example would be using a correlated subquery to filter out the result set.
 
@@ -128,7 +128,7 @@ QUALIFY order_total > AVG(order_total) OVER(PARTITION BY customer_id)
 
 ![BigQuery result grid with a single row, customer\_id 1, order\_id 1003 and order\_total 150: the only order above that customer's average order value, as kept by the filtering query.](/images/using-correlated-subqueries-in-bigquery/2.png)
 
-# Things to pay attention to
+## Things to pay attention to
 
 Since a correlated subquery is typically executed once per every row, they are typically resource-intensive and slower, so should be used with great caution and only when no other more suitable alternative exists.
 
@@ -217,7 +217,7 @@ While the results with this scale might look similar, the benchmark when working
 
 It's also worth pointing out that using correlated subqueries, especially complex ones, makes the query less readable and harder to understand for other team members.
 
-# Conclusion
+## Conclusion
 
 In conclusion, keep correlated subqueries as part of your toolbox but use them sparingly, based on the situation and compare them with other approaches to pick the best way to go forward.
 

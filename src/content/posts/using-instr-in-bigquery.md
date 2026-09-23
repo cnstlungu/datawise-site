@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "clvbflwmi00010al94mb9dnro"
 ---
 
-If you ever need to do something different based on the existence of a particular substring in hashtag#BigQuery, take a look at the INSTR function.
+If you ever need to do something different based on the existence of a particular substring in BigQuery, take a look at the INSTR function.
 
 It returns the 1-based index of the first occurrence of a substring (1 or more characters) in another STRING. The function returns 0 if the substring was not found.
 

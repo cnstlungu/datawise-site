@@ -1,6 +1,6 @@
 ---
 title: "Controlling ordering of NULL values in the ORDER BY clause"
-seoTitle: "BigQuery ORDER BY NULLS FIRST or LAST: Default Sort Rules Explained"
+seoTitle: "BigQuery ORDER BY: NULLS FIRST vs NULLS LAST Explained"
 seoDescription: "Learn how BigQuery sorts NULL values by default in ORDER BY, and how to override that behavior with NULLS FIRST and NULLS LAST."
 datePublished: 2024-06-05T21:34:46.691Z
 dateUpdated: 2026-04-28T08:37:18.768Z

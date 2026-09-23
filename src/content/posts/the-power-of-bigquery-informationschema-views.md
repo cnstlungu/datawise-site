@@ -1,7 +1,7 @@
 ---
 title: "The power of BigQuery INFORMATION_SCHEMA views"
-seoTitle: "BigQuery INFORMATION_SCHEMA: 12 Useful Queries for Tables, Jobs, and Storage"
-seoDescription: "Ready-to-run INFORMATION_SCHEMA queries for BigQuery tables, jobs, partitions, and storage costs. Practical examples you can copy and adapt."
+seoTitle: "BigQuery INFORMATION_SCHEMA: Jobs, Columns & Storage Queries"
+seoDescription: "Ready-to-run BigQuery INFORMATION_SCHEMA queries for jobs, columns, constraints and table storage costs. Practical examples you can copy and adapt."
 datePublished: 2023-09-25T21:33:09.386Z
 dateUpdated: 2026-04-28T08:33:42.053Z
 cover: "/images/the-power-of-bigquery-informationschema-views/cover.jpg"

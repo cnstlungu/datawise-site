@@ -70,7 +70,7 @@ hadoop version
 
 Works! Moving forward.
 
-# Permission denied (publickey,password).
+### Permission denied (publickey,password).
 
 So, everything is ready to spin off the Hadoop cluster. The only thing is when running
 

@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "cmbpl9ch9000102i870lugcnt"
 ---
 
-It turns out you can now (don't know since when though) create cross-dataset foreign key relationships in BigQuery hashtag#SQL. Previously this was only possible for tables that are in the same dataset (but there were workarounds).
+It turns out you can now (don't know since when though) create cross-dataset foreign key relationships in BigQuery SQL. Previously this was only possible for tables that are in the same dataset (but there were workarounds).
 
 While the performance gain when using these *unenforced* PK/FK constraints in general may be up for discussion, it's definitely nice to be able to see this table metadata there, including the table grain 👍
 

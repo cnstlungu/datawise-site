@@ -2,7 +2,7 @@
 title: "Parameters in BigQuery"
 subtitle: ""
 seoTitle: "BigQuery Parameters vs Variables: What's the Difference?"
-seoDescription: "Parameters and variables both hold typed values in BigQuery, but they solve different problems. Learn when to use query parameters for user input and when variables fit scripting workflows."
+seoDescription: "Query parameters and variables both hold typed values in BigQuery. Learn when to pass parameters in from outside and when to DECLARE and SET variables."
 datePublished: 2026-02-07T12:37:25.972Z
 dateUpdated: 2026-04-05T20:11:26.777Z
 cover: "/images/parameters-in-bigquery/cover.jpg"
@@ -13,7 +13,7 @@ series: "practical-sql"
 hashnodeCuid: "cmlcaud04000802jv5gzp5qxk"
 ---
 
-You can use query parameters in BigQuery hashtag#SQL (now in the console as well!) — but how are they different from variables, and when should you use each?
+You can use query parameters in BigQuery SQL (now in the console as well!) — but how are they different from variables, and when should you use each?
 
 Both parameters and variables act as placeholders and have a defined data type. The difference is where their value comes from and how they’re used.
 
