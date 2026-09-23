@@ -491,6 +491,23 @@ img {
   }
 }
 
+.related {
+  margin-top: 3rem;
+}
+.related h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+.related .post-list {
+  padding: 0;
+}
+.related .post-list li {
+  padding-block: 0.75rem;
+}
+.related .post-list a.title {
+  font-size: 1rem;
+}
+
 .author-box {
   display: flex;
   gap: 1rem;

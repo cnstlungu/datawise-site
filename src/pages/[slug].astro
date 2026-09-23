@@ -1,20 +1,24 @@
 ---
 import { render } from 'astro:content';
 import comments from '../data/comments.json';
+import PostList from '../components/PostList.astro';
 import Base from '../layouts/Base.astro';
 import { AUTHOR, SITE } from '../consts';
 import { allPosts, formatDate, type Post, postPath, readingMinutes, seriesInfo, tagName } from '../lib/posts';
+import { relatedPosts } from '../lib/related';
 
 export async function getStaticPaths() {
   const posts = await allPosts();
+  const related = relatedPosts(posts, 6);
   return posts.map((post) => {
     // Neighbours within the series, newest first like the series page.
     const inSeries = post.data.series ? posts.filter((p) => p.data.series === post.data.series && !p.data.delisted) : [];
     const i = inSeries.findIndex((p) => p.id === post.id);
-    return {
-      params: { slug: post.id },
-      props: { post, newer: i > 0 ? inSeries[i - 1] : undefined, older: i >= 0 ? inSeries[i + 1] : undefined },
-    };
+    const newer = i > 0 ? inSeries[i - 1] : undefined;
+    const older = i >= 0 ? inSeries[i + 1] : undefined;
+    // The series links already point at the neighbours; suggest other posts.
+    const alsoRead = related.get(post.id)!.filter((p) => p !== newer && p !== older).slice(0, 4);
+    return { params: { slug: post.id }, props: { post, newer, older, related: alsoRead } };
   });
 }
 
@@ -22,9 +26,10 @@ interface Props {
   post: Post;
   newer?: Post;
   older?: Post;
+  related: Post[];
 }
 
-const { post, newer, older } = Astro.props;
+const { post, newer, older, related } = Astro.props;
 const { Content } = await render(post);
 const d = post.data;
 const url = new URL(postPath(post), SITE.url).href;
@@ -134,6 +139,13 @@ const jsonLd: object[] = [
           <a class="older" href={postPath(older)}><small>Older in {series?.name} →</small>{older.data.title}</a>
         )}
       </nav>
+    )}
+
+    {related.length > 0 && (
+      <section class="related" aria-labelledby="related-title">
+        <h2 id="related-title">Related posts</h2>
+        <PostList posts={related} excerpts={false} />
+      </section>
     )}
 
     <aside class="author-box">
