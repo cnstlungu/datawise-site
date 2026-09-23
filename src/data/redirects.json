@@ -1,0 +1,77 @@
+[
+  {
+    "from": "/9-tips-on-writing-cleaner-sql-d3cb22e30302",
+    "to": "/9-tips-on-writing-cleaner-sql",
+    "status": 301
+  },
+  {
+    "from": "/preparing-for-the-aws-certified-developer-associate-exam-59de2feea659",
+    "to": "/preparing-for-the-aws-certified-developer-associate-exam",
+    "status": 301
+  },
+  {
+    "from": "/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows-679761d18998",
+    "to": "/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows",
+    "status": 301
+  },
+  {
+    "from": "/practical-bigquery-filling-in-missing-data-b3a2ea560232",
+    "to": "/practical-bigquery-filling-in-missing-data",
+    "status": 301
+  },
+  {
+    "from": "/exploring-twitter-python-transforming-twitter-data-using-python",
+    "to": "/intro-nlp-sentiment-analysis-python",
+    "status": 301
+  },
+  {
+    "from": "/exploring-twitter-data-python-extracting-twitter-data-using-python",
+    "to": "/extracting-twitter-data-using-python",
+    "status": 301
+  },
+  {
+    "from": "/explore-twitter-using-python-analyzing-the-data",
+    "to": "/analyzing-twitter-data-using-python",
+    "status": 301
+  },
+  {
+    "from": "/practical-bigquery-using-time-travel",
+    "to": "/using-bigquery-time-travel",
+    "status": 301
+  },
+  {
+    "from": "/recursive-ctes",
+    "to": "/recursive-ctes-in-bigquery",
+    "status": 301
+  },
+  {
+    "from": "/practical-bigquery-generating-a-compact-temporal-table",
+    "to": "/generating-a-compact-temporal-table-in-bigquery",
+    "status": 301
+  },
+  {
+    "from": "/practical-bigquery-joining-temporal-tables-4eb07ba111e2",
+    "to": "/practical-bigquery-joining-temporal-tables",
+    "status": 301
+  },
+  {
+    "from": "/6-scenarios-ive-encountered-when-using-sqlalchemy-in-my-flask-project-5ee589625e27",
+    "to": "/6-scenarios-ive-encountered-when-using-sqlalchemy-in-my-flask-project",
+    "status": 301
+  },
+  {
+    "from": "/using-arrayagg-in-bigquery",
+    "to": "/using-array-agg-in-bigquery",
+    "status": 301
+  },
+  {
+    "from": "/optimizing-storage-in-bigquery",
+    "to": "/optimizing-storage-costs-in-bigquery",
+    "status": 301
+  },
+  {
+    "from": "/how-you-round-matters-in-sql",
+    "to": "/the-order-in-which-you-round-matters-in-sql",
+    "status": 301
+  }
+]

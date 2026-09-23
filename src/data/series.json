@@ -1,0 +1,34 @@
+{
+  "practical-sql": {
+    "name": "Practical SQL",
+    "description": "Short, practical posts on SQL and BigQuery — from core language features to advanced query patterns. A reference for data practitioners at every level."
+  },
+  "bigquery-performance": {
+    "name": "BigQuery Performance",
+    "description": "Practical guides to making BigQuery queries faster and cheaper — partitioning, clustering, search indexes, time travel, cost optimization, and query tuning strategies."
+  },
+  "bigquery-arrays-and-structs": {
+    "name": "BigQuery Arrays & Structs",
+    "description": "Everything you need to work effectively with nested and repeated data in BigQuery — ARRAY, STRUCT, UNNEST, ARRAY_AGG, and related functions."
+  },
+  "bigquery-window-functions": {
+    "name": "BigQuery Window Functions",
+    "description": "A focused guide to window functions in BigQuery — cumulative sums, rolling averages, ranking functions, named windows, RANGE frames, and more."
+  },
+  "data-ops": {
+    "name": "Data Ops",
+    "description": "Hands-on guides to data tooling, infrastructure, and operations — scheduling, pipelines, access control, and the engineering behind data workflows."
+  },
+  "my-data-journey": {
+    "name": "My Data Journey",
+    "description": "Personal reflections, lessons learned, and project deep-dives from a data engineer's career — tools, decisions, and the occasional hard truth."
+  },
+  "bigquery-json": {
+    "name": "BigQuery JSON",
+    "description": "Working with JSON in BigQuery — the native JSON datatype, extracting and transforming JSON data, LAX conversion functions, and handling semi-structured payloads."
+  },
+  "python": {
+    "name": "Python for Data Engineers",
+    "description": "Concise guides to Python features and patterns most useful for data engineering — from built-ins to standard library modules."
+  }
+}

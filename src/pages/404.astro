@@ -1,0 +1,17 @@
+---
+import PostList from '../components/PostList.astro';
+import { SITE } from '../consts';
+import Base from '../layouts/Base.astro';
+import { listedPosts } from '../lib/posts';
+
+const latest = (await listedPosts()).slice(0, 5);
+---
+
+<Base title={`Page not found | ${SITE.name}`} description="This page doesn't exist." noindex>
+  <header class="page-head">
+    <h1>Page not found</h1>
+    <p>That page doesn't exist. Try <a href="/search">searching</a> or the <a href="/archive">full archive</a>.</p>
+  </header>
+  <h2 class="section-title">Latest posts</h2>
+  <PostList posts={latest} excerpts={false} />
+</Base>

@@ -1,0 +1,22 @@
+---
+import PostList from '../components/PostList.astro';
+import { SITE } from '../consts';
+import Base from '../layouts/Base.astro';
+import { listedPosts } from '../lib/posts';
+
+const posts = await listedPosts();
+const years = [...new Set(posts.map((p) => p.data.datePublished.getUTCFullYear()))];
+---
+
+<Base title={`All posts | ${SITE.name}`} description={`Every post on ${SITE.name}, newest first.`}>
+  <header class="page-head">
+    <h1>All posts</h1>
+    <p>{posts.length} posts on SQL, BigQuery, Python and data engineering.</p>
+  </header>
+  {years.map((year) => (
+    <section>
+      <h2 class="year-heading">{year}</h2>
+      <PostList posts={posts.filter((p) => p.data.datePublished.getUTCFullYear() === year)} excerpts={false} />
+    </section>
+  ))}
+</Base>

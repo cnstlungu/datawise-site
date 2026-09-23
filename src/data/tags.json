@@ -1,0 +1,13 @@
+{
+  "aws": "AWS",
+  "bigquery": "bigquery",
+  "certification": "Certification",
+  "cloud-computing": "Cloud Computing",
+  "data-engineer": "data engineer",
+  "data-engineering": "data-engineering",
+  "dataform": "dataform",
+  "gcp": "GCP",
+  "google-cloud": "google cloud",
+  "ml": "ML",
+  "sql": "SQL"
+}

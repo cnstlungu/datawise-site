@@ -1,0 +1,32 @@
+---
+title: "Cleaning up STRINGS in BigQuery"
+seoTitle: "BigQuery String Cleaning: TRIM, REPLACE, UPPER, SUBSTR"
+seoDescription: "Clean messy string data in BigQuery using TRIM, REPLACE, UPPER, LOWER, SUBSTR, and NORMALIZE before analysis. The goal is a common denominator so matching..."
+datePublished: 2024-04-24T21:27:43.142Z
+dateUpdated: 2026-03-02T10:50:53.125Z
+cover: "/images/cleaning-up-strings-in-bigquery/cover.jpg"
+coverCredit:
+  name: "JESHOOTS.COM"
+  url: "https://unsplash.com/@jeshoots"
+series: "practical-sql"
+hashnodeCuid: "clvebt7ae00020amef47t9blm"
+---
+
+Data is collected and processed in a number of ways, and it should come as no surprise that it's not always perfect.
+
+Perhaps the most important thing you need to do before analyzing data is have a look at how it's presented and check for irregularities.
+
+Before any sound analysis a great deal of attention needs to be paid to cleaning the data.
+
+Take string columns for instance. In [hashtag#BigQuery, as with ot](https://www.linkedin.com/feed/hashtag/?keywords=bigquery&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7188500022613721089)her engines, there is a wealth of functions helping you to process strings, including:
+
+\- TRIM/RTRIM/LTRIM for getting rid of the whitespace  
+\- REPLACE to replace a substring with another one  
+\- UPPER/LOWER/NORMALIZE etc to control casing  
+\- SUBSTR/SUBSTRING to cut strings and so on.
+
+The main goal here is to bring everything to a common denominator, being able to tell which observations belong together and which data can be considered "missing".
+
+![](/images/cleaning-up-strings-in-bigquery/1.jpg)
+
+*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

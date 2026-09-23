@@ -1,0 +1,46 @@
+---
+import PostList from '../components/PostList.astro';
+import { AUTHOR, SITE } from '../consts';
+import series from '../data/series.json';
+import Base from '../layouts/Base.astro';
+import { listedPosts } from '../lib/posts';
+
+const posts = await listedPosts();
+const latest = posts.slice(0, 20);
+const seriesCards = Object.entries(series)
+  .map(([slug, s]) => ({ slug, name: s.name, count: posts.filter((p) => p.data.series === slug).length }))
+  .filter((s) => s.count > 0)
+  .sort((a, b) => b.count - a.count);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: SITE.title,
+    url: SITE.url,
+    description: SITE.description,
+    author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url, sameAs: Object.values(AUTHOR.links) },
+  },
+];
+---
+
+<Base title={SITE.title} description={SITE.description} jsonLd={jsonLd}>
+  <header class="page-head">
+    <h1>{SITE.title}</h1>
+    <p>{SITE.description}</p>
+  </header>
+
+  <h2 class="section-title">Series</h2>
+  <div class="series-grid">
+    {seriesCards.map((s) => (
+      <a class="series-card" href={`/series/${s.slug}`}>
+        <strong>{s.name}</strong>
+        <span>{s.count} posts</span>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="section-title">Latest posts</h2>
+  <PostList posts={latest} />
+  <p class="more-link"><a href="/archive">All {posts.length} posts →</a></p>
+</Base>

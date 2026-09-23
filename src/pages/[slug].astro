@@ -1,0 +1,170 @@
+---
+import { render } from 'astro:content';
+import comments from '../data/comments.json';
+import Base from '../layouts/Base.astro';
+import { AUTHOR, SITE } from '../consts';
+import { allPosts, formatDate, type Post, postPath, readingMinutes, seriesInfo, tagName } from '../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await allPosts();
+  return posts.map((post) => {
+    // Neighbours within the series, newest first like the series page.
+    const inSeries = post.data.series ? posts.filter((p) => p.data.series === post.data.series && !p.data.delisted) : [];
+    const i = inSeries.findIndex((p) => p.id === post.id);
+    return {
+      params: { slug: post.id },
+      props: { post, newer: i > 0 ? inSeries[i - 1] : undefined, older: i >= 0 ? inSeries[i + 1] : undefined },
+    };
+  });
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const url = new URL(postPath(post), SITE.url).href;
+const series = d.series ? seriesInfo(d.series) : undefined;
+const updated = d.dateUpdated && d.dateUpdated > d.datePublished ? d.dateUpdated : undefined;
+const byDate = (a: any, b: any) => a.dateAdded.localeCompare(b.dateAdded);
+const postComments = [...((comments as Record<string, any[]>)[post.id] ?? [])].sort(byDate);
+const image = d.cover ? new URL(d.cover, SITE.url).href : undefined;
+
+const jsonLd: object[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.seoDescription,
+    url,
+    mainEntityOfPage: url,
+    datePublished: d.datePublished.toISOString(),
+    dateModified: (updated ?? d.datePublished).toISOString(),
+    image,
+    keywords: d.tags.map(tagName),
+    author: {
+      '@type': 'Person',
+      name: AUTHOR.name,
+      url: AUTHOR.url,
+      sameAs: Object.values(AUTHOR.links),
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.title,
+      url: SITE.url,
+      logo: new URL(SITE.logo, SITE.url).href,
+    },
+    ...(series && {
+      isPartOf: { '@type': 'CreativeWorkSeries', name: series.name, url: new URL(`/series/${d.series}`, SITE.url).href },
+    }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SITE.name, item: SITE.url },
+      ...(series
+        ? [{ '@type': 'ListItem', position: 2, name: series.name, item: new URL(`/series/${d.series}`, SITE.url).href }]
+        : []),
+      { '@type': 'ListItem', position: series ? 3 : 2, name: d.title, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  title={d.seoTitle ?? d.title}
+  description={d.seoDescription}
+  canonical={d.canonical}
+  image={d.cover}
+  type="article"
+  jsonLd={jsonLd}
+  alternateMarkdown={`${postPath(post)}.md`}
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={d.datePublished.toISOString()} />
+    {updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+    <meta property="article:author" content={AUTHOR.url} />
+  </Fragment>
+
+  <article class="post">
+    <header class="post-header">
+      {series && <a class="series-link" href={`/series/${d.series}`}>{series.name}</a>}
+      <h1 data-pagefind-meta="title">{d.title}</h1>
+      {d.subtitle && <p class="subtitle">{d.subtitle}</p>}
+      <p class="meta">
+        <span>{AUTHOR.name}</span>
+        <span><time datetime={d.datePublished.toISOString()}>{formatDate(d.datePublished)}</time></span>
+        {updated && <span>Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time></span>}
+        <span>{readingMinutes(post)} min read</span>
+      </p>
+    </header>
+
+    {d.cover && (
+      <figure class="cover">
+        <img src={d.cover} alt="" width="1600" height="840" fetchpriority="high" />
+        {d.coverCredit && (
+          <figcaption>
+            Photo by <a href={d.coverCredit.url}>{d.coverCredit.name}</a> on Unsplash
+          </figcaption>
+        )}
+      </figure>
+    )}
+
+    <div class="prose" data-pagefind-body>
+      <Content />
+    </div>
+
+    {d.tags.length > 0 && (
+      <ul class="tag-list" aria-label="Tags">
+        {d.tags.map((t) => <li><a href={`/tag/${t}`}>#{tagName(t)}</a></li>)}
+      </ul>
+    )}
+
+    {(newer || older) && (
+      <nav class="series-nav" aria-label={`More in ${series?.name}`}>
+        {newer && (
+          <a class="newer" href={postPath(newer)}><small>← Newer in {series?.name}</small>{newer.data.title}</a>
+        )}
+        {older && (
+          <a class="older" href={postPath(older)}><small>Older in {series?.name} →</small>{older.data.title}</a>
+        )}
+      </nav>
+    )}
+
+    <aside class="author-box">
+      <img src={AUTHOR.photo} alt={AUTHOR.name} width="64" height="64" loading="lazy" />
+      <div>
+        <p><strong><a href={AUTHOR.url}>{AUTHOR.name}</a></strong></p>
+        <p class="bio">{AUTHOR.bio}</p>
+        <p>Get new posts by email: <a href={SITE.newsletter.url}>{SITE.newsletter.name}</a>, my analytics newsletter.</p>
+      </div>
+    </aside>
+
+    {postComments.length > 0 && (
+      <section class="comments" aria-labelledby="comments-title">
+        <h2 id="comments-title">Comments</h2>
+        {postComments.map((c) => (
+          <div class="comment">
+            <p class="who">{c.author?.name} · {formatDate(new Date(c.dateAdded))}</p>
+            <div set:html={c.content?.html} />
+            {c.replies?.edges?.length > 0 && (
+              <div class="replies">
+                {c.replies.edges.map(({ node: r }: any) => (
+                  <div class="comment">
+                    <p class="who">{r.author?.name} · {formatDate(new Date(r.dateAdded))}</p>
+                    <div set:html={r.content?.html} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </section>
+    )}
+  </article>
+</Base>

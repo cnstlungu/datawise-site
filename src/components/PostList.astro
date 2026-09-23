@@ -1,0 +1,23 @@
+---
+import { formatDate, type Post, postPath, readingMinutes } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+  excerpts?: boolean;
+}
+
+const { posts, excerpts = true } = Astro.props;
+---
+
+<ul class="post-list">
+  {posts.map((post) => (
+    <li>
+      <a class="title" href={postPath(post)}>{post.data.title}</a>
+      <p class="meta">
+        <time datetime={post.data.datePublished.toISOString()}>{formatDate(post.data.datePublished)}</time>{' · '}
+        {readingMinutes(post)} min read
+      </p>
+      {excerpts && <p class="excerpt">{post.data.seoDescription}</p>}
+    </li>
+  ))}
+</ul>

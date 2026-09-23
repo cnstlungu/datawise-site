@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "datawise",
+  "compatibility_date": "2026-09-01",
+  // Static site only: no Worker script, so every request is a free static-asset request.
+  "assets": {
+    "directory": "./dist",
+    // /<slug>.html is served at /<slug>; /<slug>/ and /<slug>.html redirect there.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

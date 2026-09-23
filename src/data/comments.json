@@ -1,0 +1,243 @@
+{
+  "my-day-as-a-data-engineer-8-years-ago": [
+    {
+      "id": "66a39a8efe5e99b93f940aaa",
+      "content": {
+        "html": "<p>its good and got my perspectives clear</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2024-07-26T12:46:06.517Z",
+      "totalReactions": 0,
+      "author": {
+        "id": "66a3995fe14f8c0c212cb3c1",
+        "name": "Palak Bhawsar",
+        "username": "paal",
+        "profilePicture": null,
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 0,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    },
+    {
+      "id": "668842646b8b78141a007a69",
+      "content": {
+        "html": "<p>This is my typical workday today. Can't fathom why projects haven't migrated to newer technologies.</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2024-07-05T18:58:44.018Z",
+      "totalReactions": 0,
+      "author": {
+        "id": "65ae8021532d530e8cedeac3",
+        "name": "Shreyan Das",
+        "username": "sdspot2034",
+        "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1705934882175/3f7640e1-dd88-4a88-9a15-1b100d7284e5.png",
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 0,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    }
+  ],
+  "natural-join-in-sql": [
+    {
+      "id": "66740e7f5f4acabc363901aa",
+      "content": {
+        "html": "<p>Thanks for reading!</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2024-06-20T11:11:59.354Z",
+      "totalReactions": 0,
+      "author": {
+        "id": "641c1535429c76261884ecba",
+        "name": "Constantin Lungu",
+        "username": "cnstlungu",
+        "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1693694176754/oZdhdapin.jpeg",
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 0,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    },
+    {
+      "id": "6673c704d3a98f441869c6d2",
+      "content": {
+        "html": "<p>It was very beneficial and how to deal the data regarding to requirements, by this article I came to know usage of  a particular clause or function accordingly, thanks for providing these kind of articles.</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2024-06-20T06:07:00.420Z",
+      "totalReactions": 1,
+      "author": {
+        "id": "659443fdb3f3fa8f16a127bf",
+        "name": "chandravathi Yerramasu",
+        "username": "prameela",
+        "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1704215549309/5016856c-8cf3-4648-a8a3-a435cd43cf30.png",
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 0,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    }
+  ],
+  "the-power-of-bigquery-informationschema-views": [
+    {
+      "id": "6528ecb005fdd50096069c84",
+      "content": {
+        "html": "<p>Always checking INFORMATION_SCHEMA when i need to get tables and views create statements... hopefully an easier solution to obtain those info will be implemented in bq!</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2023-10-13T07:07:28.912Z",
+      "totalReactions": 1,
+      "author": {
+        "id": "6177beee0f452c1cd94fdf42",
+        "name": "Deactivated User",
+        "username": "",
+        "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1659089761812/fsOct5gl6.png?auto=compress",
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [
+          {
+            "cursor": "1",
+            "node": {
+              "id": "6528f7c12f8d4e00663ba797",
+              "content": {
+                "html": "<p>Thanks for reading <a class=\"user-mention\" href=\"https://hashnode.com/@tsambruni\">Thomas Sambruni</a>!</p>\n<p>INFORMATION_SCHEMA is indeed very useful, albeit sometimes overwhelming to use.</p>\n",
+                "__typename": "Content"
+              },
+              "dateAdded": "2023-10-13T07:54:41.485Z",
+              "totalReactions": 0,
+              "author": {
+                "id": "641c1535429c76261884ecba",
+                "name": "Constantin Lungu",
+                "username": "cnstlungu",
+                "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1693694176754/oZdhdapin.jpeg",
+                "__typename": "User"
+              },
+              "__typename": "Comment"
+            },
+            "__typename": "CommentEdge"
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 1,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    }
+  ],
+  "recursive-ctes-in-bigquery": [
+    {
+      "id": "6675457e06df1c50206e9bcb",
+      "content": {
+        "html": "<p>Thanks <a class=\"user-mention\" href=\"https://hashnode.com/@sdspot2034\">Shreyan Das</a>!</p>\n<p>Most of the time, this usecase is only a small part of the bigger data pipeline (say you'd need to work out the company hierarchy and who reports to whom). Otherwise if your entire application is centered on graph semantics, yes probably need to look at a specialized solution.</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2024-06-21T09:18:54.894Z",
+      "totalReactions": 0,
+      "author": {
+        "id": "641c1535429c76261884ecba",
+        "name": "Constantin Lungu",
+        "username": "cnstlungu",
+        "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1693694176754/oZdhdapin.jpeg",
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [
+          {
+            "cursor": "1",
+            "node": {
+              "id": "667598a4eeb201cd484bcfc3",
+              "content": {
+                "html": "<p>Makes sense, thank you!</p>\n",
+                "__typename": "Content"
+              },
+              "dateAdded": "2024-06-21T15:13:40.801Z",
+              "totalReactions": 0,
+              "author": {
+                "id": "65ae8021532d530e8cedeac3",
+                "name": "Shreyan Das",
+                "username": "sdspot2034",
+                "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1705934882175/3f7640e1-dd88-4a88-9a15-1b100d7284e5.png",
+                "__typename": "User"
+              },
+              "__typename": "Comment"
+            },
+            "__typename": "CommentEdge"
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 1,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    },
+    {
+      "id": "667527ee7224e85a4d370ff4",
+      "content": {
+        "html": "<p>Amazingly well-explained! Although, wouldn't you agree that graph databases are more suited for such use cases? What are your thoughts on that?</p>\n",
+        "__typename": "Content"
+      },
+      "dateAdded": "2024-06-21T07:12:46.387Z",
+      "totalReactions": 0,
+      "author": {
+        "id": "65ae8021532d530e8cedeac3",
+        "name": "Shreyan Das",
+        "username": "sdspot2034",
+        "profilePicture": "https://cdn.hashnode.com/res/hashnode/image/upload/v1705934882175/3f7640e1-dd88-4a88-9a15-1b100d7284e5.png",
+        "__typename": "User"
+      },
+      "replies": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "50",
+          "totalDocuments": 0,
+          "__typename": "PageInfo"
+        },
+        "__typename": "CommentConnection"
+      },
+      "__typename": "Comment"
+    }
+  ]
+}

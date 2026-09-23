@@ -1,0 +1,25 @@
+# Generated from Hashnode's redirect rules (src/data/redirects.json), plus paths
+# Hashnode served that this site doesn't have. Cloudflare applies these before assets.
+
+/9-tips-on-writing-cleaner-sql-d3cb22e30302 /9-tips-on-writing-cleaner-sql 301
+/preparing-for-the-aws-certified-developer-associate-exam-59de2feea659 /preparing-for-the-aws-certified-developer-associate-exam 301
+/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows-679761d18998 /loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows 301
+/practical-bigquery-filling-in-missing-data-b3a2ea560232 /practical-bigquery-filling-in-missing-data 301
+/exploring-twitter-python-transforming-twitter-data-using-python /intro-nlp-sentiment-analysis-python 301
+/exploring-twitter-data-python-extracting-twitter-data-using-python /extracting-twitter-data-using-python 301
+/explore-twitter-using-python-analyzing-the-data /analyzing-twitter-data-using-python 301
+/practical-bigquery-using-time-travel /using-bigquery-time-travel 301
+/recursive-ctes /recursive-ctes-in-bigquery 301
+/practical-bigquery-generating-a-compact-temporal-table /generating-a-compact-temporal-table-in-bigquery 301
+/practical-bigquery-joining-temporal-tables-4eb07ba111e2 /practical-bigquery-joining-temporal-tables 301
+/6-scenarios-ive-encountered-when-using-sqlalchemy-in-my-flask-project-5ee589625e27 /6-scenarios-ive-encountered-when-using-sqlalchemy-in-my-flask-project 301
+/using-arrayagg-in-bigquery /using-array-agg-in-bigquery 301
+/optimizing-storage-in-bigquery /optimizing-storage-costs-in-bigquery 301
+/how-you-round-matters-in-sql /the-order-in-which-you-round-matters-in-sql 301
+
+# Hashnode-only pages
+/archive/* /archive 301
+/members / 301
+/recommendations / 301
+/newsletter https://www.notjustsql.com 301
+/tag/python-libraries /series/python 301

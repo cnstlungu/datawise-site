@@ -1,0 +1,36 @@
+---
+import { SITE } from '../consts';
+import Base from '../layouts/Base.astro';
+---
+
+<Base title={`Search | ${SITE.name}`} description={`Search every post on ${SITE.name}.`} noindex>
+  <link slot="head" rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <header class="page-head">
+    <h1>Search</h1>
+  </header>
+  <div class="post" id="search"></div>
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    // The index is built by `pagefind --site dist` after `astro build`; it isn't there in `astro dev`.
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!window.PagefindUI) {
+        document.getElementById('search').textContent = 'Search is available in the built site.';
+        return;
+      }
+      const ui = new PagefindUI({ element: '#search', showSubResults: true, showImages: false });
+      const q = new URLSearchParams(location.search).get('q');
+      if (q) ui.triggerSearch(q);
+    });
+  </script>
+</Base>
+
+<style is:global>
+  #search {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--bg);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-tag: var(--bg-subtle);
+    --pagefind-ui-font: var(--font-sans);
+  }
+</style>

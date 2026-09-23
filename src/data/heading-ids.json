@@ -1,0 +1,952 @@
+{
+  "why-you-should-think-twice-before-unnesting-arrays-or-date-intervals": [
+    {
+      "depth": 2,
+      "id": "heading-a-better-approach-work-with-intervals",
+      "text": "A better approach: work with intervals"
+    }
+  ],
+  "a-quick-walkthrough-bigquery-remote-functions": [
+    {
+      "depth": 2,
+      "id": "heading-what-are-remote-functions-in-bigquery",
+      "text": "What are remote functions in BigQuery?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-why-is-that-important",
+      "text": "Why is that important?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-step-1-create-the-cloud-run-function",
+      "text": "Step 1: Create the Cloud Run Function"
+    },
+    {
+      "depth": 2,
+      "id": "heading-step-2-create-a-connection",
+      "text": "Step 2: Create a connection"
+    },
+    {
+      "depth": 2,
+      "id": "heading-step-3-set-up-permissions",
+      "text": "Step 3: Set up permissions"
+    },
+    {
+      "depth": 2,
+      "id": "heading-step-4-bind-the-connection-with-cloud-run-function",
+      "text": "Step 4: Bind the connection with Cloud Run function"
+    },
+    {
+      "depth": 2,
+      "id": "heading-test-run",
+      "text": "Test run"
+    }
+  ],
+  "a-quick-overview-of-bigquery-functions": [
+    {
+      "depth": 3,
+      "id": "heading-their-place-in-modern-sql",
+      "text": "Their Place in Modern SQL"
+    }
+  ],
+  "short-almost-non-technical-guide-to-sql-query-tuning-as-a-data-engineer": [
+    {
+      "depth": 2,
+      "id": "heading-work-with-less",
+      "text": "Work with less"
+    },
+    {
+      "depth": 2,
+      "id": "heading-do-less-work",
+      "text": "Do less work"
+    },
+    {
+      "depth": 2,
+      "id": "heading-is-there-any-repetitive-work-involved",
+      "text": "Is there any repetitive work involved?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-can-you-split-things-up",
+      "text": "Can you split things up?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-is-there-any-underlying-problem-making-the-data-that-big",
+      "text": "Is there any underlying problem making the data that big?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-check-for-yourself",
+      "text": "Check for yourself"
+    },
+    {
+      "depth": 2,
+      "id": "heading-think-about-maintainability",
+      "text": "Think about maintainability"
+    },
+    {
+      "depth": 2,
+      "id": "heading-in-lieu-of-a-conclusion-invest-your-time-wisely",
+      "text": "In lieu of a conclusion: invest your time wisely"
+    }
+  ],
+  "breaking-free-from-tutorial-hell-tips-for-aspiring-data-professionals": [
+    {
+      "depth": 3,
+      "id": "heading-dont-fall-into-the-trap",
+      "text": "Don't Fall into the Trap"
+    },
+    {
+      "depth": 3,
+      "id": "heading-start-with-the-basics",
+      "text": "Start with the Basics"
+    },
+    {
+      "depth": 3,
+      "id": "heading-choose-wisely",
+      "text": "Choose Wisely"
+    },
+    {
+      "depth": 3,
+      "id": "heading-get-hands-on-quickly",
+      "text": "Get Hands-On Quickly"
+    },
+    {
+      "depth": 3,
+      "id": "heading-course-certificates-dont-do-much",
+      "text": "Course Certificates Don’t Do Much"
+    },
+    {
+      "depth": 3,
+      "id": "heading-work-on-personal-projects-in-the-long-term",
+      "text": "Work on Personal Projects in the Long Term"
+    },
+    {
+      "depth": 3,
+      "id": "heading-its-time-to-build",
+      "text": "It’s time to build"
+    }
+  ],
+  "easy-with-that-select-distinct": [
+    {
+      "depth": 3,
+      "id": "heading-1-bad-join",
+      "text": "1. Bad join"
+    },
+    {
+      "depth": 3,
+      "id": "heading-2-incorrect-grain",
+      "text": "2. Incorrect grain"
+    },
+    {
+      "depth": 3,
+      "id": "heading-3-are-you-working-with-nested-data",
+      "text": "3. Are you working with nested data?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-what-should-i-do-how-can-i-debug-a-problem-with-duplicates",
+      "text": "What should I do? How can I debug a problem with duplicates?"
+    }
+  ],
+  "why-does-your-data-warehouse-need-to-look-more-like-a-pharmacy-than-a-retail-store": [
+    {
+      "depth": 2,
+      "id": "heading-the-reality-of-data-democratization",
+      "text": "The reality of data democratization"
+    }
+  ],
+  "search-indexes-in-bigquery": [
+    {
+      "depth": 3,
+      "id": "heading-so-what-are-they-used-for",
+      "text": "So, what are they used for?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-how-to-create-one",
+      "text": "How to create one?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-how-to-know-if-an-search-index-is-used",
+      "text": "How to know if an search index is used?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-further-reading",
+      "text": "Further reading"
+    },
+    {
+      "depth": 3,
+      "id": "heading-words-of-caution",
+      "text": "Words of caution"
+    }
+  ],
+  "using-structs-for-audit-fields-in-bigquery": [
+    {
+      "depth": 2,
+      "id": "heading-the-scenario",
+      "text": "The scenario"
+    },
+    {
+      "depth": 2,
+      "id": "heading-building-the-audit-struct-column",
+      "text": "Building the audit STRUCT column"
+    }
+  ],
+  "tidying-up-window-functions-in-bigquery-with-named-windows": [
+    {
+      "depth": 2,
+      "id": "heading-a-practical-example",
+      "text": "A practical example"
+    },
+    {
+      "depth": 2,
+      "id": "heading-defining-named-windows",
+      "text": "Defining named windows"
+    }
+  ],
+  "using-correlated-subqueries-in-bigquery": [
+    {
+      "depth": 1,
+      "id": "heading-what-are-subqueries",
+      "text": "What are subqueries?"
+    },
+    {
+      "depth": 1,
+      "id": "heading-what-makes-a-subquery-correlated",
+      "text": "What makes a subquery correlated?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-scalar-correlated-subquery",
+      "text": "Scalar correlated subquery"
+    },
+    {
+      "depth": 2,
+      "id": "heading-filter-using-a-correlated-subquery",
+      "text": "Filter using a correlated subquery"
+    },
+    {
+      "depth": 1,
+      "id": "heading-things-to-pay-attention-to",
+      "text": "Things to pay attention to"
+    },
+    {
+      "depth": 1,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "table-sampling-in-bigquery": [
+    {
+      "depth": 3,
+      "id": "heading-preview",
+      "text": "Preview"
+    },
+    {
+      "depth": 3,
+      "id": "heading-partitioning",
+      "text": "Partitioning"
+    },
+    {
+      "depth": 3,
+      "id": "heading-sampling",
+      "text": "Sampling"
+    }
+  ],
+  "importing-google-sheets-into-bigquery": [
+    {
+      "depth": 3,
+      "id": "heading-where-to-use-it",
+      "text": "Where to use it?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-what-to-pay-attention-to",
+      "text": "What to pay attention to?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-setting-up-a-google-sheet-as-an-external-table",
+      "text": "Setting up a Google Sheet as an External Table"
+    },
+    {
+      "depth": 3,
+      "id": "heading-viewing-the-ddl-of-an-external-table",
+      "text": "Viewing the DDL of an (external) table"
+    }
+  ],
+  "using-bigquery-hashing-functions": [
+    {
+      "depth": 2,
+      "id": "heading-whats-a-hashing-function",
+      "text": "What's a hashing function?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-use-cases-in-data-engineering",
+      "text": "Use cases in data engineering"
+    }
+  ],
+  "combining-structs-with-window-functions-in-bigquery": [
+    {
+      "depth": 3,
+      "id": "heading-first-what-is-a-struct",
+      "text": "First, what is a STRUCT?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-problem-statement",
+      "text": "Problem statement"
+    },
+    {
+      "depth": 3,
+      "id": "heading-the-solution",
+      "text": "The solution"
+    }
+  ],
+  "linting-bigquery-sql-with-sqlfluff": [
+    {
+      "depth": 2,
+      "id": "heading-configuration",
+      "text": "Configuration"
+    },
+    {
+      "depth": 2,
+      "id": "heading-usage-in-real-life-scenarios",
+      "text": "Usage in real-life scenarios"
+    },
+    {
+      "depth": 2,
+      "id": "heading-what-if-i-use-a-templating-engine-like-dbt",
+      "text": "What if I use a templating engine like dbt?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-next-steps",
+      "text": "Next steps"
+    }
+  ],
+  "the-power-of-bigquery-informationschema-views": [
+    {
+      "depth": 2,
+      "id": "heading-jobs",
+      "text": "JOBS"
+    },
+    {
+      "depth": 2,
+      "id": "heading-columns",
+      "text": "COLUMNS"
+    },
+    {
+      "depth": 2,
+      "id": "heading-constraint-column-usage",
+      "text": "CONSTRAINT COLUMN USAGE"
+    },
+    {
+      "depth": 2,
+      "id": "heading-table-storage",
+      "text": "TABLE STORAGE"
+    },
+    {
+      "depth": 2,
+      "id": "heading-but-theres-more",
+      "text": "But there's more!"
+    }
+  ],
+  "scheduled-queries-in-bigquery": [
+    {
+      "depth": 3,
+      "id": "heading-what-are-scheduled-queries",
+      "text": "What are Scheduled Queries?"
+    },
+    {
+      "depth": 3,
+      "id": "heading-creating-a-scheduled-query-manually",
+      "text": "Creating a Scheduled Query manually"
+    },
+    {
+      "depth": 3,
+      "id": "heading-creating-a-scheduled-query-using-terraform",
+      "text": "Creating a scheduled query using Terraform"
+    },
+    {
+      "depth": 3,
+      "id": "heading-creating-a-scheduled-query-using-the-api",
+      "text": "Creating a Scheduled Query using the API"
+    },
+    {
+      "depth": 3,
+      "id": "heading-viewing-scheduled-queries",
+      "text": "Viewing scheduled queries"
+    }
+  ],
+  "why-having-a-pet-project-can-supercharge-your-programming-learning-journey": [
+    {
+      "depth": 2,
+      "id": "heading-story-time",
+      "text": "Story time"
+    },
+    {
+      "depth": 2,
+      "id": "heading-six-reasons-to-start-a-pet-project",
+      "text": "Six reasons to start a pet project"
+    }
+  ],
+  "recursive-ctes-in-bigquery": [
+    {
+      "depth": 2,
+      "id": "heading-what-is-a-cte",
+      "text": "What is a CTE?"
+    },
+    {
+      "depth": 2,
+      "id": "heading-enter-the-recursive-variety",
+      "text": "Enter the recursive variety"
+    },
+    {
+      "depth": 2,
+      "id": "heading-recursive-ctes-and-hierarchical-data",
+      "text": "Recursive CTEs and hierarchical data"
+    },
+    {
+      "depth": 2,
+      "id": "heading-performance-considerations",
+      "text": "Performance considerations"
+    },
+    {
+      "depth": 2,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "using-bigquery-time-travel": [
+    {
+      "depth": 2,
+      "id": "heading-changing-the-time-travel-window",
+      "text": "Changing the time travel window"
+    },
+    {
+      "depth": 2,
+      "id": "heading-practical-considerations",
+      "text": "Practical considerations"
+    },
+    {
+      "depth": 2,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "generating-a-compact-temporal-table-in-bigquery": [
+    {
+      "depth": 3,
+      "id": "heading-problem-statement",
+      "text": "Problem statement"
+    },
+    {
+      "depth": 3,
+      "id": "heading-implementation",
+      "text": "Implementation"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "practical-bigquery-joining-temporal-tables": [
+    {
+      "depth": 2,
+      "id": "heading-problem-statement",
+      "text": "Problem statement"
+    },
+    {
+      "depth": 2,
+      "id": "heading-trying-it-out",
+      "text": "Trying it out"
+    },
+    {
+      "depth": 2,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "practical-bigquery-filling-in-missing-data": [
+    {
+      "depth": 3,
+      "id": "heading-the-input",
+      "text": "The input"
+    },
+    {
+      "depth": 3,
+      "id": "heading-the-desired-outcome",
+      "text": "The desired outcome"
+    },
+    {
+      "depth": 3,
+      "id": "heading-analyzing-our-options",
+      "text": "Analyzing our options"
+    },
+    {
+      "depth": 3,
+      "id": "heading-lets-unpivot",
+      "text": "Let’s (un)pivot"
+    },
+    {
+      "depth": 3,
+      "id": "heading-pivoting-the-data",
+      "text": "Pivoting the data"
+    },
+    {
+      "depth": 3,
+      "id": "heading-final-touches",
+      "text": "Final touches"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows": [
+    {
+      "depth": 4,
+      "id": "heading-preparation-work",
+      "text": "Preparation work"
+    },
+    {
+      "depth": 4,
+      "id": "heading-creating-the-workflow",
+      "text": "Creating the workflow"
+    },
+    {
+      "depth": 4,
+      "id": "heading-creating-the-steps",
+      "text": "Creating the steps"
+    },
+    {
+      "depth": 4,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "9-tips-on-writing-cleaner-sql": [
+    {
+      "depth": 3,
+      "id": "heading-format-your-queries",
+      "text": "Format your queries"
+    },
+    {
+      "depth": 4,
+      "id": "heading-capitalize-sql-keywords",
+      "text": "Capitalize SQL keywords"
+    },
+    {
+      "depth": 4,
+      "id": "heading-use-consistent-indentation",
+      "text": "Use consistent indentation"
+    },
+    {
+      "depth": 4,
+      "id": "heading-aliasing",
+      "text": "Aliasing"
+    },
+    {
+      "depth": 4,
+      "id": "heading-avoid-select",
+      "text": "Avoid SELECT *"
+    },
+    {
+      "depth": 3,
+      "id": "heading-comments",
+      "text": "Comments"
+    },
+    {
+      "depth": 3,
+      "id": "heading-avoid-nested-queries-and-use-ctes",
+      "text": "Avoid nested queries and use CTEs"
+    },
+    {
+      "depth": 3,
+      "id": "heading-work-only-with-data-that-you-need",
+      "text": "Work only with data that you need"
+    },
+    {
+      "depth": 3,
+      "id": "heading-if-something-is-tedious-theres-probably-a-way-to-do-it-smarter",
+      "text": "If something is tedious, there’s probably a way to do it smarter"
+    },
+    {
+      "depth": 3,
+      "id": "heading-development-amp-debugging-approach",
+      "text": "Development & debugging approach"
+    },
+    {
+      "depth": 3,
+      "id": "heading-materialize-if-you-reuse-and-if-you-can",
+      "text": "Materialize if you reuse (and if you can)"
+    },
+    {
+      "depth": 3,
+      "id": "heading-use-distinct-and-union-the-right-way",
+      "text": "Use DISTINCT and UNION the right way"
+    },
+    {
+      "depth": 3,
+      "id": "heading-use-the-full-power-of-your-sql-implementation-and-its-version",
+      "text": "Use the full power of your SQL implementation (and its version)"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6": [
+    {
+      "depth": 3,
+      "id": "heading-getting-started",
+      "text": "Getting started"
+    },
+    {
+      "depth": 3,
+      "id": "heading-data-shape",
+      "text": "Data shape"
+    },
+    {
+      "depth": 3,
+      "id": "heading-other-considerations",
+      "text": "Other considerations"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry": [
+    {
+      "depth": 3,
+      "id": "heading-the-origins",
+      "text": "The origins"
+    },
+    {
+      "depth": 3,
+      "id": "heading-our-days",
+      "text": "Our days"
+    },
+    {
+      "depth": 3,
+      "id": "heading-problem-definition-the-data-sources",
+      "text": "Problem definition: the data sources"
+    },
+    {
+      "depth": 4,
+      "id": "heading-the-oltp-database",
+      "text": "The OLTP database"
+    },
+    {
+      "depth": 3,
+      "id": "heading-the-tools-for-the-job",
+      "text": "The tools for the job"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "preparing-for-the-aws-certified-developer-associate-exam": [
+    {
+      "depth": 4,
+      "id": "heading-background",
+      "text": "Background"
+    },
+    {
+      "depth": 4,
+      "id": "heading-why-did-i-choose-aws",
+      "text": "Why did I choose AWS?"
+    },
+    {
+      "depth": 4,
+      "id": "heading-is-it-worth-it",
+      "text": "Is it worth it?"
+    },
+    {
+      "depth": 4,
+      "id": "heading-prerequisites",
+      "text": "Prerequisites"
+    },
+    {
+      "depth": 3,
+      "id": "heading-resources",
+      "text": "Resources"
+    },
+    {
+      "depth": 4,
+      "id": "heading-aws-official-study-guide",
+      "text": "AWS Official Study Guide"
+    },
+    {
+      "depth": 4,
+      "id": "heading-linuxacademy",
+      "text": "LinuxAcademy"
+    },
+    {
+      "depth": 4,
+      "id": "heading-a-cloud-guru",
+      "text": "A Cloud Guru"
+    },
+    {
+      "depth": 4,
+      "id": "heading-tutorials-dojo",
+      "text": "Tutorials Dojo"
+    },
+    {
+      "depth": 3,
+      "id": "heading-tips",
+      "text": "Tips"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion-and-next-steps",
+      "text": "Conclusion and next steps"
+    }
+  ],
+  "9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time": [
+    {
+      "depth": 3,
+      "id": "heading-javahomenotset",
+      "text": "JAVA_HOME_NOT_SET"
+    },
+    {
+      "depth": 1,
+      "id": "heading-permission-denied-publickeypassword",
+      "text": "Permission denied (publickey,password)."
+    },
+    {
+      "depth": 3,
+      "id": "heading-hadoop-cluster-setup-javanetconnectexception-connection-refused",
+      "text": "Hadoop cluster setup — java.net.ConnectException: Connection refused"
+    },
+    {
+      "depth": 3,
+      "id": "heading-nodes-not-showing-up",
+      "text": "Nodes not showing up"
+    },
+    {
+      "depth": 4,
+      "id": "heading-check-the-uis-first",
+      "text": "Check the UIs first"
+    },
+    {
+      "depth": 4,
+      "id": "heading-use-jps-to-see-that-service-is-running",
+      "text": "Use jps to see that service is running"
+    },
+    {
+      "depth": 4,
+      "id": "heading-dive-into-hadoop-logs",
+      "text": "Dive into Hadoop logs"
+    },
+    {
+      "depth": 4,
+      "id": "heading-check-the-configuration-files",
+      "text": "Check the configuration files"
+    },
+    {
+      "depth": 3,
+      "id": "heading-spark-fails-to-start",
+      "text": "Spark fails to start"
+    },
+    {
+      "depth": 3,
+      "id": "heading-pyspark-error-unsupported-class-file-major-version-55",
+      "text": "Pyspark error — Unsupported class file major version 55"
+    },
+    {
+      "depth": 3,
+      "id": "heading-javalangnumberformatexception-for-input-string-0x100",
+      "text": "java.lang.NumberFormatException: For input string: “0x100”"
+    },
+    {
+      "depth": 3,
+      "id": "heading-spark-ui-has-broken-css",
+      "text": "Spark UI has broken CSS"
+    },
+    {
+      "depth": 3,
+      "id": "heading-property-sparkyarnjars",
+      "text": "Property Spark.yarn.jars"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "how-i-set-up-my-first-hadoop-spark-cluster-preparation": [
+    {
+      "depth": 3,
+      "id": "heading-the-preparation",
+      "text": "The Preparation"
+    },
+    {
+      "depth": 4,
+      "id": "heading-hardware",
+      "text": "Hardware"
+    },
+    {
+      "depth": 4,
+      "id": "heading-operating-system",
+      "text": "Operating system"
+    },
+    {
+      "depth": 4,
+      "id": "heading-hostnames",
+      "text": "Hostnames"
+    },
+    {
+      "depth": 4,
+      "id": "heading-ssh",
+      "text": "SSH"
+    },
+    {
+      "depth": 4,
+      "id": "heading-security-and-utility",
+      "text": "Security and utility"
+    },
+    {
+      "depth": 4,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "6-scenarios-ive-encountered-when-using-sqlalchemy-in-my-flask-project": [
+    {
+      "depth": 4,
+      "id": "heading-managing-many-to-many-relationships",
+      "text": "Managing many-to-many relationships"
+    },
+    {
+      "depth": 4,
+      "id": "heading-creating-a-post-slug",
+      "text": "Creating a post slug"
+    },
+    {
+      "depth": 4,
+      "id": "heading-comparing-two-objects",
+      "text": "Comparing two objects"
+    },
+    {
+      "depth": 4,
+      "id": "heading-inserting-initial-values",
+      "text": "Inserting initial values"
+    },
+    {
+      "depth": 4,
+      "id": "heading-returning-n-newest-posts",
+      "text": "Returning 'n' newest posts"
+    },
+    {
+      "depth": 4,
+      "id": "heading-getting-or-creating-a-tag",
+      "text": "Getting-or-creating a Tag"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "analyzing-twitter-data-using-python": [
+    {
+      "depth": 3,
+      "id": "heading-geo-locating-tweets-using-location",
+      "text": "Geo-locating tweets using location"
+    },
+    {
+      "depth": 3,
+      "id": "heading-plotting-on-a-map",
+      "text": "Plotting on a map"
+    },
+    {
+      "depth": 3,
+      "id": "heading-further-analysis-using-charts",
+      "text": "Further analysis using charts"
+    },
+    {
+      "depth": 4,
+      "id": "heading-word-cloud",
+      "text": "Word Cloud"
+    },
+    {
+      "depth": 4,
+      "id": "heading-hash-tags",
+      "text": "Hash Tags"
+    },
+    {
+      "depth": 4,
+      "id": "heading-users-mentioned",
+      "text": "Users Mentioned"
+    },
+    {
+      "depth": 4,
+      "id": "heading-top-words",
+      "text": "Top Words"
+    },
+    {
+      "depth": 4,
+      "id": "heading-bigrams",
+      "text": "Bigrams"
+    },
+    {
+      "depth": 3,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "intro-nlp-sentiment-analysis-python": [
+    {
+      "depth": 2,
+      "id": "heading-processing-the-data",
+      "text": "Processing the data"
+    },
+    {
+      "depth": 2,
+      "id": "heading-sentiment-analysis",
+      "text": "Sentiment Analysis"
+    },
+    {
+      "depth": 2,
+      "id": "heading-a-closer-look-at-our-features",
+      "text": "A closer look at our features"
+    },
+    {
+      "depth": 2,
+      "id": "heading-conclusion",
+      "text": "Conclusion"
+    }
+  ],
+  "extracting-twitter-data-using-python": [
+    {
+      "depth": 3,
+      "id": "heading-setup",
+      "text": "Setup"
+    },
+    {
+      "depth": 3,
+      "id": "heading-getting-twitter-data",
+      "text": "Getting Twitter data"
+    },
+    {
+      "depth": 4,
+      "id": "heading-wrapping-up",
+      "text": "Wrapping up"
+    }
+  ]
+}

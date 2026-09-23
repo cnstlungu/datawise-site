@@ -1,0 +1,31 @@
+---
+import PostList from '../../components/PostList.astro';
+import { SITE } from '../../consts';
+import series from '../../data/series.json';
+import Base from '../../layouts/Base.astro';
+import { listedPosts, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await listedPosts();
+  return Object.entries(series).map(([slug, info]) => ({
+    params: { series: slug },
+    props: { info, posts: posts.filter((p) => p.data.series === slug) },
+  }));
+}
+
+interface Props {
+  info: { name: string; description?: string };
+  posts: Post[];
+}
+
+const { info, posts } = Astro.props;
+const description = info.description ?? `Posts in the ${info.name} series on ${SITE.name}.`;
+---
+
+<Base title={`${info.name} | ${SITE.name}`} description={description}>
+  <header class="page-head">
+    <h1>{info.name}</h1>
+    <p>{description}</p>
+  </header>
+  <PostList posts={posts} />
+</Base>
