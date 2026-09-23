@@ -28,7 +28,40 @@ So yes, USING is pretty much syntactic sugar for a fairly common type of join, b
 It's worth pointing out that with USING, the columns in the clause do not need an alias for disambiguation (making clear which one of the two tables we take the column from), effectively doing the same a COALESCE of the columns in the two tables would do.  
 This helps you a little bit with FULL OUTER JOINS for example. Of course, for other columns, if there are clashes in the namespace, you do need to specify where do you want them sourced from.
 
-![BigQuery SQL joining orders to products (size, color, product\_id, variant) two ways: LEFT JOIN products p USING (product\_id, variant) lets product\_id and variant be selected unqualified, while ON o.product\_id = p.product\_id AND o.variant = p.variant needs o. prefixes; both return the same rows.](/images/joining-with-using-vs-on-in-bigquery/1.jpg)
+![Input data: a products table with size, color, product\_id and variant (product 100 in sizes XL to XS and colors Blue, Gray and Green, variants such as XL-Blue), and an orders table with order\_id, product\_id, quantity, variant and country\_code: eight orders of product 100 plus order 9 with NULLs.](/images/joining-with-using-vs-on-in-bigquery/1-input.jpg)
+
+```sql
+SELECT
+  o.order_id,
+  product_id,
+  variant,
+  o.country_code,
+  o.quantity,
+  p.color,
+  p.size
+
+FROM orders o
+
+LEFT JOIN products p USING (product_id, variant)
+```
+
+```sql
+SELECT
+  o.order_id,
+  o.product_id,
+  o.variant,
+  o.country_code,
+  o.quantity,
+  p.color,
+  p.size
+
+FROM orders o
+
+LEFT JOIN products p ON o.product_id = p.product_id AND
+                        o.variant = p.variant
+```
+
+![Result of both queries, with columns order\_id, product\_id, variant, country\_code, quantity, color and size: orders 1 to 8 get the color and size of their variant (XL-Green is Green, XL; L-White is White, L), and order 9 is NULL in every column.](/images/joining-with-using-vs-on-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -25,7 +25,59 @@ Here's how they all differ:
 
 3️⃣ dataclass: can be mutable or not (controlled by `frozen` parameter), can set default attributes, has special methods like **repr** (how it's displayed) and **eq** (check if it's equal to another instance). Uses more memory and is relatively newly-introduced (Python 3.7).
 
-![Python side-by-side: namedtuple Person is immutable so \_replace(age=31) makes a new instance; SimpleNamespace and a @dataclass(frozen=False) Person let you set age = 31 and add a height attribute dynamically, with printed outputs in comments.](/images/python-showdown-namedtuple-vs-simplenamespace-vs-dataclass/1.jpg)
+```python
+from collections import namedtuple
+
+Person = namedtuple('Person', ['name', 'age'])
+george = Person(name="George", age=30)
+
+print(george.name)  # Output: George
+print(george.age)   # Output: 30
+
+# Immutable, so you can only create a new instance
+# Create a new instance with a modified age
+george_new = george._replace(age=31)
+print(george_new.age)  # Output: 31
+```
+
+```python
+from types import SimpleNamespace
+
+ken = SimpleNamespace(name="Ken", age=30)
+
+print(ken.name)  # Output: Ken
+print(ken.age)   # Output: 30
+
+# Modify the age attribute
+ken.age = 31
+print(ken.age)   # Output: 31
+
+# Add a new attribute dynamically
+ken.height = 180
+print(ken.height) # Output: 180
+```
+
+```python
+from dataclasses import dataclass
+
+@dataclass(frozen=False) #frozen by default False
+class Person:
+    name: str
+    age: int
+
+peter = Person(name="Peter", age=30)
+
+print(peter.name)  # Output: Peter
+print(peter.age)   # Output: 30
+
+# Modify the age attribute
+peter.age = 31
+print(peter.age)   # Output: 31
+
+# Add a new attribute dynamically
+peter.height = 180
+print(peter.height) # Output: 180
+```
 
 When to use which?  
 ➡ namedtuple: You need something light on memory and immutable

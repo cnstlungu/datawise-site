@@ -30,7 +30,33 @@ Then, we can reference the table clone when defining the Foreign Key constraints
 
 We should keep in mind that identical data from source table and clone table is charged only one - so you'd only pay for the storage of different data, if that's the case.
 
-![BigQuery SQL in three steps: ADD FOREIGN KEY(id) references auxiliary.ids(id) fails with FOREIGN KEY constraint cannot reference a table in a different dataset; CREATE OR REPLACE TABLE learning.ids CLONE auxiliary.ids with a PRIMARY KEY NOT ENFORCED; then the foreign key to learning.ids(id) succeeds.](/images/cross-dataset-foreign-key-referencing-in-bigquery/1.jpg)
+(1)
+
+```sql
+ALTER TABLE learning.data_source ADD PRIMARY KEY (id, ds_date) NOT ENFORCED,
+ADD FOREIGN KEY(id) references auxiliary.ids(id) NOT ENFORCED;
+```
+
+The query fails with the error `FOREIGN KEY constraint cannot reference a table in a different dataset`.
+
+(2)
+
+```sql
+CREATE OR REPLACE TABLE `learning.ids` CLONE `auxiliary.ids`;
+
+
+ALTER TABLE `learning.ids` ADD PRIMARY KEY (id) NOT ENFORCED;
+```
+
+(3)
+
+```sql
+ALTER TABLE learning.data_source ADD PRIMARY KEY (id, ds_date) NOT ENFORCED,
+
+ADD FOREIGN KEY(id) REFERENCES learning.ids(id) NOT ENFORCED;
+```
+
+![BigQuery results message: This statement altered the table named data\_source.](/images/cross-dataset-foreign-key-referencing-in-bigquery/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

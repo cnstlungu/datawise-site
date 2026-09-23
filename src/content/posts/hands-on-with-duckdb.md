@@ -24,13 +24,62 @@ Many analytical workloads don't demand the vast scale of cloud data warehouses l
 
 How easy is it to use it? Simply download an executable and start querying your files.
 
-![DuckDB CLI v0.8.1 on a transient in-memory database: CREATE TABLE ecommerce\_demo AS SELECT \* FROM './repos/duckdb-demo/export.csv' loads a CSV, and SHOW ecommerce\_demo lists 16 inferred columns such as id BIGINT, f\_productprice DOUBLE, f\_orderdate TIMESTAMP.](/images/hands-on-with-duckdb/1.jpg)
+```sql
+CREATE TABLE ecommerce_demo AS  SELECT * FROM './repos/duckdb-demo/export.csv';
+SHOW ecommerce_demo;
+```
+
+![Terminal output: SHOW ecommerce\_demo lists 16 columns with their inferred types, all nullable: id, f\_orderquantity, f\_employeeid, f\_storeid, f\_vatrateid, f\_productid, f\_campaignid and created\_by BIGINT; f\_productprice, f\_NetAmountEUR and f\_GrossAmountEUR DOUBLE; f\_orderdate TIMESTAMP; is\_active, created\_on and modified\_on VARCHAR; modified\_by BIGINT.](/images/hands-on-with-duckdb/1-output.jpg)
 
 Where can you use it? In the console, using a host of programming languages, and more recently in the cloud, with Motherduck, currently in beta, a new offering also based on DuckDB.
 
-![DuckDB SQL in a desktop SQL client: a WITH input\_data CTE casts f\_orderdate AS DATE and sums f\_NetAmountEUR and f\_GrossAmountEUR from main.ecommerce\_demo grouped by day; the result grid shows order\_date, sum\_net\_amount, sum\_gross\_amount from 2014-01-01.](/images/hands-on-with-duckdb/2.jpg)
+```sql
+WITH input_data AS
+(
+SELECT
+    CAST(f_orderdate AS DATE) AS order_date,
+    SUM(f_NetAmountEUR) AS sum_net_amount,
+    SUM(f_GrossAmountEUR) AS sum_gross_amount
+FROM main.ecommerce_demo
+GROUP BY
+    CAST(f_orderdate AS DATE)
+)
 
-![DuckDB SQL in the MotherDuck (Beta) web UI: the same daily net and gross amount CTE on the uploaded export table in my\_db runs in 2.27 s with 730 rows and column histograms, plus SELECT COUNT(1) FROM main."export" returning 9305031 rows.](/images/hands-on-with-duckdb/3.jpg)
+SELECT
+    order_date,
+    sum_net_amount,
+    sum_gross_amount
+FROM input_data;
+```
+
+![DuckDB results in DBeaver: order\_date with daily sum\_net\_amount and sum\_gross\_amount, starting 2014-01-01 at 398,607 and 483,941, then roughly 1.1 to 1.2 million net and 1.4 to 1.5 million gross per day through 2014-01-23.](/images/hands-on-with-duckdb/2-result.jpg)
+
+```sql
+WITH input_data AS
+(
+SELECT
+    CAST(f_orderdate AS DATE) AS order_date,
+    SUM(f_NetAmountEUR) AS sum_net_amount,
+    SUM(f_GrossAmountEUR) AS sum_gross_amount
+FROM export
+GROUP BY
+    CAST(f_orderdate AS DATE)
+)
+
+SELECT
+    order_date,
+    sum_net_amount,
+    sum_gross_amount
+FROM input_data;
+```
+
+![MotherDuck results: the query ran in 2.27 s and returned 730 rows of order\_date, sum\_net\_amount and sum\_gross\_amount, with a histogram over each amount column; the first row is Fri Oct 10 2014 with 1,155,998.00 net and 1,404,026.00 gross.](/images/hands-on-with-duckdb/3-result.jpg)
+
+```sql
+SELECT COUNT(1) FROM main."export";
+```
+
+![MotherDuck results: the count query ran in 2.53 s and returned count(1) 9305031.](/images/hands-on-with-duckdb/3-result-2.jpg)
 
 Where do I see it applicable? Useful to DAs, DEs, and even those who only get started. One-off analysis, exploratory data analysis, super-fast DW for small-to-medium analytical apps, and prototypes. Anywhere else you might use a pop-up OLAP database. Further down, perhaps separate queues for workloads based on their size.
 

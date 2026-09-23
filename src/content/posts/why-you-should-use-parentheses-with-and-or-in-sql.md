@@ -30,7 +30,26 @@ is equivalent to
 
 It should also be noted that for comparison operators parentheses are required in order to resolve ambiguity since they are not associative like NOT/AND/OR.
 
-![BigQuery SQL filtering an input\_data CTE of boolean flags with WHERE (is\_paid AND is\_shipped) OR (customer\_is\_on\_contract AND is\_first\_time\_buyer), with comments noting the unparenthesised version resolves the same way; orders 1 and 2 are returned, order 3 is not.](/images/why-you-should-use-parentheses-with-and-or-in-sql/1.jpg)
+```sql
+WITH input_data AS (
+  SELECT 1 AS order_id, TRUE AS is_paid, FALSE AS is_shipped, TRUE AS customer_is_on_contract, TRUE AS is_first_time_buyer
+  UNION ALL
+  SELECT 2 AS order_id, FALSE AS is_paid, TRUE AS is_shipped, TRUE AS customer_is_on_contract, TRUE AS is_first_time_buyer
+  UNION ALL
+  SELECT 3 AS order_id, FALSE AS is_paid, FALSE AS is_shipped, TRUE AS customer_is_on_contract, FALSE AS is_first_time_buyer
+)
+
+SELECT *
+
+FROM input_data
+
+WHERE
+      --is_paid AND is_shipped OR customer_is_on_contract AND is_first_time_buyer
+      --resolved as:
+     (is_paid AND is_shipped) OR (customer_is_on_contract AND is_first_time_buyer)
+```
+
+![BigQuery results: orders 1 and 2 are returned; order 1 has is\_paid true and is\_shipped false, order 2 has is\_paid false and is\_shipped true, and both have customer\_is\_on\_contract and is\_first\_time\_buyer true.](/images/why-you-should-use-parentheses-with-and-or-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

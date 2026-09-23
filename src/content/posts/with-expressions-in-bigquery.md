@@ -26,7 +26,33 @@ Well, WITH expressions have the potential to help in the same way — but for no
 When working with complex formulas, you can’t reference (within the same SELECT) a column you just defined. The usual workaround is to push it into another CTE — which works, but feels verbose. I still opted to do it since it's important that the code stayed readable and maintainable.  
 Now WITH expressions give us a cleaner option and help avoid those 7-operand expressions. I, for one, plan on trying them out ASAP.
 
-![BigQuery SQL using a WITH expression inside SELECT to define discounted\_price and price\_incl\_tax as local variables, then compute quantity \* price\_incl\_tax AS sales\_amount from input\_data; results are 514.25, 255.552 and 163.35 for products 1 to 3.](/images/with-expressions-in-bigquery/1.jpg)
+```sql
+-- WITH clause
+WITH input_data AS (
+  SELECT 1 AS product_id, 5 AS quantity, 100 AS base_price, 0.15 AS discount_rate, 0.21 AS tax_rate
+  UNION ALL
+  SELECT 2 AS product_id, 3 AS quantity, 80 AS base_price, 0.12 AS discount_rate, 0.21 AS tax_rate
+  UNION ALL
+  SELECT 3 AS product_id, 2 AS quantity, 75 AS base_price, 0.10 AS discount_rate, 0.21 AS tax_rate
+)
+
+
+
+--WITH expression
+SELECT
+
+product_id,
+
+WITH(
+  discounted_price AS base_price * (1 - discount_rate), -- variable 1
+  price_incl_tax AS discounted_price * (1 + tax_rate), -- variable 2
+  quantity * price_incl_tax) AS sales_amount           -- result
+
+
+FROM input_data
+```
+
+![BigQuery results: sales\_amount 514.25 for product 1, 255.552 for product 2 and 163.35 for product 3.](/images/with-expressions-in-bigquery/1-result.jpg)
 
 Has anyone here used them already? Any thoughts? Docs [here](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression).
 

@@ -22,6 +22,27 @@ They also come with the advantage that you can compare multiple values at once.
 
 As usual, pay attention to the NULLs - if one of values is NULL, the result would be as well.
 
-![BigQuery SQL on val\_a 10, val\_b 20 and val\_c 30 comparing GREATEST(val\_a, val\_b) and LEAST(val\_a, val\_b) with equivalent IF expressions, plus GREATEST across all three; results are highest 20, also\_highest 20, lowest 10, also\_lowest 10 and greatest\_of\_all 30.](/images/greatest-least-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+
+  SELECT 10 AS val_a, 20 AS val_b, 30 AS val_c
+)
+
+SELECT
+
+GREATEST(val_a, val_b) AS highest,
+
+IF(val_a>=val_b, val_a, val_b) AS also_highest,
+
+LEAST(val_a, val_b) AS lowest,
+
+IF(val_a <= val_b, val_a, val_b) AS also_lowest,
+
+GREATEST(val_a, val_b, val_c) AS greatest_of_all
+
+FROM input_data
+```
+
+![BigQuery results: highest 20, also\_highest 20, lowest 10, also\_lowest 10 and greatest\_of\_all 30.](/images/greatest-least-in-bigquery/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

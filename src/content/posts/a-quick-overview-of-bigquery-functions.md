@@ -50,7 +50,62 @@ For complex processing requirements, BigQuery offers remote functions, which all
 
 This opens access to the vast ecosystem of libraries in languages like Python.
 
-![BigQuery SQL showing three function types: temp scalar function double\_minus\_five (x\*2-5) returning -3 to 5, CREATE TEMP AGGREGATE FUNCTION sum\_only\_even with SUM(CASE WHEN MOD(val, 2) = 0 ...) returning 6, and CREATE TABLE FUNCTION learning.get\_top\_cities('FR') returning Paris, Marseille and Lyon.](/images/a-quick-overview-of-bigquery-functions/1.png)
+```sql
+CREATE TEMP FUNCTION double_minus_five(x NUMERIC)
+AS (
+  x*2-5
+);
+SELECT double_minus_five(val) AS results FROM UNNEST([1,2,3,4,5]) val;
+
+-- +---------+
+-- | results |
+-- +---------+
+-- | -3      |
+-- | -1      |
+-- | 1       |
+-- | 3       |
+-- | 5       |
+-- +---------+
+
+
+CREATE TEMP AGGREGATE FUNCTION sum_only_even(val NUMERIC)
+RETURNS NUMERIC
+AS (
+  SUM(CASE WHEN MOD(val, 2) = 0 THEN val ELSE 0 END)
+);
+
+SELECT sum_only_even(val) FROM UNNEST([1,2,3,4,5]) val;
+
+-- 6
+
+
+CREATE TABLE FUNCTION learning.get_top_cities(country_code STRING)
+AS (
+
+SELECT city_name, population FROM
+(
+    -- USA
+    SELECT 'US' AS country, 'New York' AS city_name, 10000000 AS population UNION ALL
+    SELECT 'US', 'Los Angeles', 4000000 UNION ALL
+    SELECT 'US', 'Chicago', 2700000 UNION ALL
+    -- France
+    SELECT 'FR', 'Paris', 2200000 UNION ALL
+    SELECT 'FR', 'Marseille', 870000 UNION ALL
+    SELECT 'FR', 'Lyon', 520000
+) data WHERE  data.country =  country_code
+
+);
+
+SELECT * FROM learning.get_top_cities('FR')
+
+-- +-----------+------------+
+-- | city_name | population |
+-- +-----------+------------+
+-- | Paris     | 2200000    |
+-- | Marseille | 870000     |
+-- | Lyon      | 520000     |
+-- +-----------+------------+
+```
 
 ### Their Place in Modern **SQL**
 

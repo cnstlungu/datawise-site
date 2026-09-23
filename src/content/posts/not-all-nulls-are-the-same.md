@@ -20,7 +20,24 @@ First, sure, the NULL means the absence of a value, but it is bound to a particu
 
 I've also seen that if we specify just the NULL literal, it defaults to INTEGER.
 
-![BigQuery SQL showing typed NULLs: CAST(NULL AS INT64) \<\> CAST(NULL AS STRING) fails with no matching signature for operator !=, while CREATE OR REPLACE TABLE learning.my\_table AS SELECT NULL AS my\_column gives an INTEGER NULLABLE column, and comparing it to CAST(NULL AS INT64) returns null.](/images/not-all-nulls-are-the-same/1.jpg)
+```sql
+--No matching signature for operator != for argument types: INT64, STRING. Supported signature: ANY != ANY at [4:8]
+
+--SELECT CAST(NULL AS INT64) <> CAST(NULL AS STRING)
+
+
+
+-- If not specified, the NULL is considered an INT
+CREATE OR REPLACE TABLE `learning.my_table` AS
+SELECT NULL AS my_column;
+
+--null
+SELECT my_column <> CAST(NULL AS INT64) FROM learning.my_table;
+```
+
+![Schema of learning.my\_table: my\_column, type INTEGER, mode NULLABLE.](/images/not-all-nulls-are-the-same/1-schema.jpg)
+
+![BigQuery results: one row, f0\_ is null.](/images/not-all-nulls-are-the-same/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
 

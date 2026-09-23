@@ -31,7 +31,36 @@ Defining our JSON objects as such will allow us to use JSON functions with them 
 
 Stay tuned for the next posts on this topic.
 
-![BigQuery SQL creating the same JSON object five ways: a JSON literal in triple quotes, PARSE\_JSON on an escaped string, TO\_JSON(STRUCT(name, city, sports)), JSON\_OBJECT with key-value pairs and JSON\_ARRAY(sports); the results show identical name, city and sports objects plus a nested array.](/images/the-json-datatype-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+
+SELECT
+
+  JSON """
+      {"name": "John Doe",
+      "city": "New York",
+      "sports": ["football", "snooker", "tennis"]}
+  """
+  AS json_native,
+
+  "{\"name\": \"John Doe\", \"city\": \"New York\", \"sports\": [\"football\", \"snooker\", \"tennis\"]}" AS json_string,
+
+  "John Doe" AS name,
+  "New York" AS city,
+  ["football", "snooker", "tennis"] AS sports
+)
+
+SELECT
+  json_native,
+  PARSE_JSON(json_string) AS parsed_json_from_string,
+  TO_JSON(STRUCT(name, city, sports)) AS json_from_key_values,
+  JSON_OBJECT('name', name, 'city', city, 'sports', sports) AS json_object_from_key_value_pairs,
+  JSON_ARRAY(sports) AS json_array_from_array
+
+FROM  input_data
+```
+
+![BigQuery results: json\_native, parsed\_json\_from\_string, json\_from\_key\_values and json\_object\_from\_key\_value\_pairs all hold {"city":"New York","name":"John Doe","sports":\["football","snooker","tennis"\]}, and json\_array\_from\_array is \[\["football","snooker","tennis"\]\].](/images/the-json-datatype-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

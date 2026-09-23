@@ -26,7 +26,25 @@ For this we'll need :
 
 See below for an illustration of how it all works. Happy querying!
 
-![BigQuery SQL cumulative sum on an orders table: SUM(order\_total) OVER (PARTITION BY customer\_id ORDER BY order\_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative\_sum; the highlighted result runs 100, 175, 265 for Customer-1 and 80, 200, 250 for Customer-2.](/images/computing-a-cumulative-sum-in-bigquery/1.jpg)
+![Input data: an orders table with customer\_id, order\_id, order\_total and order\_date; Customer-1 has orders of 100, 75 and 90 and Customer-2 orders of 80, 120 and 50, on 2021-01-01, 2021-01-02 and 2021-01-03.](/images/computing-a-cumulative-sum-in-bigquery/1-input.jpg)
+
+```sql
+SELECT
+
+customer_id,
+order_id,
+order_total,
+order_date,
+
+SUM(order_total) OVER (PARTITION BY customer_id
+                       ORDER BY order_date
+                       ROWS BETWEEN UNBOUNDED PRECEDING
+                                    AND CURRENT ROW) AS cumulative_sum
+
+FROM input_data
+```
+
+![Query results: the same six orders with a cumulative\_sum column (boxed in red) of 100, 175, 265 for Customer-1 and 80, 200, 250 for Customer-2.](/images/computing-a-cumulative-sum-in-bigquery/1-result.jpg)
 
 Bonus point: You can also use a [named window declaration](/tidying-up-window-functions-in-bigquery-with-named-windows) for cleaner code.
 

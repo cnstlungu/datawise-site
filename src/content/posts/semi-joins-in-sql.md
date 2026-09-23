@@ -24,7 +24,33 @@ How are we going to implement it? We're going to use WHERE + EXISTS + a correlat
 
 In the example below, we're using a semi-join to see which of the products have been previously ordered.
 
-![BigQuery SQL semi-join: SELECT \* FROM products p WHERE EXISTS (SELECT 1 FROM orders o WHERE p.product\_id = o.product\_id), a correlated subquery; only Cherries and Tomatoes are returned, once each, even though both appear in several orders, and Squash is excluded.](/images/semi-joins-in-sql/1.jpg)
+```sql
+WITH products AS (
+  SELECT 1 AS product_id, 'Cherries' AS product_name UNION ALL
+  SELECT 2 AS product_id, 'Tomatoes' AS product_name UNION ALL
+  SELECT 3 AS product_id, 'Squash' AS product_name
+),
+
+orders AS (
+  SELECT 1001 AS order_id, 1 AS product_id, 3 AS quantity UNION ALL
+  SELECT 1001 AS order_id, 2 AS product_id, 4 AS quantity UNION ALL
+
+  SELECT 1002 AS order_id, 1 AS product_id, 4 AS quantity UNION ALL
+  SELECT 1002 AS order_id, 2 AS product_id, 1 AS quantity)
+
+
+SELECT * FROM products p
+
+WHERE EXISTS (
+
+SELECT 1
+    FROM orders o
+    WHERE p.product_id = o.product_id
+
+)
+```
+
+![BigQuery results: two rows, product 1 Cherries and product 2 Tomatoes.](/images/semi-joins-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -22,6 +22,62 @@ This, in my opinion, makes the query much more readable when working with boolea
 
 If you properly name the flags, reading the query feels much closer to natural language.
 
-![BigQuery SQL defining val\_b \> val\_a AS is\_val\_b\_higher and filtering with just WHERE is\_val\_b\_higher, which returns true, beside a SQL Server version that needs CAST(IIF(val\_b \> val\_a, 1, 0) AS BIT) and WHERE is\_val\_b\_higher = 1, with comments marking the plain boolean forms as errors there.](/images/boolean-data-type-in-bigquery/1.jpg)
+BigQuery:
+
+```sql
+WITH input_data AS (
+  SELECT
+    1 AS val_a,
+    2 AS val_b
+),
+
+bool_flags AS (
+  SELECT
+    val_a,
+    val_b,
+    val_b > val_a AS is_val_b_higher
+  FROM
+    input_data
+)
+
+SELECT val_a, val_b , is_val_b_higher
+
+FROM bool_flags
+
+WHERE is_val_b_higher
+```
+
+![BigQuery results: one row with val\_a 1, val\_b 2 and is\_val\_b\_higher true.](/images/boolean-data-type-in-bigquery/1-result.jpg)
+
+SQL Server:
+
+```sql
+WITH input_data AS (
+  SELECT
+    1 AS val_a,
+    2 AS val_b
+),
+
+bool_flags AS (
+  SELECT
+    val_a,
+    val_b,
+    --   val_b > val_a AS is_val_b_higher -- NOT POSSIBLE, ERROR
+  CAST(IIF(val_b > val_a, 1, 0) AS BIT) AS is_val_b_higher
+
+  FROM
+    input_data
+)
+
+SELECT val_a, val_b , is_val_b_higher
+
+FROM bool_flags
+
+WHERE
+    --is_val_b_higher -- ALSO NOT POSSIBLE, ERROR
+    is_val_b_higher = 1
+```
+
+![SQL Server results: one row with val\_a 1, val\_b 2 and is\_val\_b\_higher 1.](/images/boolean-data-type-in-bigquery/1-result-2.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

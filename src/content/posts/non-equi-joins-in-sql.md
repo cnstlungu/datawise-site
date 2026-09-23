@@ -25,7 +25,22 @@ Moreover, sometimes we might use both equality and other operators for joining t
 
 Let's look at a simple non-equi join scenario below.
 
-![SQL non-equi joins from orders to campaign ON o.order\_date BETWEEN c.valid\_from AND c.valid\_to and to discounts ON o.amount \>= value\_from AND o.amount \< value\_to, computing (1-discount\_percentage)\*amount AS paid\_amount; e.g. order 3 (151, Summer 2022) gets 0.2 off and pays 120.8.](/images/non-equi-joins-in-sql/1.jpg)
+![Input data: campaigns (Winter 2021, Summer 2021, Winter 2022, Summer 2022 with valid\_from/valid\_to half-year ranges), discounts (0-50 at 0.1, 50-100 at 0.15, 100-1000000 at 0.2) and orders (1 on 2021-03-01 for 100, 2 on 2022-03-01 for 45, 3 on 2022-07-01 for 151, 4 on 2022-12-01 for 80).](/images/non-equi-joins-in-sql/1-input.jpg)
+
+```sql
+SELECT
+  o.order_id,
+  o.order_date,
+  c.name AS campaign_name,
+  o.amount AS list_price_amount,
+  d.discount_percentage,
+  (1-discount_percentage)*amount AS paid_amount
+FROM orders o
+JOIN campaign c ON o.order_date BETWEEN c.valid_from AND c.valid_to
+JOIN discounts d ON o.amount >= value_from AND o.amount < value_to
+```
+
+![Results: order 4 (2022-12-01, Summer 2022, 80) gets 0.15 and pays 68; order 3 (2022-07-01, Summer 2022, 151) gets 0.2 and pays 120.8; order 2 (2022-03-01, Winter 2022, 45) gets 0.1 and pays 40.5; order 1 (2021-03-01, Winter 2021, 100) gets 0.2 and pays 80.](/images/non-equi-joins-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

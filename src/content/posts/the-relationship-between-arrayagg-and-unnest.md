@@ -23,10 +23,30 @@ Check my previous posts on the topic:
 * [Unnesting ARRAYS in BigQuery](/unnesting-arrays-in-bigquery)
     
 * [Using ARRAY\_AGG in BigQuery](/using-array-agg-in-bigquery)
-    
-    ![BigQuery SQL round trip drawn as a cycle: ARRAY\_AGG(STRUCT(order\_id, product)) AS orders with GROUP BY customer\_id nests four flat order rows into one row per customer, and LEFT JOIN UNNEST(orders) AS \_order flattens them back into the same four rows.](/images/the-relationship-between-arrayagg-and-unnest/1.jpg)
-    
-    *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
+
+```sql
+SELECT
+  customer_id,
+  ARRAY_AGG(STRUCT(order_id,
+                   product)) AS orders
+FROM unnested_data
+GROUP BY customer_id
+```
+
+![BigQuery results of the ARRAY\_AGG query: one row per customer with a nested orders array, customer 1 with orders 101 apples and 102 tomatoes, customer 2 with 201 cherries and 202 cucumbers.](/images/the-relationship-between-arrayagg-and-unnest/1-result.jpg)
+
+```sql
+SELECT
+  customer_id,
+  _order.order_id,
+  _order.product
+FROM array_data
+LEFT JOIN UNNEST(orders) AS _order
+```
+
+![BigQuery results of the UNNEST query: the four flat rows again, customer 1 with 101 apples and 102 tomatoes, customer 2 with 201 cherries and 202 cucumbers.](/images/the-relationship-between-arrayagg-and-unnest/1-result-2.jpg)
+
+*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 
 ---
 

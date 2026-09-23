@@ -22,7 +22,26 @@ What are they and when to use them?
 
 See below a representative example.
 
-![BigQuery SQL comparing IFNULL(value\_a, default\_value), COALESCE(value\_a, value\_b, default\_value) and NULLIF(maybe\_empty\_string, '') on NULL strings and an empty string; ifnull\_example and coalesce\_example return default value, while nullif\_example returns null.](/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+
+  SELECT
+    CAST(NULL AS STRING) AS value_a,
+    CAST(NULL AS STRING) AS value_b,
+    'default value' AS default_value,
+    '' AS maybe_empty_string
+)
+
+SELECT
+
+  IFNULL(value_a, default_value) AS ifnull_example, --if a IS NULL then another value
+  COALESCE(value_a, value_b, default_value) AS coalesce_example, --first non-null value among multiple options (if any)
+  NULLIF(maybe_empty_string, '') AS nullif_example, -- replaces a value with a NULL
+
+FROM input_data
+```
+
+![BigQuery results: ifnull\_example and coalesce\_example are both 'default value', nullif\_example is null.](/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

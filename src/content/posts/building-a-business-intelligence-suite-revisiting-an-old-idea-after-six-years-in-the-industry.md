@@ -75,11 +75,33 @@ The Company’s transactional database
 
 > *The data is fictional and automatically generated. Any similarities with existing persons, entities, products or businesses are purely coincidental.*
 
-![CSV file from a reseller with the header Transaction ID, Product name, Quantity, Total amount, Sales Channel, Customer First Name, Customer Last Name, Customer Email, Series City, Created Date, and five postcard sales rows dated 2019-01-01, such as 6x11 Come visit me in Helsinki.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/5.png)
+```csv
+Transaction ID,Product name,Quantity,Total amount,Sales Channel,Customer First Name,Customer Last Name,Customer Email,Series City,Created Date
+0,6x11 Come visit me in Helsinki ,1,4.3,mobile app,Megan,Freeman,Megan.Freeman@example.com,Helsinki,2019-01-01
+1,6x11 Come visit me in Sarajevo ,4,17.2,web,Charles,Steinbeck,Charles.Steinbeck@example.com,Sarajevo,2019-01-01
+2,4x6 Merry Christmas from Novosibirsk ,4,14.0,web,David,Tucker,David.Tucker@example.com,Novosibirsk,2019-01-01
+3,6x11 Come visit me in Milano (Milan) ,3,6.300000000000001,web,Mary,Valdez,Mary.Valdez@example.com,Milano (Milan),2019-01-01
+4,4.25x6 Just settled in Saratov ,6,17.4,mobile app,Jim,Cooper,Jim.Cooper@example.com,Saratov,2019-01-01
+```
 
 CSV data received from the resellers
 
-![XML file from a reseller: a transaction element with date and reseller-id attributes holding transactionId, productName, qty, totalAmount, salesChannel, a nested customer element (firstname, lastname, email), dateCreated and seriesCity for one postcard sale via mobile app.](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/6.png)
+```xml
+<transaction date="20190101" reseller-id="1001">
+    <transactionId>0</transactionId>
+    <productName>5.5x8.5 Come visit me in Orenburg </productName>
+    <qty>3</qty>
+    <totalAmount>4.5</totalAmount>
+    <salesChannel>mobile app</salesChannel>
+    <customer>
+        <firstname>Jason</firstname>
+        <lastname>Sagredo</lastname>
+        <email>Jason.Sagredo@example.com</email>
+    </customer>
+    <dateCreated>20190101</dateCreated>
+    <seriesCity>Orenburg</seriesCity>
+</transaction>
+```
 
 XML data received from the resellers
 

@@ -18,6 +18,28 @@ It returns the 1-based index of the first occurrence of a substring (1 or more c
 
 There's also a possibility to specify at what position to start the search (like in good old Excel) and which occurrence to get.
 
-![BigQuery SQL using INSTR(fruits,',') and INSTR(fruits,';') to find the first comma and semicolon positions in fruit lists, feeding a CASE WHEN with SPLIT into fruits\_array; apple,grapes,melon gives 6 and 0 and splits into three items, while banana returns 0 for both.](/images/using-instr-in-bigquery/1.png)
+```sql
+WITH input_data AS (
+  SELECT 1 AS user_id, 'apple,grapes,melon' AS fruits
+  UNION ALL
+  SELECT 2 AS user_id, 'pear;mango;kiwi'
+  UNION ALL
+  SELECT 3 AS user_id, 'banana'
+)
+
+SELECT
+
+  user_id,
+  fruits,
+  INSTR(fruits,',') AS comma_first_position,
+  INSTR(fruits,';') AS semicolon_first_position,
+
+  CASE WHEN INSTR(fruits,';') > 0 THEN SPLIT(fruits,',')
+       ELSE SPLIT(fruits,',') END AS fruits_array,
+
+FROM input_data
+```
+
+![BigQuery results: apple,grapes,melon has comma\_first\_position 6 and semicolon\_first\_position 0 and splits into apple, grapes and melon; pear;mango;kiwi has 0 and 5 and stays one item; banana has 0 and 0.](/images/using-instr-in-bigquery/1-result.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

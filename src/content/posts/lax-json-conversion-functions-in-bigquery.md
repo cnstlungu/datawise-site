@@ -22,7 +22,25 @@ Just note that even JSON-like string won't work as an input, it only works for t
 
 As usual, watch out because these conversion functions might work differently as how you'd expect. SAFE\_CAST('1' AS BOOL) =&gt; NULL but SAFE\_CAST(1 AS BOOL) =&gt; TRUE.
 
-![BigQuery SQL declaring an ARRAY\<JSON\> of fruits with loosely typed fields and reading them via UNNEST with LAX\_STRING, LAX\_BOOL, LAX\_FLOAT64 and LAX\_INT64; string "7.1" becomes 7.1, 1/0 and "TRUE"/"false" become booleans, and an empty string is\_local gives null.](/images/lax-json-conversion-functions-in-bigquery/1.jpg)
+```sql
+DECLARE json_data ARRAY<JSON> DEFAULT
+[
+ JSON '{"name": "apple", "pack_size": 4, "price": "7.1","type": "pome fruit", "is_local": "TRUE", "is_sweet": 1 }',
+ JSON '{"name": "lemon", "pack_size": 5, "price": "12.5", "type": "citrus", "is_local": "false", "is_sweet": 0 }',
+ JSON '{"name": "orange","pack_size": 3, "price": "9.99", "type": "citrus", "is_local": "", "is_sweet": 1}'
+];
+
+SELECT
+  LAX_STRING(fruit.name) AS fruit_name,
+  LAX_BOOL(fruit.is_sweet) AS is_sweet,
+  LAX_BOOL(fruit.is_local) AS is_local,
+  LAX_FLOAT64(fruit.price) AS price,
+  LAX_INT64(fruit.pack_size) AS pack_size
+
+FROM UNNEST(json_data) AS fruit
+```
+
+![BigQuery results: apple has is\_sweet true, is\_local true, price 7.1, pack\_size 4; lemon false, false, 12.5, 5; orange true, null, 9.99, 3.](/images/lax-json-conversion-functions-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -29,6 +29,35 @@ Since it's a table-valued function, it acts like a table so you select FROM it.
 
 Obligatory remark that this is in 'Preview' for now.
 
-![BigQuery SQL filling a transaction\_date column with gaps (2021-01-01, 01-03, 01-05) two ways: the GAP\_FILL table function with TABLE learning.dates\_with\_gaps, 'transaction\_date' and INTERVAL 1 DAY, and a bounds CTE with GENERATE\_DATE\_ARRAY and LEFT JOIN; both return all five dates.](/images/using-gapsfill-in-bigquery/1.jpg)
+![Input data: a transaction\_date column with three dates, 2021-01-01, 2021-01-03 and 2021-01-05.](/images/using-gapsfill-in-bigquery/1-input.jpg)
+
+```sql
+SELECT
+  dates.transaction_date
+
+FROM GAP_FILL (
+  TABLE learning.dates_with_gaps,
+  'transaction_date',
+  INTERVAL 1 DAY
+) dates
+```
+
+![BigQuery results of GAP\_FILL: five rows, transaction\_date 2021-01-01, 2021-01-02, 2021-01-03, 2021-01-04 and 2021-01-05.](/images/using-gapsfill-in-bigquery/1-result.jpg)
+
+```sql
+WITH bounds AS (
+  SELECT
+    MIN(transaction_date) AS start_date,
+    MAX(transaction_date) AS end_date
+  FROM `learning.dates_with_gaps`
+)
+
+SELECT filled_date AS transaction_date
+FROM bounds
+JOIN UNNEST(GENERATE_DATE_ARRAY(start_date, end_date, INTERVAL 1 DAY)) AS filled_date
+LEFT JOIN `learning.dates_with_gaps` dates ON filled_date = dates.transaction_date
+```
+
+![BigQuery results of the GENERATE\_DATE\_ARRAY query: the same five dates, 2021-01-01 through 2021-01-05.](/images/using-gapsfill-in-bigquery/1-result-2.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*

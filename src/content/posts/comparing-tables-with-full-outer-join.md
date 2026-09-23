@@ -24,7 +24,30 @@ Once you have aligned them to the same grain, you can now join on the respective
 
 You could also leverage a hashing function + TO\_JSON\_ARRAY ([check my previous post](/using-bigquery-hashing-functions)) to see which rows are different in the two tables.
 
-![BigQuery SQL comparing trends\_us\_prod and trends\_us\_dev with a FULL OUTER JOIN on refresh\_date, week, dma\_id and term, using COUNTIF, COUNT(DISTINCT CASE WHEN ...) and FARM\_FINGERPRINT(TO\_JSON\_STRING(...)); results show 3954227 rows missing from prod, 3956293 missing from dev and 7910520 rows\_different of 43514223.](/images/comparing-tables-with-full-outer-join/1.jpg)
+```sql
+SELECT
+
+  COUNTIF (prod.term IS NULL AND dev.term IS NOT NULL) AS cnt_missing_prod,
+  COUNT (DISTINCT CASE WHEN prod.term IS NULL AND dev.term IS NOT NULL THEN dev.term END) AS distinct_terms_missing_from_prod,
+
+  COUNTIF (dev.term IS NULL AND prod.term IS NOT NULL) AS cnt_missing_dev,
+  COUNT (DISTINCT CASE WHEN dev.term IS NULL AND prod.term IS NOT NULL THEN prod.term END) AS distinct_terms_missing_from_dev,
+
+  COUNT(1) AS total_rows,
+  COUNT(DISTINCT COALESCE(prod.term, dev.term)) AS total_distinct_terms,
+
+  COUNTIF(FARM_FINGERPRINT(TO_JSON_STRING(prod))  <> FARM_FINGERPRINT(TO_JSON_STRING(dev))) AS rows_different
+
+
+FROM `learning_us.trends_us_prod` prod
+
+FULL OUTER JOIN `learning_us.trends_us_dev` dev ON prod.refresh_date = dev.refresh_date AND
+                                                   prod.week = dev.week AND
+                                                   prod.dma_id = dev.dma_id AND
+                                                   prod.term = dev.term
+```
+
+![BigQuery results: cnt\_missing\_prod 3954227, distinct\_terms\_missing\_from\_prod 660, cnt\_missing\_dev 3956293, distinct\_terms\_missing\_from\_dev 660, total\_rows 43514223, total\_distinct\_terms 660 and rows\_different 7910520.](/images/comparing-tables-with-full-outer-join/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

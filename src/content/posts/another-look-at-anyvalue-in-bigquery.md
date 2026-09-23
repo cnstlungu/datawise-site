@@ -25,6 +25,30 @@ Otherwise, when do I use it? A couple of cases, and it's not only for the thrill
 \- aggregation after pseudo-pivoting with CASE WHEN value = x, same as we used to do with MIN or MAX before  
 \- other aggregations of string values based on a rule
 
-![BigQuery SQL using ANY\_VALUE(product\_id HAVING MAX price), ANY\_VALUE(product\_id HAVING MIN is\_banana) and ANY\_VALUE(product\_id HAVING MIN best\_before\_date) with GROUP BY order\_id; order 1 returns Mango, Mango and Banana, order 2 returns Pears for all three.](/images/another-look-at-anyvalue-in-bigquery/1.jpg)
+```sql
+WITH input_data AS
+(
+  SELECT 1 AS order_id, 'Banana' AS product_id, 7.00 AS price, '2024-01-01' AS best_before_date
+  UNION ALL
+  SELECT 1 AS order_id, 'Mango' AS product_id, 8.00 AS price, '2024-01-10' AS best_before_date
+  UNION ALL
+  SELECT 2 AS order_id, 'Pears' AS product_id, 10.00 AS price, '2024-01-05' AS best_before_date
+),
+
+processing AS (
+
+  SELECT order_id, product_id, price, product_id = 'Banana' AS is_banana, best_before_date FROM input_data
+)
+
+SELECT
+  order_id,
+  ANY_VALUE(product_id HAVING MAX price ) AS most_expensive_product,
+  ANY_VALUE(product_id HAVING MIN is_banana) AS any_product_except_banana,
+  ANY_VALUE(product_id HAVING MIN best_before_date) AS first_expiring_product
+FROM processing
+GROUP BY order_id
+```
+
+![BigQuery results: order 1 gives most\_expensive\_product Mango, any\_product\_except\_banana Mango and first\_expiring\_product Banana; order 2 gives Pears in all three columns.](/images/another-look-at-anyvalue-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

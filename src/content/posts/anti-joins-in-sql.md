@@ -26,7 +26,26 @@ An anti-join is a bit similar to the [EXCEPT set operation](https://www.linkedin
 
 In the example below, we're illustrating a LEFT ANTI JOIN which finds all the products we have details for (like product name) but for which we don't have a row in the pricing table.
 
-![BigQuery SQL left anti-join: product\_details LEFT JOIN prices ON pd.product\_id = p.product\_id WHERE p.product\_id IS NULL, finding products with no price row; the result is product 4, sweater, with a null price.](/images/anti-joins-in-sql/1.jpg)
+```sql
+WITH product_details AS (
+  SELECT 1 AS product_id, 'shoes' AS product_name   UNION ALL
+  SELECT 2 AS product_id, 'hat' AS product_name     UNION ALL
+  SELECT 3 AS product_id, 'jacket' AS product_name  UNION ALL
+  SELECT 4 AS product_id, 'sweater' AS product_name
+),
+prices AS (
+  SELECT 1 AS product_id, 100 AS price UNION ALL
+  SELECT 2 AS product_id, 30 AS price  UNION ALL
+  SELECT 3 AS product_id, 90 AS price
+)
+
+SELECT pd.product_id, pd.product_name, p.price
+FROM product_details pd
+LEFT JOIN prices p ON pd.product_id = p.product_id
+WHERE p.product_id IS NULL
+```
+
+![BigQuery results: one row, product\_id 4, product\_name sweater, price null.](/images/anti-joins-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -25,7 +25,47 @@ Unlike APPENDS (which works right out of the box), you need to enable change his
 To illustrate how it all works I've:  
 1️⃣ Created a table 2️⃣ Inserted a row 3️⃣ Updated a row
 
-![BigQuery SQL comparing the APPENDS and CHANGES table functions on learning.customers after enable\_change\_history = TRUE, an INSERT of George and an UPDATE SET country = 'UAE' WHERE id = 4; APPENDS returns only inserts, while CHANGES also shows Ahmed as an UPDATE (UAE) and a DELETE (Egypt).](/images/change-history-in-bigquery/1.jpg)
+![Input data: the learning.customers table with id, first\_name, last\_name and country, five rows: 2 Maria Garcia Spain, 3 Yuki Tanaka Japan, 4 Ahmed Hassan Egypt, 5 Isabella Santos Brazil and 1 Joe Doe UK.](/images/change-history-in-bigquery/1-input.jpg)
+
+```sql
+INSERT learning.customers
+
+SELECT 9 AS id,
+       'George' AS first_name,
+       'Matthews' AS last_name,
+       'Australia' AS country;
+```
+
+```sql
+UPDATE learning.customers
+
+SET country = 'UAE'
+
+WHERE id = 4;
+```
+
+```sql
+ALTER TABLE learning.customers SET OPTIONS (enable_change_history = TRUE);
+```
+
+```sql
+SELECT * FROM APPENDS (
+  TABLE `learning.customers`,
+  TIMESTAMP '2025-03-06 14:06:45',
+  CURRENT_TIMESTAMP())
+```
+
+![APPENDS results: all six rows with \_CHANGE\_TYPE INSERT, the original five at 2025-03-06 14:06:45.423000 UTC and George Matthews (Australia) at 14:08:12.494000 UTC; Ahmed still shows Egypt.](/images/change-history-in-bigquery/1-result.jpg)
+
+```sql
+SELECT * FROM CHANGES (
+  TABLE `learning.customers`,
+  TIMESTAMP '2025-03-06 14:06:45',
+  TIMESTAMP '2025-03-06 14:11:00') -- needs to be >10 minutes before NOW
+  ORDER BY _CHANGE_TIMESTAMP
+```
+
+![CHANGES results: the same six INSERT rows, plus two rows for Ahmed Hassan at 2025-03-06 14:10:17.105000 UTC, an UPDATE with country UAE and a DELETE with country Egypt.](/images/change-history-in-bigquery/1-result-2.jpg)
 
 As you will be able to see:  
 ✅ APPENDS captures new rows only.  

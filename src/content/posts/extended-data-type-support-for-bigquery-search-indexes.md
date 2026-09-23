@@ -24,6 +24,24 @@ I’ve played a bit with it but still haven’t managed to get the index to be u
 
 Does anyone use this feature in the real world?
 
-![BigQuery SQL CREATE SEARCH INDEX test\_index on auxiliary.sample\_logs(event\_details, json\_payload) with OPTIONS data\_types STRING, INT64, TIMESTAMP; job details show Index Usage Mode UNUSED (data too small), and INFORMATION\_SCHEMA.SEARCH\_INDEXES shows coverage\_percentage 0, LOG\_ANALYZER.](/images/extended-data-type-support-for-bigquery-search-indexes/1.jpg)
+```sql
+CREATE SEARCH INDEX `test_index`
+
+ON `auxiliary.sample_logs`(event_details, json_payload)
+
+OPTIONS (data_types = ['STRING', 'INT64', 'TIMESTAMP'])
+```
+
+![Schema of auxiliary.sample\_logs: level STRING, source\_ip STRING, event\_details RECORD, json\_payload STRING and upsert\_timestamp TIMESTAMP, all NULLABLE.](/images/extended-data-type-support-for-bigquery-search-indexes/1-schema.jpg)
+
+![Job information: 43.77 GB processed in 10 sec, Index Usage Mode UNUSED, because the amount of data covered by the search index on auxiliary.sample\_logs is too small for the index to be effective.](/images/extended-data-type-support-for-bigquery-search-indexes/1-result.jpg)
+
+```sql
+SELECT table_name, index_name, ddl, coverage_percentage, analyzer
+FROM auxiliary.INFORMATION_SCHEMA.SEARCH_INDEXES
+WHERE index_status = 'ACTIVE';
+```
+
+![BigQuery results: table sample\_logs with index test\_index, its DDL (partly visible), coverage\_percentage 0 and analyzer LOG\_ANALYZER.](/images/extended-data-type-support-for-bigquery-search-indexes/1-result-2.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*

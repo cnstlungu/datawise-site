@@ -22,7 +22,36 @@ Now, one can refer to a lookup table and use that in conjunction with the SESSIO
 
 The result is the same, but this adds a degree of simplicity and easiness when managing row-level access security in BigQuery.
 
-![BigQuery SQL comparing CREATE ROW ACCESS POLICY with a static FILTER USING (country IN ('US', 'UK')) to the preview version whose FILTER USING subquery reads lookup\_table, UNNESTs country\_list and matches user\_principal = SESSION\_USER(); both let the service account see only the UK and US customers.](/images/using-subqueries-with-row-level-security-in-bigquery/1.jpg)
+![Input data: a customer table with CustomerId, FirstName, LastName, Country and FirstOrderDate, four rows: Michelle Dubois (FR), Jane Springer (UK), Bianca Moretti (IT) and John Doe (US).](/images/using-subqueries-with-row-level-security-in-bigquery/1-input.jpg)
+
+```sql
+CREATE ROW ACCESS POLICY us_uk_policy ON `learning.customer_data`
+
+GRANT TO ('serviceAccount:test-rowlevel-security@<redacted>.iam.gserviceaccount.com')
+
+FILTER USING (country IN ('US', 'UK'));
+```
+
+NEW (in preview):
+
+```sql
+CREATE ROW ACCESS POLICY us_uk_policy ON `learning.customer_data`
+
+GRANT TO ('serviceAccount:test-rowlevel-security@<redacted>.iam.gserviceaccount.com')
+
+FILTER USING (country IN (
+    SELECT
+      country
+    FROM
+      `<redacted>.learning.lookup_table`
+    LEFT JOIN UNNEST(country_list) AS country
+    WHERE
+      user_principal = SESSION_USER()));
+```
+
+![Preview of lookup\_table: one row whose user\_principal is the test-rowlevel-security service account (project id hidden) and whose country\_list holds US and UK.](/images/using-subqueries-with-row-level-security-in-bigquery/1-input-2.jpg)
+
+![Output: what the service account sees, only customer 4 Jane Springer (UK, 2022-03-01) and customer 1 John Doe (US, 2021-01-01).](/images/using-subqueries-with-row-level-security-in-bigquery/1-output.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

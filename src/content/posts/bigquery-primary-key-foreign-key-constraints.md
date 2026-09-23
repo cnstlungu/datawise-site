@@ -32,7 +32,31 @@ ADD FOREIGN KEY(id) references testing.lookup_table(id) NOT ENFORCED;
 
 I compared query results from two tables without constraints (learning dataset) to their replicas with constraints (testing dataset), ensuring cached results were disabled.
 
-![BigQuery SQL side by side, cache disabled: SELECT id, MAX(ds\_date), MIN(ds\_date) joining data\_source to lookup\_table USING (id) GROUP BY id. With constraints (testing) it took 212 ms, 91 ms slot time, 3.55 KB shuffled; without (learning) 2 sec, 18 min 9 sec, 7.19 MB.](/images/bigquery-primary-key-foreign-key-constraints/3.jpg)
+```sql
+-- WITH CONSTRAINTS
+
+SELECT id, MAX(ds_date), MIN(ds_date)
+
+FROM testing.data_source d
+JOIN testing.lookup_table l USING (id)
+
+
+GROUP BY id
+```
+
+```sql
+-- WITHOUT CONSTRAINTS
+
+SELECT id, MAX(ds_date), MIN(ds_date)
+
+FROM learning.data_source d
+JOIN learning.lookup_table l USING (id)
+
+
+GROUP BY id
+```
+
+![Execution details side by side: with constraints (left) elapsed time 212 ms, slot time consumed 91 ms, bytes shuffled 3.55 KB and 0 B spilled to disk; without constraints (right) 2 sec, 18 min 9 sec, 7.19 MB and 0 B.](/images/bigquery-primary-key-foreign-key-constraints/3-result.jpg)
 
 From my tests, the queries using tables with constraints showed a significant efficiency boost. While they're not a one-size-fits-all solution, it's evident that Primary and Foreign Key constraints can influence performance (as showcased in the aforementioned article).
 

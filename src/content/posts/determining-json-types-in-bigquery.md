@@ -21,7 +21,27 @@ See below an illustration of it in action.
 Also, given we use the native JSON datatype, notice how we can just access the first (\[0\]) element in an ARRAY or a field directly by dot notation.  
 This you cannot do with a JSON-like STRING (not without parsing). Check out my [previous post about JSON vs JSON-like string](/json-datatype-vs-json-like-string-in-bigquery).
 
-![BigQuery SQL that declares a JSON array of people (city, age, name, registered\_footballer) and calls JSON\_TYPE on json\_data, its first element via index 0, and that element's name, age and registered\_footballer, returning array, object, string, number and boolean.](/images/determining-json-types-in-bigquery/1.jpg)
+```sql
+DECLARE json_data  DEFAULT JSON
+"""
+[
+ {"city": "New York", "age": 25,"name": "John Doe", "registered_footballer": true },
+ {"city": "London", "age": 21, "name": "Jane Dew", "registered_footballer": false},
+ {"city": "Berlin", "age": 30, "name": "Joanna Dow", "registered_footballer": true},
+ {"city": "Prague", "age": 28, "name": "Johann Duw", "registered_footballer": false}
+]
+""";
+
+SELECT
+
+  JSON_TYPE(json_data), -- array,
+  JSON_TYPE(json_data[0]), -- object,
+  JSON_TYPE(json_data[0].name), -- string,
+  JSON_TYPE(json_data[0].age), -- number,
+  JSON_TYPE(json_data[0].registered_footballer) --boolean
+```
+
+![BigQuery results: one row with f0\_ array, f1\_ object, f2\_ string, f3\_ number and f4\_ boolean.](/images/determining-json-types-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

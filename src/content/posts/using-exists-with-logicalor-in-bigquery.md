@@ -16,7 +16,34 @@ Long time, no see! Here's a quick SQL exercise that illustrates some important m
 
 So, we're given a list of updates per each order, and at each point in time we have some flags. Our goal here is to check for each order if there was any point in time when any of the flags had the value of 1.
 
-![BigQuery SQL where input\_data holds per-order updates with an indicators ARRAY; a compute\_flags CTE uses EXISTS(SELECT indicator FROM UNNEST(indicators) WHERE indicator = 1), then LOGICAL\_OR(flag\_was\_true) with GROUP BY order\_id; results show order 1 true, order 2 false.](/images/using-exists-with-logicalor-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+  SELECT 1 AS order_id, '2021-01-01' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL
+  SELECT 1 AS order_id, '2021-01-02' AS update_date, [0,0,0,0,1]  AS indicators UNION ALL
+  SELECT 1 AS order_id, '2021-01-03' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL
+  SELECT 1 AS order_id, '2021-01-04' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL
+  SELECT 1 AS order_id, '2021-01-05' AS update_date, [0,0,0,0,0]  AS indicators UNION ALL
+  SELECT 2 AS order_id, '2021-01-06' AS update_date, [9,9,9,9,9]  AS indicators
+),
+
+compute_flags AS (
+
+SELECT
+  order_id,
+  EXISTS(SELECT indicator FROM UNNEST(indicators) as indicator WHERE indicator = 1) AS flag_was_true
+FROM
+  input_data id)
+
+ SELECT
+  order_id,
+  LOGICAL_OR(flag_was_true) AS order_had_flag
+
+ FROM compute_flags
+
+ GROUP BY order_id
+```
+
+![BigQuery results: order 1 has order\_had\_flag true, order 2 has false.](/images/using-exists-with-logicalor-in-bigquery/1-result.jpg)
 
 We solve this by:
 

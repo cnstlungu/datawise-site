@@ -47,7 +47,9 @@ The build fails if frontmatter is missing or wrong (schema in `src/content.confi
 - `wrangler.jsonc` – Cloudflare config
 - `scripts/export_hashnode.py` – the one-off export from Hashnode (cached in `.export-cache/`)
 - `scripts/apply_alt_text.py` + `scripts/image-alt.json` – image alt text
-- `scripts/image-code.json` – code transcribed from SQL/code screenshots, not yet in the posts
+- `scripts/image-code.json` – code transcribed from the old SQL/code screenshots, now in the posts as code
+  blocks; the crops next to them (`<n>-result`, `-input`, `-schema`, `-output`) keep the query results and
+  other non-code parts. The original screenshots stay in `public/images/`; all but two are no longer used
 - `scripts/check_parity.py` – old-vs-new comparison
 
 ## Kept from Hashnode

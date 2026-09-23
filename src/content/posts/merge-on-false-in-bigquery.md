@@ -31,15 +31,151 @@ I tested this on some data, especially after my previous post on [Primary and Fo
 
 ![BigQuery console Schema tab for table data\_source: fields id INTEGER with key PK/FK, value INTEGER with no key, and ds\_date DATE with key PK, all NULLABLE, showing the primary and foreign key constraints on the table.](/images/merge-on-false-in-bigquery/1.jpg)
 
-![BigQuery SQL side by side on learning.data\_source without PK/FK constraints: MERGE ... ON FALSE with WHEN NOT MATCHED BY TARGET THEN INSERT ROW took 1 sec, 12 sec slot time, 2.72 KB shuffled, versus a MERGE matching on id and ds\_date at 5 sec, 14 min 13 sec slot time, 31.06 MB.](/images/merge-on-false-in-bigquery/2.jpg)
+```sql
+-- NO PK/FK constraints  on the target table
+
+MERGE `learning.data_source`  AS target
+
+USING (
+
+SELECT 44 AS id, 10 AS value, DATE('2023-09-01') AS ds_date
+
+UNION ALL
+
+SELECT 1000 AS id, 11 AS  value, DATE('2023-09-02') AS ds_date
+
+) AS source
+
+ON FALSE
+
+WHEN NOT MATCHED BY TARGET THEN
+
+INSERT ROW
+
+WHEN MATCHED THEN
+
+UPDATE SET target.value = source.value
+```
+
+![Execution details of the ON FALSE merge: elapsed time 1 sec, slot time consumed 12 sec, bytes shuffled 2.72 KB, bytes spilled to disk 0 B.](/images/merge-on-false-in-bigquery/2-result.jpg)
+
+```sql
+-- NO PK/FK constraints  on the target table
+
+MERGE `learning.data_source`  AS target
+
+USING (
+
+SELECT 33 AS id, 7 AS value, DATE('2015-02-11') AS ds_date
+
+UNION ALL
+
+SELECT 999 AS id, 10 AS  value, DATE('2023-09-16') AS ds_date
+
+) AS source
+
+ON source.id = target.id AND source.ds_date = target.ds_date
+
+WHEN NOT matched BY TARGET THEN
+
+INSERT (id,ds_date,value)
+
+VALUES (source.id, source.ds_date, source.value)
+
+WHEN MATCHED THEN
+
+UPDATE SET target.value = source.value
+```
+
+![Execution details of the key-based merge: elapsed time 5 sec, slot time consumed 14 min 13 sec, bytes shuffled 31.06 MB, bytes spilled to disk 0 B.](/images/merge-on-false-in-bigquery/2-result-2.jpg)
 
 Testing that the expected changes happened.
 
-![BigQuery SQL checking the MERGE results: a test\_cases CTE of four rows built with UNION ALL is joined to learning.data\_source USING (id, ds\_date); all four rows come back, ids 1000, 44, 33 and 999 with their value and ds\_date.](/images/merge-on-false-in-bigquery/3.jpg)
+```sql
+WITH test_cases AS (
+
+
+SELECT 33 AS id, 7 AS value, DATE('2015-02-11') AS ds_date
+
+UNION ALL
+
+SELECT 999 AS id, 10 AS  value, DATE('2023-09-16') AS ds_date
+
+UNION ALL
+
+SELECT 44 AS id, 10 AS value, DATE('2023-09-01') AS ds_date
+
+UNION ALL
+
+SELECT 1000 AS id, 11 AS  value, DATE('2023-09-02') AS ds_date
+)
+
+SELECT ds.* FROM learning.data_source ds
+
+JOIN test_cases t USING (id, ds_date)
+```
+
+![BigQuery results: all four test rows are found, id 1000 value 11 on 2023-09-02, id 44 value 10 on 2023-09-01, id 33 value 7 on 2015-02-11 and id 999 value 10 on 2023-09-16.](/images/merge-on-false-in-bigquery/3-result.jpg)
 
 Using the table version that has Primary Key and Foreign Key constraints has yielded even more impressive results.
 
-![BigQuery SQL side by side on testing.data\_source with PK/FK constraints: MERGE ... ON FALSE with INSERT ROW took 1 sec, 2 sec slot time, 84 B shuffled, versus the MERGE matching on id and ds\_date at 2 sec, 11 sec slot time, 56.02 MB shuffled.](/images/merge-on-false-in-bigquery/4.jpg)
+```sql
+-- PK/FK constraints  on the target table
+
+MERGE `testing.data_source`  AS target
+
+USING (
+
+SELECT 44 AS id, 10 AS value, DATE('2023-09-01') AS ds_date
+
+UNION ALL
+
+SELECT 1000 AS id, 11 AS  value, DATE('2023-09-02') AS ds_date
+
+) AS source
+
+ON FALSE
+
+WHEN NOT MATCHED BY TARGET THEN
+
+INSERT ROW
+
+WHEN MATCHED THEN
+
+UPDATE SET target.value = source.value
+```
+
+![Execution details of the ON FALSE merge with PK/FK constraints: elapsed time 1 sec, slot time consumed 2 sec, bytes shuffled 84 B, bytes spilled to disk 0 B.](/images/merge-on-false-in-bigquery/4-result.jpg)
+
+```sql
+-- PK/FK constraints  on the target table
+
+MERGE `testing.data_source`  AS target
+
+USING (
+
+SELECT 33 AS id, 7 AS value, DATE('2015-02-11') AS ds_date
+
+UNION ALL
+
+SELECT 999 AS id, 10 AS  value, DATE('2023-09-16') AS ds_date
+
+) AS source
+
+ON source.id = target.id AND source.ds_date = target.ds_date
+
+WHEN NOT matched BY TARGET THEN
+
+INSERT (id,ds_date,value)
+
+VALUES (source.id, source.ds_date, source.value)
+
+WHEN MATCHED THEN
+
+UPDATE SET target.value = source.value
+```
+
+![Execution details of the key-based merge with PK/FK constraints: elapsed time 2 sec, slot time consumed 11 sec, bytes shuffled 56.02 MB, bytes spilled to disk 0 B.](/images/merge-on-false-in-bigquery/4-result-2.jpg)
 
 Thanks for reading!
 

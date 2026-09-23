@@ -19,6 +19,23 @@ Understanding this distinction is pretty important as a beginner! Since sorting 
 ➡ sorted(\[a\_list\]): is a built-in function than returns a new sorted list, without modifying the original  
 ➡ a\_list.sort(): sorts the list in place and doesn't return anything
 
-![Python sorting.py comparing sorted(numbers), which returns a new sorted list 1, 2, 3, 4, 5, 5 and leaves numbers unchanged as 2, 3, 1, 4, 5, 5, with numbers.sort(), which sorts the original list in place.](/images/sortedlist-vs-listsorted-in-python/1.jpg)
+```python
+numbers = [2,3,1,4,5,5]
+
+print(sorted(numbers))
+# returns a new, sorted list
+# [1, 2, 3, 4, 5, 5]
+
+print(numbers)
+# the original list was not affected
+# [2, 3, 1, 4, 5, 5]
+
+numbers.sort()
+# sorts the original list in-place
+
+print(numbers)
+# check that the original list is sorted
+# [1, 2, 3, 4, 5, 5]
+```
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

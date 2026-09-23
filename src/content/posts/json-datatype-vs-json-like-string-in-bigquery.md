@@ -24,7 +24,23 @@ When you use, say, JSON\_VALUE to query such a string, it does not validate it a
 
 In the example below, the json-formatted/json-like string is missing a closing bracket "}", but JSON\_VALUE using it still manages to retrieve the 'key' since it never reaches the missing bracket .
 
-![BigQuery SQL declaring a native\_json JSON variable and a json\_formatted\_string STRING missing its closing brace, then applying JSON\_VALUE with '$.key' to both; value\_from\_native and value\_from\_json\_like\_string both return value, so the invalid string is not rejected.](/images/json-datatype-vs-json-like-string-in-bigquery/1.jpg)
+```sql
+DECLARE native_json DEFAULT  JSON
+"""
+{"key": "value"}
+"""
+;
+
+DECLARE json_formatted_string STRING DEFAULT "{\"key\": \"value\"";
+
+
+
+SELECT
+  JSON_VALUE(native_json, '$.key') AS value_from_native,
+  JSON_VALUE(json_formatted_string, '$.key') AS value_from_json_like_string
+```
+
+![BigQuery results: value\_from\_native and value\_from\_json\_like\_string both return value.](/images/json-datatype-vs-json-like-string-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

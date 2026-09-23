@@ -23,7 +23,34 @@ In the a quick walk-through below, we're looking at the following functions:
 
 Notice how we're using the inside context managers (the 'with' block , check out the comments for a quick intro on them). This means the file will be automatically cleaned up upon exiting (default behavior), unless we specify delete=False at creation.
 
-![Python tempfile\_demo.py using with blocks for tempfile.NamedTemporaryFile(mode='w+t'), tempfile.TemporaryFile with seek(0) and read(), and tempfile.TemporaryDirectory() plus os.path.join to write tempfile.txt; comments show the generated paths under /var/folders and the file content Hello world!](/images/using-tempfile-module-in-python/1.jpg)
+```python
+import tempfile
+import os
+
+with tempfile.NamedTemporaryFile(mode='w+t') as temp_file:
+    temp_file.write('Hello world!')
+    print(f"Temporary file created at {temp_file.name}")
+# Temporary file created at /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmp8nqm3qa1
+
+
+with tempfile.TemporaryFile(mode='w+t') as temp_file:
+    temp_file.write('Hello world!')
+    temp_file.seek(0)
+    content = temp_file.read()
+    print(f'Content of the file: {content}')
+# Content of the file: Hello world!
+
+
+with tempfile.TemporaryDirectory() as temp_dir:
+    print(f"Temporary directory created at: {temp_dir}")
+    temp_file_path = os.path.join(temp_dir, 'tempfile.txt')
+    with open(temp_file_path, 'w') as temp_file:
+        temp_file.write("Hello, World!")
+        print(temp_file.name)
+        print(f"Temporary file created at {temp_file.name}")
+# Temporary directory created at: /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmp4yh5u33m
+# Temporary file created at /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmprgxjwmsj/tempfile.txt
+```
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

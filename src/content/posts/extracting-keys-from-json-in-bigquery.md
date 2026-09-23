@@ -22,7 +22,21 @@ The function is JSON\_KEYS. Apart from the json input, we can tweak:
 
 The usual note - still in preview.
 
-![BigQuery SQL that DECLAREs a JSON variable (name, city, and a sports array of objects with name, since, club) and runs JSON\_KEYS(json\_data, mode =\> 'lax'); the json\_keys result lists city, name, sports, sports.club, sports.name and sports.since.](/images/extracting-keys-from-json-in-bigquery/1.jpg)
+```sql
+DECLARE json_data  DEFAULT JSON  """
+      {"name": "John Doe",
+      "city": "New York",
+      "sports": [{"name": "football", "since": 2020, "club": "Liberty FC"},
+                 {"name": "snooker", "since": 2019, "club": "Snooker Champions"},
+                 {"name": "tennis", "since": 2015, "club":"Tennis Stars"}
+                ]
+      }
+  """;
+
+SELECT JSON_KEYS(json_data, mode => 'lax') AS json_keys
+```
+
+![BigQuery results: json\_keys returns one row holding six keys: city, name, sports, sports.club, sports.name and sports.since.](/images/extracting-keys-from-json-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
 

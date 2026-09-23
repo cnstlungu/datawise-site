@@ -22,7 +22,26 @@ Otherwise it's important to leverage great packages like these in our workflows 
 
 Check out a quick example of it in action below.
 
-![Python retrying.py using the tenacity @retry decorator with retry\_if\_exception\_type(IOError) and wait\_exponential(multiplier=2, min=4, max=12) on a function that randomly raises IOError; terminal output shows retries about 4, 4, 8, 12 and 12 seconds apart before All good!](/images/retrying-in-python-using-tenacity/1.jpg)
+```python
+import random
+from datetime import datetime, timezone
+from tenacity import retry, retry_if_exception_type, wait_exponential
+
+
+@retry(retry=retry_if_exception_type(IOError),
+       wait=wait_exponential(multiplier=2, min=4, max=12))
+def retrieve_data():
+    print(f"{datetime.now(timezone.utc)}: running ...")
+    if random.randint(0, 10) > 1:
+        print("An error has occurred.")
+        raise IOError("Something went wrong.")
+    else:
+        print("All good!")
+
+retrieve_data()
+```
+
+![Terminal output: retrieve\_data runs on 2024-07-27 at 12:42:16, 12:42:20, 12:42:24, 12:42:32, 12:42:44, 12:42:56 and 12:43:08, waiting 4, 4, 8, 12, 12 and 12 seconds; the first six runs print An error has occurred. and the last prints All good!](/images/retrying-in-python-using-tenacity/1-output.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

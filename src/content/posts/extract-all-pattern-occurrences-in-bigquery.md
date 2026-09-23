@@ -20,6 +20,16 @@ With regards to the pattern itself, I typically use a representative example wit
 
 Worth noting that it has a limitation - it would only work with a single regex capture group, so you can't match multiple patterns at the same time.
 
-![BigQuery SQL applying REGEXP\_EXTRACT\_ALL(raw\_data, r'\\d{4}-\\d{2}-\\d{2}') to a string that mentions four dates; the extracted\_dates array returns 2021-01-01, 2021-01-02, 2021-01-03 and 2021-01-04.](/images/extract-all-pattern-occurrences-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+  SELECT  """Occurences on 2021-01-01, 2021-01-02, 2021-01-03, 2021-01-04""" AS raw_data
+)
+
+SELECT
+  REGEXP_EXTRACT_ALL(raw_data, r'\d{4}-\d{2}-\d{2}') AS extracted_dates
+FROM input_data
+```
+
+![BigQuery results: one row whose extracted\_dates array holds 2021-01-01, 2021-01-02, 2021-01-03 and 2021-01-04.](/images/extract-all-pattern-occurrences-in-bigquery/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

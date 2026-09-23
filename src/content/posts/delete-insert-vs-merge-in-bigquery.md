@@ -20,7 +20,22 @@ That means that instead of merging your changes the old-fashioned way, it might 
 
 Here's a comparison of the two approaches for the same source and destination tables. As you can see the amount of processed data can be wildly different between the two.
 
-![BigQuery SQL comparing two ways to load staging data: DELETE FROM learning.data\_source WHERE ds\_date \>= 2023-09-02 then INSERT INTO ... SELECT \* FROM learning.data\_source\_staging, estimated at 67.97 KB, versus a MERGE ON id and ds\_date with WHEN NOT MATCHED THEN INSERT and WHEN MATCHED THEN UPDATE SET, estimated at 9.15 MB.](/images/delete-insert-vs-merge-in-bigquery/1.png)
+```sql
+DELETE FROM learning.data_source WHERE ds_date >= "2023-09-02";
+INSERT INTO learning.data_source
+SELECT * FROM learning.data_source_staging;
+```
+
+![BigQuery query validator: This script will process 67.97 KB when run.](/images/delete-insert-vs-merge-in-bigquery/1-result.png)
+
+```sql
+MERGE `learning.data_source` AS t
+USING `learning.data_source_staging` AS s ON t.id = s.id AND t.ds_date = s.ds_date
+WHEN NOT MATCHED THEN INSERT (id,value,ds_date) VALUES(id,value,ds_date)
+WHEN MATCHED THEN UPDATE SET t.value = s.value
+```
+
+![BigQuery query validator: This query will process 9.15 MB when run.](/images/delete-insert-vs-merge-in-bigquery/1-result-2.png)
 
 Happy querying!
 

@@ -39,7 +39,30 @@ Ultimately, this reinforced the importance of validating assumptions through rea
 
 The resource consumption varied significantly across runs (so avoid thinking in terms of precise percentages), but the relative performance rankings remained consistent. It should be also noted that these results might be different based on the querying patterns and needs.
 
-![BigQuery comparison of three joins from orders\_per\_store (partitioned on order\_date, clustered by order\_id): to unpartitioned order\_amounts\_unpartitioned USING (order\_id) takes 10 min 13 sec slot time, to partitioned order\_amounts USING (order\_date, order\_id) 27 min 13 sec, USING (order\_id) 41 min 47 sec.](/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1.png)
+![Schemas of the three tables: order\_amounts\_unpartitioned (order\_id, order\_amount; clustered by order\_id), orders\_per\_store (order\_id, order\_date, store\_id; partitioned on order\_date, clustered by order\_id) and order\_amounts (order\_id, order\_date, order\_amount; partitioned on order\_date, clustered by order\_id).](/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1-schema.png)
+
+```sql
+SELECT *
+FROM `learning.orders_per_store` s
+JOIN `learning.order_amounts_unpartitioned` a
+USING (order_id)
+```
+
+```sql
+SELECT *
+FROM `learning.orders_per_store` s
+JOIN `learning.order_amounts` a
+USING (order_date, order_id)
+```
+
+```sql
+SELECT *
+FROM `learning.orders_per_store` s
+JOIN `learning.order_amounts` a
+USING (order_id)
+```
+
+![Execution details, left to right for the three queries: 7 sec elapsed and 10 min 13 sec slot time (unpartitioned order\_amounts\_unpartitioned), 7 sec and 27 min 13 sec (order\_amounts USING order\_date, order\_id), 9 sec and 41 min 47 sec (order\_amounts USING order\_id).](/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1-result.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

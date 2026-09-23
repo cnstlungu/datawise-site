@@ -45,6 +45,21 @@ When to use it:
 
 P.S. There's also BIGNUMERIC (alias for BIGDECIMAL) if you need even larger range, but that takes 32 logical bytes.
 
-![BigQuery SQL adding CAST(0.1 AS FLOAT64) and CAST(0.2 AS FLOAT64) and casting 'NaN', '-inf' and 'inf' to FLOAT64; the JSON result shows float\_sum 0.30000000000000004 plus NaN, -Infinity and Infinity values.](/images/float-vs-numeric-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+    SELECT
+        CAST(0.1 AS FLOAT64) AS float_a,
+        CAST(0.2 AS FLOAT64) AS float_b
+)
+
+SELECT
+    float_a + float_b AS float_sum,
+    CAST('NaN' AS FLOAT64) AS not_a_number_float,
+    CAST('-inf' AS FLOAT64) AS minus_infinity,
+    CAST('inf' AS FLOAT64) AS plus_infinity
+FROM input_data
+```
+
+![BigQuery results in the JSON tab: float\_sum "0.30000000000000004", not\_a\_number\_float "NaN", minus\_infinity "-Infinity" and plus\_infinity "Infinity".](/images/float-vs-numeric-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -25,7 +25,7 @@
  },
  "/images/parameters-in-bigquery/1.png": {
   "language": "sql",
-  "code": "SELECT\n  word,\n  word_count\nFROM\n  `bigquery-public-data.samples.shakespeare`\nWHERE\n  corpus = @corpus\n\nORDER BY\n  word_count DESC;\n\nDECLARE corpus_var STRING DEFAULT 'sonnets';\n\nSELECT\n  word,\n  word_count\nFROM\n  `bigquery-public-data.samples.shakespeare`\nWHERE\n  corpus = corpus_var\n\nORDER BY\n  word_count DESC;"
+  "code": "SELECT\n    word,\n    word_count\n  FROM\n    `bigquery-public-data.samples.shakespeare`\n  WHERE\n    corpus = @corpus\n\n  ORDER BY\n    word_count DESC;\n\nDECLARE corpus_var STRING DEFAULT 'sonnets';\n\nSELECT\n    word,\n    word_count\n  FROM\n    `bigquery-public-data.samples.shakespeare`\n  WHERE\n    corpus = corpus_var\n\n  ORDER BY\n    word_count DESC;"
  },
  "/images/flattening-json-arrays-in-bigquery/1.jpg": {
   "language": "sql",
@@ -97,7 +97,7 @@
  },
  "/images/heres-a-great-use-case-for-genai-writing-sql/1.jpg": {
   "language": "sql",
-  "code": "WITH RECURSIVE combinations AS (\n  -- Base case: Start with each element as a single combination\n  SELECT\n      element,\n      CAST(element AS STRING) AS combination,\n      1 AS size\n  FROM UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS element\n\n  UNION ALL\n\n  -- Recursive case: Add elements to existing combinations\n  SELECT\n      e AS element,\n      CONCAT(c.combination, ',', e) AS combination,\n      c.size + 1 AS size\n  FROM combinations c\n  CROSS JOIN UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS e\n  WHERE e > SPLIT(c.combination, ',')[\n      OFFSET(c.size - 1)\n  ] -- Ensure uniqueness and order\n)\nSELECT combination\nFROM combinations\nORDER BY size, combination;"
+  "code": "WITH RECURSIVE combinations AS (\n    -- Base case: Start with each element as a single combination\n    SELECT\n        element,\n        CAST(element AS STRING) AS combination,\n        1 AS size\n    FROM UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS element\n\n    UNION ALL\n\n    -- Recursive case: Add elements to existing combinations\n    SELECT\n        e AS element,\n        CONCAT(c.combination, ',', e) AS combination,\n        c.size + 1 AS size\n    FROM combinations c\n    CROSS JOIN UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS e\n    WHERE e > SPLIT(c.combination, ',')[\n        OFFSET(c.size - 1)\n    ] -- Ensure uniqueness and order\n)\nSELECT combination\nFROM combinations\nORDER BY size, combination;"
  },
  "/images/using-exists-with-logicalor-in-bigquery/1.jpg": {
   "language": "sql",
@@ -333,7 +333,7 @@
  },
  "/images/raising-errors-in-bigquery/1.jpg": {
   "language": "sql",
-  "code": "SELECT population/surface AS population_density\nFROM input_data\nWHERE IF(IFNULL(surface,0) > 0,\n         TRUE,\n         ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)));\n\nSELECT population / CASE WHEN IFNULL(surface,0) > 0 THEN surface\n                    ELSE ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)) END AS population_density\n\nFROM input_data"
+  "code": "SELECT population/surface AS population_density\nFROM input_data\nWHERE IF(IFNULL(surface,0) > 0,\n         TRUE,\n         ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)));\n\nSELECT population / CASE WHEN IFNULL(surface,0) > 0 THEN surface\n                         ELSE ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)) END AS population_density\n\nFROM input_data"
  },
  "/images/cleaning-up-strings-in-bigquery/1.jpg": {
   "language": "sql",
@@ -361,7 +361,7 @@
  },
  "/images/comparing-tables-with-full-outer-join/1.jpg": {
   "language": "sql",
-  "code": "SELECT\n\n  COUNTIF (prod.term IS NULL AND dev.term IS NOT NULL) AS cnt_missing_prod,\n  COUNT (DISTINCT CASE WHEN prod.term IS NULL AND dev.term IS NOT NULL THEN dev.term END) AS distinct_terms_missing_from_prod,\n\n  COUNTIF (dev.term IS NULL AND prod.term IS NOT NULL) AS cnt_missing_dev,\n  COUNT (DISTINCT CASE WHEN dev.term IS NULL AND prod.term IS NOT NULL THEN prod.term END) AS distinct_terms_missing_from_dev,\n\n  COUNT(1) AS total_rows,\n  COUNT(DISTINCT COALESCE(prod.term, dev.term)) AS total_distinct_terms,\n\n  COUNTIF(FARM_FINGERPRINT(TO_JSON_STRING(prod))  <> FARM_FINGERPRINT(TO_JSON_STRING(dev))) AS rows_different\n\n\nFROM `learning_us.trends_us_prod` prod\n\nFULL OUTER JOIN `learning_us.trends_us_dev` dev ON prod.refresh_date = dev.refresh_date AND\n                                                  prod.week = dev.week AND\n                                                  prod.dma_id = dev.dma_id AND\n                                                  prod.term = dev.term"
+  "code": "SELECT\n\n  COUNTIF (prod.term IS NULL AND dev.term IS NOT NULL) AS cnt_missing_prod,\n  COUNT (DISTINCT CASE WHEN prod.term IS NULL AND dev.term IS NOT NULL THEN dev.term END) AS distinct_terms_missing_from_prod,\n\n  COUNTIF (dev.term IS NULL AND prod.term IS NOT NULL) AS cnt_missing_dev,\n  COUNT (DISTINCT CASE WHEN dev.term IS NULL AND prod.term IS NOT NULL THEN prod.term END) AS distinct_terms_missing_from_dev,\n\n  COUNT(1) AS total_rows,\n  COUNT(DISTINCT COALESCE(prod.term, dev.term)) AS total_distinct_terms,\n\n  COUNTIF(FARM_FINGERPRINT(TO_JSON_STRING(prod))  <> FARM_FINGERPRINT(TO_JSON_STRING(dev))) AS rows_different\n\n\nFROM `learning_us.trends_us_prod` prod\n\nFULL OUTER JOIN `learning_us.trends_us_dev` dev ON prod.refresh_date = dev.refresh_date AND\n                                                   prod.week = dev.week AND\n                                                   prod.dma_id = dev.dma_id AND\n                                                   prod.term = dev.term"
  },
  "/images/splitting-a-string-in-bigquery/1.jpg": {
   "language": "sql",

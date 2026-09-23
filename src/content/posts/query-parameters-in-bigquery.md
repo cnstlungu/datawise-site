@@ -27,7 +27,14 @@ But you cannot ❌ :
 \- pass parameters as column or table names  
 \- use positional AND named parameters at the same time
 
-![Terminal running bq query --use\_legacy\_sql=false with named query parameters --parameter=input\_value:INT64:1 and --parameter=input\_date:DATE:2020-12-18, used as @input\_value and @input\_date in a SELECT on learning.data\_source; the output lists six id values.](/images/query-parameters-in-bigquery/1.jpg)
+```bash
+bq query --use_legacy_sql=false \
+--parameter=input_value:INT64:1 \
+--parameter=input_date:DATE:2020-12-18 \
+'SELECT id FROM learning.data_source WHERE value=@input_value AND ds_date=@input_date'
+```
+
+![Terminal output: an id column with six rows: 37, 94, 67, 60, 25 and 72.](/images/query-parameters-in-bigquery/1-output.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

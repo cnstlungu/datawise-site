@@ -27,4 +27,28 @@ In practice it enables you to cleanly:
 
 What's the most interesting use case you've seen for pre\_operations / post\_operations (or pre\_hook / post\_hook if you're on dbt)?
 
-![Dataform SQLX incremental table with uniqueKey order\_id: pre\_operations DECLAREs max\_date DEFAULT COALESCE(MAX(order\_date), DATE('2000-01-01')) FROM ${self()}, the SELECT loads orders WHERE order\_date \> max\_date, and post\_operations INSERTs the run into pipeline\_audit with CURRENT\_TIMESTAMP().](/images/pre-and-post-operations-in-dataform/1.png)
+```sql
+config {
+  type: "incremental",
+  uniqueKey: ["order_id"]
+}
+
+pre_operations {
+  DECLARE max_date DATE
+  DEFAULT (
+    SELECT COALESCE(MAX(order_date), DATE('2000-01-01'))
+    FROM ${self()}
+  );
+}
+
+SELECT *
+FROM ${ref("orders")}
+WHERE order_date > max_date
+
+post_operations {
+
+  -- Track every run in your audit log
+  INSERT INTO ${ref("pipeline_audit")} (table_name, loaded_at)
+  VALUES ("${self()}", CURRENT_TIMESTAMP());
+}
+```

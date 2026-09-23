@@ -31,7 +31,25 @@ When can these be useful?
 
 See below for an illustration of the differences between the two.
 
-![BigQuery SQL value tables infographic: SELECT AS VALUE order\_line and SELECT AS STRUCT order\_line FROM input\_data LEFT JOIN UNNEST(order\_lines), applied to orders with nested order lines; both yield product\_id, order\_quantity and unit\_price rows, but the STRUCT result keeps a nested column prefix.](/images/select-as-struct-and-select-as-value/1.png)
+![Input data: three orders (order\_id 1 to 3, stores STORE\_UK, STORE\_FR and STORE\_UK, customers 1001 and 1002 from UK and FR), each with two nested order lines of product\_id, order\_quantity and unit\_price.](/images/select-as-struct-and-select-as-value/1-input.png)
+
+```sql
+SELECT AS VALUE order_line
+
+FROM input_data
+LEFT JOIN UNNEST(order_lines) AS order_line
+```
+
+![BigQuery results of SELECT AS VALUE: six rows with plain columns product\_id, order\_quantity and unit\_price, for example 10001, 5, 40.0 and 10002, 2, 50.0.](/images/select-as-struct-and-select-as-value/1-result.png)
+
+```sql
+SELECT AS STRUCT order_line
+
+FROM input_data
+LEFT JOIN UNNEST(order_lines) AS order_line
+```
+
+![BigQuery results of SELECT AS STRUCT: the same six rows, but the column headers keep the struct prefix (o... product\_id, order\_quantity, or... unit\_price), circled in red.](/images/select-as-struct-and-select-as-value/1-result-2.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

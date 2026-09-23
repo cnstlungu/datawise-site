@@ -24,6 +24,28 @@ As with other partition types, you can set up OPTIONS such as :
 
 Reminder that if you're ingesting data via a BigQuery job (say using the bq CLI utility), you can also control which partition in this table you want to write to using a decorator e.g. `my_table$20240621`
 
-![BigQuery SQL creating learning.weather\_measurements with PARTITION BY DATE(\_PARTITIONTIME), inserting rows for New York, Rome and Madrid, then selecting \*, \_PARTITIONDATE, \_PARTITIONTIME; results show every row in partition 2024-06-21 with \_PARTITIONTIME 2024-06-21 00:00:00 UTC.](/images/ingestion-time-partitioning-in-bigquery/1.jpg)
+```sql
+CREATE OR REPLACE TABLE learning.weather_measurements (location_id INT64,
+                                                       location_name STRING,
+                                                       temperature NUMERIC,
+                                                       humidity INT64 )
+PARTITION BY DATE(_PARTITIONTIME);
+
+
+
+INSERT INTO learning.weather_measurements(location_id, location_name, temperature, humidity)
+
+SELECT 1, 'New York', NUMERIC '25.4', 65;
+
+SELECT 2, 'Rome', NUMERIC '34.2', 27;
+
+SELECT 3, 'Madrid', NUMERIC '23.1', 41;
+```
+
+```sql
+SELECT *, _PARTITIONDATE, _PARTITIONTIME FROM `learning.weather_measurements`
+```
+
+![BigQuery results: New York (25.4, 65), Madrid (23.1, 41) and Rome (34.2, 27) all land in \_PARTITIONDATE 2024-06-21, with \_PARTITIONTIME 2024-06-21 00:00:00 UTC.](/images/ingestion-time-partitioning-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -24,7 +24,20 @@ Pretty sure the regex can be streamlined, but that's as much me feat. GPT could 
 
 PS. If we're talking about JSON datatype, you can transform it to JSON-like STRING with TO\_JSON\_STRING() and do the same thing.
 
-![BigQuery SQL turning JSON-like strings with varying keys into rows: REGEXP\_REPLACE strips braces and quotes, SPLIT plus LEFT JOIN UNNEST yields kv pairs, and REGEXP\_EXTRACT pulls key and value; results list id 1 key\_1=1, key\_3=3 and id 2 key\_99=2, key\_4=4.](/images/dynamically-extracting-json-data-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+  SELECT 1 AS id, '{"key_1":"1", "key_3":"3"}' AS data UNION ALL
+  SELECT 2 AS id, '{"key_99":"2", "key_4":"4"}' AS data
+)
+SELECT
+  id,
+  REGEXP_EXTRACT(kv, r'\s*([^:]+)\s*') AS key,
+  NULLIF(REGEXP_EXTRACT(kv, r':\s*(.*)\s*'), 'null') AS value
+FROM input_data t
+LEFT JOIN UNNEST(SPLIT(REGEXP_REPLACE(data, r'[{}"]', ''))) kv;
+```
+
+![BigQuery results: id 1 gives key\_1 with value 1 and key\_3 with value 3; id 2 gives key\_99 with value 2 and key\_4 with value 4.](/images/dynamically-extracting-json-data-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

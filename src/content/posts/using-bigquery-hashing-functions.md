@@ -134,7 +134,7 @@ SELECT t.*, FARM_FINGERPRINT(TO_JSON_STRING(t)) AS row_hash
 FROM learning.Customers AS t;
 ```
 
-![BigQuery SQL hashing entire rows with SELECT t.\*, FARM\_FINGERPRINT(TO\_JSON\_STRING(t)) AS row\_hash FROM learning.Customers AS t; results list the four customers with an extra row\_hash column of large signed integers, shown truncated.](/images/using-bigquery-hashing-functions/2.png)
+![BigQuery results listing the four customers with an extra row\_hash column of large signed integers, shown truncated.](/images/using-bigquery-hashing-functions/2-result.png)
 
 Thanks for reading!
 

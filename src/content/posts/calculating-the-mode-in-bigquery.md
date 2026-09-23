@@ -27,7 +27,19 @@ Now here's how we can compute them otherwise:
 \- compute value counts for our desired grain  
 \- take the most frequent one per our grain using QUALIFY + RANK
 
-![BigQuery SQL computing the mode per country: SELECT country, value, COUNT(1) AS times\_seen FROM input\_data WHERE value IS NOT NULL (a comment says to remove it to include NULLs), GROUP BY country, value, then QUALIFY RANK() OVER(PARTITION BY country ORDER BY times\_seen DESC) = 1.](/images/calculating-the-mode-in-bigquery/2.png)
+```sql
+SELECT country, value, COUNT(1) AS times_seen
+
+FROM input_data
+
+-- comment this if you want to include NULLS
+WHERE value IS NOT NULL
+
+GROUP BY country, value
+
+QUALIFY RANK() OVER(PARTITION BY country
+                    ORDER BY times_seen DESC) = 1
+```
 
 Here's how the output would look with NULLS excluded.
 

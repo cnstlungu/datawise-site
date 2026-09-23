@@ -35,7 +35,19 @@ Pay attention here to how we're joining the UNNEST - this will determine if we k
 
 Do remember to give the UNNESTed items a proper logical name i.e. if you're UNNESTING activities, call it activity for better readability.
 
-![BigQuery SQL flattening a nested activities array of name and registered\_on per member with LEFT JOIN UNNEST(activities) AS activity; 4 member rows become 8 rows, one per activity, and Joanna, who has no activities, is kept with null values.](/images/unnesting-arrays-in-bigquery/1.jpg)
+![Input data: four members with a nested activities array of name and registered\_on: Jeremy (tennis, basketball), Jane (volleyball, cycling, snooker), Joseph (football, chess) and Joanna with null.](/images/unnesting-arrays-in-bigquery/1-input.jpg)
+
+```sql
+SELECT
+  member,
+  activity.name AS activity_name,
+  activity.registered_on AS activity_registered_on
+
+FROM input_data
+LEFT JOIN UNNEST(activities) AS activity
+```
+
+![BigQuery results: eight rows, one per activity: Jeremy tennis 2023-01-06, Jeremy basketball 2022-11-01, Jane volleyball 2021-01-01, Jane cycling 2022-01-15, Jane snooker 2021-10-01, Joseph football 2022-01-01, Joseph chess 2022-06-01, and Joanna with null activity\_name and activity\_registered\_on.](/images/unnesting-arrays-in-bigquery/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

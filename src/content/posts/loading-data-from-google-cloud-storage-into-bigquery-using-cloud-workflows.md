@@ -39,7 +39,18 @@ Now, let’s have a look at our file — a regular comma-delimited CSV, with
 
 ![Spreadsheet import preview of the orders CSV with columns date, order\_id, product\_id, price, quantity and amount: nine rows dated 2022-09-01 for order\_id 1 to 5, e.g. product 100 at price 4.5, quantity 2, amount 9.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/4.png)
 
-![CSV file in a text editor: header row date,order\_id,product\_id,price,quantity,amount followed by nine comma-delimited sales rows dated 2022-09-01, such as 2022-09-01,1,100,4.5,2,9.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/5.png)
+```csv
+date,order_id,product_id,price,quantity,amount
+2022-09-01,1,100,4.5,2,9
+2022-09-01,1,101,5,1,5
+2022-09-01,1,102,3.75,1,3.75
+2022-09-01,2,100,4.5,1,4.5
+2022-09-01,2,102,3.75,3,11.25
+2022-09-01,3,103,6.25,5,32.25
+2022-09-01,4,105,8,2,16
+2022-09-01,4,100,4.5,2,9
+2022-09-01,5,104,2.95,1,2.95
+```
 
 By our legend, this file follows the below naming convention, with the first part being the date of the sale.
 
@@ -69,7 +80,43 @@ A workflow with a trigger would look as follows
 
 We now have the Workflow development window, where we can write the definition for our workflow in YAML-esque syntax. If you aren’t familiar with Workflow syntax, a good place to start is the [Workflows tutorials page](https://cloud.google.com/functions/docs/tutorials). Also, note the pane on the right side, illustrating our control flow
 
-![Cloud Workflows editor with the default sample workflow in YAML (steps checkSearchTermInInput with a switch, getCurrentTime and readWikipedia using http.get, setFromCallResult, returnOutput) and the Visualization pane drawing those steps as a flowchart from START.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11.png)
+```yaml
+# This is a sample workflow to test or replace with your source code.
+#
+# This workflow passes the current day of the week to the Wikipedia API and
+# returns a list of related Wikipedia articles.
+# The current day of the week (in GMT) is retrieved from a Cloud Function
+# unless you input your own search term (for example, {"searchTerm": "Monday"}).
+main:
+    params: [input]
+    steps:
+    - checkSearchTermInInput:
+        switch:
+            - condition: ${"searchTerm" in input}
+              assign:
+                - searchTerm: ${input.searchTerm}
+              next: readWikipedia
+    - getCurrentTime:
+        call: http.get
+        args:
+            url: https://us-central1-workflowsample.cloudfunctions.net/datetime
+        result: currentDateTime
+    - setFromCallResult:
+        assign:
+            - searchTerm: ${currentDateTime.body.dayOfTheWeek}
+    - readWikipedia:
+        call: http.get
+        args:
+            url: https://en.wikipedia.org/w/api.php
+            query:
+                action: opensearch
+                search: ${searchTerm}
+        result: wikiResult
+    - returnOutput:
+            return: ${wikiResult.body[1]}
+```
+
+![Workflow visualization: the steps as a flowchart from START, checkSearchTermInInput (switch) branching to its condition (assign) or getCurrentTime (call), then setFromCallResult (assign), readWikipedia (call) and returnOutput (return).](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11-output.png)
 
 We now need the build the workflow logic. For this exercise, we’ll need to check the configuration options we can set up for the BigQuery job, documented at the following link
 
@@ -235,7 +282,21 @@ We now have a partitioned table
 
 ![BigQuery sales table page with the notice This is a partitioned table; the schema tab lists date DATE, order\_id INTEGER, product\_id INTEGER, price NUMERIC, quantity INTEGER and amount NUMERIC, all NULLABLE.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/14.png)
 
-![BigQuery SQL on the partitioned sales\_data.sales table selecting date AS SalesDate, count(distinct order\_id) AS CountOrders and sum(Amount) AS TotalAmount, GROUP BY date; results show 2022-09-02 with 5 orders and 135.8, and 2022-09-01 with 5 orders and 93.7.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15.png)
+```sql
+SELECT
+
+  date AS SalesDate,
+  count(distinct order_id) AS CountOrders,
+  sum(Amount) as TotalAmount
+
+FROM
+  `**REDACTED**.sales_data.sales`
+
+GROUP BY
+  date
+```
+
+![BigQuery results: SalesDate 2022-09-02 with CountOrders 5 and TotalAmount 135.8, and 2022-09-01 with CountOrders 5 and TotalAmount 93.7.](/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15-result.png)
 
 #### Conclusion
 

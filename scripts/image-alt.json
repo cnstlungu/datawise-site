@@ -1,12 +1,4 @@
 {
- "/images/using-where-inside-aggregate-functions/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on a sales table (year, country, amount, category) with WHERE inside each aggregate: SUM(amount WHERE category = 'fruit'), AND and IN ('FR', 'NL') conditions, and MAX(amount WHERE ...); the JSON result shows total_sales 161, fruit_all_time_sales 78 and highest_yearly_nl_vegetable_sales 21."
- },
- "/images/pre-and-post-operations-in-dataform/1.png": {
-  "kind": "code",
-  "alt": "Dataform SQLX incremental table with uniqueKey order_id: pre_operations DECLAREs max_date DEFAULT COALESCE(MAX(order_date), DATE('2000-01-01')) FROM ${self()}, the SELECT loads orders WHERE order_date > max_date, and post_operations INSERTs the run into pipeline_audit with CURRENT_TIMESTAMP()."
- },
  "/images/bigquery-object-tables-a-practical-introduction/1.png": {
   "kind": "ui-screenshot",
   "alt": "Google Cloud Storage console screenshot of the object-tables-demo-animals bucket (eu multi-region) on the Objects tab, listing four JPEG thumbnails such as NZP-20070705-593MM_thumb.jpg, each about 38 to 43 KB with type image/jpeg."
@@ -15,25 +7,9 @@
   "kind": "photo",
   "alt": "Four animal thumbnail images from the bucket shown as files: a giant panda eating bamboo, a lion cub, a tiger standing in grass and an elephant spraying water, named NZP-20070705-593MM_thumb.jpg to NZP-20180628-596SB_thumb.jpg."
  },
- "/images/bigquery-object-tables-a-practical-introduction/3.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating an object table: CREATE OR REPLACE EXTERNAL TABLE learning.animals WITH CONNECTION to the eu demo-biglake-connection (project ID hidden), OPTIONS object_metadata = 'SIMPLE' and uris gs://object-tables-demo-animals/*.jpg; the console confirms a new table named animals."
- },
  "/images/bigquery-object-tables-a-practical-introduction/4.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshot of the Schema tab for the animals object table (Lakehouse), listing the fields uri, generation, content_type, size, md5_hash and updated, plus metadata as a REPEATED RECORD and ref as a RECORD."
- },
- "/images/bigquery-object-tables-a-practical-introduction/5.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL SELECT * FROM learning.animals on the object table, processing 0 B; the results have columns uri, generation, content_type, size, md5_hash and updated, with four gs://object-tables-demo-animals rows of type image/jpeg sized 37558 to 43079 bytes."
- },
- "/images/bigquery-object-tables-a-practical-introduction/6.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating a remote model pointing at Gemini: CREATE OR REPLACE MODEL learning.gemini_flash REMOTE WITH CONNECTION to the eu demo-biglake-connection, with OPTIONS (endpoint = 'gemini-2.5-flash'); the project ID is blanked out."
- },
- "/images/bigquery-object-tables-a-practical-introduction/7.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL running inference over the object table with ML.GENERATE_TEXT, passing MODEL learning.gemini_flash, TABLE learning.animals and a STRUCT with a prompt asking what animal is depicted; ml_generate_text_llm_result AS animal_detected returns Lion cub, Tiger, Panda and Elephant."
  },
  "/images/bigquery-biglake-tables-explained-what-they-are-and-when-to-use-them/1.png": {
   "kind": "other",
@@ -67,53 +43,9 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshot: a GROUP BY ALL query on learning_us.trends_us_prod lists Destination table as Temporary table under Job information, and an arrow leads to querying that anonymous _a85a60... dataset table, which processes 0 B and returns the same dma_name results."
  },
- "/images/parameters-in-bigquery/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing a query parameter and a variable on bigquery-public-data.samples.shakespeare: WHERE corpus = @corpus with corpus set to sonnets under Query parameters, versus DECLARE corpus_var STRING DEFAULT 'sonnets'; both process 4.88 MB and return the same word counts."
- },
- "/images/flattening-json-arrays-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL calling JSON_FLATTEN on a JSON literal with arrays nested up to three levels deep (1, then 2,3,4, then 5,6 and 7,8); the single result row is one flat array of the values 1 through 8."
- },
- "/images/using-lastvalue-with-structs/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL where LAST_VALUE(event IGNORE NULLS) on a STRUCT fails, since an all-NULL struct is not NULL and 2025-01-10 gets null fields, then three fixes: CASE WHEN event.a IS NULL AND event.b IS NULL THEN NULL, NULLIF(TO_JSON_STRING(event), ...) and REGEXP_CONTAINS, all carrying 123 and 235 forward."
- },
- "/images/table-grain-quick-validation-with-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL checking table grain with GROUP BY ALL, comparing COUNT(FARM_FINGERPRINT(TO_JSON_STRING(i))) with its COUNT(DISTINCT ...); order_id, product_name is an incorrect grain, while adding order_status is correct but reveals duplicate Plums rows (count_duplicates 2, count_grain 1)."
- },
- "/images/with-expressions-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using a WITH expression inside SELECT to define discounted_price and price_incl_tax as local variables, then compute quantity * price_incl_tax AS sales_amount from input_data; results are 514.25, 255.552 and 163.35 for products 1 to 3."
- },
  "/images/beware-of-rownumber-without-order-by/1.jpg": {
   "kind": "other",
   "alt": "Scooby-Doo unmasking meme: Fred asks why the report keeps changing at random, then pulls the mask off the ghost to reveal the villain, labelled ROW_NUMBER with stochastic vibes."
- },
- "/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL merging SCD-2 attribute timelines: anchor dates via UNION DISTINCT, date ranges via LEAD(valid_date) OVER (PARTITION BY id ORDER BY valid_date), a LEFT JOIN on overlapping intervals and ARRAY_AGG(STRUCT(dt.key, dt.value)); for id 2 from 2023-01-05 to 2023-01-08, B is true and A false."
- },
- "/images/cross-dataset-foreign-key-relationships-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating learning.order_lines and auxiliary.products, then ALTER TABLE ADD PRIMARY KEY(order_id, product_id) NOT ENFORCED and ADD FOREIGN KEY(product_id) REFERENCES auxiliary.products(id) NOT ENFORCED across datasets; the table details list the primary keys."
- },
- "/images/compacting-date-intervals-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL compacting SCD-2 intervals in four steps: FARM_FINGERPRINT of the flags as hash_val, LAG over a named WINDOW to flag is_new_segment, a running SUM as segment_id, then MIN(valid_from) and MAX(valid_to) per segment; adjacent rows with equal flags merge, e.g. into 2021-01-12 to 2021-01-25."
- },
- "/images/null-safe-comparison-is-distinctnot-distinct-from/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing 'a' <> and = CAST(NULL AS STRING) with IS DISTINCT FROM and IS NOT DISTINCT FROM; the JSON result shows a_different_null and a_equals_null are null, while a_distinct_null is true and a_not_distinct_null is false."
- },
- "/images/transforming-cumulative-sums-into-monthly-values/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL turning cumulative fiscal-year sales into monthly values: a temp function GET_FINANCIAL_YEAR_START (July to June), LAG(cumulative_fy_sales,1) per fiscal year, and cumulative_fy_sales minus IFNULL(LAG(...),0) AS current_month_sales; 1100 cumulative in 2021-01 becomes 300."
- },
- "/images/a-quick-walkthrough-bigquery-remote-functions/1.png": {
-  "kind": "code",
-  "alt": "Python source of a Cloud Run function (entry point get_next_public_holiday) in the Cloud Run console: it reads the BigQuery calls array from request.get_json(), uses holidays.country_holidays and next() to find each country's next holiday, and returns jsonify with a replies list."
  },
  "/images/a-quick-walkthrough-bigquery-remote-functions/2.png": {
   "kind": "ui-screenshot",
@@ -127,321 +59,25 @@
   "kind": "ui-screenshot",
   "alt": "Cloud Run console screenshot with the test-bigquery-processing function selected and the PERMISSIONS button highlighted; the Permissions panel shows the Cloud Run Invoker role granted to a YOUR SERVICE ACCOUNT FROM (2) placeholder, meaning the connection's service account."
  },
- "/images/a-quick-walkthrough-bigquery-remote-functions/5.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL CREATE FUNCTION learning.get_next_public_holidays(country_code STRING) RETURNS STRING REMOTE WITH CONNECTION to an eu test-bigquery-connection, with OPTIONS endpoint set to the Cloud Run europe-west1.run.app URL; red placeholders mark your project, connection and endpoint."
- },
- "/images/a-quick-walkthrough-bigquery-remote-functions/6.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL calling the remote function learning.get_next_public_holidays(country_code) for RO, BE and VN; results read Next holiday is on 2025-04-18 and is called Easter for RO, 2025-04-20 Easter Sunday for BE and 2025-04-07 Hung Kings' Commemoration Day for VN."
- },
- "/images/change-history-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing the APPENDS and CHANGES table functions on learning.customers after enable_change_history = TRUE, an INSERT of George and an UPDATE SET country = 'UAE' WHERE id = 4; APPENDS returns only inserts, while CHANGES also shows Ahmed as an UPDATE (UAE) and a DELETE (Egypt)."
- },
- "/images/a-quick-overview-of-bigquery-functions/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL showing three function types: temp scalar function double_minus_five (x*2-5) returning -3 to 5, CREATE TEMP AGGREGATE FUNCTION sum_only_even with SUM(CASE WHEN MOD(val, 2) = 0 ...) returning 6, and CREATE TABLE FUNCTION learning.get_top_cities('FR') returning Paris, Marseille and Lyon."
- },
- "/images/expressing-multiple-repeated-joins-as-a-correlated-subquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL rewrite: four LEFT JOINs to calculated_averages (per product, subcategory, category and all products) merged with COALESCE become one correlated subquery with OR conditions, ORDER BY CASE WHEN priorities 1 to 4 and LIMIT 1, returning average_ordered_quantity."
- },
- "/images/revisiting-group-by-rollup-with-a-more-realistic-example/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL building calculated_averages from sales_data with ROUND(AVG(quantity),2) and GROUP BY ROLLUP (category, subcategory, product_id), then LEFT JOINs and COALESCE for a fallback average; results give Mangoes 4.67 from Fruits, Cucumbers 4.67 from Food and Washing Machine 6.0 overall."
- },
  "/images/choosing-the-right-ranking-function-why-ties-in-sql-matter/1.png": {
   "kind": "other",
   "alt": "Tables comparing the first event per user_id: User1 has events A and B both at 2024-02-12 08:00:00, so ROW_NUMBER returns one row per user (User1 A, User2 A) and hides the tie, while DENSE_RANK returns User1 A, User1 B and User2 A."
- },
- "/images/a-closer-look-at-stringagg-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using STRING_AGG(DISTINCT payment_method, '~' ORDER BY payment_method) grouped by customer_id; results are Card~Cash~Gift_card for customer 1, Card~Gift_card for 2 and Cash~Gift_card for 3, with duplicates removed and values sorted."
- },
- "/images/heres-a-great-use-case-for-genai-writing-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL with WITH RECURSIVE combinations generating every combination of the letters a to i: the base case UNNESTs the array, the recursive case CROSS JOINs it with CONCAT and WHERE e > SPLIT(c.combination, ',') at OFFSET(c.size - 1); the result has 511 rows, ending with a,b,c,d,e,f,g,h,i."
- },
- "/images/using-exists-with-logicalor-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL where input_data holds per-order updates with an indicators ARRAY; a compute_flags CTE uses EXISTS(SELECT indicator FROM UNNEST(indicators) WHERE indicator = 1), then LOGICAL_OR(flag_was_true) with GROUP BY order_id; results show order 1 true, order 2 false."
- },
- "/images/extended-data-type-support-for-bigquery-search-indexes/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL CREATE SEARCH INDEX test_index on auxiliary.sample_logs(event_details, json_payload) with OPTIONS data_types STRING, INT64, TIMESTAMP; job details show Index Usage Mode UNUSED (data too small), and INFORMATION_SCHEMA.SEARCH_INDEXES shows coverage_percentage 0, LOG_ANALYZER."
  },
  "/images/why-you-should-care-about-vs-code-remote-development/1.jpg": {
   "kind": "ui-screenshot",
   "alt": "VS Code window connected over Remote SSH to a mini-PC, editing app.py, a FastAPI hello world with an async root route; the Ports panel shows port 8000 auto-forwarded to 127.0.0.1:8000 on the laptop."
  },
- "/images/sometimes-you-have-to-use-subqueries/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL building an errors ARRAY per order with the ARRAY() constructor over a scalar subquery that UNION ALLs payment_error, delivery_error and fulfilment_error with labels, filtered WHERE has_error; order 1 gets Payment and Delivery, order 2 an empty array (0 rows)."
- },
- "/images/not-all-nulls-are-the-same/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL showing typed NULLs: CAST(NULL AS INT64) <> CAST(NULL AS STRING) fails with no matching signature for operator !=, while CREATE OR REPLACE TABLE learning.my_table AS SELECT NULL AS my_column gives an INTEGER NULLABLE column, and comparing it to CAST(NULL AS INT64) returns null."
- },
- "/images/extracting-keys-from-json-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL that DECLAREs a JSON variable (name, city, and a sports array of objects with name, since, club) and runs JSON_KEYS(json_data, mode => 'lax'); the json_keys result lists city, name, sports, sports.club, sports.name and sports.since."
- },
- "/images/computing-a-hash-aggregation-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL computing one hash per group: FARM_FINGERPRINT(STRING_AGG(TO_JSON_STRING(t))) AS group_hash over input_data rows (id, event_date, number_value, text_value) with GROUP BY id; the result gives a long integer group_hash for id 1 and id 2."
- },
- "/images/another-look-at-anyvalue-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using ANY_VALUE(product_id HAVING MAX price), ANY_VALUE(product_id HAVING MIN is_banana) and ANY_VALUE(product_id HAVING MIN best_before_date) with GROUP BY order_id; order 1 returns Mango, Mango and Banana, order 2 returns Pears for all three."
- },
- "/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery comparison of three joins from orders_per_store (partitioned on order_date, clustered by order_id): to unpartitioned order_amounts_unpartitioned USING (order_id) takes 10 min 13 sec slot time, to partitioned order_amounts USING (order_date, order_id) 27 min 13 sec, USING (order_id) 41 min 47 sec."
- },
- "/images/using-rangebucket-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL applying RANGE_BUCKET(num, ...) with boundaries 0, 5, 10, 20, 100 to an UNNEST of numbers from -1 to 40 plus NULL; results: -1 goes to bucket 0, 2 to 1, 5 and 9 to 2, 10, 14 and 15 to 3, 40 to 4, and NULL gives a NULL bucket."
- },
- "/images/calculating-the-median-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "Two BigQuery SQL queries for the median of an UNNEST of 1, 2, 2, 3, 4, NULL: PERCENTILE_CONT and PERCENTILE_DISC(x, 0.5 IGNORE NULLS) OVER() return median_cont 2.0 and median_disc 2, while APPROX_QUANTILES(value, 100) with OFFSET(50) and GROUP BY id returns median 2."
- },
- "/images/dynamically-extracting-json-data-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL turning JSON-like strings with varying keys into rows: REGEXP_REPLACE strips braces and quotes, SPLIT plus LEFT JOIN UNNEST yields kv pairs, and REGEXP_EXTRACT pulls key and value; results list id 1 key_1=1, key_3=3 and id 2 key_99=2, key_4=4."
- },
- "/images/using-tempfile-module-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python tempfile_demo.py using with blocks for tempfile.NamedTemporaryFile(mode='w+t'), tempfile.TemporaryFile with seek(0) and read(), and tempfile.TemporaryDirectory() plus os.path.join to write tempfile.txt; comments show the generated paths under /var/folders and the file content Hello world!"
- },
- "/images/a-quick-look-at-the-json-module-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python json_demo.py next to a data.json file of users: json.loads parses a string and json.load(open('data.json')) a file into dicts, then json.dumps turns a_dict into a str and json.dump writes it to exported_data.json, shown open with the x, y, z data."
- },
- "/images/retrying-in-python-using-tenacity/1.jpg": {
-  "kind": "code",
-  "alt": "Python retrying.py using the tenacity @retry decorator with retry_if_exception_type(IOError) and wait_exponential(multiplier=2, min=4, max=12) on a function that randomly raises IOError; terminal output shows retries about 4, 4, 8, 12 and 12 seconds apart before All good!"
- },
- "/images/sortedlist-vs-listsorted-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python sorting.py comparing sorted(numbers), which returns a new sorted list 1, 2, 3, 4, 5, 5 and leaves numbers unchanged as 2, 3, 1, 4, 5, 5, with numbers.sort(), which sorts the original list in place."
- },
  "/images/using-virtual-environments-in-python/1.webp": {
   "kind": "code",
   "alt": "Terminal session in ~/repos/test: source .venv/bin/activate adds a (test) prompt prefix, Python 3.10.12 imports pandas and builds a DataFrame, which python points to /repos/test/.venv/bin/python, and deactivate returns to the normal prompt."
- },
- "/images/installing-python-packages-with-pip/1.jpg": {
-  "kind": "code",
-  "alt": "VS Code with program.py (import pandas as pd, build a DataFrame from a list of dicts, df.head()) and a requirements.txt pinning numpy==2.0.0, pandas==2.2.2, python-dateutil, pytz, six and tzdata; the terminal shows source .venv/bin/activate and deactivate."
- },
- "/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on weather_alerts and events tables: ARRAY_AGG(STRUCT(alert_name, valid_from, valid_to)) GROUP BY city_id, then a correlated subquery over UNNEST(aa.alerts) returns a STRUCT of COUNTIF and COUNT(DISTINCT CASE WHEN) metrics per event, e.g. Pop Concert had_heatwave_prior true."
- },
- "/images/query-parameters-in-bigquery/1.jpg": {
-  "kind": "code",
-  "alt": "Terminal running bq query --use_legacy_sql=false with named query parameters --parameter=input_value:INT64:1 and --parameter=input_date:DATE:2020-12-18, used as @input_value and @input_date in a SELECT on learning.data_source; the output lists six id values."
- },
- "/images/system-variables-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL script that runs a COUNT(DISTINCT value) GROUP BY ds_date query on learning.data_source, then selects system variables @@project_id, @@script.slot_ms, @@script.bytes_billed and @@script.creation_time; results show 636839 slot ms and 10485760 bytes billed."
- },
- "/images/ingestion-time-partitioning-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating learning.weather_measurements with PARTITION BY DATE(_PARTITIONTIME), inserting rows for New York, Rome and Madrid, then selecting *, _PARTITIONDATE, _PARTITIONTIME; results show every row in partition 2024-06-21 with _PARTITIONTIME 2024-06-21 00:00:00 UTC."
- },
- "/images/declare-and-set-variables-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL script with DECLARE ... DEFAULT CURRENT_TIMESTAMP() (implicit type), DECLARE fruits DEFAULT from a subquery giving ARRAY<STRUCT<STRING name, STRING taste>>, DECLARE another_timestamp TIMESTAMP, DECLARE a, b, c DEFAULT 0, and SET; the result shows both timestamps and apple/sweet, lemon/sour."
- },
- "/images/comments-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on an orderline_updates CTE demonstrating comment styles: a full-line -- comment, inline -- and # comments after columns, an inline /* */ comment followed by AS total_quantity, and a multi-line /* */ block before FROM; the query returns four order lines normally."
- },
- "/images/non-equi-joins-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "SQL non-equi joins from orders to campaign ON o.order_date BETWEEN c.valid_from AND c.valid_to and to discounts ON o.amount >= value_from AND o.amount < value_to, computing (1-discount_percentage)*amount AS paid_amount; e.g. order 3 (151, Summer 2022) gets 0.2 off and pays 120.8."
- },
- "/images/lax-json-conversion-functions-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL declaring an ARRAY<JSON> of fruits with loosely typed fields and reading them via UNNEST with LAX_STRING, LAX_BOOL, LAX_FLOAT64 and LAX_INT64; string \"7.1\" becomes 7.1, 1/0 and \"TRUE\"/\"false\" become booleans, and an empty string is_local gives null."
- },
- "/images/determining-json-types-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL that declares a JSON array of people (city, age, name, registered_footballer) and calls JSON_TYPE on json_data, its first element via index 0, and that element's name, age and registered_footballer, returning array, object, string, number and boolean."
  },
  "/images/replicating-datasets-across-regions-in-bigquery/1.jpg": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console Dataset replicas (Preview) screens: the Create replica panel for dataset learning in EU with Multi-region US selected as replica location, and the Replicas list afterwards showing a US Secondary replica from June 11, 2024 next to the EU Primary."
  },
- "/images/natural-join-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "SQL with stores (store_id, store_name) and employees (employee_id, store_id) CTEs joined via NATURAL JOIN with no ON clause, matching on the shared store_id column; the result pairs employees 1, 2, 3 with Flagship store - NY, Main St. - LA and Michigan Ave. - Chicago."
- },
- "/images/semi-joins-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL semi-join: SELECT * FROM products p WHERE EXISTS (SELECT 1 FROM orders o WHERE p.product_id = o.product_id), a correlated subquery; only Cherries and Tomatoes are returned, once each, even though both appear in several orders, and Squash is excluded."
- },
- "/images/anti-joins-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL left anti-join: product_details LEFT JOIN prices ON pd.product_id = p.product_id WHERE p.product_id IS NULL, finding products with no price row; the result is product 4, sweater, with a null price."
- },
- "/images/self-joins-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "SQL self-join on an employees table (employee_id, name, manager_id): employees emp LEFT JOIN employees man ON emp.manager_id = man.employee_id returns each employee with manager_name, e.g. Jacob D reports to Andrew F, while Sabrina W has a null manager."
- },
- "/images/the-relationship-between-arrayagg-and-unnest/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL round trip drawn as a cycle: ARRAY_AGG(STRUCT(order_id, product)) AS orders with GROUP BY customer_id nests four flat order rows into one row per customer, and LEFT JOIN UNNEST(orders) AS _order flattens them back into the same four rows."
- },
- "/images/a-couple-of-fun-things-about-null-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL doing a FULL OUTER JOIN source_b USING(order_id) where each source has one NULL order_id; orders 1 and 2 match (UK apples, US peaches), but the NULL keys do not, giving separate rows for FR with null product and grapes with null country."
- },
- "/images/float-vs-numeric-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL adding CAST(0.1 AS FLOAT64) and CAST(0.2 AS FLOAT64) and casting 'NaN', '-inf' and 'inf' to FLOAT64; the JSON result shows float_sum 0.30000000000000004 plus NaN, -Infinity and Infinity values."
- },
- "/images/the-partitions-view-in-informationschema/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL selecting * EXCEPT(table_catalog) from learning.INFORMATION_SCHEMA.PARTITIONS for table data_source ORDER BY last_modified_time DESC; results list partition_id, total_rows, bytes, last_modified_time and storage_tier, with partition 20221112 modified 2024-05-31 ACTIVE and older ones LONG_TERM."
- },
- "/images/heres-how-group-by-works-differently-across-sql-dialects/1.jpg": {
-  "kind": "sql",
-  "alt": "SQL Server vs BigQuery GROUP BY on input_data (amount, country NULL, UK, N/A): BigQuery GROUP BY country uses the IFNULL(country, 'N/A') alias, giving N/A 4 and UK 2, as does grouping by the expression, while SQL Server GROUP BY country uses the raw column and returns N/A twice, 3 and 1."
- },
- "/images/controlling-ordering-of-null-values-in-the-order-by-clause/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on six orders, two with NULL order_amount, sorted with ORDER BY order_amount DESC NULLS FIRST; the results list orders 3 and 5 (null) first, then 100, 90, 90 and 50."
- },
- "/images/joining-with-using-vs-on-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL joining orders to products (size, color, product_id, variant) two ways: LEFT JOIN products p USING (product_id, variant) lets product_id and variant be selected unqualified, while ON o.product_id = p.product_id AND o.variant = p.variant needs o. prefixes; both return the same rows."
- },
- "/images/another-look-at-logicaland-logicalor-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on customer orders (is_paid, is_shipped) with GROUP BY customer_id: LOGICAL_AND(is_paid) AS all_orders_paid, LOGICAL_OR(NOT is_shipped) AS outstanding_orders, and LOGICAL_OR on olives ordered after DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH); Customer 1 is true for all three."
- },
- "/images/the-first-thing-i-do-when-analyzing-a-sql-table/1.jpg": {
-  "kind": "sql",
-  "alt": "SQL data-quality check on input_data (order_id, is_paid, product_id): SELECT is_paid IS NULL, product_id IS NULL and COUNT(1) AS occurences with GROUP BY ALL; the result shows 4 clean rows, 1 row with a NULL product_id and 1 with a NULL is_paid."
- },
- "/images/how-limit-helps-you-save-time-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL that counts rows per order_id with COUNT(1) AS times_seen, GROUP BY order_id, HAVING COUNT(1) > 1 and LIMIT 10 to quickly surface a few duplicates; the result shows order_id 1 with times_seen 2."
- },
- "/images/combining-anyvalue-with-having-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on an input_data CTE of order_id and order_line that groups by order_id and filters with HAVING COUNT(order_line) = 1 AND ANY_VALUE(order_line) IN ('grapes', 'oranges'); the result keeps order 2 with grapes and order 3 with oranges, each with count_order_lines 1."
- },
- "/images/using-the-bq-cli-utility-with-bigquery/1.jpg": {
-  "kind": "code",
-  "alt": "Bash terminal running the bq CLI: bq query --use_legacy_sql=false with SELECT * FROM learning.employee_data; the output is an ASCII table of nine employees with columns employee_id, first_name, last_name and manager_id, where John Smith has a NULL manager_id."
- },
- "/images/why-you-should-use-parentheses-with-and-or-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL filtering an input_data CTE of boolean flags with WHERE (is_paid AND is_shipped) OR (customer_is_on_contract AND is_first_time_buyer), with comments noting the unparenthesised version resolves the same way; orders 1 and 2 are returned, order 3 is not."
- },
- "/images/the-not-null-constraint-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating learning.customers with first_name STRING NOT NULL, the console Schema tab showing first_name Mode REQUIRED and phone_number NULLABLE, and an INSERT with NULL AS first_name that fails with the error Required field first_name cannot be null."
- },
- "/images/generating-a-random-number-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL that builds an available_options array of Option 1 to Option 20 with ARRAY_AGG, CONCAT and GENERATE_ARRAY, cross joins 100 participants and picks one per row with OFFSET(CAST(ARRAY_LENGTH(available_options)*RAND()-0.5 AS INT64)); results list each participant_id with a random selected_option."
- },
- "/images/using-subqueries-with-row-level-security-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing CREATE ROW ACCESS POLICY with a static FILTER USING (country IN ('US', 'UK')) to the preview version whose FILTER USING subquery reads lookup_table, UNNESTs country_list and matches user_principal = SESSION_USER(); both let the service account see only the UK and US customers."
- },
- "/images/the-order-in-which-you-round-matters-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL grouping quantities by country and comparing SUM(ROUND(quantity,0)) AS sum_rounded_quantities with ROUND(SUM(quantity),0) AS round_sum_of_quantities; UK gives 4.0 vs 5.0 and US 7.0 vs 6.0, so rounding before or after summing changes the result."
- },
- "/images/order-of-precedence-in-sql-where-vs-having/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing two queries on a quantity and country table: SUM(quantity) AS quantity with HAVING quantity > 0 returns UK 25 and US 10, while WHERE quantity > 0 before GROUP BY country returns UK 25 and US 15; FR is dropped in both."
- },
- "/images/transactions-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL script with BEGIN TRANSACTION, an INSERT INTO learning.some_table and a SELECT ERROR call before COMMIT TRANSACTION, plus an EXCEPTION WHEN ERROR THEN block that selects @@error.message and runs ROLLBACK TRANSACTION; the execution list shows the ERROR step failing and the rollback succeeding."
- },
- "/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on order events (order_id, event_ts, order_status) that filters WHERE order_status = 'order_updated' and then QUALIFY ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY event_ts DESC) = 2; results give order 2 at 13:15 and order 1 at 11:30, the highlighted second-to-last updates."
- },
- "/images/using-gapsfill-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL filling a transaction_date column with gaps (2021-01-01, 01-03, 01-05) two ways: the GAP_FILL table function with TABLE learning.dates_with_gaps, 'transaction_date' and INTERVAL 1 DAY, and a bounds CTE with GENERATE_DATE_ARRAY and LEFT JOIN; both return all five dates."
- },
- "/images/time-series-functions-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using TIMESTAMP_BUCKET(event_timestamp, INTERVAL 15 MINUTE) AS event_timestamp_bucket; results map eight 2021-01-01 events to 15-minute buckets, for example 10:13:20 to 10:00:00, 10:22:15 to 10:15:00 and 10:59:12 to 10:45:00."
- },
- "/images/json-datatype-vs-json-like-string-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL declaring a native_json JSON variable and a json_formatted_string STRING missing its closing brace, then applying JSON_VALUE with '$.key' to both; value_from_native and value_from_json_like_string both return value, so the invalid string is not rejected."
- },
- "/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing daily total_sales per department in System A and System B with FULL OUTER JOIN USING (department, sales_date) and ORDER BY ABS(IFNULL(sales_a, 0) - IFNULL(sales_b, 0)) DESC; shoes on 2021-01-01, missing in A, tops the list with a difference of 3000."
- },
- "/images/the-json-datatype-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating the same JSON object five ways: a JSON literal in triple quotes, PARSE_JSON on an escaped string, TO_JSON(STRUCT(name, city, sports)), JSON_OBJECT with key-value pairs and JSON_ARRAY(sports); the results show identical name, city and sports objects plus a nested array."
- },
- "/images/sessionuser-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery console running SELECT SESSION_USER() in an untitled query; the result has one unnamed column f0_ holding the email address of the user running the query."
- },
- "/images/concatenation-operator-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL showing the || concatenation operator next to its function equivalents: joining two integer arrays with || and with ARRAY_CONCAT both return 1 to 6, and 'Hello ' || 'World' and CONCAT('Hello ', 'World') both return Hello World."
- },
- "/images/using-formatdate-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL joining a weekly schedule CTE (day, opening_time, closing_time) to April 2023 dates from GENERATE_DATE_ARRAY ON UPPER(FORMAT_DATE('%a', d.calendar_date)) = s.day; results show 2023-04-01 as Sat, open 11:00 to 20:00, and weekdays 10:00 to 22:00."
- },
- "/images/raising-errors-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using ERROR(FORMAT('Error: surface must be strictly greater than 0, but is %t', surface)) inside WHERE IF(IFNULL(surface,0) > 0, TRUE, ...) and in a CASE WHEN divisor to guard population/surface; the queries fail reporting surface 0 and NULL for the bad rows."
- },
- "/images/cleaning-up-strings-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on city values containing empty strings, whitespace and a NULL: SELECT DISTINCT city returns 7 variants, while SELECT DISTINCT NULLIF(TRIM(city),'') AS city, annotated to remove whitespace and make empty strings NULL, returns only null, New York and Athens."
- },
- "/images/using-instr-in-bigquery/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using INSTR(fruits,',') and INSTR(fruits,';') to find the first comma and semicolon positions in fruit lists, feeding a CASE WHEN with SPLIT into fruits_array; apple,grapes,melon gives 6 and 0 and splits into three items, while banana returns 0 for both."
- },
- "/images/cross-dataset-foreign-key-referencing-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL in three steps: ADD FOREIGN KEY(id) references auxiliary.ids(id) fails with FOREIGN KEY constraint cannot reference a table in a different dataset; CREATE OR REPLACE TABLE learning.ids CLONE auxiliary.ids with a PRIMARY KEY NOT ENFORCED; then the foreign key to learning.ids(id) succeeds."
- },
- "/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL for student Joe Doe with a grades ARRAY of 4 values and an allergies ARRAY of 3; unnesting both with LEFT JOIN UNNEST(grades) AS grade and LEFT JOIN UNNEST(allergies) AS food_allergy returns 12 rows, pairing every grade with every allergy."
- },
- "/images/using-structs-for-quick-analysis-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL filtering customers with WHERE STRUCT(country, has_paid, plan, service) IN (STRUCT('UK', FALSE, 'Premium', 'TV'), STRUCT('FR', FALSE, 'Basic', 'Internet')) as a shorter alternative to chained AND/OR conditions; it returns Catie Doe (UK) and Francesca Duchamp (FR)."
- },
- "/images/understanding-structs-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL creating learning.customer_data with a STRUCT address, an ARRAY of instruments and an ARRAY of STRUCTs for certifications; arrows map them to schema types RECORD NULLABLE, STRING REPEATED and RECORD REPEATED, and the result shows nested columns like address.city and certifications.name."
- },
  "/images/sharded-tables-in-bigquery/1.jpg": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshot of date-sharded tables: the explorer groups them as sharded_table_ (2), the sharded_table_20240102 page has a shard picker listing 2024 01-01 and 01-02, and SELECT * FROM learning.sharded_table_* returns rows from both shards."
- },
- "/images/comparing-tables-with-full-outer-join/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing trends_us_prod and trends_us_dev with a FULL OUTER JOIN on refresh_date, week, dma_id and term, using COUNTIF, COUNT(DISTINCT CASE WHEN ...) and FARM_FINGERPRINT(TO_JSON_STRING(...)); results show 3954227 rows missing from prod, 3956293 missing from dev and 7910520 rows_different of 43514223."
- },
- "/images/splitting-a-string-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using SPLIT('a, b, c', ', ') with 0-based indexes 0, 1 and 2 to return first_element a, second_element b and third_element c, shown beside Excel, where a TEXTSPLIT formula splits the same text into cells a, b and c."
  },
  "/images/search-indexes-in-bigquery/1.jpg": {
   "kind": "ui-screenshot",
@@ -450,50 +86,6 @@
  "/images/a-portable-data-analytics-stack-using-docker-mage-dbt-core-duckdb-and-superset/1.png": {
   "kind": "ui-screenshot",
   "alt": "Apache Superset Sales dashboard screenshot with a sales per region table, a sales per country map, a channel sales evolution line chart for 2019 to 2020, an average order size of 8.99 USD, sales by month and a day-of-week trends pivot by city."
- },
- "/images/extract-all-pattern-occurrences-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL applying REGEXP_EXTRACT_ALL(raw_data, r'\\d{4}-\\d{2}-\\d{2}') to a string that mentions four dates; the extracted_dates array returns 2021-01-01, 2021-01-02, 2021-01-03 and 2021-01-04."
- },
- "/images/why-you-should-use-union-distinct-sparingly/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL unioning google_trends.top_terms (US) with international_top_terms, run once with UNION DISTINCT and once with UNION ALL; both process 13.9 GB, but UNION DISTINCT uses 47 min 31 sec of slot time and shuffles 69.37 GB versus 25 min 45 sec and 48.72 GB for UNION ALL."
- },
- "/images/order-by-expressions-in-sql/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL sorting sales rows with ORDER BY CASE WHEN channel = 'direct' THEN 1 ELSE 0 END DESC, sales DESC; results list direct sales first (FR 170, IT 150, US 100), then partners sales (FR 200, US 125, IT 100)."
- },
- "/images/accessing-array-elements-in-bigquery/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL reading elements of a letters array (a to e) with ORDINAL(2), a plain index 1, OFFSET(1), SAFE_OFFSET(5) and SAFE_ORDINAL(6); the first three all return b, while both safe accessors return null instead of an out-of-bounds error."
- },
- "/images/enumerating-array-elements-in-bigquery-using-with-offset/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL that builds a status_updates array per order with ARRAY_AGG(event_type ORDER BY event_time), then flattens it with LEFT JOIN UNNEST(status_updates) AS status_update WITH OFFSET AS offset; results show order_created, order_paid and order_shipped at offsets 0, 1 and 2."
- },
- "/images/unnesting-arrays-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL flattening a nested activities array of name and registered_on per member with LEFT JOIN UNNEST(activities) AS activity; 4 member rows become 8 rows, one per activity, and Joanna, who has no activities, is kept with null values."
- },
- "/images/boolean-data-type-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL defining val_b > val_a AS is_val_b_higher and filtering with just WHERE is_val_b_higher, which returns true, beside a SQL Server version that needs CAST(IIF(val_b > val_a, 1, 0) AS BIT) and WHERE is_val_b_higher = 1, with comments marking the plain boolean forms as errors there."
- },
- "/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing IFNULL(value_a, default_value), COALESCE(value_a, value_b, default_value) and NULLIF(maybe_empty_string, '') on NULL strings and an empty string; ifnull_example and coalesce_example return default value, while nullif_example returns null."
- },
- "/images/greatest-least-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on val_a 10, val_b 20 and val_c 30 comparing GREATEST(val_a, val_b) and LEAST(val_a, val_b) with equivalent IF expressions, plus GREATEST across all three; results are highest 20, also_highest 20, lowest 10, also_lowest 10 and greatest_of_all 30."
- },
- "/images/range-data-type-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL building three date RANGE values and applying RANGE_OVERLAPS, RANGE_INTERSECT, RANGE_START, RANGE_END and RANGE_CONTAINS; the JSON result shows range_a and range_b overlap with intersection 2021-03-01 to 2021-04-01, and range_a contains range_c and 2021-01-15."
- },
- "/images/delete-insert-vs-merge-in-bigquery/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL comparing two ways to load staging data: DELETE FROM learning.data_source WHERE ds_date >= 2023-09-02 then INSERT INTO ... SELECT * FROM learning.data_source_staging, estimated at 67.97 KB, versus a MERGE ON id and ds_date with WHEN NOT MATCHED THEN INSERT and WHEN MATCHED THEN UPDATE SET, estimated at 9.15 MB."
  },
  "/images/using-group-by-all-in-bigquery/1.png": {
   "kind": "ui-screenshot",
@@ -506,10 +98,6 @@
  "/images/calculating-the-mode-in-bigquery/1.png": {
   "kind": "other",
   "alt": "Input table for calculating the mode, with columns country, value and value_date: US and UK rows twice a month from 2023-01-01 to 2023-03-15 with values 1 or 2, and empty NULL values on 2023-02-15 and 2023-03-15."
- },
- "/images/calculating-the-mode-in-bigquery/2.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL computing the mode per country: SELECT country, value, COUNT(1) AS times_seen FROM input_data WHERE value IS NOT NULL (a comment says to remove it to include NULLs), GROUP BY country, value, then QUALIFY RANK() OVER(PARTITION BY country ORDER BY times_seen DESC) = 1."
  },
  "/images/calculating-the-mode-in-bigquery/3.png": {
   "kind": "other",
@@ -530,26 +118,6 @@
  "/images/using-include-nulls-with-unpivot-in-bigquery/3.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console result of UNPIVOT INCLUDE NULLS with columns measurement_date, value and measurement: all 9 rows appear, including null values for water_level on 2021-01-01 and temperature on 2021-01-02."
- },
- "/images/watch-out-when-using-safecast-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL in the console: SELECT CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP), with seven fractional digits, fails with an Invalid timestamp error, while the same value with SAFE_CAST silently returns a single null in column f0_."
- },
- "/images/generating-date-intervals-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL selecting valid_date FROM UNNEST(GENERATE_DATE_ARRAY('2021-01-01', '2021-01-31', INTERVAL 1 DAY)) AS valid_date; the console result lists 31 rows, one per day from 2021-01-01 to 2021-01-31."
- },
- "/images/datetime-vs-timestamp-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL converting between DATETIME and TIMESTAMP: CURRENT_DATETIME for Europe/Bucharest and America/New_York, CURRENT_TIMESTAMP(), TIMESTAMP(datetime, 'America/New_York') and DATETIME(CURRENT_TIMESTAMP(), 'Europe/Bucharest'); results show 18:09 Bucharest, 11:09 New York and 16:09 UTC."
- },
- "/images/using-range-in-window-functions-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on athlete finish times comparing AVG(finish_time) OVER (ORDER BY birth_year RANGE BETWEEN 1 PRECEDING AND 1 FOLLOWING) with the same frame using ROWS; for the two athletes born in 1991, neighbours_average is 117.5 while neighbours_average_wrong gives 120.0 and 116.67."
- },
- "/images/computing-a-cumulative-sum-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL cumulative sum on an orders table: SUM(order_total) OVER (PARTITION BY customer_id ORDER BY order_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_sum; the highlighted result runs 100, 175, 265 for Customer-1 and 80, 200, 250 for Customer-2."
  },
  "/images/optimizing-storage-costs-in-bigquery/1.jpg": {
   "kind": "ui-screenshot",
@@ -578,18 +146,6 @@
  "/images/leveraging-arrays-in-bigquery-for-query-performance/5.jpg": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshots of two queries computing MIN and MAX of ds_date GROUP BY id: on example_with_array via LEFT JOIN UNNEST(dates) it processes 2.78 MB with 86 ms of slot time; on example_without_array it processes 5.55 MB and uses 9 min 44 sec of slot time."
- },
- "/images/decorators-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python decorator example: polite(function) defines a wrapper() that prints Dear passengers!, then Please plus the wrapped function's return value, then a thank-you line; @polite decorates issue_offboarding_warning and issue_platform_warning, with their printed announcements shown as comments."
- },
- "/images/using-countif-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL using COUNTIF(Salary > 80000) AS count_salaries_over_80k on learning.Customers with GROUP BY country; the console results show CA 1, IT 0, UK 1 and FR 0."
- },
- "/images/partial-functions-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python example of functools.partial: a power(base, exponent) function is specialised into square = partial(power, exponent = 2) and cube = partial(power, exponent = 3), so square(5) outputs 25 and cube(5) outputs 125."
  },
  "/images/approximate-aggregate-functions-in-bigquery/1.png": {
   "kind": "ui-screenshot",
@@ -627,14 +183,6 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery console result of ANY_VALUE with HAVING MAX and HAVING MIN, grouped by country: Germany has highest_selling_by_value productC and lowest_selling_by_quantity productB, while Spain has productD and productE."
  },
- "/images/comprehensions-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python worksheet of comprehensions for squaring numbers, each beside its for-loop equivalent: a list comprehension, one filtered with if i%2==0, a dictionary comprehension, a set comprehension on a list with duplicates, a note that there are no tuple comprehensions, and a generator expression versus a yield function."
- },
- "/images/select-as-struct-and-select-as-value/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL value tables infographic: SELECT AS VALUE order_line and SELECT AS STRUCT order_line FROM input_data LEFT JOIN UNNEST(order_lines), applied to orders with nested order lines; both yield product_id, order_quantity and unit_price rows, but the STRUCT result keeps a nested column prefix."
- },
  "/images/does-order-of-expressions-in-the-where-clause-matter/1.jpg": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshots of one query on google_trends.international_top_terms with the WHERE conditions swapped, term LIKE '%ATP%' AND region_code = 'RO-B' and the reverse: 441 ms and 6 sec of slot time versus 538 ms and 7 sec, both shuffling 18.29 KB."
@@ -650,14 +198,6 @@
  "/images/de-duplicating-with-rownumber-vs-arrayagg/1.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery result grid of the sample data used for the de-duplication test, with columns id, value and ds_date: 25 rows of random ids such as 37, 75 and 2 with single-digit values, all dated 2020-12-18."
- },
- "/images/de-duplicating-with-rownumber-vs-arrayagg/2.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL de-duplicating learning.data_source with QUALIFY ROW_NUMBER() OVER (PARTITION BY id ORDER BY ds_date DESC) = 1; the Execution Details tab shows 3 sec elapsed, 20 min 19 sec slot time consumed and 8.77 MB bytes shuffled."
- },
- "/images/de-duplicating-with-rownumber-vs-arrayagg/3.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL de-duplicating with a last_events CTE using SELECT AS VALUE ARRAY_AGG(t ORDER BY t.ds_date DESC LIMIT 1) with OFFSET(0) FROM learning.data_source GROUP BY id; Execution Details show 2 sec elapsed, 8 min 8 sec slot time consumed and 33.94 MB bytes shuffled."
  },
  "/images/using-select-with-except-and-replace/1.png": {
   "kind": "other",
@@ -711,14 +251,6 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery result grid for input B with columns customer_id and order_id: three rows, customer 1 with order 1001, customer 5 with order 1010 and customer 6 with order 1012."
  },
- "/images/intersect-and-except-in-bigquery/3.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL building CTEs input_a and input_b from SELECT rows joined with UNION ALL, then combining SELECT customer_id, order_id from each with INTERSECT DISTINCT; the result has one row, customer_id 1 and order_id 1001, the only pair present in both inputs."
- },
- "/images/intersect-and-except-in-bigquery/4.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL with the same input_a and input_b CTEs, selecting customer_id, order_id from input_b EXCEPT DISTINCT the rows of input_a; the result has two rows, customer 5 with order 1010 and customer 6 with order 1012, the pairs found only in input_b."
- },
  "/images/table-sampling-in-bigquery/1.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshot of the Schema tab for the partitioned table data_source, listing three NULLABLE fields: id INTEGER, value INTEGER and ds_date DATE, next to the Details, Preview, Lineage, Data Profile and Data Quality tabs."
@@ -726,10 +258,6 @@
  "/images/table-sampling-in-bigquery/2.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console screenshot of the Preview tab for the partitioned data_source table, showing a free, scrollable subset of rows (rows 67 to 88 visible) with columns id, value and ds_date, all dated 2020-12-18."
- },
- "/images/table-sampling-in-bigquery/3.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL selecting all columns from learning.data_source with a WHERE filter on ds_date = 2022-01-01 so only one partition is read; the results grid lists rows with id, value and ds_date, every row dated 2022-01-01."
  },
  "/images/table-sampling-in-bigquery/4.png": {
   "kind": "ui-screenshot",
@@ -755,21 +283,9 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery console Create table form: source Drive with a Google Sheets URI (partly redacted), file format Google Sheet, sheet range A1:D4, dataset learning, table example_table, table type External table, four STRING fields FirstName, LastName, City, Country, and 1 header row to skip."
  },
- "/images/importing-google-sheets-into-bigquery/5.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL SELECT * FROM learning.example_table LIMIT 1000 querying the new external table; results show FirstName, LastName, City and Country for Jane Doe (New York, USA), Max Muller (Munich, Germany) and Amelie Johnson (London, UK), matching the sheet."
- },
- "/images/importing-google-sheets-into-bigquery/6.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL selecting table_name and ddl from learning.INFORMATION_SCHEMA.TABLES WHERE table_name = 'example_table'; the result's ddl column starts with CREATE EXTERNAL TABLE followed by a partly redacted project name and .learning.example_table."
- },
  "/images/using-bigquery-hashing-functions/1.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery result grid with ID, Name, City, Salary, Snapshot_Date and a truncated ChangedSinceLastSnapshot flag: null on each ID's first snapshot, true when John Doe moves from Berlin to New York, false for an unchanged Jessica Taylor row and true when she moves from Paris to London."
- },
- "/images/using-bigquery-hashing-functions/2.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL hashing entire rows with SELECT t.*, FARM_FINGERPRINT(TO_JSON_STRING(t)) AS row_hash FROM learning.Customers AS t; results list the four customers with an extra row_hash column of large signed integers, shown truncated."
  },
  "/images/pay-attention-to-this-when-unnesting-in-bigquery/1.jpg": {
   "kind": "ui-screenshot",
@@ -799,22 +315,6 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery result grid of the unpivoted output with columns customer_id, key and value: each customer becomes one row per attribute, e.g. customer 2 has FirstName Michelle, LastName Dubois, Country FR and FirstOrderDate 2021-06-01."
  },
- "/images/linting-bigquery-sql-with-sqlfluff/1.png": {
-  "kind": "code",
-  "alt": "Terminal output of sqlfluff lint test_sql_query.sql --dialect bigquery reporting FAIL with 11 violations by line and position, including CP01 keywords must be upper case, LT02 expected indent of 4 spaces, LT05 line too long (96 > 80), LT08, LT09 and LT12 missing trailing newline."
- },
- "/images/linting-bigquery-sql-with-sqlfluff/2.png": {
-  "kind": "code",
-  "alt": "Terminal output of sqlfluff fix test_sql_query.sql --dialect bigquery listing the same CP01 and LT01, LT02, LT05, LT08, LT09, LT12 violations, then reporting 11 fixable linting violations found and asking Are you sure you wish to attempt to fix these, Y/n."
- },
- "/images/linting-bigquery-sql-with-sqlfluff/3.png": {
-  "kind": "code",
-  "alt": "Terminal output of a second sqlfluff lint test_sql_query.sql --dialect bigquery run after the fix, printing only All Finished with no violations reported."
- },
- "/images/context-managers-in-python/1.png": {
-  "kind": "code",
-  "alt": "Python context_manager.py defining class ExampleContextManager with __init__(host, port), __enter__ opening a DatabaseConnection and __exit__(exc_type, exc_value, exc_traceback) calling connection.close(), used in a with ... as manager block; printed output runs from Initializing to Connection closed."
- },
  "/images/using-gcp-cloud-functions-in-data-engineering/1.png": {
   "kind": "ui-screenshot",
   "alt": "Google Cloud console screenshot of the Cloud Functions welcome page, describing it as a lightweight, event-based compute solution, with a Create Function button and cards for local development, testing, how-to guides, tips, tutorials and billing."
@@ -823,10 +323,6 @@
   "kind": "ui-screenshot",
   "alt": "Google Cloud console screenshot of the Cloud Functions Create function configuration: 2nd gen environment, test-cloud-function in europe-west1, HTTPS trigger with Require authentication, 256 MiB memory, 60 s timeout, concurrency 1, autoscaling 0 to 100 instances, service account dev-tf-sa."
  },
- "/images/using-gcp-cloud-functions-in-data-engineering/3.png": {
-  "kind": "code",
-  "alt": "Google Cloud Functions console Code step with Python 3.11 runtime, entry point hello_http and the inline editor showing main.py: a @functions_framework.http function that reads name from request.get_json or request.args, defaults to World and returns 'Hello {}!'.format(name)."
- },
  "/images/using-gcp-cloud-functions-in-data-engineering/4.png": {
   "kind": "ui-screenshot",
   "alt": "Google Cloud Functions console Configure pre-deployment test panel: the triggering event is the JSON body {\"name\": \"fellow earthlings\"}, HTTP method POST, with a Run Test button and a last test on Oct 5, 2023 that returned HTTP status 200."
@@ -834,18 +330,6 @@
  "/images/using-gcp-cloud-functions-in-data-engineering/5.png": {
   "kind": "ui-screenshot",
   "alt": "Cloud Functions pre-deployment test log: builder steps run pip check with no broken requirements, then Function is ready to test, followed by execution responses Hello Greetings, fellow earthlings!! and Hello fellow earthlings!"
- },
- "/images/swapping-partitions-in-bigquery/1.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL selecting MIN(ds_date) and MAX(ds_date) from learning.data_source_staging; the result shows the staging table spans 2023-09-02 to 2023-09-30."
- },
- "/images/swapping-partitions-in-bigquery/2.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL selecting MAX(ds_date) from the target table learning.data_source; the result is 2023-09-02, so the target is behind the staging table before the partitions are copied."
- },
- "/images/swapping-partitions-in-bigquery/3.png": {
-  "kind": "code",
-  "alt": "Terminal output of bq cp -f commands copying partitions $20230928, $20230929 and $20230930 from learning.data_source_staging to learning.data_source, one command per date; the project IDs are blacked out."
  },
  "/images/swapping-partitions-in-bigquery/4.png": {
   "kind": "ui-screenshot",
@@ -871,30 +355,6 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery results from INFORMATION_SCHEMA.TABLE_STORAGE showing per-table active and long-term logical bytes, total, active and long-term physical bytes, time-travel physical bytes, storage_last_modified_time, deleted and table_type BASE TABLE."
  },
- "/images/using-labels-in-bigquery/1.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL in the console: SET @@query_label = \"cost_center:demo\" labels a query on learning.data_source, then a query on region-eu INFORMATION_SCHEMA.JOBS with UNNEST(labels) AS label WHERE label.key = 'cost_center' returns that job with key cost_center, value demo and its bytes billed."
- },
- "/images/python-showdown-namedtuple-vs-simplenamespace-vs-dataclass/1.jpg": {
-  "kind": "code",
-  "alt": "Python side-by-side: namedtuple Person is immutable so _replace(age=31) makes a new instance; SimpleNamespace and a @dataclass(frozen=False) Person let you set age = 31 and add a height attribute dynamically, with printed outputs in comments."
- },
- "/images/understanding-generators-in-python/1.jpg": {
-  "kind": "code",
-  "alt": "Python comparison: get_first_n_squares_gen(n) uses yield i * i to produce squares lazily, consumed by a list comprehension, while get_first_n_squares(n) builds a squares list with append and returns it; both print 0, 1, 4, 9, 16 for n = 5."
- },
- "/images/hands-on-with-duckdb/1.jpg": {
-  "kind": "sql",
-  "alt": "DuckDB CLI v0.8.1 on a transient in-memory database: CREATE TABLE ecommerce_demo AS SELECT * FROM './repos/duckdb-demo/export.csv' loads a CSV, and SHOW ecommerce_demo lists 16 inferred columns such as id BIGINT, f_productprice DOUBLE, f_orderdate TIMESTAMP."
- },
- "/images/hands-on-with-duckdb/2.jpg": {
-  "kind": "sql",
-  "alt": "DuckDB SQL in a desktop SQL client: a WITH input_data CTE casts f_orderdate AS DATE and sums f_NetAmountEUR and f_GrossAmountEUR from main.ecommerce_demo grouped by day; the result grid shows order_date, sum_net_amount, sum_gross_amount from 2014-01-01."
- },
- "/images/hands-on-with-duckdb/3.jpg": {
-  "kind": "sql",
-  "alt": "DuckDB SQL in the MotherDuck (Beta) web UI: the same daily net and gross amount CTE on the uploaded export table in my_db runs in 2.27 s with 730 rows and column histograms, plus SELECT COUNT(1) FROM main.\"export\" returning 9305031 rows."
- },
  "/images/hands-on-with-duckdb/4.jpg": {
   "kind": "ui-screenshot",
   "alt": "Spreadsheet view of the sample e-commerce CSV used with DuckDB, with columns id, f_orderquantity, f_productprice, f_employeeid, f_storeid, f_vatrateid, f_orderdate, f_productid, f_campaignid, f_NetAmountEUR, f_GrossAmountEUR and audit columns."
@@ -903,18 +363,6 @@
   "kind": "ui-screenshot",
   "alt": "BigQuery console Schema tab for table data_source: fields id INTEGER with key PK/FK, value INTEGER with no key, and ds_date DATE with key PK, all NULLABLE, showing the primary and foreign key constraints on the table."
  },
- "/images/merge-on-false-in-bigquery/2.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL side by side on learning.data_source without PK/FK constraints: MERGE ... ON FALSE with WHEN NOT MATCHED BY TARGET THEN INSERT ROW took 1 sec, 12 sec slot time, 2.72 KB shuffled, versus a MERGE matching on id and ds_date at 5 sec, 14 min 13 sec slot time, 31.06 MB."
- },
- "/images/merge-on-false-in-bigquery/3.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL checking the MERGE results: a test_cases CTE of four rows built with UNION ALL is joined to learning.data_source USING (id, ds_date); all four rows come back, ids 1000, 44, 33 and 999 with their value and ds_date."
- },
- "/images/merge-on-false-in-bigquery/4.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL side by side on testing.data_source with PK/FK constraints: MERGE ... ON FALSE with INSERT ROW took 1 sec, 2 sec slot time, 84 B shuffled, versus the MERGE matching on id and ds_date at 2 sec, 11 sec slot time, 56.02 MB shuffled."
- },
  "/images/bigquery-primary-key-foreign-key-constraints/1.jpg": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console Preview tabs of two tables side by side: lookup_table with columns id and unique_identifier (UUID strings) and data_source with columns id, value and ds_date, in the sample rows every id is 1."
@@ -922,10 +370,6 @@
  "/images/bigquery-primary-key-foreign-key-constraints/2.jpg": {
   "kind": "ui-screenshot",
   "alt": "BigQuery console Schema tabs side by side: data_source has id INTEGER keyed PK/FK, value INTEGER and ds_date DATE keyed PK, while lookup_table has id INTEGER keyed PK and unique_identifier STRING, all NULLABLE."
- },
- "/images/bigquery-primary-key-foreign-key-constraints/3.jpg": {
-  "kind": "sql",
-  "alt": "BigQuery SQL side by side, cache disabled: SELECT id, MAX(ds_date), MIN(ds_date) joining data_source to lookup_table USING (id) GROUP BY id. With constraints (testing) it took 212 ms, 91 ms slot time, 3.55 KB shuffled; without (learning) 2 sec, 18 min 9 sec, 7.19 MB."
  },
  "/images/using-maxby-minby-in-bigquery/1.png": {
   "kind": "ui-screenshot",
@@ -963,21 +407,9 @@
   "kind": "other",
   "alt": "Sample BigQuery Customers table with columns CustomerId, Age, FirstName, LastName, Country, Salary and FirstOrderDate, holding four customers: John Doe (US), Jane Springer (UK), Bianca Moretti (IT) and Michelle Dubois (FR)."
  },
- "/images/row-level-access-security-in-bigquery/2.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL CREATE ROW ACCESS POLICY us_uk_country_filter ON learning.Customers, with GRANT TO a service account (test-access-control@REDACTED.iam.gserviceaccount.com) and FILTER USING (country IN ('US', 'UK')) so that account only sees US and UK rows."
- },
  "/images/row-level-access-security-in-bigquery/3.png": {
   "kind": "other",
   "alt": "BigQuery query result for the service account covered by the row access policy: the Customers table (CustomerId, Age, FirstName, LastName, Country, Salary, FirstOrderDate) now returns only two rows, John Doe from the US and Jane Springer from the UK."
- },
- "/images/row-level-access-security-in-bigquery/4.png": {
-  "kind": "sql",
-  "alt": "BigQuery console running SELECT * FROM REDACTED.learning.Customers LIMIT 1000 as a user without a row access policy: no rows come back, with the notices 'Your query results may be limited because you do not have access to certain rows' and 'There is no data to display'."
- },
- "/images/row-level-access-security-in-bigquery/5.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL to remove row-level security: DROP ROW ACCESS POLICY us_uk_country_filter ON learning.Customers deletes one specific policy, while DROP ALL ROW ACCESS POLICIES ON learning.Customers deletes every policy on the table."
  },
  "/images/a-portable-data-stack-with-dagster-docker-duckdb-dbt-and-superset/1.png": {
   "kind": "ui-screenshot",
@@ -998,14 +430,6 @@
  "/images/using-bigquery-time-travel/1.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery query result of the newly created learning.test_time_travel table, with columns id and value and two rows: 1 abc and 2 def."
- },
- "/images/using-bigquery-time-travel/2.png": {
-  "kind": "sql",
-  "alt": "BigQuery console running SELECT * FROM learning.test_time_travel after the insert; the Results tab shows three rows with id and value: 1 abc, 2 def and the newly added 3 hij."
- },
- "/images/using-bigquery-time-travel/3.png": {
-  "kind": "sql",
-  "alt": "BigQuery time travel query SELECT * FROM learning.test_time_travel FOR SYSTEM_TIME AS OF TIMESTAMP('2023-04-02 11:00:00.000 UTC'); the results show only the original two rows, 1 abc and 2 def, as the table was before the third row was inserted."
  },
  "/images/rounding-timestamps-in-bigquery/1.png": {
   "kind": "ui-screenshot",
@@ -1055,10 +479,6 @@
   "kind": "ui-screenshot",
   "alt": "Spreadsheet import preview of the orders CSV with columns date, order_id, product_id, price, quantity and amount: nine rows dated 2022-09-01 for order_id 1 to 5, e.g. product 100 at price 4.5, quantity 2, amount 9."
  },
- "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/5.png": {
-  "kind": "code",
-  "alt": "CSV file in a text editor: header row date,order_id,product_id,price,quantity,amount followed by nine comma-delimited sales rows dated 2022-09-01, such as 2022-09-01,1,100,4.5,2,9."
- },
  "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/6.png": {
   "kind": "ui-screenshot",
   "alt": "Google Cloud Storage bucket listing with two CSV files named by sale date, 20220901_orders.csv and 20220902_orders.csv, showing the date-prefixed naming convention."
@@ -1079,10 +499,6 @@
   "kind": "ui-screenshot",
   "alt": "Cloud Workflows create form for load-gcs-data (europe-west6, service account mini-sa) with a Cloud Scheduler trigger added: daily-12am-utc on schedule 0 12 * * *, timezone Etc/UTC, region europe-west6, above the Next button."
  },
- "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11.png": {
-  "kind": "code",
-  "alt": "Cloud Workflows editor with the default sample workflow in YAML (steps checkSearchTermInInput with a switch, getCurrentTime and readWikipedia using http.get, setFromCallResult, returnOutput) and the Visualization pane drawing those steps as a flowchart from START."
- },
  "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/12.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery schema tab of the sales_autodetect table loaded with schema auto-detection: date DATE, order_id INTEGER, product_id INTEGER, price FLOAT, quantity INTEGER and amount FLOAT, all NULLABLE."
@@ -1094,10 +510,6 @@
  "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/14.png": {
   "kind": "ui-screenshot",
   "alt": "BigQuery sales table page with the notice This is a partitioned table; the schema tab lists date DATE, order_id INTEGER, product_id INTEGER, price NUMERIC, quantity INTEGER and amount NUMERIC, all NULLABLE."
- },
- "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15.png": {
-  "kind": "sql",
-  "alt": "BigQuery SQL on the partitioned sales_data.sales table selecting date AS SalesDate, count(distinct order_id) AS CountOrders and sum(Amount) AS TotalAmount, GROUP BY date; results show 2022-09-02 with 5 orders and 135.8, and 2022-09-01 with 5 orders and 93.7."
  },
  "/images/analyzing-reddit-data-using-scala-spark-and-spark-sql-6246c75463c6/1.png": {
   "kind": "code",
@@ -1123,14 +535,6 @@
   "kind": "diagram",
   "alt": "Entity-relationship diagram of the company's OLTP database: a transactions table (transaction_id, customer_id, product_id, amount, qty, channel_id, bought_date) linked to channels, customers and products tables, plus a standalone resellers table with reseller_id, reseller_name and commission_pct."
  },
- "/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/5.png": {
-  "kind": "code",
-  "alt": "CSV file from a reseller with the header Transaction ID, Product name, Quantity, Total amount, Sales Channel, Customer First Name, Customer Last Name, Customer Email, Series City, Created Date, and five postcard sales rows dated 2019-01-01, such as 6x11 Come visit me in Helsinki."
- },
- "/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/6.png": {
-  "kind": "code",
-  "alt": "XML file from a reseller: a transaction element with date and reseller-id attributes holding transactionId, productName, qty, totalAmount, salesChannel, a nested customer element (firstname, lastname, email), dateCreated and seriesCity for one postcard sale via mobile app."
- },
  "/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/7.png": {
   "kind": "ui-screenshot",
   "alt": "BI dashboard titled Sales dashboard with six panels: a Day of Week Trends pivot of SUM(total_qty) by city, a Channel sales evolution line chart for 2019 to 2020, a Commission paid table by reseller and year, Average order size of 9.1 USD, a Sales by month table and a Sales per country map."
@@ -1142,10 +546,6 @@
  "/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/2.png": {
   "kind": "ui-screenshot",
   "alt": "Terminal on ubuntu@rpi-3 where hadoop version now succeeds, printing Hadoop 3.2.1, the source repository commit, compile details including protoc 2.5.0, and that it ran using /opt/hadoop/share/hadoop/common/hadoop-common-3.2.1.jar."
- },
- "/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/3.png": {
-  "kind": "code",
-  "alt": "Hadoop core-site.xml configuration setting the fs.defaultFS property to hdfs://XPS-15-9560:9000, pointing HDFS at the name node's hostname XPS-15-9560 on port 9000."
  },
  "/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/4.png": {
   "kind": "ui-screenshot",
@@ -1163,14 +563,6 @@
   "kind": "ui-screenshot",
   "alt": "Raspberry Pi Imager v1.2 application window with the Raspberry Pi logo and three controls: Choose OS under Operating System, Choose SD Card under SD Card, and a Write button that is still disabled."
  },
- "/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/3.png": {
-  "kind": "code",
-  "alt": "Terminal output of cat /etc/netplan/50-cloud-init.yaml on rpi-3: a netplan config with ethernets eth0 (dhcp4 true, optional true) and wifis wlan0 with access-points whose SSID and password are redacted, dhcp4 true and version 2."
- },
- "/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/4.png": {
-  "kind": "code",
-  "alt": "Terminal on rpi-3 showing cat /etc/hostname returning rpi-3 and cat /etc/hosts mapping 127.0.0.1 to localhost, 192.168.100.47 to rpi-4 and 192.168.100.6 to the laptop XPS-15-9560, followed by the default IPv6 entries."
- },
  "/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/5.png": {
   "kind": "ui-screenshot",
   "alt": "Terminal on the laptop XPS-15-9560 running ls .ssh, which lists the generated key pair id_rsa and id_rsa.pub alongside authorized_keys, config, known_hosts and known_hosts.old."
@@ -1183,25 +575,9 @@
   "kind": "ui-screenshot",
   "alt": "Terminal on the laptop testing the custom shell functions: otherpis prints rpi-3 and rpi-4, and clustercmd cat /etc/hostname runs the command on each Pi over SSH, returning rpi-3 and rpi-4."
  },
- "/images/analyzing-twitter-data-using-python/1.png": {
-  "kind": "code",
-  "alt": "Python pandas in Jupyter: value_counts() on the user.location column, filtered to locations with at least 10 tweets; the output shows messy variants such as London 198, London, England 187, United Kingdom 184, England, United Kingdom 173 and UK 145."
- },
- "/images/analyzing-twitter-data-using-python/2.png": {
-  "kind": "code",
-  "alt": "Python dictionary named mapping that normalises Twitter user locations, e.g. 'London, England' to 'London, UK', 'England, United Kingdom' to 'England', 'UK' to 'United Kingdom' and 'Glasgow, Scotland' to 'Glasgow, UK'; the list is cut off at the bottom."
- },
- "/images/analyzing-twitter-data-using-python/3.png": {
-  "kind": "code",
-  "alt": "Python pandas in Jupyter recomputing value_counts() on user.location after the mapping and keeping counts of 10 or more; merged locations now lead with London, UK 465, United Kingdom 329, England 246, Scotland 67 and Europe 40."
- },
  "/images/analyzing-twitter-data-using-python/4.png": {
   "kind": "ui-screenshot",
   "alt": "Jupyter output of a pandas DataFrame used as a lookup table, with columns locat, lat and lon holding geocoded coordinates for 20 locations, e.g. London, UK at 51.489334, -0.144055 and Europe at 51.0, 10.0."
- },
- "/images/analyzing-twitter-data-using-python/5.png": {
-  "kind": "code",
-  "alt": "Python pandas locations.head(10) output: tweet counts grouped by locat, lat and lon, led by London, UK with 465, United Kingdom 329, England 246, Scotland 67 and South East England 38."
  },
  "/images/analyzing-twitter-data-using-python/6.png": {
   "kind": "chart",
@@ -1210,10 +586,6 @@
  "/images/analyzing-twitter-data-using-python/7.png": {
   "kind": "chart",
   "alt": "Matplotlib histogram of tweet sentiment_score values ranging roughly from -1.6 to 1.8; the tallest bin, about 3,200 tweets, sits just below zero, followed by about 1,550 just above zero and about 950 between -1 and -0.5."
- },
- "/images/analyzing-twitter-data-using-python/8.png": {
-  "kind": "code",
-  "alt": "Python pandas value_counts() on the binned sent_clasification series: negative 3958, positive 2250, strongly negative 105 and strongly positive 75 tweets."
  },
  "/images/analyzing-twitter-data-using-python/9.png": {
   "kind": "chart",
@@ -1227,10 +599,6 @@
   "kind": "chart",
   "alt": "Word cloud of processed Brexit tweet text, dominated by brexit, deal, johnson, boris, parliament, eu, uk, people, say and stop, with smaller words such as corbyn, labour, vote, trump, government and british."
  },
- "/images/analyzing-twitter-data-using-python/12.png": {
-  "kind": "code",
-  "alt": "Python pandas hashtags.head(10) output with hashtag and occurences columns: #brexit 639, #blockthecoup 84, #eu 64, #revokea50 54, #stopbrexit 40, #liarjohnson 35, #peoplesvote 32, #borisjohnson 30, #fbpe 26, #nodeal 24."
- },
  "/images/analyzing-twitter-data-using-python/13.png": {
   "kind": "chart",
   "alt": "Matplotlib bar chart titled Top 10 Hashtags for keyword: BREXIT, locale: EN, where #brexit at about 640 occurrences dwarfs #blockthecoup, #eu, #revokea50, #stopbrexit and the rest, all under 100."
@@ -1239,72 +607,812 @@
   "kind": "chart",
   "alt": "Matplotlib bar chart titled Top 10 Users for keyword: BREXIT, locale: EN: @BorisJohnson is mentioned about 315 times and @joswinson about 190, followed by @Femi, @jeremycorbyn, @Doozy, @Peston, @SkyNews, @PaulBrandITV, @DavidLammy and @brexit, each under 80."
  },
- "/images/analyzing-twitter-data-using-python/15.png": {
-  "kind": "code",
-  "alt": "Python pandas words.head(10) output with word and occurences columns: brexit 1490, deal 483, johnson 354, eu 272, uk 186, boris 184, get 166, people 154, mps 138 and would 133."
- },
  "/images/analyzing-twitter-data-using-python/16.png": {
   "kind": "chart",
   "alt": "Matplotlib bar chart titled Top 10 Words for keyword: BREXIT, locale: EN: brexit leads with about 1,490 occurrences, then deal about 480, johnson 350 and eu 270, with uk, boris, get, people, mps and would between roughly 130 and 190."
- },
- "/images/analyzing-twitter-data-using-python/17.png": {
-  "kind": "code",
-  "alt": "Python pandas bigrams.head(10) output of the most common word pairs: (deal, brexit) 532, (boris, johnson) 364, (brexit, deal) 102, (abuse, power) 96, (gravest, abuse) 96, down to (power, living) 80."
  },
  "/images/analyzing-twitter-data-using-python/18.png": {
   "kind": "chart",
   "alt": "Matplotlib bar chart titled Top 10 Bigrams for keyword: BREXIT, locale: EN: (deal, brexit) at about 530 and (boris, johnson) at about 365 far exceed the rest, such as (brexit, deal), (abuse, power) and (shutting, parliament), all between 80 and 100."
  },
- "/images/intro-nlp-sentiment-analysis-python/1.png": {
-  "kind": "code",
-  "alt": "Python pandas df.shape output in Jupyter before removing duplicate tweets: (18000, 326), meaning 18,000 rows and 326 columns."
- },
- "/images/intro-nlp-sentiment-analysis-python/2.png": {
-  "kind": "code",
-  "alt": "Python pandas df.shape output in Jupyter after dropping duplicate tweet texts: (6389, 326), meaning 6,389 unique tweets remain with 326 columns."
- },
- "/images/intro-nlp-sentiment-analysis-python/3.png": {
-  "kind": "code",
-  "alt": "Jupyter cell evaluating swords, the Python set of stopwords, showing the start of its alphabetical contents: a, about, above, after, again, against, ain, all, am, an, and, any, are, aren, aren't, as, at, be, because; the rest is cropped."
- },
- "/images/intro-nlp-sentiment-analysis-python/4.png": {
-  "kind": "code",
-  "alt": "Python pandas head(n=10) on the stemmed column: tweet ids with lists of Porter-stemmed tokens such as bori, live, brexit, johnson and parti, voter, brexit, deal, oppos, manifesto, with long lists truncated."
- },
- "/images/intro-nlp-sentiment-analysis-python/5.png": {
-  "kind": "code",
-  "alt": "Python pandas output of the processed_text and sentiment_score columns for 10 tweets indexed by id, with VADER scores from -0.7364 to 0.8423; for example boris live brexit johnson scores 0.0000."
- },
- "/images/intro-nlp-sentiment-analysis-python/6.png": {
-  "kind": "code",
-  "alt": "Python pandas rounding sentiment_score with apply(lambda x: round(x,)) and value_counts(): 0 has 4627 tweets, -1 has 932, 1 has 779, -2 has 33, 2 has 17 and -3 has 1."
- },
- "/images/intro-nlp-sentiment-analysis-python/7.png": {
-  "kind": "code",
-  "alt": "Python pandas head() on the user_audience_category column: five tweet ids labelled small, small, small, wide and medium, with dtype category and ordered categories small < medium < wide."
- },
  "/images/extracting-twitter-data-using-python/1.png": {
   "kind": "ui-screenshot",
   "alt": "Twitter developer portal Keys and tokens tab for an app, showing Consumer API keys (API key, API secret key) and an access token and secret with Read-only access level, all values scribbled out in red, with Regenerate and Revoke buttons."
  },
- "/images/extracting-twitter-data-using-python/2.png": {
-  "kind": "code",
-  "alt": "Jupyter output of the first element of results: one tweet as a nested Python dictionary with keys such as created_at, id, id_str, text (a retweet of @PaulBrandITV about a No Deal Brexit), truncated, metadata, source and a nested user dictionary."
+ "/images/analyzing-twitter-data-using-python/1-output.png": {
+  "kind": "output",
+  "alt": "Output: user locations with at least 10 tweets, led by London 198, London, England 187, United Kingdom 184, England, United Kingdom 173 and UK 145, with many variants of the same places further down, ending with Leeds 10."
  },
- "/images/extracting-twitter-data-using-python/3.png": {
-  "kind": "code",
-  "alt": "Jupyter output of df.head() on the flattened tweets DataFrame: 5 rows by 307 columns, including contributors, coordinates, created_at, favorite_count, favorited, geo, id, id_str and in_reply_to_screen_name."
+ "/images/analyzing-twitter-data-using-python/12-output.png": {
+  "kind": "output",
+  "alt": "Output: the top 10 hashtags with their counts (occurences column): #brexit 639.0, #blockthecoup 84.0, #eu 64.0, #revokea50 54.0, #stopbrexit 40.0, #liarjohnson 35.0, #peoplesvote 32.0, #borisjohnson 30.0, #fbpe 26.0 and #nodeal 24.0."
  },
- "/images/extracting-twitter-data-using-python/4.png": {
-  "kind": "code",
-  "alt": "Python pandas df.shape output in Jupyter for the flattened tweets DataFrame: (18000, 326), meaning 18,000 tweets as rows and 326 attributes as columns."
+ "/images/analyzing-twitter-data-using-python/15-output.png": {
+  "kind": "output",
+  "alt": "Output: the top 10 words with their counts (occurences column): brexit 1490.0, deal 483.0, johnson 354.0, eu 272.0, uk 186.0, boris 184.0, get 166.0, people 154.0, mps 138.0 and would 133.0."
  },
- "/images/extracting-twitter-data-using-python/5.png": {
-  "kind": "code",
-  "alt": "Python pandas df.columns output: an Index of flattened tweet fields such as coordinates.coordinates, created_at, favorite_count, geo.type, user.screen_name, user.statuses_count and withheld_in_countries, abbreviated, with dtype object and length 328."
+ "/images/analyzing-twitter-data-using-python/17-output.png": {
+  "kind": "output",
+  "alt": "Output: the 10 most common bigrams: (deal, brexit) 532, (boris, johnson) 364, (brexit, deal) 102, (abuse, power) 96, (gravest, abuse) 96, (shutting, parliament) 94, (stop, brexit) 91, (brexit, party) 86, (living, memory) 86 and (power, living) 80."
  },
- "/images/extracting-twitter-data-using-python/6.png": {
-  "kind": "code",
-  "alt": "Python pandas selecting the created_at, user.screen_name and text columns with head(): five tweets indexed by id, all created Mon Aug 19 2019 around 19:45 UTC, with screen names and truncated retweet texts about Brexit."
+ "/images/analyzing-twitter-data-using-python/3-output.png": {
+  "kind": "output",
+  "alt": "Output: locations after the mapping, led by London, UK 465, United Kingdom 329, England 246, Scotland 67 and Europe 40, down to Spain 10."
+ },
+ "/images/analyzing-twitter-data-using-python/5-output.png": {
+  "kind": "output",
+  "alt": "Output: the first 10 tweet counts by locat, lat and lon: London, UK (51.489334, -0.144055) 465, United Kingdom 329, England 246, Scotland 67, South East England 38, North West England 32, Ireland 31, Glasgow, UK 30, Wales 29 and Manchester, UK 28."
+ },
+ "/images/analyzing-twitter-data-using-python/8-output.png": {
+  "kind": "output",
+  "alt": "Output: negative 3958, positive 2250, strongly negative 105 and strongly positive 75 (Name: sentiment_score, dtype: int64)."
+ },
+ "/images/datetime-vs-timestamp-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: local_time_bucharest 2024-01-12T18:09:21.870935, local_time_new_york 2024-01-12T11:09:21.870935, utc_timestamp and timestamp_converted_from_datetime both 2024-01-12 16:09:21.870935 (the UTC suffix is cut off), and bucharest_datetime_from_timestamp 2024-01-12T18:09:21.870935."
+ },
+ "/images/extract-all-pattern-occurrences-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row whose extracted_dates array holds 2021-01-01, 2021-01-02, 2021-01-03 and 2021-01-04."
+ },
+ "/images/heres-a-great-use-case-for-genai-writing-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results, last page (501 to 511 of 511): eight-letter combinations such as a,b,c,d,e,f,g,i and b,c,d,e,f,g,h,i, then row 511 with all nine letters, a,b,c,d,e,f,g,h,i."
+ },
+ "/images/not-all-nulls-are-the-same/1-schema.jpg": {
+  "kind": "schema",
+  "alt": "Schema of learning.my_table: my_column, type INTEGER, mode NULLABLE."
+ },
+ "/images/not-all-nulls-are-the-same/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row, f0_ is null."
+ },
+ "/images/query-parameters-in-bigquery/1-output.jpg": {
+  "kind": "output",
+  "alt": "Terminal output: an id column with six rows: 37, 94, 67, 60, 25 and 72."
+ },
+ "/images/system-variables-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: script_slot_ms 636839, script_bytes_billed 10485760 and script_creation_time 2024-06-22 16:07:41.402000 (the UTC suffix is cut off); the project_id value is hidden."
+ },
+ "/images/table-grain-quick-validation-with-sql/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: input_data with order_id, product_name, qty, price and order_status, 15 rows for orders 1 to 3 (Apples, Mangoes, Cucumbers, Tomatoes and Plums), each product once ORDER_PLACED and once ORDER_SENT, with the order 3 Plums rows repeated and one Plums row with a null order_status."
+ },
+ "/images/table-grain-quick-validation-with-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "Results of the two queries. Incorrect grain (order_id, product_name): six groups with count_grain 2, e.g. order 1 Apples 2/2 and order 3 Plums with count_duplicates 4. Correct grain, but there are duplicates (adding order_status): order 3 Plums ORDER_PLACED and ORDER_SENT, each count_duplicates 2 and count_grain 1."
+ },
+ "/images/using-structs-for-quick-analysis-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: two rows, Catie Doe (UK, has_paid false, Premium, TV) and Francesca Duchamp (FR, has_paid false, Basic, Internet)."
+ },
+ "/images/using-subqueries-with-row-level-security-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: a customer table with CustomerId, FirstName, LastName, Country and FirstOrderDate, four rows: Michelle Dubois (FR), Jane Springer (UK), Bianca Moretti (IT) and John Doe (US)."
+ },
+ "/images/using-subqueries-with-row-level-security-in-bigquery/1-input-2.jpg": {
+  "kind": "input",
+  "alt": "Preview of lookup_table: one row whose user_principal is the test-rowlevel-security service account (project id hidden) and whose country_list holds US and UK."
+ },
+ "/images/using-subqueries-with-row-level-security-in-bigquery/1-output.jpg": {
+  "kind": "output",
+  "alt": "Output: what the service account sees, only customer 4 Jane Springer (UK, 2022-03-01) and customer 1 John Doe (US, 2021-01-01)."
+ },
+ "/images/why-you-should-use-union-distinct-sparingly/1-result.jpg": {
+  "kind": "result",
+  "alt": "Execution details for the UNION DISTINCT query: elapsed time 21 sec, slot time consumed 47 min 31 sec, bytes shuffled 69.37 GB, bytes spilled to disk 0 B."
+ },
+ "/images/why-you-should-use-union-distinct-sparingly/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "Execution details for the UNION ALL query: elapsed time 15 sec, slot time consumed 25 min 45 sec, bytes shuffled 48.72 GB, bytes spilled to disk 0 B."
+ },
+ "/images/cleaning-up-strings-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: SELECT DISTINCT city returns 7 rows (two that look blank, New York, Athens, New York with a leading space, New York again, and null), while the NULLIF(TRIM(city),'') query returns 3 rows: null, New York and Athens."
+ },
+ "/images/extracting-keys-from-json-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: json_keys returns one row holding six keys: city, name, sports, sports.club, sports.name and sports.since."
+ },
+ "/images/heres-how-group-by-works-differently-across-sql-dialects/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: input_data with amount and country, three rows: 1 NULL, 2 UK and 3 N/A."
+ },
+ "/images/heres-how-group-by-works-differently-across-sql-dialects/1-result.jpg": {
+  "kind": "result",
+  "alt": "SQL Server results: country N/A with total_amount 4 and UK with 2."
+ },
+ "/images/heres-how-group-by-works-differently-across-sql-dialects/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "SQL Server results: N/A with total_amount 3, N/A with 1 and UK with 2."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/1-output.png": {
+  "kind": "output",
+  "alt": "Output: (18000, 326), that is 18,000 rows and 326 columns."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/2-output.png": {
+  "kind": "output",
+  "alt": "Output: (6389, 326), that is 6,389 rows and 326 columns."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/3-output.png": {
+  "kind": "output",
+  "alt": "Output: the start of the stopword set in alphabetical order: 'a', 'about', 'above', 'after', 'again', 'against', 'ain', 'all', 'am', 'an', 'and', 'any', 'are', 'aren', \"aren't\", 'as', 'at', 'be', 'because'."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/4-output.png": {
+  "kind": "output",
+  "alt": "Output: the stemmed column for the first 10 tweet ids, each a list of Porter-stemmed tokens (long lists truncated), such as [bori, live, brexit, johnson] and [parti, voter, brexit, deal, oppos, manifesto, ...]."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/5-output.png": {
+  "kind": "output",
+  "alt": "Output: processed_text and sentiment_score for the first 10 tweets by id, with scores from -0.7364 to 0.8423; for example boris live brexit johnson scores 0.0000."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/6-output.png": {
+  "kind": "output",
+  "alt": "Output: counts of the rounded sentiment scores: 0 has 4627 tweets, -1 has 932, 1 has 779, -2 has 33, 2 has 17 and -3 has 1."
+ },
+ "/images/intro-nlp-sentiment-analysis-python/7-output.png": {
+  "kind": "output",
+  "alt": "Output: user_audience_category for the first five tweet ids: small, small, small, wide and medium, with dtype category and categories small < medium < wide."
+ },
+ "/images/null-safe-comparison-is-distinctnot-distinct-from/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results in the JSON tab: a_different_null and a_equals_null are null, a_distinct_null is \"true\" and a_not_distinct_null is \"false\"."
+ },
+ "/images/raising-errors-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: input_data with population and surface, five rows labelled OK or ERROR: 10000 / 60 and 7000 / 35 are OK; 20000 / 0, 25000 / null and 25000 / -1 are ERROR."
+ },
+ "/images/raising-errors-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results for the two OK rows: population_density 166.6666666666... and 200.0."
+ },
+ "/images/table-sampling-in-bigquery/3-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: 10 rows of id, value and ds_date, all with ds_date 2022-01-01."
+ },
+ "/images/the-first-thing-i-do-when-analyzing-a-sql-table/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: input_data with order_id, is_paid and product_id, six rows; order 1 has a NULL product_id and order 6 a NULL is_paid."
+ },
+ "/images/the-first-thing-i-do-when-analyzing-a-sql-table/1-result.jpg": {
+  "kind": "result",
+  "alt": "Query results: is_paid_null false with product_id_null true occurs 1 time, both false 4 times, and is_paid_null true with product_id_null false 1 time."
+ },
+ "/images/understanding-structs-in-bigquery/1-schema.jpg": {
+  "kind": "schema",
+  "alt": "Schema of learning.customer_data: first_name and last_name are STRING NULLABLE; address is RECORD NULLABLE with city, street_name and street_number; instruments is STRING REPEATED; certifications is RECORD REPEATED with name (STRING) and from_date (DATE)."
+ },
+ "/images/understanding-structs-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row for Joe Doe with address New York, Wall St., 9A; instruments guitar, piano and saxophone; certifications Certified Football coach from 2021-01-01 and Certified Golf Instructor from 2022-02-01."
+ },
+ "/images/why-you-should-use-parentheses-with-and-or-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: orders 1 and 2 are returned; order 1 has is_paid true and is_shipped false, order 2 has is_paid false and is_shipped true, and both have customer_is_on_contract and is_first_time_buyer true."
+ },
+ "/images/with-expressions-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: sales_amount 514.25 for product 1, 255.552 for product 2 and 163.35 for product 3."
+ },
+ "/images/a-closer-look-at-stringagg-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: payment_method_agg is Card~Cash~Gift_card for customer 1, Card~Gift_card for customer 2 and Cash~Gift_card for customer 3."
+ },
+ "/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: a weather_alerts table (city_id, alert_name, valid_from, valid_to) with Heatwave Alert twice and Heavy Snow Alert for city 1, and Heavy Rain Alert, Hale Alert and Strong Wind Alert for city 2; and an events table (city_id, event_name, event_date) with Pop Concert and Football Game in city 1 and Rock Concert and Basketball Game in city 2."
+ },
+ "/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "Intermediate result of alerts_aggregated: one row per city_id, each with an alerts array of alert_name, valid_from and valid_to (three alerts for city 1, three for city 2)."
+ },
+ "/images/a-practical-exercise-working-with-arrays-and-correlated-subqueries-in-bigquery/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: Pop Concert (2021-01-01) has had_alert_before_or_after 2, had_heatwave_prior true and count_alert_type_year_prior 1; Football Game (2021-07-03) 1, false, 2; Rock Concert (2021-01-01) 2, false, 1; Basketball Game (2021-03-03) 1, false, 3."
+ },
+ "/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: System A and System B tables with department, sales_date and total_sales for clothing and shoes from 2021-01-01 to 2021-01-03; they differ for clothing on 2021-01-01 (1500 vs 1400) and shoes on 2021-01-02 (1500 vs 1550), System A has no value for shoes on 2021-01-01 (B: 3000) and System B none for shoes on 2021-01-03 (A: 1400)."
+ },
+ "/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results, biggest difference first: shoes 2021-01-01 (sales_a null, sales_b 3000, difference 3000), shoes 2021-01-03 (1400, null, 1400), clothing 2021-01-01 (1500, 1400, 100), shoes 2021-01-02 (1500, 1550, 50), then clothing 2021-01-02 and 2021-01-03 with difference 0."
+ },
+ "/images/compacting-date-intervals-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: input_data with valid_from, valid_to, product_id, country_name, flag_a and flag_b, eleven intervals for product 1 (US), 2 (CA) and 3 (US); three pairs of adjacent rows with the same flags are boxed as MERGED: product 1 from 2021-01-12 to 2021-01-25, product 2 from 2021-01-01 to 2021-01-25 and product 3 from 2021-01-01 to 2021-01-20."
+ },
+ "/images/compacting-date-intervals-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: seven compacted intervals, with the merged ones boxed: product 1 US 2021-01-01 to 2021-01-10, 2021-01-12 to 2021-01-25, 2021-01-25 to 2021-02-04 (False, False) and 2021-02-04 to 2021-02-08; product 2 CA 2021-01-01 to 2021-01-25; product 3 US 2021-01-01 to 2021-01-20 and 2021-01-20 to 2021-01-30."
+ },
+ "/images/computing-a-hash-aggregation-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: group_hash 2171288142330… for id 1 and 7271343146336… for id 2 (both truncated in the grid)."
+ },
+ "/images/delete-insert-vs-merge-in-bigquery/1-result.png": {
+  "kind": "result",
+  "alt": "BigQuery query validator: This script will process 67.97 KB when run."
+ },
+ "/images/delete-insert-vs-merge-in-bigquery/1-result-2.png": {
+  "kind": "result",
+  "alt": "BigQuery query validator: This query will process 9.15 MB when run."
+ },
+ "/images/extracting-twitter-data-using-python/2-output.png": {
+  "kind": "output",
+  "alt": "Output: the first tweet as a nested dictionary, with created_at 'Mon Aug 19 19:45:18 +0000 2019', id 1163537442827395074, a retweet text starting 'RT @PaulBrandITV', truncated False, metadata, source Twitter for Android, in_reply_to fields None and a nested user dictionary (name Izwiz, screen_name Izwiz55, location Devon UK)."
+ },
+ "/images/extracting-twitter-data-using-python/3-output.png": {
+  "kind": "output",
+  "alt": "Output: df.head() shows five tweets (rows 0 to 4) with columns contributors, coordinates, created_at, favorite_count, favorited, geo, id, id_str and in_reply_to_screen_name, mostly None and False, created Fri Aug 16 2019 around 21:20; 5 rows × 307 columns."
+ },
+ "/images/extracting-twitter-data-using-python/4-output.png": {
+  "kind": "output",
+  "alt": "Output: (18000, 326)."
+ },
+ "/images/extracting-twitter-data-using-python/5-output.png": {
+  "kind": "output",
+  "alt": "Output: an Index of column names such as contributors, coordinates.coordinates, created_at, favorite_count, geo.type, user.screen_name, user.statuses_count, user.verified and withheld_in_countries, dtype='object', length=328."
+ },
+ "/images/extracting-twitter-data-using-python/6-output.png": {
+  "kind": "output",
+  "alt": "Output: five tweets indexed by id, all created Mon Aug 19 2019 at 19:45:17 or 19:45:18 +0000, by Izwiz55, Nickthegrey4, Zuperpie, halfwookie and Messgorough, with truncated retweet texts."
+ },
+ "/images/generating-date-intervals-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: 31 rows of valid_date, one per day from 2021-01-01 to 2021-01-31."
+ },
+ "/images/how-limit-helps-you-save-time-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row, order_id 1 with times_seen 2."
+ },
+ "/images/order-of-precedence-in-sql-where-vs-having/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: quantity and country rows 10 UK, 15 UK, 15 US, -5 US, -10 FR and -5 FR."
+ },
+ "/images/order-of-precedence-in-sql-where-vs-having/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results side by side: the HAVING query (left) returns UK 25 and US 10, the WHERE query (right) returns UK 25 and US 15."
+ },
+ "/images/range-data-type-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery JSON results: range_a [2021-01-01, 2021-04-01), range_b [2021-03-01, 2021-09-01), range_c [2021-02-01, 2021-03-01), do_ranges_a_b_overlap true, ranges_a_b_intersection [2021-03-01, 2021-04-01), range_a_start 2021-01-01, range_a_end 2021-04-01, range_a_contains_c true and range_a_contains_date true."
+ },
+ "/images/the-json-datatype-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: json_native, parsed_json_from_string, json_from_key_values and json_object_from_key_value_pairs all hold {\"city\":\"New York\",\"name\":\"John Doe\",\"sports\":[\"football\",\"snooker\",\"tennis\"]}, and json_array_from_array is [[\"football\",\"snooker\",\"tennis\"]]."
+ },
+ "/images/the-order-in-which-you-round-matters-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: UK has sum_rounded_quantities 4.0 and round_sum_of_quantities 5.0; US has 7.0 and 6.0."
+ },
+ "/images/unnesting-arrays-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: four members with a nested activities array of name and registered_on: Jeremy (tennis, basketball), Jane (volleyball, cycling, snooker), Joseph (football, chess) and Joanna with null."
+ },
+ "/images/unnesting-arrays-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: eight rows, one per activity: Jeremy tennis 2023-01-06, Jeremy basketball 2022-11-01, Jane volleyball 2021-01-01, Jane cycling 2022-01-15, Jane snooker 2021-10-01, Joseph football 2022-01-01, Joseph chess 2022-06-01, and Joanna with null activity_name and activity_registered_on."
+ },
+ "/images/using-the-bq-cli-utility-with-bigquery/1-output.jpg": {
+  "kind": "output",
+  "alt": "Terminal output: an ASCII table of nine employees with employee_id, first_name, last_name and manager_id: John Smith has manager_id NULL, Jane Doe and Bob Johnson report to 1, Alice Lee and Tom Wilson to 2, Mike Brown and Sarah Kim to 3, David Lee and Emily Davis to 4."
+ },
+ "/images/a-couple-of-fun-things-about-null-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: order_id 1 is UK with apples and 2 is US with peaches; the NULL keys don't match, so row 3 is FR with a null product and row 4 is grapes with a null order_id and country."
+ },
+ "/images/a-quick-look-at-the-json-module-in-python/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: data.json, a users list of three objects with id, name and email: 1 John Doe johndoe@example.com, 2 Jane Smith janesmith@example.com and 3 Bob Johnson bobjohnson@example.com."
+ },
+ "/images/a-quick-look-at-the-json-module-in-python/1-output.jpg": {
+  "kind": "output",
+  "alt": "Output: the exported_data.json file written by json.dump contains {\"x\": 1, \"y\": 2, \"z\": [1, 2, 3]}."
+ },
+ "/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: an ASCII table with valid_from, valid_to, id, key and value, five rows: id 1 has A true from 2021-01-01 to 2021-01-10 and B true from 2021-01-05 to 2021-01-15; id 2 has B true from 2022-01-05 to 2022-01-15, B true from 2023-01-05 to 2023-01-15 and A false from 2023-01-03 to 2023-01-08."
+ },
+ "/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row per id and date range with an attributes array of key/value pairs; for example id 1 from 2021-01-05 to 2021-01-10 has A true and B true, id 2 from 2022-01-15 to 2023-01-03 has null, and id 2 from 2023-01-05 to 2023-01-08 has B true and A false."
+ },
+ "/images/concatenation-operator-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: concat_array and also_concat_array both hold 1, 2, 3, 4, 5, 6; concat_string and also_concat_string are both Hello World."
+ },
+ "/images/hands-on-with-duckdb/1-output.jpg": {
+  "kind": "output",
+  "alt": "Terminal output: SHOW ecommerce_demo lists 16 columns with their inferred types, all nullable: id, f_orderquantity, f_employeeid, f_storeid, f_vatrateid, f_productid, f_campaignid and created_by BIGINT; f_productprice, f_NetAmountEUR and f_GrossAmountEUR DOUBLE; f_orderdate TIMESTAMP; is_active, created_on and modified_on VARCHAR; modified_by BIGINT."
+ },
+ "/images/hands-on-with-duckdb/2-result.jpg": {
+  "kind": "result",
+  "alt": "DuckDB results in DBeaver: order_date with daily sum_net_amount and sum_gross_amount, starting 2014-01-01 at 398,607 and 483,941, then roughly 1.1 to 1.2 million net and 1.4 to 1.5 million gross per day through 2014-01-23."
+ },
+ "/images/hands-on-with-duckdb/3-result.jpg": {
+  "kind": "result",
+  "alt": "MotherDuck results: the query ran in 2.27 s and returned 730 rows of order_date, sum_net_amount and sum_gross_amount, with a histogram over each amount column; the first row is Fri Oct 10 2014 with 1,155,998.00 net and 1,404,026.00 gross."
+ },
+ "/images/hands-on-with-duckdb/3-result-2.jpg": {
+  "kind": "result",
+  "alt": "MotherDuck results: the count query ran in 2.53 s and returned count(1) 9305031."
+ },
+ "/images/ingestion-time-partitioning-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: New York (25.4, 65), Madrid (23.1, 41) and Rome (34.2, 27) all land in _PARTITIONDATE 2024-06-21, with _PARTITIONTIME 2024-06-21 00:00:00 UTC."
+ },
+ "/images/json-datatype-vs-json-like-string-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: value_from_native and value_from_json_like_string both return value."
+ },
+ "/images/parameters-in-bigquery/1-input.png": {
+  "kind": "input",
+  "alt": "BigQuery query settings: a query parameter named corpus, type STRING, value sonnets."
+ },
+ "/images/parameters-in-bigquery/1-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results of both queries, side by side and identical: the 363, of 351, I 342, my 335, to 335, in 287."
+ },
+ "/images/retrying-in-python-using-tenacity/1-output.jpg": {
+  "kind": "output",
+  "alt": "Terminal output: retrieve_data runs on 2024-07-27 at 12:42:16, 12:42:20, 12:42:24, 12:42:32, 12:42:44, 12:42:56 and 12:43:08, waiting 4, 4, 8, 12, 12 and 12 seconds; the first six runs print An error has occurred. and the last prints All good!"
+ },
+ "/images/swapping-partitions-in-bigquery/1-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: f0_, the minimum ds_date, is 2023-09-02 and f1_, the maximum, is 2023-09-30."
+ },
+ "/images/swapping-partitions-in-bigquery/2-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: f0_, the maximum ds_date in the target table, is 2023-09-02."
+ },
+ "/images/the-partitions-view-in-informationschema/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: 10 partitions of data_source with partition_id, total_rows, total_logical_bytes, total_billable_bytes, last_modified_time and storage_tier; 20221112 (modified 2024-05-31 10:14:06) and __NULL__ (0 rows, modified 2024-05-31 09:47:52) are ACTIVE, the other eight, about 100 rows and 2400 bytes each, last modified in 2023 or 2022, are LONG_TERM."
+ },
+ "/images/using-countif-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: count_salaries_over_80k is 1 for CA, 0 for IT, 1 for UK and 0 for FR."
+ },
+ "/images/using-gapsfill-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: a transaction_date column with three dates, 2021-01-01, 2021-01-03 and 2021-01-05."
+ },
+ "/images/using-gapsfill-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results of GAP_FILL: five rows, transaction_date 2021-01-01, 2021-01-02, 2021-01-03, 2021-01-04 and 2021-01-05."
+ },
+ "/images/using-gapsfill-in-bigquery/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results of the GENERATE_DATE_ARRAY query: the same five dates, 2021-01-01 through 2021-01-05."
+ },
+ "/images/another-look-at-logicaland-logicalor-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: an orders table with customer_id, order_id, order_date, product_id, is_paid and is_shipped. Customer 1 has orders 101 to 103 (tomatoes, cucumbers, and olives on 2024-03-01, not shipped); Customer 2 has orders 201 to 203 (olives, mangoes, and grapes on 2024-04-01, neither paid nor shipped)."
+ },
+ "/images/another-look-at-logicaland-logicalor-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "Query results: Customer 1 has all_orders_paid true, outstanding_orders true and ordered_olives_last_3_months true; Customer 2 has false, true and false."
+ },
+ "/images/anti-joins-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row, product_id 4, product_name sweater, price null."
+ },
+ "/images/computing-a-cumulative-sum-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: an orders table with customer_id, order_id, order_total and order_date; Customer-1 has orders of 100, 75 and 90 and Customer-2 orders of 80, 120 and 50, on 2021-01-01, 2021-01-02 and 2021-01-03."
+ },
+ "/images/computing-a-cumulative-sum-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "Query results: the same six orders with a cumulative_sum column (boxed in red) of 100, 175, 265 for Customer-1 and 80, 200, 250 for Customer-2."
+ },
+ "/images/controlling-ordering-of-null-values-in-the-order-by-clause/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: orders 3 and 5 with a null order_amount come first, then order 1 (100), orders 4 and 6 (90) and order 2 (50)."
+ },
+ "/images/extended-data-type-support-for-bigquery-search-indexes/1-schema.jpg": {
+  "kind": "schema",
+  "alt": "Schema of auxiliary.sample_logs: level STRING, source_ip STRING, event_details RECORD, json_payload STRING and upsert_timestamp TIMESTAMP, all NULLABLE."
+ },
+ "/images/extended-data-type-support-for-bigquery-search-indexes/1-result.jpg": {
+  "kind": "result",
+  "alt": "Job information: 43.77 GB processed in 10 sec, Index Usage Mode UNUSED, because the amount of data covered by the search index on auxiliary.sample_logs is too small for the index to be effective."
+ },
+ "/images/extended-data-type-support-for-bigquery-search-indexes/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: table sample_logs with index test_index, its DDL (partly visible), coverage_percentage 0 and analyzer LOG_ANALYZER."
+ },
+ "/images/importing-google-sheets-into-bigquery/5-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: FirstName, LastName, City and Country for Jane Doe (New York, USA), Max Muller (Munich, Germany) and Amelie Johnson (London, UK)."
+ },
+ "/images/importing-google-sheets-into-bigquery/6-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: table_name example_table, with a ddl that starts CREATE EXTERNAL TABLE followed by the project name (hidden with yellow marks) and .learning.example_table."
+ },
+ "/images/installing-python-packages-with-pip/1-output.jpg": {
+  "kind": "output",
+  "alt": "Terminal output: source .venv/bin/activate adds a (test) prefix to the prompt and deactivate removes it; the user and host name are hidden."
+ },
+ "/images/lax-json-conversion-functions-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: apple has is_sweet true, is_local true, price 7.1, pack_size 4; lemon false, false, 12.5, 5; orange true, null, 9.99, 3."
+ },
+ "/images/linting-bigquery-sql-with-sqlfluff/1-output.png": {
+  "kind": "output",
+  "alt": "Terminal output: sqlfluff marks test_sql_query.sql as FAIL and lists 11 violations by line and position: four CP01 (keywords must be consistently upper case), two LT01 (spacing), LT02 (expected indent of 4 spaces), LT05 (line too long, 96 > 80), LT08 (blank line expected after CTE closing bracket), LT09 (select targets should be on a new line) and LT12 (files must end with a single trailing newline). It ends with All Finished."
+ },
+ "/images/linting-bigquery-sql-with-sqlfluff/2-output.png": {
+  "kind": "output",
+  "alt": "Terminal output: sqlfluff lists the same violations (CP01, LT01, LT02, LT05 with 95 > 80, LT08, LT09 and LT12), reports 11 fixable linting violations found and asks Are you sure you wish to attempt to fix these? [Y/n]."
+ },
+ "/images/linting-bigquery-sql-with-sqlfluff/3-output.png": {
+  "kind": "output",
+  "alt": "Terminal output: All Finished, with no violations listed."
+ },
+ "/images/revisiting-group-by-rollup-with-a-more-realistic-example/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: sales_data with order_id, product_id, subcategory, category and quantity: Apples (5 and 7) and Pears (2) in Fruits, Food; Trainers (10) in Casual, and Ski (2) and Snowboard (10) in Winter sports, all Sports equipment."
+ },
+ "/images/revisiting-group-by-rollup-with-a-more-realistic-example/1-result.jpg": {
+  "kind": "result",
+  "alt": "Query results, the calculated_averages table: average_qty 6.0 overall, 4.67 for Food and for Fruits, 6.0 for Apples, 2.0 for Pears, 7.33 for Sports equipment, 10.0 for Casual and Trainers, 6.0 for Winter sports, 2.0 for Ski and 10.0 for Snowboard."
+ },
+ "/images/revisiting-group-by-rollup-with-a-more-realistic-example/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "Query results with the fallback average_qty per product: Ski 2.0, Mangoes 4.67, Washing Machine 6.0, Cucumbers 4.67, Snowboard 10.0, Pears 2.0, Trainers 10.0 and Apples 6.0."
+ },
+ "/images/row-level-access-security-in-bigquery/4-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: no rows, only the notices Your query results may be limited because you do not have access to certain rows, and There is no data to display."
+ },
+ "/images/the-relationship-between-arrayagg-and-unnest/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results of the ARRAY_AGG query: one row per customer with a nested orders array, customer 1 with orders 101 apples and 102 tomatoes, customer 2 with 201 cherries and 202 cucumbers."
+ },
+ "/images/the-relationship-between-arrayagg-and-unnest/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results of the UNNEST query: the four flat rows again, customer 1 with 101 apples and 102 tomatoes, customer 2 with 201 cherries and 202 cucumbers."
+ },
+ "/images/using-exists-with-logicalor-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: order 1 has order_had_flag true, order 2 has false."
+ },
+ "/images/using-gcp-cloud-functions-in-data-engineering/3-input.png": {
+  "kind": "input",
+  "alt": "Cloud Functions console, Code step: Runtime Python 3.11, Entry point hello_http, and a TEST FUNCTION button."
+ },
+ "/images/using-where-inside-aggregate-functions/1-input.png": {
+  "kind": "input",
+  "alt": "Input data: a sales table with year, country, amount and category, one fruit and one vegetable amount per country and year: 2025 US 10 and 12, FR 15 and 8, NL 12 and 20; 2026 US 12 and 13, FR 16 and 9, NL 13 and 21."
+ },
+ "/images/using-where-inside-aggregate-functions/1-result.png": {
+  "kind": "result",
+  "alt": "Query results as JSON: total_sales 161, fruit_all_time_sales 78, vegetable_all_time_sales 83, fruit_sales_2025 37, fruit_sales_2026 41, fr_nl_fruit_all_time_sales 56, nl_vegetable_all_time_sales 41 and highest_yearly_nl_vegetable_sales 21."
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/3-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: the message This statement created a new table named animals, with a Go to table button."
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/5-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: four rows of the animals object table with columns uri, generation, content_type, size, md5_hash and updated; each uri starts with gs://object-tables-demo-animal..., content_type is image/jpeg, sizes are 38470, 40783, 37558 and 43079, and updated is 2026-05-15 09:37."
+ },
+ "/images/bigquery-object-tables-a-practical-introduction/7-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: four rows of uri (gs://object-tables-demo-animal..., truncated) and animal_detected, which reads Lion cub, Tiger, Panda and Elephant."
+ },
+ "/images/bigquery-primary-key-foreign-key-constraints/3-result.jpg": {
+  "kind": "result",
+  "alt": "Execution details side by side: with constraints (left) elapsed time 212 ms, slot time consumed 91 ms, bytes shuffled 3.55 KB and 0 B spilled to disk; without constraints (right) 2 sec, 18 min 9 sec, 7.19 MB and 0 B."
+ },
+ "/images/combining-anyvalue-with-having-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: order_id 2 with count_order_lines 1 and product_name grapes, and order_id 3 with count_order_lines 1 and product_name oranges."
+ },
+ "/images/context-managers-in-python/1-output.png": {
+  "kind": "output",
+  "alt": "Output: Initializing Context Manager, Setting up the connection, Do something with the connection, Connection closed."
+ },
+ "/images/determining-json-types-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row with f0_ array, f1_ object, f2_ string, f3_ number and f4_ boolean."
+ },
+ "/images/flattening-json-arrays-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: a single row whose f0_ value is the flat array 1, 2, 3, 4, 5, 6, 7, 8."
+ },
+ "/images/joining-with-using-vs-on-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: a products table with size, color, product_id and variant (product 100 in sizes XL to XS and colors Blue, Gray and Green, variants such as XL-Blue), and an orders table with order_id, product_id, quantity, variant and country_code: eight orders of product 100 plus order 9 with NULLs."
+ },
+ "/images/joining-with-using-vs-on-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "Result of both queries, with columns order_id, product_id, variant, country_code, quantity, color and size: orders 1 to 8 get the color and size of their variant (XL-Green is Green, XL; L-White is White, L), and order 9 is NULL in every column."
+ },
+ "/images/order-by-expressions-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: the direct rows first (FR 170, IT 150, US 100), then the partners rows (FR 200, US 125, IT 100)."
+ },
+ "/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row for Joe Doe with the grades array 90, 58, 50, 100 and the allergies array gluten, milk, eggs."
+ },
+ "/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: 12 rows for Joe Doe, pairing each grade (90, 58, 50, 100) with each food_allergy (gluten, milk, eggs)."
+ },
+ "/images/select-as-struct-and-select-as-value/1-input.png": {
+  "kind": "input",
+  "alt": "Input data: three orders (order_id 1 to 3, stores STORE_UK, STORE_FR and STORE_UK, customers 1001 and 1002 from UK and FR), each with two nested order lines of product_id, order_quantity and unit_price."
+ },
+ "/images/select-as-struct-and-select-as-value/1-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results of SELECT AS VALUE: six rows with plain columns product_id, order_quantity and unit_price, for example 10001, 5, 40.0 and 10002, 2, 50.0."
+ },
+ "/images/select-as-struct-and-select-as-value/1-result-2.png": {
+  "kind": "result",
+  "alt": "BigQuery results of SELECT AS STRUCT: the same six rows, but the column headers keep the struct prefix (o... product_id, order_quantity, or... unit_price), circled in red."
+ },
+ "/images/time-series-functions-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: eight 2021-01-01 events and their 15-minute buckets; 10:01:00 and 10:13:20 fall in 10:00:00, 10:22:15 and 10:22:40 in 10:15:00, 10:31:30 and 10:38:15 in 10:30:00, and 10:51:33 and 10:59:12 in 10:45:00."
+ },
+ "/images/using-formatdate-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: 2023-04-01 is Sat (SAT, 11:00:00 to 20:00:00), 2023-04-02 is Sun (SUN, 11:00:00 to 16:00:00), and Mon to Thu, 2023-04-03 to 2023-04-06, are 10:00:00 to 22:00:00."
+ },
+ "/images/using-labels-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "Execution details: elapsed time 2 sec, slot time consumed 9 min 14 sec, bytes shuffled 5.3 MB, bytes spilled to disk 0 B."
+ },
+ "/images/using-labels-in-bigquery/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one QUERY job, SELECT id, max(ds_date) AS max_date FROM learning.data_source, with key cost_center, value demo, total_bytes_billed 10485760, total_bytes_processed 6350528 and total_slot_ms 554752."
+ },
+ "/images/watch-out-when-using-safecast-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row, and f0_ is null."
+ },
+ "/images/a-quick-walkthrough-bigquery-remote-functions/1-output.png": {
+  "kind": "output",
+  "alt": "Cloud Run console service details for test-bigquery-processing in europe-west1: all deployment steps completed, the service URL is marked as your endpoint URL, and the Source tab shows base image Python 3.12 and function entry point get_next_public_holiday."
+ },
+ "/images/a-quick-walkthrough-bigquery-remote-functions/5-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results message: This statement created a new function named YOUR PROJECT.learning.get_next_public_holidays."
+ },
+ "/images/a-quick-walkthrough-bigquery-remote-functions/6-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: RO gets Next holiday is on 2025-04-18 and is called Easter, BE gets 2025-04-20 Easter Sunday, and VN gets 2025-04-07 Hung Kings' Commemoration Day."
+ },
+ "/images/boolean-data-type-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: one row with val_a 1, val_b 2 and is_val_b_higher true."
+ },
+ "/images/boolean-data-type-in-bigquery/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "SQL Server results: one row with val_a 1, val_b 2 and is_val_b_higher 1."
+ },
+ "/images/comments-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: four order lines, order 1 Apples 10 and Grapes 3 (2021-01-01 12:00:12), order 2 Mangoes 1 (2021-01-02 10:00:19) and Kiwi 6 (2021-01-03 12:24:33), with the quantity column named total_quantity."
+ },
+ "/images/cross-dataset-foreign-key-referencing-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results message: This statement altered the table named data_source."
+ },
+ "/images/dynamically-extracting-json-data-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: id 1 gives key_1 with value 1 and key_3 with value 3; id 2 gives key_99 with value 2 and key_4 with value 4."
+ },
+ "/images/float-vs-numeric-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results in the JSON tab: float_sum \"0.30000000000000004\", not_a_number_float \"NaN\", minus_infinity \"-Infinity\" and plus_infinity \"Infinity\"."
+ },
+ "/images/merge-on-false-in-bigquery/2-result.jpg": {
+  "kind": "result",
+  "alt": "Execution details of the ON FALSE merge: elapsed time 1 sec, slot time consumed 12 sec, bytes shuffled 2.72 KB, bytes spilled to disk 0 B."
+ },
+ "/images/merge-on-false-in-bigquery/2-result-2.jpg": {
+  "kind": "result",
+  "alt": "Execution details of the key-based merge: elapsed time 5 sec, slot time consumed 14 min 13 sec, bytes shuffled 31.06 MB, bytes spilled to disk 0 B."
+ },
+ "/images/merge-on-false-in-bigquery/3-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: all four test rows are found, id 1000 value 11 on 2023-09-02, id 44 value 10 on 2023-09-01, id 33 value 7 on 2015-02-11 and id 999 value 10 on 2023-09-16."
+ },
+ "/images/merge-on-false-in-bigquery/4-result.jpg": {
+  "kind": "result",
+  "alt": "Execution details of the ON FALSE merge with PK/FK constraints: elapsed time 1 sec, slot time consumed 2 sec, bytes shuffled 84 B, bytes spilled to disk 0 B."
+ },
+ "/images/merge-on-false-in-bigquery/4-result-2.jpg": {
+  "kind": "result",
+  "alt": "Execution details of the key-based merge with PK/FK constraints: elapsed time 2 sec, slot time consumed 11 sec, bytes shuffled 56.02 MB, bytes spilled to disk 0 B."
+ },
+ "/images/natural-join-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "Output: employee 1 with store 1 Flagship store - NY, employee 2 with store 2 Main St. - LA, and employee 3 with store 3 Michigan Ave. - Chicago."
+ },
+ "/images/self-joins-in-sql/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: an employees table with employee_id, name and manager_id, six rows: 1 Jacob D (manager 3), 2 Jane D (4), 3 Andrew F (5), 4 Liz Q (5), 5 Matt O (6) and 6 Sabrina W (null)."
+ },
+ "/images/self-joins-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "Output: each employee with their manager, Jacob D under Andrew F, Jane D under Liz Q, Andrew F and Liz Q under Matt O, Matt O under Sabrina W, and Sabrina W with a null manager_id and manager_name."
+ },
+ "/images/semi-joins-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: two rows, product 1 Cherries and product 2 Tomatoes."
+ },
+ "/images/transactions-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery script results: 5 statements processed in 4 sec; BEGIN TRANSACTION, INSERT INTO learning.some_table, SELECT @@error.message and ROLLBACK TRANSACTION succeed, while SELECT ERROR(\"Some VERY unexpected error\") fails."
+ },
+ "/images/using-instr-in-bigquery/1-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: apple,grapes,melon has comma_first_position 6 and semicolon_first_position 0 and splits into apple, grapes and melon; pear;mango;kiwi has 0 and 5 and stays one item; banana has 0 and 0."
+ },
+ "/images/using-lastvalue-with-structs/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: event_date with a struct event of fields a and b, three rows: 2025-01-10 with a and b null, 2025-01-07 with a 123 and b 235, 2025-01-02 with a and b null."
+ },
+ "/images/using-lastvalue-with-structs/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: 2025-01-02 null, 2025-01-07 a 123 and b 235, and 2025-01-10 null again, because the all-null struct is not skipped."
+ },
+ "/images/using-lastvalue-with-structs/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: with all three fixes, 2025-01-02 stays null while 2025-01-07 and 2025-01-10 both carry 123 and 235 forward in the struct, JSON-string and regex columns."
+ },
+ "/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: order events with order_id, event_ts and order_status for orders 1 and 2 on 2021-01-01; the order_updated rows are boxed and the second-to-last update of each order (11:30 for order 1, 13:15 for order 2) is highlighted."
+ },
+ "/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: order 2 with second_to_last_order_update_ts 2021-01-01 13:15:00 UTC and order 1 with 2021-01-01 11:30:00 UTC, both order_updated."
+ },
+ "/images/change-history-in-bigquery/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: the learning.customers table with id, first_name, last_name and country, five rows: 2 Maria Garcia Spain, 3 Yuki Tanaka Japan, 4 Ahmed Hassan Egypt, 5 Isabella Santos Brazil and 1 Joe Doe UK."
+ },
+ "/images/change-history-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "APPENDS results: all six rows with _CHANGE_TYPE INSERT, the original five at 2025-03-06 14:06:45.423000 UTC and George Matthews (Australia) at 14:08:12.494000 UTC; Ahmed still shows Egypt."
+ },
+ "/images/change-history-in-bigquery/1-result-2.jpg": {
+  "kind": "result",
+  "alt": "CHANGES results: the same six INSERT rows, plus two rows for Ahmed Hassan at 2025-03-06 14:10:17.105000 UTC, an UPDATE with country UAE and a DELETE with country Egypt."
+ },
+ "/images/comparing-tables-with-full-outer-join/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: cnt_missing_prod 3954227, distinct_terms_missing_from_prod 660, cnt_missing_dev 3956293, distinct_terms_missing_from_dev 660, total_rows 43514223, total_distinct_terms 660 and rows_different 7910520."
+ },
+ "/images/cross-dataset-foreign-key-relationships-in-bigquery/1-schema.jpg": {
+  "kind": "schema",
+  "alt": "Table details for learning.order_lines: Primary key(s) order_id, product_id."
+ },
+ "/images/cross-dataset-foreign-key-relationships-in-bigquery/1-schema-2.jpg": {
+  "kind": "schema",
+  "alt": "Table details for auxiliary.products: Primary key(s) id."
+ },
+ "/images/de-duplicating-with-rownumber-vs-arrayagg/2-result.png": {
+  "kind": "result",
+  "alt": "Execution details: elapsed time 3 sec, slot time consumed 20 min 19 sec, bytes shuffled 8.77 MB."
+ },
+ "/images/de-duplicating-with-rownumber-vs-arrayagg/3-result.png": {
+  "kind": "result",
+  "alt": "Execution details: elapsed time 2 sec, slot time consumed 8 min 8 sec, bytes shuffled 33.94 MB."
+ },
+ "/images/enumerating-array-elements-in-bigquery-using-with-offset/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: for customer 1 / order 100 and customer 2 / order 200, status_update order_created, order_paid and order_shipped with offset 0, 1 and 2."
+ },
+ "/images/generating-a-random-number-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: participant_id 1 to 14, each with a randomly picked selected_option, e.g. Option 3, Option 17, Option 14 and Option 2."
+ },
+ "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/11-output.png": {
+  "kind": "output",
+  "alt": "Workflow visualization: the steps as a flowchart from START, checkSearchTermInInput (switch) branching to its condition (assign) or getCurrentTime (call), then setFromCallResult (assign), readWikipedia (call) and returnOutput (return)."
+ },
+ "/images/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows/15-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: SalesDate 2022-09-02 with CountOrders 5 and TotalAmount 135.8, and 2022-09-01 with CountOrders 5 and TotalAmount 93.7."
+ },
+ "/images/non-equi-joins-in-sql/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: campaigns (Winter 2021, Summer 2021, Winter 2022, Summer 2022 with valid_from/valid_to half-year ranges), discounts (0-50 at 0.1, 50-100 at 0.15, 100-1000000 at 0.2) and orders (1 on 2021-03-01 for 100, 2 on 2022-03-01 for 45, 3 on 2022-07-01 for 151, 4 on 2022-12-01 for 80)."
+ },
+ "/images/non-equi-joins-in-sql/1-result.jpg": {
+  "kind": "result",
+  "alt": "Results: order 4 (2022-12-01, Summer 2022, 80) gets 0.15 and pays 68; order 3 (2022-07-01, Summer 2022, 151) gets 0.2 and pays 120.8; order 2 (2022-03-01, Winter 2022, 45) gets 0.1 and pays 40.5; order 1 (2021-03-01, Winter 2021, 100) gets 0.2 and pays 80."
+ },
+ "/images/sometimes-you-have-to-use-subqueries/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: order 1 has errors Payment and Delivery, order 2 an empty array (0 rows), order 3 Fulfilment, and order 4 Payment and Fulfilment."
+ },
+ "/images/transforming-cumulative-sums-into-monthly-values/1-input.jpg": {
+  "kind": "input",
+  "alt": "Input data: month_start_date from 2020-12-01 to 2022-01-01 with cumulative_fy_sales 800, 1100, 1200, 1350, 1700, 1900, 2100, then 100, 400, 800, 1100, 1400, 1800 and 2100 after the July reset."
+ },
+ "/images/transforming-cumulative-sums-into-monthly-values/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: fiscal_year_start 2020-07-01 through 2021-06, then 2021-07-01; current_month_sales 800, 300, 100, 150, 350, 200, 200, then 100, 300, 400, 300, 300, 400 and 300, with previous_cumulative_sales null at the start of each fiscal year."
+ },
+ "/images/using-bigquery-time-travel/2-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: three rows, id 1 abc, 2 def and 3 hij."
+ },
+ "/images/using-bigquery-time-travel/3-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: only the two original rows, id 1 abc and 2 def."
+ },
+ "/images/using-range-in-window-functions-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "Results: for the two athletes born in 1991 (Jack Dalton 115, George Downey 125), neighbours_average is 117.5 for both, while neighbours_average_wrong gives 120.0 and 116.66666666666667; all seven athletes from John Doe (1990) to Robert Key (1995) are listed."
+ },
+ "/images/using-rangebucket-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: num -1 is in bucket 0, 2 in 1, 5 and 9 in 2, 10, 14, 14 and 15 in 3, 40 in 4, and null gives a null bucket."
+ },
+ "/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1-schema.png": {
+  "kind": "schema",
+  "alt": "Schemas of the three tables: order_amounts_unpartitioned (order_id, order_amount; clustered by order_id), orders_per_store (order_id, order_date, store_id; partitioned on order_date, clustered by order_id) and order_amounts (order_id, order_date, order_amount; partitioned on order_date, clustered by order_id)."
+ },
+ "/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1-result.png": {
+  "kind": "result",
+  "alt": "Execution details, left to right for the three queries: 7 sec elapsed and 10 min 13 sec slot time (unpartitioned order_amounts_unpartitioned), 7 sec and 27 min 13 sec (order_amounts USING order_date, order_id), 9 sec and 41 min 47 sec (order_amounts USING order_id)."
+ },
+ "/images/declare-and-set-variables-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: start_timestamp 2024-06-17 13:03:42 UTC, another_timestamp 2021-01-01 17:00:00 UTC, and the fruits array as two rows, apple/sweet and lemon/sour."
+ },
+ "/images/the-not-null-constraint-in-bigquery/1-schema.jpg": {
+  "kind": "schema",
+  "alt": "BigQuery console Schema tab for learning.customers: id, first_name and last_name have Mode REQUIRED, phone_number is NULLABLE."
+ },
+ "/images/using-bigquery-hashing-functions/2-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results listing the four customers with an extra row_hash column of large signed integers, shown truncated."
+ },
+ "/images/another-look-at-anyvalue-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: order 1 gives most_expensive_product Mango, any_product_except_banana Mango and first_expiring_product Banana; order 2 gives Pears in all three columns."
+ },
+ "/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: ifnull_example and coalesce_example are both 'default value', nullif_example is null."
+ },
+ "/images/splitting-a-string-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results with first_element a, second_element b and third_element c, beside Excel, where =TEXTSPLIT(B1,\", \") splits the text a, b, c into cells a, b and c."
+ },
+ "/images/calculating-the-median-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: the first query returns median_cont 2.0 and median_disc 2, the APPROX_QUANTILES query returns median 2."
+ },
+ "/images/intersect-and-except-in-bigquery/3-result.png": {
+  "kind": "result",
+  "alt": "BigQuery result of INTERSECT DISTINCT: one row, customer_id 1 with order_id 1001."
+ },
+ "/images/intersect-and-except-in-bigquery/4-result.png": {
+  "kind": "result",
+  "alt": "BigQuery result of EXCEPT DISTINCT: two rows, customer 5 with order 1010 and customer 6 with order 1012."
+ },
+ "/images/greatest-least-in-bigquery/1-result.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results: highest 20, also_highest 20, lowest 10, also_lowest 10 and greatest_of_all 30."
+ },
+ "/images/accessing-array-elements-in-bigquery/1-result.png": {
+  "kind": "result",
+  "alt": "BigQuery results: second_with_ordinal, second_with_index and second_with_offest are all b; sixth_with_safe_offset and sixth_with_safe_ordinal are null."
+ },
+ "/images/heres-how-group-by-works-differently-across-sql-dialects/1-result-3.jpg": {
+  "kind": "result",
+  "alt": "BigQuery results for both queries: country N/A with total_amount 4 and UK with 2."
  }
 }

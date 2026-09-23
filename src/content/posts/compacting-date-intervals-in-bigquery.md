@@ -18,7 +18,62 @@ Problem statement: compacting a SCD-2 table, essentially finding intervals that 
 
 This particular input data guarantees these intervals cannot overlap (at the same grain), but there can be gaps. We're also talking about \[left-inclusive, right-exclusive) intervals.
 
-![BigQuery SQL compacting SCD-2 intervals in four steps: FARM\_FINGERPRINT of the flags as hash\_val, LAG over a named WINDOW to flag is\_new\_segment, a running SUM as segment\_id, then MIN(valid\_from) and MAX(valid\_to) per segment; adjacent rows with equal flags merge, e.g. into 2021-01-12 to 2021-01-25.](/images/compacting-date-intervals-in-bigquery/1.jpg)
+![Input data: input\_data with valid\_from, valid\_to, product\_id, country\_name, flag\_a and flag\_b, eleven intervals for product 1 (US), 2 (CA) and 3 (US); three pairs of adjacent rows with the same flags are boxed as MERGED: product 1 from 2021-01-12 to 2021-01-25, product 2 from 2021-01-01 to 2021-01-25 and product 3 from 2021-01-01 to 2021-01-20.](/images/compacting-date-intervals-in-bigquery/1-input.jpg)
+
+```sql
+WITH prepare_output AS (
+  SELECT
+    product_id,
+    country_name,
+    valid_from,
+    valid_to,
+    flag_a,
+    flag_b,
+    FARM_FINGERPRINT(CONCAT(TO_JSON_STRING(flag_a),
+                            TO_JSON_STRING(flag_b))) AS hash_val
+  FROM input_data
+),
+prepare_segments AS (
+  SELECT
+    product_id,
+    country_name,
+    valid_from,
+    valid_to,
+    flag_a,
+    flag_b,
+    CASE WHEN LAG(hash_val) OVER country_item = hash_val AND
+              valid_from = LAG(valid_to) OVER country_item
+         THEN 0 ELSE 1  END AS is_new_segment
+  FROM prepare_output
+  WINDOW country_item AS (PARTITION BY product_id, country_name
+                          ORDER BY valid_from)
+),
+define_segments AS (
+  SELECT
+    product_id,
+    country_name,
+    valid_from,
+    valid_to,
+    flag_a,
+    flag_b,
+    SUM(is_new_segment) OVER (PARTITION BY product_id, country_name
+                              ORDER BY valid_from
+                              ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                              ) AS segment_id
+  FROM prepare_segments
+)
+SELECT
+  product_id,
+  country_name,
+  MIN(valid_from) AS valid_from,
+  MAX(valid_to) AS valid_to,
+  ANY_VALUE(flag_a) AS flag_a,
+  ANY_VALUE(flag_b) AS flag_b
+FROM define_segments
+GROUP BY product_id, country_name, segment_id
+```
+
+![BigQuery results: seven compacted intervals, with the merged ones boxed: product 1 US 2021-01-01 to 2021-01-10, 2021-01-12 to 2021-01-25, 2021-01-25 to 2021-02-04 (False, False) and 2021-02-04 to 2021-02-08; product 2 CA 2021-01-01 to 2021-01-25; product 3 US 2021-01-01 to 2021-01-20 and 2021-01-20 to 2021-01-30.](/images/compacting-date-intervals-in-bigquery/1-result.jpg)
 
 Here's a breakdown of how it all works:
 

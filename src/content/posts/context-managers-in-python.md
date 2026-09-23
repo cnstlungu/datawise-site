@@ -38,7 +38,28 @@ Wondering how to define a Context Manager?
 
 A class just needs to implement two magical dunder methods: `__enter__()` (which produces the resource) and `__exit__()` (which handles cleanup). See below a simple example illustrating how context managers work behind the scenes.
 
-![Python context\_manager.py defining class ExampleContextManager with \_\_init\_\_(host, port), \_\_enter\_\_ opening a DatabaseConnection and \_\_exit\_\_(exc\_type, exc\_value, exc\_traceback) calling connection.close(), used in a with ... as manager block; printed output runs from Initializing to Connection closed.](/images/context-managers-in-python/1.png)
+```python
+class ExampleContextManager():
+
+    def __init__(self, host, port):
+        print('Initializing Context Manager')
+        self.host = host
+        self.port = port
+        self.connection = None
+
+    def __enter__(self):
+        print('Setting up the connection')
+        self.connection = DatabaseConnection(self.host, self.port)
+        return self.connection
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.connection.close()
+
+with ExampleContextManager('example_host', '1000') as manager:
+    print('Do something with the connection')
+```
+
+![Output: Initializing Context Manager, Setting up the connection, Do something with the connection, Connection closed.](/images/context-managers-in-python/1-output.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

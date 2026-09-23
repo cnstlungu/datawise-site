@@ -18,7 +18,20 @@ So I've [previously posted](/table-sampling-in-bigquery) about how in BigQuery u
 
 But there are still cases where I use LIMIT.
 
-![BigQuery SQL that counts rows per order\_id with COUNT(1) AS times\_seen, GROUP BY order\_id, HAVING COUNT(1) \> 1 and LIMIT 10 to quickly surface a few duplicates; the result shows order\_id 1 with times\_seen 2.](/images/how-limit-helps-you-save-time-in-bigquery/1.jpg)
+```sql
+SELECT
+    order_id,
+    COUNT(1) AS times_seen
+FROM input_data
+
+GROUP BY order_id
+
+HAVING COUNT(1) > 1
+
+LIMIT 10;
+```
+
+![BigQuery results: one row, order\_id 1 with times\_seen 2.](/images/how-limit-helps-you-save-time-in-bigquery/1-result.jpg)
 
 Say I'm validating some data and I want to check an assumption I have about the data. For instance, knowing that even a few duplicate records exist indicates me that the problem exists and provides an example to investigate.
 

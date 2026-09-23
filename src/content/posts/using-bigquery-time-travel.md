@@ -39,7 +39,7 @@ INSERT INTO `learning.test_time_travel`
 SELECT 3 AS id, 'hij' AS value
 ```
 
-![BigQuery console running SELECT \* FROM learning.test\_time\_travel after the insert; the Results tab shows three rows with id and value: 1 abc, 2 def and the newly added 3 hij.](/images/using-bigquery-time-travel/2.png)
+![BigQuery results: three rows, id 1 abc, 2 def and 3 hij.](/images/using-bigquery-time-travel/2-result.png)
 
 We can now confirm that we have the extra row. But what if we’d like to query the table as of earlier?
 
@@ -49,7 +49,7 @@ SELECT * FROM learning.test_time_travel
 FOR SYSTEM_TIME AS OF TIMESTAMP('2023-04-02 11:00:00.000 UTC')
 ```
 
-![BigQuery time travel query SELECT \* FROM learning.test\_time\_travel FOR SYSTEM\_TIME AS OF TIMESTAMP('2023-04-02 11:00:00.000 UTC'); the results show only the original two rows, 1 abc and 2 def, as the table was before the third row was inserted.](/images/using-bigquery-time-travel/3.png)
+![BigQuery results: only the two original rows, id 1 abc and 2 def.](/images/using-bigquery-time-travel/3-result.png)
 
 Using the approach above we can query the table at any particular point in the time travel window, set by default to 7 days, but configurable to be between 2 and 7 days.
 

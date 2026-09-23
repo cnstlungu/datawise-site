@@ -28,7 +28,23 @@ In the example below, we're going to order the results by the absolute value (AB
 
 This way, we can start our investigation from the biggest differences, regardless of which system shows 'bigger' values and also take into account missing values between the two.
 
-![BigQuery SQL comparing daily total\_sales per department in System A and System B with FULL OUTER JOIN USING (department, sales\_date) and ORDER BY ABS(IFNULL(sales\_a, 0) - IFNULL(sales\_b, 0)) DESC; shoes on 2021-01-01, missing in A, tops the list with a difference of 3000.](/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1.jpg)
+![Input data: System A and System B tables with department, sales\_date and total\_sales for clothing and shoes from 2021-01-01 to 2021-01-03; they differ for clothing on 2021-01-01 (1500 vs 1400) and shoes on 2021-01-02 (1500 vs 1550), System A has no value for shoes on 2021-01-01 (B: 3000) and System B none for shoes on 2021-01-03 (A: 1400).](/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1-input.jpg)
+
+```sql
+SELECT
+  department,
+  sales_date,
+  a.total_sales AS sales_a,
+  b.total_sales AS sales_b,
+  ABS(IFNULL(a.total_sales, 0) - IFNULL(b.total_sales, 0)) AS difference
+
+FROM sales_system_a a
+FULL OUTER JOIN sales_system_b b USING (department, sales_date)
+
+ORDER BY ABS(IFNULL(sales_a, 0) - IFNULL(sales_b, 0)) DESC
+```
+
+![BigQuery results, biggest difference first: shoes 2021-01-01 (sales\_a null, sales\_b 3000, difference 3000), shoes 2021-01-03 (1400, null, 1400), clothing 2021-01-01 (1500, 1400, 100), shoes 2021-01-02 (1500, 1550, 50), then clothing 2021-01-02 and 2021-01-03 with difference 0.](/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

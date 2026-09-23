@@ -39,7 +39,45 @@ Let’s look at a step-by-step example of creating a Remote Function.
 
 ## Step 1: Create the Cloud Run Function
 
-![Python source of a Cloud Run function (entry point get\_next\_public\_holiday) in the Cloud Run console: it reads the BigQuery calls array from request.get\_json(), uses holidays.country\_holidays and next() to find each country's next holiday, and returns jsonify with a replies list.](/images/a-quick-walkthrough-bigquery-remote-functions/1.png)
+![Cloud Run console service details for test-bigquery-processing in europe-west1: all deployment steps completed, the service URL is marked as your endpoint URL, and the Source tab shows base image Python 3.12 and function entry point get\_next\_public\_holiday.](/images/a-quick-walkthrough-bigquery-remote-functions/1-output.png)
+
+```python
+    try:
+        # Read request JSON (BigQuery sends input in "calls" array)
+        request_json = request.get_json()
+        calls = request_json.get("calls", [])
+
+        responses = []  # This will store the results
+
+        today = datetime.date.today()
+        year = today.year
+
+        for call in calls:
+            try:
+                country_code = call[0].upper()  # Extract country_code from input
+                country_holidays = holidays.country_holidays(country_code, years=[year, year + 1])
+
+                # Find the next upcoming holiday
+                next_holiday = next(
+                    ((str(date), name) for date, name in sorted(country_holidays.items()) if date >= today),
+                    None
+                )
+
+                if next_holiday:
+                    response = f"Next holiday is on {next_holiday[0]} and is called {next_holiday[1]}"
+                else:
+                    response = f"No upcoming holidays found for {country_code} in {year}."
+
+            except KeyError:
+                response = f"Error: Invalid or unsupported country code: {call[0]}"
+
+            responses.append(response)
+
+        return jsonify({"replies": responses})  # Send the list of replies
+
+    except Exception as e:
+        return jsonify({"errorMessage": str(e)})
+```
 
 ## Step 2: Create a connection
 
@@ -53,10 +91,32 @@ Let’s look at a step-by-step example of creating a Remote Function.
 
 ## Step 4: Bind the connection with Cloud Run function
 
-![BigQuery SQL CREATE FUNCTION learning.get\_next\_public\_holidays(country\_code STRING) RETURNS STRING REMOTE WITH CONNECTION to an eu test-bigquery-connection, with OPTIONS endpoint set to the Cloud Run europe-west1.run.app URL; red placeholders mark your project, connection and endpoint.](/images/a-quick-walkthrough-bigquery-remote-functions/5.png)
+```sql
+CREATE FUNCTION learning.get_next_public_holidays(country_code STRING) RETURNS STRING
+
+REMOTE WITH CONNECTION `YOUR_PROJECT.eu.test-bigquery-connection`
+
+OPTIONS (endpoint = 'https://YOUR_ENDPOINT_URL.europe-west1.run.app')
+```
+
+![BigQuery results message: This statement created a new function named YOUR PROJECT.learning.get\_next\_public\_holidays.](/images/a-quick-walkthrough-bigquery-remote-functions/5-result.png)
 
 ## Test run
 
-![BigQuery SQL calling the remote function learning.get\_next\_public\_holidays(country\_code) for RO, BE and VN; results read Next holiday is on 2025-04-18 and is called Easter for RO, 2025-04-20 Easter Sunday for BE and 2025-04-07 Hung Kings' Commemoration Day for VN.](/images/a-quick-walkthrough-bigquery-remote-functions/6.png)
+```sql
+WITH input AS (
+
+  SELECT 'RO' AS country_code UNION ALL
+  SELECT 'BE' AS country_code UNION ALL
+  SELECT 'VN' AS country_code
+)
+
+SELECT country_code, learning.get_next_public_holidays(country_code)
+
+
+FROM input
+```
+
+![BigQuery results: RO gets Next holiday is on 2025-04-18 and is called Easter, BE gets 2025-04-20 Easter Sunday, and VN gets 2025-04-07 Hung Kings' Commemoration Day.](/images/a-quick-walkthrough-bigquery-remote-functions/6-result.png)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

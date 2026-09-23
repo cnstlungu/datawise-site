@@ -18,7 +18,31 @@ In the example below, we'd like to ORDER by sales decreasingly, but show the 'di
 
 This is achieved by using a CASE WHEN that will rank direct sales above other types of sales, then sorting by the sales decreasingly.
 
-![BigQuery SQL sorting sales rows with ORDER BY CASE WHEN channel = 'direct' THEN 1 ELSE 0 END DESC, sales DESC; results list direct sales first (FR 170, IT 150, US 100), then partners sales (FR 200, US 125, IT 100).](/images/order-by-expressions-in-sql/1.jpg)
+```sql
+WITH input_data AS (
+  SELECT 'US' AS country, 100 AS sales, 'direct' AS channel
+  UNION ALL
+  SELECT 'US' AS country, 125 AS sales, 'partners' AS channel
+  UNION ALL
+  SELECT 'FR' AS country, 170 AS sales, 'direct' AS channel
+  UNION ALL
+  SELECT 'FR' AS country, 200 AS sales, 'partners' AS channel
+  UNION ALL
+  SELECT 'IT' AS country, 150 AS sales, 'direct' AS channel
+  UNION ALL
+  SELECT 'IT' AS country, 100 AS sales, 'partners' AS channel
+)
+
+SELECT
+  country,
+  sales,
+  channel
+FROM input_data
+
+ORDER BY CASE WHEN channel = 'direct' THEN 1 ELSE 0 END DESC, sales DESC
+```
+
+![BigQuery results: the direct rows first (FR 170, IT 150, US 100), then the partners rows (FR 200, US 125, IT 100).](/images/order-by-expressions-in-sql/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -29,6 +29,35 @@ With ANY\_VALUE of a single value being always that value, we can filter the res
 
 As almost always with SQL, there are of course plenty of other ways to achieve the same result.
 
-![BigQuery SQL on an input\_data CTE of order\_id and order\_line that groups by order\_id and filters with HAVING COUNT(order\_line) = 1 AND ANY\_VALUE(order\_line) IN ('grapes', 'oranges'); the result keeps order 2 with grapes and order 3 with oranges, each with count\_order\_lines 1.](/images/combining-anyvalue-with-having-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+
+  SELECT 1 AS order_id, 'apples' AS order_line
+  UNION ALL
+  SELECT 1 AS order_id, 'pears' AS order_line
+  UNION ALL
+  SELECT 1 AS order_id, 'grapes' AS order_line
+  UNION ALL
+  SELECT 2 AS order_id, 'grapes' AS order_line
+  UNION ALL
+  SELECT 3 AS order_id, 'oranges' AS order_line
+  UNION ALL
+  SELECT 4 AS order_id, 'kiwi' AS order_line
+)
+
+SELECT
+  order_id,
+  COUNT(order_line) AS count_order_lines,
+  ANY_VALUE(order_line) AS product_name
+
+FROM input_data
+
+GROUP BY order_id
+
+HAVING COUNT(order_line) = 1 AND
+       ANY_VALUE(order_line) IN ('grapes', 'oranges')
+```
+
+![BigQuery results: order\_id 2 with count\_order\_lines 1 and product\_name grapes, and order\_id 3 with count\_order\_lines 1 and product\_name oranges.](/images/combining-anyvalue-with-having-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

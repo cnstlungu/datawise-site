@@ -18,7 +18,22 @@ It's pretty straightforward - you can take a function that takes multiple argume
 
 See below an example of it in action.
 
-![Python example of functools.partial: a power(base, exponent) function is specialised into square = partial(power, exponent = 2) and cube = partial(power, exponent = 3), so square(5) outputs 25 and cube(5) outputs 125.](/images/partial-functions-in-python/1.jpg)
+```python
+from functools import partial
+
+# Raises the number to a power
+def power(base, exponent):
+    return base ** exponent
+
+# Making specialized versions for squaring and cubing
+square = partial(power, exponent = 2)
+
+cube = partial(power, exponent = 3)
+
+print(square(5))  # Output: 25
+
+print(cube(5))    # Output: 125
+```
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -45,6 +45,48 @@ GROUP BY cntry
 
 Lesson learned (for now).
 
-![SQL Server vs BigQuery GROUP BY on input\_data (amount, country NULL, UK, N/A): BigQuery GROUP BY country uses the IFNULL(country, 'N/A') alias, giving N/A 4 and UK 2, as does grouping by the expression, while SQL Server GROUP BY country uses the raw column and returns N/A twice, 3 and 1.](/images/heres-how-group-by-works-differently-across-sql-dialects/1.jpg)
+![Input data: input\_data with amount and country, three rows: 1 NULL, 2 UK and 3 N/A.](/images/heres-how-group-by-works-differently-across-sql-dialects/1-input.jpg)
+
+SQL Server:
+
+```sql
+SELECT
+  ISNULL(country, 'N/A') AS country,
+  SUM(amount) AS total_amount
+FROM input_data
+GROUP BY ISNULL(country, 'N/A')
+```
+
+![SQL Server results: country N/A with total\_amount 4 and UK with 2.](/images/heres-how-group-by-works-differently-across-sql-dialects/1-result.jpg)
+
+```sql
+SELECT
+  ISNULL(country, 'N/A') AS country,
+  SUM(amount) AS total_amount
+FROM input_data
+GROUP BY country
+```
+
+![SQL Server results: N/A with total\_amount 3, N/A with 1 and UK with 2.](/images/heres-how-group-by-works-differently-across-sql-dialects/1-result-2.jpg)
+
+BigQuery:
+
+```sql
+SELECT
+  IFNULL(country, 'N/A') AS country,
+  SUM(amount) AS total_amount
+FROM input_data
+GROUP BY country
+```
+
+```sql
+SELECT
+  IFNULL(country, 'N/A') AS country,
+  SUM(amount) AS total_amount
+FROM input_data
+GROUP BY IFNULL(country, 'N/A')
+```
+
+![BigQuery results for both queries: country N/A with total\_amount 4 and UK with 2.](/images/heres-how-group-by-works-differently-across-sql-dialects/1-result-3.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

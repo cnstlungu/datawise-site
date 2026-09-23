@@ -108,7 +108,14 @@ The next error on our list took me a good evening to debug. So when trying to st
 
 The correct answer was in fact to set it to my name node server’s address (in **core-site.xml**) AND to make sure there isn’t an entry in **/etc/hosts** tying that to 127.0.0.1 or localhost. Hadoop doesn’t like that, and I’ve [been warned](https://dev.to/awwsmm/building-a-raspberry-pi-hadoop-spark-cluster-8b2).
 
-![Hadoop core-site.xml configuration setting the fs.defaultFS property to hdfs://XPS-15-9560:9000, pointing HDFS at the name node's hostname XPS-15-9560 on port 9000.](/images/9-issues-ive-encountered-when-setting-up-a-hadoop-spark-cluster-for-the-first-time/3.png)
+```xml
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://XPS-15-9560:9000</value>
+  </property>
+</configuration>
+```
 
 ### Nodes not showing up
 

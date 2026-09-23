@@ -24,6 +24,10 @@ The only use case I thought of was a poor man's row-level security for tables, e
 
 Any interesting use cases which involve SESSION\_USER in your projects?
 
-![BigQuery console running SELECT SESSION\_USER() in an untitled query; the result has one unnamed column f0\_ holding the email address of the user running the query.](/images/sessionuser-in-bigquery/1.jpg)
+```sql
+SELECT SESSION_USER()
+```
+
+It returns one row with the email address of the user running the query.
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

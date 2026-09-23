@@ -37,11 +37,19 @@ df.drop_duplicates(subset='text',inplace=True)
 
 Let’s inspect how many rows we’ve dropped by removing the duplicates. So, from a randomly-build dataset of 18000 tweets, we end up with 6389 unique tweets.
 
-![Python pandas df.shape output in Jupyter before removing duplicate tweets: (18000, 326), meaning 18,000 rows and 326 columns.](/images/intro-nlp-sentiment-analysis-python/1.png)
+```python
+df.shape
+```
+
+![Output: (18000, 326), that is 18,000 rows and 326 columns.](/images/intro-nlp-sentiment-analysis-python/1-output.png)
 
 before
 
-![Python pandas df.shape output in Jupyter after dropping duplicate tweet texts: (6389, 326), meaning 6,389 unique tweets remain with 326 columns.](/images/intro-nlp-sentiment-analysis-python/2.png)
+```python
+df.shape
+```
+
+![Output: (6389, 326), that is 6,389 rows and 326 columns.](/images/intro-nlp-sentiment-analysis-python/2-output.png)
 
 after
 
@@ -68,7 +76,11 @@ swords = set().union(stopwords.words('english'),additional)
 
 Here’s a preview of the words we’re excluding:
 
-![Jupyter cell evaluating swords, the Python set of stopwords, showing the start of its alphabetical contents: a, about, above, after, again, against, ain, all, am, an, and, any, are, aren, aren't, as, at, be, because; the rest is cropped.](/images/intro-nlp-sentiment-analysis-python/3.png)
+```python
+swords
+```
+
+![Output: the start of the stopword set in alphabetical order: 'a', 'about', 'above', 'after', 'again', 'against', 'ain', 'all', 'am', 'an', 'and', 'any', 'are', 'aren', "aren't", 'as', 'at', 'be', 'because'.](/images/intro-nlp-sentiment-analysis-python/3-output.png)
 
 A total of 182 words
 
@@ -91,7 +103,11 @@ ps = PorterStemmer()
 df['stemmed'] = df['processed_text'].apply(lambda x: [ps.stem(i) for i in x if i != ''])
 ```
 
-![Python pandas head(n=10) on the stemmed column: tweet ids with lists of Porter-stemmed tokens such as bori, live, brexit, johnson and parti, voter, brexit, deal, oppos, manifesto, with long lists truncated.](/images/intro-nlp-sentiment-analysis-python/4.png)
+```python
+df['stemmed'].head(n=10)
+```
+
+![Output: the stemmed column for the first 10 tweet ids, each a list of Porter-stemmed tokens (long lists truncated), such as \[bori, live, brexit, johnson\] and \[parti, voter, brexit, deal, oppos, manifesto, ...\].](/images/intro-nlp-sentiment-analysis-python/4-output.png)
 
 The columns we’ve obtained through original tweet text transformation and its stemming will allow us to analyze the vocabulary used, look at what tare the recurring themes and identify the word most used.
 
@@ -124,13 +140,21 @@ from nltk.tokenize import word_tokenize
 df['sentiment_score'] = df['processed_text'].apply(lambda x: sum([ sia.polarity_scores(i)['compound'] for i in word_tokenize( ' '.join(x) )]) )
 ```
 
-![Python pandas output of the processed\_text and sentiment\_score columns for 10 tweets indexed by id, with VADER scores from -0.7364 to 0.8423; for example boris live brexit johnson scores 0.0000.](/images/intro-nlp-sentiment-analysis-python/5.png)
+```python
+df[['processed_text','sentiment_score']].head(n=10)
+```
+
+![Output: processed\_text and sentiment\_score for the first 10 tweets by id, with scores from -0.7364 to 0.8423; for example boris live brexit johnson scores 0.0000.](/images/intro-nlp-sentiment-analysis-python/5-output.png)
 
 Of course, we should inspect the data in detail to see if we’re happy with the way the Polarity Scoring has assigned sentiments to our tweets.
 
 Now, we will try to visualize the split between attributed sentiments. As we can see, the term is quite contradictory, with a slight advantage for the negative sentiment.
 
-![Python pandas rounding sentiment\_score with apply(lambda x: round(x,)) and value\_counts(): 0 has 4627 tweets, -1 has 932, 1 has 779, -2 has 33, 2 has 17 and -3 has 1.](/images/intro-nlp-sentiment-analysis-python/6.png)
+```python
+df['sentiment_score'].apply(lambda x: round(x,)).value_counts()
+```
+
+![Output: counts of the rounded sentiment scores: 0 has 4627 tweets, -1 has 932, 1 has 779, -2 has 33, 2 has 17 and -3 has 1.](/images/intro-nlp-sentiment-analysis-python/6-output.png)
 
 Unfortunately, some of the more negative opinions (&lt;-2) could not be reproduced here given the strong language used. We’re going to look more at sentiment in the next part of our series.
 
@@ -144,7 +168,11 @@ For example, from the **user.followers\_count** table we could understand which 
 df['user_audience_category'] = pd.cut(df['user.followers_count'],[0,300,10000,999999999],include_lowest=True,labels=['small','medium','wide'])
 ```
 
-![Python pandas head() on the user\_audience\_category column: five tweet ids labelled small, small, small, wide and medium, with dtype category and ordered categories small \< medium \< wide.](/images/intro-nlp-sentiment-analysis-python/7.png)
+```python
+df['user_audience_category'].head()
+```
+
+![Output: user\_audience\_category for the first five tweet ids: small, small, small, wide and medium, with dtype category and categories small \< medium \< wide.](/images/intro-nlp-sentiment-analysis-python/7-output.png)
 
 ## Conclusion
 

@@ -21,9 +21,17 @@ bq cp -f 'project:dataset.source_table$your_partition' 'project:dataset.target_t
 
 Imagine a staging table, where we extract the delta from a source table (based on the last entry seen in the target table), and MERGE it into the target table.
 
-![BigQuery SQL selecting MIN(ds\_date) and MAX(ds\_date) from learning.data\_source\_staging; the result shows the staging table spans 2023-09-02 to 2023-09-30.](/images/swapping-partitions-in-bigquery/1.png)
+```sql
+SELECT MIN(ds_date), MAX(ds_date) FROM `learning.data_source_staging`
+```
 
-![BigQuery SQL selecting MAX(ds\_date) from the target table learning.data\_source; the result is 2023-09-02, so the target is behind the staging table before the partitions are copied.](/images/swapping-partitions-in-bigquery/2.png)
+![BigQuery results: f0\_, the minimum ds\_date, is 2023-09-02 and f1\_, the maximum, is 2023-09-30.](/images/swapping-partitions-in-bigquery/1-result.png)
+
+```sql
+SELECT MAX(ds_date) FROM `learning.data_source`
+```
+
+![BigQuery results: f0\_, the maximum ds\_date in the target table, is 2023-09-02.](/images/swapping-partitions-in-bigquery/2-result.png)
 
 Instead, we can craft a short script to copy delta partitions (new + changed, if any) into the target table, bypassing the need for MERGE altogether! This generates COPY jobs as opposed to QUERY jobs.
 
@@ -57,7 +65,11 @@ done
 
 Once this executes, we will have copied the partitions from the staging table to the target table using the `bq cp` command.
 
-![Terminal output of bq cp -f commands copying partitions $20230928, $20230929 and $20230930 from learning.data\_source\_staging to learning.data\_source, one command per date; the project IDs are blacked out.](/images/swapping-partitions-in-bigquery/3.png)
+```bash
+bq cp -f '<redacted>:learning.data_source_staging$20230928' '<redacted>:learning.data_source$20230928'
+bq cp -f '<redacted>:learning.data_source_staging$20230929' '<redacted>:learning.data_source$20230929'
+bq cp -f '<redacted>:learning.data_source_staging$20230930' '<redacted>:learning.data_source$20230930'
+```
 
 We can confirm that all the partitions have been loaded properly and see the list of COPY jobs in the job history tab.
 

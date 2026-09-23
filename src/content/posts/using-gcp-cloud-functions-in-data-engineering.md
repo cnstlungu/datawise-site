@@ -32,7 +32,33 @@ Now, there are of course a lot of things to think about when setting up such ser
 
 ![Google Cloud console screenshot of the Cloud Functions Create function configuration: 2nd gen environment, test-cloud-function in europe-west1, HTTPS trigger with Require authentication, 256 MiB memory, 60 s timeout, concurrency 1, autoscaling 0 to 100 instances, service account dev-tf-sa.](/images/using-gcp-cloud-functions-in-data-engineering/2.png)
 
-![Google Cloud Functions console Code step with Python 3.11 runtime, entry point hello\_http and the inline editor showing main.py: a @functions\_framework.http function that reads name from request.get\_json or request.args, defaults to World and returns 'Hello {}!'.format(name).](/images/using-gcp-cloud-functions-in-data-engineering/3.png)
+![Cloud Functions console, Code step: Runtime Python 3.11, Entry point hello\_http, and a TEST FUNCTION button.](/images/using-gcp-cloud-functions-in-data-engineering/3-input.png)
+
+```python
+import functions_framework
+
+@functions_framework.http
+def hello_http(request):
+    """HTTP Cloud Function.
+    Args:
+        request (flask.Request): The request object.
+        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
+    Returns:
+        The response text, or any set of values that can be turned into a
+        Response object using `make_response`
+        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
+    """
+    request_json = request.get_json(silent=True)
+    request_args = request.args
+
+    if request_json and 'name' in request_json:
+        name = request_json['name']
+    elif request_args and 'name' in request_args:
+        name = request_args['name']
+    else:
+        name = 'World'
+    return 'Hello {}!'.format(name)
+```
 
 ![Google Cloud Functions console Configure pre-deployment test panel: the triggering event is the JSON body {"name": "fellow earthlings"}, HTTP method POST, with a Run Test button and a last test on Oct 5, 2023 that returned HTTP status 200.](/images/using-gcp-cloud-functions-in-data-engineering/4.png)
 

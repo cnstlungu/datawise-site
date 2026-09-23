@@ -22,7 +22,56 @@ See below a quick worksheet with examples of common comprehensions in Python, ap
 
 Thanks for reading!
 
-![Python worksheet of comprehensions for squaring numbers, each beside its for-loop equivalent: a list comprehension, one filtered with if i%2==0, a dictionary comprehension, a set comprehension on a list with duplicates, a note that there are no tuple comprehensions, and a generator expression versus a yield function.](/images/comprehensions-in-python/1.jpg)
+```python
+### Number squares - Python comprehensions examples
+
+input_list = [1,2,3,4,5,6,7,8,9,10]
+
+## List comprehension
+output_list = []
+for i in input_list:
+    output_list.append(i**2)
+
+[i**2 for i in input_list]
+# both would print out: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# a list comprehension for only squares of even numbers
+[i**2 for i in input_list if i%2==0]
+# prints: [4, 16, 36, 64, 100]
+
+## Dictionary comprehension
+output_dict = {}
+for i in input_list:
+    output_dict[i] =  i**2
+
+{ k: k**2 for k in input_list}
+# both print out:
+# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100}
+
+
+## Set comprehension
+input_list_with_dups = [1,2,3,4,5,6,7,8,9,10,10]
+
+output_set = set()
+
+for i in input_list_with_dups:
+    output_set.add(i**2)
+
+{i**2 for i in input_list_with_dups}
+# both print out something like {64, 1, 4, 36, 100, 9, 16, 49, 81, 25}
+# Sets are unordered and have unique members!
+
+## NO TUPLE COMPREHENSIONS
+
+## Generator comprehension
+def generate_squares(list_of_numbers):
+    for i in list_of_numbers:
+        yield i**2
+
+(i**2 for i in input_list)
+# both produce a generator that will yield one by one
+# [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -27,7 +27,38 @@ Alternatively, we can just apply LAST\_VALUE separately to each individual field
 
 If you're new to STRUCTs, see [one of my previous posts](/understanding-structs-in-bigquery).
 
-![BigQuery SQL where LAST\_VALUE(event IGNORE NULLS) on a STRUCT fails, since an all-NULL struct is not NULL and 2025-01-10 gets null fields, then three fixes: CASE WHEN event.a IS NULL AND event.b IS NULL THEN NULL, NULLIF(TO\_JSON\_STRING(event), ...) and REGEXP\_CONTAINS, all carrying 123 and 235 forward.](/images/using-lastvalue-with-structs/1.jpg)
+![Input data: event\_date with a struct event of fields a and b, three rows: 2025-01-10 with a and b null, 2025-01-07 with a 123 and b 235, 2025-01-02 with a and b null.](/images/using-lastvalue-with-structs/1-input.jpg)
+
+```sql
+SELECT
+  event_date,
+  LAST_VALUE(event IGNORE NULLS) OVER (ORDER BY event_date
+                                       ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_event
+FROM cte
+
+ORDER BY event_date
+```
+
+![BigQuery results: 2025-01-02 null, 2025-01-07 a 123 and b 235, and 2025-01-10 null again, because the all-null struct is not skipped.](/images/using-lastvalue-with-structs/1-result.jpg)
+
+```sql
+SELECT event_date,
+    LAST_VALUE(CASE WHEN event.a IS NULL AND event.b IS NULL THEN NULL ELSE event END IGNORE NULLS)
+          OVER (ORDER BY event_date
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_event_struct,
+
+    LAST_VALUE(NULLIF(TO_JSON_STRING(event),'{"a":null,"b":null}') IGNORE NULLS)
+          OVER (ORDER BY event_date
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_event_json,
+
+    LAST_VALUE(CASE WHEN NOT REGEXP_CONTAINS(TO_JSON_STRING(event), r':(true|false|"|[0-9\-]|\[|\{)') THEN NULL ELSE event END IGNORE NULLS)
+          OVER (ORDER BY event_date
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS last_known_event_regex
+
+FROM cte
+```
+
+![BigQuery results: with all three fixes, 2025-01-02 stays null while 2025-01-07 and 2025-01-10 both carry 123 and 235 forward in the struct, JSON-string and regex columns.](/images/using-lastvalue-with-structs/1-result-2.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

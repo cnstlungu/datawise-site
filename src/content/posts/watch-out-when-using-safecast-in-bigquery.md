@@ -25,6 +25,16 @@ Without proper monitoring this issue can go unnoticed quite a bit. So watch out 
 
 It just drives the point home on how important is to have proper monitoring in place and enforcing a robust data contract with data sources.
 
-![BigQuery SQL in the console: SELECT CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP), with seven fractional digits, fails with an Invalid timestamp error, while the same value with SAFE\_CAST silently returns a single null in column f0\_.](/images/watch-out-when-using-safecast-in-bigquery/1.jpg)
+```sql
+SELECT CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP)
+```
+
+The query fails with the error `Invalid timestamp: '2024-01-01 12:00:00.1234567'`.
+
+```sql
+SELECT SAFE_CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP)
+```
+
+![BigQuery results: one row, and f0\_ is null.](/images/watch-out-when-using-safecast-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

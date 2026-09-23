@@ -21,7 +21,36 @@ In order to solve it, we:
 \- since the flags can have the NULL value, we'd need to filter them out before passing them to the arrays constructor (which doesn't like nulls)  
 \- create the array using the ARRAY () constructor
 
-![BigQuery SQL building an errors ARRAY per order with the ARRAY() constructor over a scalar subquery that UNION ALLs payment\_error, delivery\_error and fulfilment\_error with labels, filtered WHERE has\_error; order 1 gets Payment and Delivery, order 2 an empty array (0 rows).](/images/sometimes-you-have-to-use-subqueries/1.jpg)
+```sql
+WITH input_data AS (
+
+  SELECT 1 AS order_id, TRUE AS payment_error, FALSE AS fulfilment_error, TRUE AS delivery_error UNION ALL
+  SELECT 2 AS order_id, FALSE AS payment_error, FALSE AS fulfilment_error, FALSE AS delivery_error UNION ALL
+  SELECT 3 AS order_id, FALSE AS payment_error, TRUE AS fulfilment_error, NULL AS delivery_error UNION ALL
+  SELECT 4 AS order_id, TRUE AS payment_error, TRUE AS fulfilment_error, NULL AS delivery_error
+)
+
+SELECT
+
+  order_id,
+  ARRAY(
+    SELECT error_type
+
+    FROM (
+        SELECT payment_error AS has_error, "Payment" AS error_type
+        UNION ALL
+        SELECT delivery_error AS has_error, "Delivery" AS error_type
+        UNION ALL
+        SELECT fulfilment_error AS has_error, "Fulfilment" AS error_type
+    ) errors
+
+    WHERE has_error
+  ) AS errors
+
+FROM input_data
+```
+
+![BigQuery results: order 1 has errors Payment and Delivery, order 2 an empty array (0 rows), order 3 Fulfilment, and order 4 Payment and Fulfilment.](/images/sometimes-you-have-to-use-subqueries/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
 

@@ -25,6 +25,35 @@ Here's how a BigQuery solution could look like:
 
 How would your solution to such a problem look like?
 
-![BigQuery SQL joining a weekly schedule CTE (day, opening\_time, closing\_time) to April 2023 dates from GENERATE\_DATE\_ARRAY ON UPPER(FORMAT\_DATE('%a', d.calendar\_date)) = s.day; results show 2023-04-01 as Sat, open 11:00 to 20:00, and weekdays 10:00 to 22:00.](/images/using-formatdate-in-bigquery/1.jpg)
+```sql
+WITH schedule AS (
+  SELECT 'MON' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time
+    UNION ALL
+  SELECT 'TUE' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time
+    UNION ALL
+  SELECT 'WED' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time
+    UNION ALL
+  SELECT 'THU' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time
+    UNION ALL
+  SELECT 'FRI' AS day, TIME '10:00:00' AS opening_time, TIME '22:00:00' AS closing_time
+    UNION ALL
+  SELECT 'SAT' AS day, TIME '11:00:00' AS opening_time, TIME '20:00:00' AS closing_time
+    UNION ALL
+  SELECT 'SUN' AS day, TIME '11:00:00' AS opening_time, TIME '16:00:00' AS closing_time
+),
+dates AS (
+  SELECT calendar_date FROM UNNEST(GENERATE_DATE_ARRAY(DATE '2023-04-01', DATE '2023-04-30')) AS calendar_date
+)
+SELECT
+  calendar_date,
+  FORMAT_DATE('%a', d.calendar_date) AS day_of_week,
+  s.day,
+  s.opening_time,
+  s.closing_time
+FROM dates d
+JOIN schedule s ON UPPER(FORMAT_DATE('%a', d.calendar_date)) = s.day
+```
+
+![BigQuery results: 2023-04-01 is Sat (SAT, 11:00:00 to 20:00:00), 2023-04-02 is Sun (SUN, 11:00:00 to 16:00:00), and Mon to Thu, 2023-04-03 to 2023-04-06, are 10:00:00 to 22:00:00.](/images/using-formatdate-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

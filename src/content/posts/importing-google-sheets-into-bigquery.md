@@ -62,8 +62,12 @@ We provide the necessary configuration:
 
 After we hit ***Create Table*** the external table is created. We can verify that the data has been properly created.
 
-* ![BigQuery SQL SELECT \* FROM learning.example\_table LIMIT 1000 querying the new external table; results show FirstName, LastName, City and Country for Jane Doe (New York, USA), Max Muller (Munich, Germany) and Amelie Johnson (London, UK), matching the sheet.](/images/importing-google-sheets-into-bigquery/5.png)
-    
+```sql
+SELECT * FROM `learning.example_table` LIMIT 1000
+```
+
+![BigQuery results: FirstName, LastName, City and Country for Jane Doe (New York, USA), Max Muller (Munich, Germany) and Amelie Johnson (London, UK).](/images/importing-google-sheets-into-bigquery/5-result.png)
+
 
 ### Viewing the DDL of an (external) table
 
@@ -78,7 +82,15 @@ FROM
  learning.INFORMATION_SCHEMA.TABLES;
 ```
 
-![BigQuery SQL selecting table\_name and ddl from learning.INFORMATION\_SCHEMA.TABLES WHERE table\_name = 'example\_table'; the result's ddl column starts with CREATE EXTERNAL TABLE followed by a partly redacted project name and .learning.example\_table.](/images/importing-google-sheets-into-bigquery/6.jpg)
+```sql
+SELECT
+ table_name, ddl
+FROM `learning.INFORMATION_SCHEMA.TABLES`
+
+WHERE table_name = 'example_table';
+```
+
+![BigQuery results: table\_name example\_table, with a ddl that starts CREATE EXTERNAL TABLE followed by the project name (hidden with yellow marks) and .learning.example\_table.](/images/importing-google-sheets-into-bigquery/6-result.jpg)
 
 ```sql
 CREATE EXTERNAL TABLE `learning.example_table`

@@ -30,7 +30,34 @@ We will then decorate a function issuing such an announcement.
 
 Here's how it would look like:
 
-![Python decorator example: polite(function) defines a wrapper() that prints Dear passengers!, then Please plus the wrapped function's return value, then a thank-you line; @polite decorates issue\_offboarding\_warning and issue\_platform\_warning, with their printed announcements shown as comments.](/images/decorators-in-python/1.jpg)
+```python
+def polite(function):
+    def wrapper():
+            print('Dear passengers!')
+            original_output = function()
+            print(f'Please {original_output}')
+            print('Thank you for traveling with us!')
+    return wrapper
+
+@polite
+def issue_offboarding_warning():
+    return "mind the gap between the train and the platform."
+
+@polite
+def issue_platform_warning():
+    return "maintain a safe distance from the edge of the platform."
+
+
+issue_offboarding_warning()
+# Dear passengers!
+# Please mind the gap between the train and the platform.
+# Thank you for traveling with us!
+
+issue_platform_warning()
+# Dear passengers!
+# Please maintain a safe distance from the edge of the platform.
+# Thank you for traveling with us!
+```
 
 Thanks for reading!
 

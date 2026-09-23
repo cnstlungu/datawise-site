@@ -50,7 +50,7 @@ sqlfluff lint test_sql_query.sql --dialect bigquery
 
 The linter analyzes our code and issues a list of findings. It compares the code to a set of standard, built-in guidelines, which can be overridden or ignored via configuration, based on needs.
 
-![Terminal output of sqlfluff lint test\_sql\_query.sql --dialect bigquery reporting FAIL with 11 violations by line and position, including CP01 keywords must be upper case, LT02 expected indent of 4 spaces, LT05 line too long (96 \> 80), LT08, LT09 and LT12 missing trailing newline.](/images/linting-bigquery-sql-with-sqlfluff/1.png)
+![Terminal output: sqlfluff marks test\_sql\_query.sql as FAIL and lists 11 violations by line and position: four CP01 (keywords must be consistently upper case), two LT01 (spacing), LT02 (expected indent of 4 spaces), LT05 (line too long, 96 \> 80), LT08 (blank line expected after CTE closing bracket), LT09 (select targets should be on a new line) and LT12 (files must end with a single trailing newline). It ends with All Finished.](/images/linting-bigquery-sql-with-sqlfluff/1-output.png)
 
 We can also ask sqlfluff to attempt to fix these issues.
 
@@ -58,7 +58,7 @@ We can also ask sqlfluff to attempt to fix these issues.
 sqlfluff fix test_sql_query.sql --dialect bigquery
 ```
 
-![Terminal output of sqlfluff fix test\_sql\_query.sql --dialect bigquery listing the same CP01 and LT01, LT02, LT05, LT08, LT09, LT12 violations, then reporting 11 fixable linting violations found and asking Are you sure you wish to attempt to fix these, Y/n.](/images/linting-bigquery-sql-with-sqlfluff/2.png)
+![Terminal output: sqlfluff lists the same violations (CP01, LT01, LT02, LT05 with 95 \> 80, LT08, LT09 and LT12), reports 11 fixable linting violations found and asks Are you sure you wish to attempt to fix these? \[Y/n\].](/images/linting-bigquery-sql-with-sqlfluff/2-output.png)
 
 If we respond Yes, it will apply the proposed fix to the file we provided.
 
@@ -84,7 +84,7 @@ FROM cte
 
 Another run of `sqlfluff lint` would yield no issues found.
 
-![Terminal output of a second sqlfluff lint test\_sql\_query.sql --dialect bigquery run after the fix, printing only All Finished with no violations reported.](/images/linting-bigquery-sql-with-sqlfluff/3.png)
+![Terminal output: All Finished, with no violations listed.](/images/linting-bigquery-sql-with-sqlfluff/3-output.png)
 
 ## Configuration
 

@@ -32,7 +32,41 @@ Things to watch out for:
 ➡️ Gaps in the data: How do they impact the calculation? Are we okay with that?  
 ➡️ Grain considerations: Do we need to do this per department? Per country? If so, adjust the PARTITION BY accordingly.
 
-![BigQuery SQL turning cumulative fiscal-year sales into monthly values: a temp function GET\_FINANCIAL\_YEAR\_START (July to June), LAG(cumulative\_fy\_sales,1) per fiscal year, and cumulative\_fy\_sales minus IFNULL(LAG(...),0) AS current\_month\_sales; 1100 cumulative in 2021-01 becomes 300.](/images/transforming-cumulative-sums-into-monthly-values/1.jpg)
+![Input data: month\_start\_date from 2020-12-01 to 2022-01-01 with cumulative\_fy\_sales 800, 1100, 1200, 1350, 1700, 1900, 2100, then 100, 400, 800, 1100, 1400, 1800 and 2100 after the July reset.](/images/transforming-cumulative-sums-into-monthly-values/1-input.jpg)
+
+```sql
+-- computes the start of the respective financial year
+-- (July 1st -> June 30th), given a date
+CREATE TEMP FUNCTION GET_FINANCIAL_YEAR_START(input_date DATE)
+RETURNS DATE
+AS (
+DATE(IF(EXTRACT(MONTH FROM input_date) >= 7,
+     EXTRACT(YEAR FROM input_date),
+     EXTRACT(YEAR FROM input_date) - 1), 7, 1)
+);
+
+SELECT
+
+  month_start_date,
+
+  -- computes the first day of the fiscal year
+  GET_FINANCIAL_YEAR_START(month_start_date) AS fiscal_year_start,
+
+  cumulative_fy_sales,
+
+
+  -- retrieves the previous month's cumulative sales
+  LAG(cumulative_fy_sales,1) OVER (PARTITION BY GET_FINANCIAL_YEAR_START(month_start_date)
+                                   ORDER BY month_start_date) AS previous_cumulative_sales,
+
+  -- calculates the sales for this particular month
+  cumulative_fy_sales - IFNULL(LAG(cumulative_fy_sales,1) OVER (PARTITION BY GET_FINANCIAL_YEAR_START(month_start_date)
+                                                                ORDER BY month_start_date),0) AS current_month_sales
+
+FROM input_data
+```
+
+![BigQuery results: fiscal\_year\_start 2020-07-01 through 2021-06, then 2021-07-01; current\_month\_sales 800, 300, 100, 150, 350, 200, 200, then 100, 300, 400, 300, 300, 400 and 300, with previous\_cumulative\_sales null at the start of each fiscal year.](/images/transforming-cumulative-sums-into-monthly-values/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

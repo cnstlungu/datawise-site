@@ -43,7 +43,26 @@ Raspberry Pi Imager
 
 Then, I set up the wireless connectivity for my newly set up Raspberry Pi using the instructions [available here](https://askubuntu.com/questions/1143287/how-to-setup-of-raspberry-pi-3-onboard-wifi-for-ubuntu-server-18-04).
 
-![Terminal output of cat /etc/netplan/50-cloud-init.yaml on rpi-3: a netplan config with ethernets eth0 (dhcp4 true, optional true) and wifis wlan0 with access-points whose SSID and password are redacted, dhcp4 true and version 2.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/3.png)
+```yaml
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        eth0:
+            dhcp4: true
+            optional: true
+    wifis:
+        wlan0:
+            optional: true
+            access-points:
+               "<redacted>":
+                   password: "<redacted>"
+            dhcp4: true
+    version: 2
+```
 
 */etc/netplan/50-cloud-init.yaml*
 
@@ -51,7 +70,22 @@ Then, I set up the wireless connectivity for my newly set up Raspberry Pi using 
 
 Next, I’ve set up hostnames and hosts on each machine.
 
-![Terminal on rpi-3 showing cat /etc/hostname returning rpi-3 and cat /etc/hosts mapping 127.0.0.1 to localhost, 192.168.100.47 to rpi-4 and 192.168.100.6 to the laptop XPS-15-9560, followed by the default IPv6 entries.](/images/how-i-set-up-my-first-hadoop-spark-cluster-preparation/4.png)
+```console
+ubuntu@rpi-3:~$ cat /etc/hostname
+rpi-3
+ubuntu@rpi-3:~$ cat /etc/hosts
+127.0.0.1 localhost
+192.168.100.47 rpi-4
+192.168.100.6 XPS-15-9560
+
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+```
 
 */etc/hostname* and */etc/hosts* for one of the Pis
 

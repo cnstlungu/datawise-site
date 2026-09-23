@@ -35,6 +35,21 @@ I make use of LOGICAL\_AND and LOGICAL\_OR for that.
 As usual, one can achieve the same results using MIN and MAX, since:  
 \- MIN(\[TRUE,..., FALSE\]) = FALSE AND MAX(\[TRUE,..., FALSE\]) = MAX.
 
-![BigQuery SQL on customer orders (is\_paid, is\_shipped) with GROUP BY customer\_id: LOGICAL\_AND(is\_paid) AS all\_orders\_paid, LOGICAL\_OR(NOT is\_shipped) AS outstanding\_orders, and LOGICAL\_OR on olives ordered after DATE\_SUB(CURRENT\_DATE(), INTERVAL 3 MONTH); Customer 1 is true for all three.](/images/another-look-at-logicaland-logicalor-in-bigquery/1.jpg)
+![Input data: an orders table with customer\_id, order\_id, order\_date, product\_id, is\_paid and is\_shipped. Customer 1 has orders 101 to 103 (tomatoes, cucumbers, and olives on 2024-03-01, not shipped); Customer 2 has orders 201 to 203 (olives, mangoes, and grapes on 2024-04-01, neither paid nor shipped).](/images/another-look-at-logicaland-logicalor-in-bigquery/1-input.jpg)
+
+```sql
+SELECT
+  customer_id,
+  LOGICAL_AND(is_paid) AS all_orders_paid,
+  LOGICAL_OR(NOT is_shipped) AS outstanding_orders,
+  LOGICAL_OR(product_id = 'olives' AND
+             order_date > DATE_SUB(CURRENT_DATE(),
+                                   INTERVAL 3 MONTH)) AS ordered_olives_last_3_months
+FROM input_data
+
+GROUP BY customer_id
+```
+
+![Query results: Customer 1 has all\_orders\_paid true, outstanding\_orders true and ordered\_olives\_last\_3\_months true; Customer 2 has false, true and false.](/images/another-look-at-logicaland-logicalor-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*https://www.notjustsql.com*](https://www.notjustsql.com/)*.*

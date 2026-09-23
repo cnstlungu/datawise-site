@@ -37,11 +37,61 @@ Input B:
 
 Here's what the output of INTERSECT would look like:
 
-![BigQuery SQL building CTEs input\_a and input\_b from SELECT rows joined with UNION ALL, then combining SELECT customer\_id, order\_id from each with INTERSECT DISTINCT; the result has one row, customer\_id 1 and order\_id 1001, the only pair present in both inputs.](/images/intersect-and-except-in-bigquery/3.png)
+```sql
+WITH input_a AS (
+SELECT 1 AS customer_id, 1001 AS order_id
+UNION ALL
+SELECT 2 AS customer_id, 1002 AS order_id
+UNION ALL
+SELECT 3 AS customer_id, 1003 AS order_id
+),
+
+input_b AS (
+
+SELECT 1 AS customer_id, 1001 AS order_id
+UNION ALL
+SELECT 5 AS customer_id, 1010 AS order_id
+UNION ALL
+SELECT 6 AS customer_id, 1012 AS order_id
+)
+
+SELECT customer_id, order_id from input_b
+
+INTERSECT DISTINCT
+
+SELECT customer_id, order_id FROM input_a
+```
+
+![BigQuery result of INTERSECT DISTINCT: one row, customer\_id 1 with order\_id 1001.](/images/intersect-and-except-in-bigquery/3-result.png)
 
 And EXCEPT:
 
-![BigQuery SQL with the same input\_a and input\_b CTEs, selecting customer\_id, order\_id from input\_b EXCEPT DISTINCT the rows of input\_a; the result has two rows, customer 5 with order 1010 and customer 6 with order 1012, the pairs found only in input\_b.](/images/intersect-and-except-in-bigquery/4.png)
+```sql
+WITH input_a AS (
+SELECT 1 AS customer_id, 1001 AS order_id
+UNION ALL
+SELECT 2 AS customer_id, 1002 AS order_id
+UNION ALL
+SELECT 3 AS customer_id, 1003 AS order_id
+),
+
+input_b AS (
+
+SELECT 1 AS customer_id, 1001 AS order_id
+UNION ALL
+SELECT 5 AS customer_id, 1010 AS order_id
+UNION ALL
+SELECT 6 AS customer_id, 1012 AS order_id
+)
+
+SELECT customer_id, order_id from input_b
+
+EXCEPT DISTINCT
+
+SELECT customer_id, order_id FROM input_a
+```
+
+![BigQuery result of EXCEPT DISTINCT: two rows, customer 5 with order 1010 and customer 6 with order 1012.](/images/intersect-and-except-in-bigquery/4-result.png)
 
 Thanks for reading!
 

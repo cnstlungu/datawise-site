@@ -22,7 +22,46 @@ To avoid multiple joins, you can use a correlated subquery to fetch all possible
 
 A word of caution: correlated subqueries execute once per row, which can impact performance, especially with large datasets. However, they’re a valuable tool in your SQL tool belt, particularly when other elegant solutions aren’t available.
 
-![BigQuery SQL rewrite: four LEFT JOINs to calculated\_averages (per product, subcategory, category and all products) merged with COALESCE become one correlated subquery with OR conditions, ORDER BY CASE WHEN priorities 1 to 4 and LIMIT 1, returning average\_ordered\_quantity.](/images/expressing-multiple-repeated-joins-as-a-correlated-subquery/1.jpg)
+```sql
+SELECT
+  nd.product_id,
+  nd.subcategory,
+  nd.category,
+  COALESCE(cap.average_qty,
+           cas.average_qty,
+           cac.average_qty,
+           ct.average_qty) AS average_qty
+
+FROM new_data nd
+LEFT JOIN calculated_averages cap ON nd.product_id = cap.product_id --per product
+LEFT JOIN calculated_averages cas ON nd.subcategory = cas.subcategory AND
+                                     cas.product_id IS NULL --per subcategory
+LEFT JOIN calculated_averages cac ON nd.category = cac.category AND
+                                     cac.subcategory IS NULL --per category
+LEFT JOIN calculated_averages ct ON ct.category IS NULL --for all products
+```
+
+```sql
+SELECT
+  nd.product_id,
+  (SELECT ca.average_ordered_quantity
+   FROM calculated_averages ca
+   WHERE
+      (nd.product_id = ca.product_id)
+      OR (nd.subcategory = ca.subcategory AND ca.product_id IS NULL)
+      OR (nd.category = ca.category AND ca.subcategory IS NULL)
+      OR (ca.category IS NULL)
+   ORDER BY
+      CASE
+        WHEN nd.product_id = ca.product_id THEN 1
+        WHEN nd.subcategory = ca.subcategory AND ca.product_id IS NULL THEN 2
+        WHEN nd.category = ca.category AND ca.subcategory IS NULL THEN 3
+        ELSE 4
+      END
+   LIMIT 1) AS average_ordered_quantity
+
+FROM new_data nd
+```
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

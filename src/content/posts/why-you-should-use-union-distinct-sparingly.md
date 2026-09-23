@@ -18,7 +18,57 @@ If you're UNIONING two sources known to have distinct values (and they don't hav
 
 In the example below, I've unioned two Google Trends tables - one that is only for US terms and another one for the rest of the world. Since one table only contains US and the other everything except the US, we know the union of the two tables to be distinct from the start, thus not needing the UNION DISTINCT.
 
-![BigQuery SQL unioning google\_trends.top\_terms (US) with international\_top\_terms, run once with UNION DISTINCT and once with UNION ALL; both process 13.9 GB, but UNION DISTINCT uses 47 min 31 sec of slot time and shuffles 69.37 GB versus 25 min 45 sec and 48.72 GB for UNION ALL.](/images/why-you-should-use-union-distinct-sparingly/1.jpg)
+```sql
+SELECT
+  dma_name AS region_name,
+  term,
+  week,
+  score,
+  rank,
+  refresh_date,
+  'US' AS country_code
+FROM `bigquery-public-data.google_trends.top_terms` --US terms
+
+UNION DISTINCT
+
+SELECT
+  region_name,
+  term,
+  week,
+  score,
+  rank,
+  refresh_date,
+  country_code
+FROM `bigquery-public-data.google_trends.international_top_terms` --international terms excl US
+```
+
+![Execution details for the UNION DISTINCT query: elapsed time 21 sec, slot time consumed 47 min 31 sec, bytes shuffled 69.37 GB, bytes spilled to disk 0 B.](/images/why-you-should-use-union-distinct-sparingly/1-result.jpg)
+
+```sql
+SELECT
+  dma_name AS region_name,
+  term,
+  week,
+  score,
+  rank,
+  refresh_date,
+  'US' AS country_code
+FROM `bigquery-public-data.google_trends.top_terms` --US terms
+
+UNION ALL
+
+SELECT
+  region_name,
+  term,
+  week,
+  score,
+  rank,
+  refresh_date,
+  country_code
+FROM `bigquery-public-data.google_trends.international_top_terms` --international terms excl US
+```
+
+![Execution details for the UNION ALL query: elapsed time 15 sec, slot time consumed 25 min 45 sec, bytes shuffled 48.72 GB, bytes spilled to disk 0 B.](/images/why-you-should-use-union-distinct-sparingly/1-result-2.jpg)
 
 There's no difference indeed for on-demand pricing (same amount of data scanned), but quite a difference for capacity pricing users ( 1/2 of slot usage).
 

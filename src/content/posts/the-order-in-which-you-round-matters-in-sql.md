@@ -19,7 +19,33 @@ Rounding numbers in SQL is one of the simplest operation, but it's important to 
 
 When you ROUND a value and then aggregate it using functions like SUM or AVG, the outcome may differ significantly compared to first aggregating the values and then rounding the result.
 
-![BigQuery SQL grouping quantities by country and comparing SUM(ROUND(quantity,0)) AS sum\_rounded\_quantities with ROUND(SUM(quantity),0) AS round\_sum\_of\_quantities; UK gives 4.0 vs 5.0 and US 7.0 vs 6.0, so rounding before or after summing changes the result.](/images/the-order-in-which-you-round-matters-in-sql/1.jpg)
+```sql
+WITH input_data AS (
+
+  SELECT 1.2 AS quantity, 'UK' AS country
+  UNION ALL
+  SELECT 1.4 AS quantity, 'UK' AS country
+  UNION ALL
+  SELECT 2.2 AS quantity, 'UK' AS country
+  UNION ALL
+  SELECT 1.8 AS quantity, 'US' AS country
+  UNION ALL
+  SELECT 1.5 AS quantity, 'US' AS country
+  UNION ALL
+  SELECT 2.6 AS quantity, 'US' AS country
+)
+
+SELECT
+  country,
+  SUM(ROUND(quantity,0)) AS sum_rounded_quantities, -- rounds, them sums
+  ROUND(SUM(quantity),0) AS round_sum_of_quantities -- sums, then rounds
+
+FROM input_data
+
+GROUP BY country
+```
+
+![BigQuery results: UK has sum\_rounded\_quantities 4.0 and round\_sum\_of\_quantities 5.0; US has 7.0 and 6.0.](/images/the-order-in-which-you-round-matters-in-sql/1-result.jpg)
 
 As with all things, take into consideration your context and business problem you're trying to solve.
 

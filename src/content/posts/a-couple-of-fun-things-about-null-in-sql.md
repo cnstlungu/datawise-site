@@ -29,7 +29,32 @@ You can handle NULLS with:
 🔹 IFNULL/ISNULL: if null, use a backup value  
 🔹 NULLIF: replace this value with a NULL
 
-![BigQuery SQL doing a FULL OUTER JOIN source\_b USING(order\_id) where each source has one NULL order\_id; orders 1 and 2 match (UK apples, US peaches), but the NULL keys do not, giving separate rows for FR with null product and grapes with null country.](/images/a-couple-of-fun-things-about-null-in-sql/1.jpg)
+```sql
+WITH source_a AS (
+
+  SELECT 1 AS order_id, 'UK' AS country
+  UNION ALL
+  SELECT 2 AS order_id, 'US' AS country
+  UNION ALL
+  SELECT NULL AS order_id, 'FR' AS country
+),
+source_b AS (
+
+  SELECT 1 AS order_id, 'apples' AS product
+  UNION ALL
+  SELECT 2 AS order_id, 'peaches' AS product
+  UNION ALL
+  SELECT NULL AS order_id, 'grapes' AS products
+
+)
+SELECT
+order_id, country, product
+
+FROM source_a
+FULL OUTER JOIN source_b USING(order_id)
+```
+
+![BigQuery results: order\_id 1 is UK with apples and 2 is US with peaches; the NULL keys don't match, so row 3 is FR with a null product and row 4 is grapes with a null order\_id and country.](/images/a-couple-of-fun-things-about-null-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

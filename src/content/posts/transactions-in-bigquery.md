@@ -24,6 +24,26 @@ The docs point out that use cases for transactions could include:
 
 In the example below, we wanted to perform another operation after inserting a row in the table, but upon encountering an error, that change is reverted as well, leaving us with the state we had before running this code.
 
-![BigQuery SQL script with BEGIN TRANSACTION, an INSERT INTO learning.some\_table and a SELECT ERROR call before COMMIT TRANSACTION, plus an EXCEPTION WHEN ERROR THEN block that selects @@error.message and runs ROLLBACK TRANSACTION; the execution list shows the ERROR step failing and the rollback succeeding.](/images/transactions-in-bigquery/1.jpg)
+```sql
+BEGIN
+
+  BEGIN TRANSACTION;
+  -- ALL OR NOTHING: Operations inside transaction happen successfully as a whole,
+  -- or are being rolled back to previous state
+  INSERT INTO learning.some_table
+    VALUES (1, 'New York', 'USA');
+
+  -- An operation that produces an error.
+  SELECT ERROR("Some VERY unexpected error");
+  COMMIT TRANSACTION;
+
+EXCEPTION WHEN ERROR THEN
+  -- Rollback the transaction and the changes happening inside it
+  SELECT @@error.message;
+  ROLLBACK TRANSACTION;
+END;
+```
+
+![BigQuery script results: 5 statements processed in 4 sec; BEGIN TRANSACTION, INSERT INTO learning.some\_table, SELECT @@error.message and ROLLBACK TRANSACTION succeed, while SELECT ERROR("Some VERY unexpected error") fails.](/images/transactions-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -27,6 +27,30 @@ Take string columns for instance. In BigQuery, as with other engines, there is a
 
 The main goal here is to bring everything to a common denominator, being able to tell which observations belong together and which data can be considered "missing".
 
-![BigQuery SQL on city values containing empty strings, whitespace and a NULL: SELECT DISTINCT city returns 7 variants, while SELECT DISTINCT NULLIF(TRIM(city),'') AS city, annotated to remove whitespace and make empty strings NULL, returns only null, New York and Athens.](/images/cleaning-up-strings-in-bigquery/1.jpg)
+```sql
+SELECT '' AS city --empty string
+UNION ALL
+SELECT ' ' AS city --whitespace
+UNION ALL
+SELECT 'New York' AS city
+UNION ALL
+SELECT 'Athens' AS city
+UNION ALL
+SELECT ' New York' AS city --whitespace before
+UNION ALL
+SELECT 'New York ' AS city -- whitespace after
+UNION ALL
+SELECT NULL AS city       -- NULL value
+```
+
+```sql
+SELECT DISTINCT city FROM input_data
+```
+
+```sql
+SELECT DISTINCT NULLIF(TRIM(city),'') AS city FROM input_data
+```
+
+![BigQuery results: SELECT DISTINCT city returns 7 rows (two that look blank, New York, Athens, New York with a leading space, New York again, and null), while the NULLIF(TRIM(city),'') query returns 3 rows: null, New York and Athens.](/images/cleaning-up-strings-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

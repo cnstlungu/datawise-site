@@ -22,7 +22,40 @@ By comparing the total number of rows in a group against the distinct count of t
 
 This was a quick exercise but use this with care. Depending on your SQL implementation, data volumes and context, results may vary.
 
-![BigQuery SQL checking table grain with GROUP BY ALL, comparing COUNT(FARM\_FINGERPRINT(TO\_JSON\_STRING(i))) with its COUNT(DISTINCT ...); order\_id, product\_name is an incorrect grain, while adding order\_status is correct but reveals duplicate Plums rows (count\_duplicates 2, count\_grain 1).](/images/table-grain-quick-validation-with-sql/1.jpg)
+![Input data: input\_data with order\_id, product\_name, qty, price and order\_status, 15 rows for orders 1 to 3 (Apples, Mangoes, Cucumbers, Tomatoes and Plums), each product once ORDER\_PLACED and once ORDER\_SENT, with the order 3 Plums rows repeated and one Plums row with a null order\_status.](/images/table-grain-quick-validation-with-sql/1-input.jpg)
+
+```sql
+SELECT
+
+  order_id,
+  product_name,
+  COUNT(FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_duplicates,
+  COUNT(DISTINCT FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_grain
+
+FROM input_data i
+
+GROUP BY ALL
+
+HAVING count_duplicates > 1 OR count_grain > 1
+```
+
+```sql
+SELECT
+
+  order_id,
+  product_name,
+  order_status,
+  COUNT(FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_duplicates,
+  COUNT(DISTINCT FARM_FINGERPRINT(TO_JSON_STRING(i))) AS count_grain
+
+FROM input_data i
+
+GROUP BY ALL
+
+HAVING count_duplicates > 1 OR count_grain > 1
+```
+
+![Results of the two queries. Incorrect grain (order\_id, product\_name): six groups with count\_grain 2, e.g. order 1 Apples 2/2 and order 3 Plums with count\_duplicates 4. Correct grain, but there are duplicates (adding order\_status): order 3 Plums ORDER\_PLACED and ORDER\_SENT, each count\_duplicates 2 and count\_grain 1.](/images/table-grain-quick-validation-with-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

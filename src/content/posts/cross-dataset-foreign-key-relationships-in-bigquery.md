@@ -18,7 +18,32 @@ While the performance gain when using these *unenforced* PK/FK constraints in ge
 
 For a refresher on what these constraints are, see [my previous post](/bigquery-primary-key-foreign-key-constraints).
 
-![BigQuery SQL creating learning.order\_lines and auxiliary.products, then ALTER TABLE ADD PRIMARY KEY(order\_id, product\_id) NOT ENFORCED and ADD FOREIGN KEY(product\_id) REFERENCES auxiliary.products(id) NOT ENFORCED across datasets; the table details list the primary keys.](/images/cross-dataset-foreign-key-relationships-in-bigquery/1.jpg)
+```sql
+CREATE OR REPLACE TABLE `learning.order_lines` AS
+
+SELECT 1001 AS order_id, 1 AS product_id UNION ALL
+SELECT 1002 AS order_id, 2 AS product_id UNION ALL
+SELECT 1003 AS order_id, 3 AS product_id;
+
+ALTER TABLE `learning.order_lines` ADD PRIMARY KEY(order_id, product_id) NOT ENFORCED;
+
+ALTER TABLE `learning.order_lines` ADD FOREIGN KEY(product_id) REFERENCES `auxiliary.products`(id) NOT ENFORCED;
+```
+
+![Table details for learning.order\_lines: Primary key(s) order\_id, product\_id.](/images/cross-dataset-foreign-key-relationships-in-bigquery/1-schema.jpg)
+
+```sql
+CREATE OR REPLACE TABLE `auxiliary.products` AS
+
+SELECT 1 AS id, 'Apple' AS product_name UNION ALL
+SELECT 2 AS id, 'Pear' AS product_name UNION ALL
+SELECT 3 AS id, 'Mango' AS product_name;
+
+
+ALTER TABLE `auxiliary.products` ADD PRIMARY KEY(id) NOT ENFORCED;
+```
+
+![Table details for auxiliary.products: Primary key(s) id.](/images/cross-dataset-foreign-key-relationships-in-bigquery/1-schema-2.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

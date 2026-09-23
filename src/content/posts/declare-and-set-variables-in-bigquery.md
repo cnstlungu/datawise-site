@@ -21,7 +21,25 @@ A couple of ways to do it:
 \- a variable can be declared together with the type and choose to assign a value at declaration or later with SET  
 \- a sub query can also provide the implicit value and table of a variable
 
-![BigQuery SQL script with DECLARE ... DEFAULT CURRENT\_TIMESTAMP() (implicit type), DECLARE fruits DEFAULT from a subquery giving ARRAY\<STRUCT\<STRING name, STRING taste\>\>, DECLARE another\_timestamp TIMESTAMP, DECLARE a, b, c DEFAULT 0, and SET; the result shows both timestamps and apple/sweet, lemon/sour.](/images/declare-and-set-variables-in-bigquery/1.jpg)
+```sql
+DECLARE start_timestamp DEFAULT CURRENT_TIMESTAMP(); -- declare with default value, implicit type
+
+DECLARE fruits DEFAULT (
+  SELECT [STRUCT('apple' AS name, 'sweet' AS taste  ), STRUCT('lemon','sour')]
+); --- declare with implicit type from subquery
+   --- ARRAY<STRUCT<STRING name, STRING taste>>
+
+DECLARE another_timestamp TIMESTAMP; -- declare with explicit type
+
+DECLARE a, b, c DEFAULT 0; -- declare multiple values at once with a single default
+
+SET another_timestamp = TIMESTAMP '2021-01-01 17:00:00'; -- set a previous declared variable
+
+
+SELECT start_timestamp, another_timestamp, fruits;
+```
+
+![BigQuery results: start\_timestamp 2024-06-17 13:03:42 UTC, another\_timestamp 2021-01-01 17:00:00 UTC, and the fruits array as two rows, apple/sweet and lemon/sour.](/images/declare-and-set-variables-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

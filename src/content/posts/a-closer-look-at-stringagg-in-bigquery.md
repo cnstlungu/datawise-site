@@ -29,6 +29,34 @@ so that, as in the below example, ("Card", "Cash") and ("Cash", "Card") both pro
 
 Any interesting aggregation function that you use in your SQL dialect?
 
-![BigQuery SQL using STRING\_AGG(DISTINCT payment\_method, '\~' ORDER BY payment\_method) grouped by customer\_id; results are Card\~Cash\~Gift\_card for customer 1, Card\~Gift\_card for 2 and Cash\~Gift\_card for 3, with duplicates removed and values sorted.](/images/a-closer-look-at-stringagg-in-bigquery/1.jpg)
+```sql
+WITH customer_data AS
+(
+  SELECT 1 AS customer_id, 1001 AS order_id, 'Card' AS payment_method
+  UNION ALL
+  SELECT 1 AS customer_id, 1002 AS order_id, 'Cash' AS payment_method
+  UNION ALL
+  SELECT 1 AS customer_id, 1003 AS order_id, 'Gift_card' AS payment_method
+  UNION ALL
+  SELECT 1 AS customer_id, 1004 AS order_id, 'Card' AS payment_method
+  UNION ALL
+  SELECT 2 AS customer_id, 2001 AS order_id, 'Gift_card' AS payment_method
+  UNION ALL
+  SELECT 2 AS customer_id, 2002 AS order_id, 'Card' AS payment_method
+  UNION ALL
+  SELECT 2 AS customer_id, 2003 AS order_id, 'Card' AS payment_method
+  UNION ALL
+  SELECT 3 AS customer_id, 3001 AS order_id, 'Cash' AS payment_method
+  UNION ALL
+  SELECT 3 AS customer_id, 3002 AS order_id, 'Gift_card' AS payment_method
+)
+SELECT
+  customer_id,
+  STRING_AGG(DISTINCT payment_method, '~' ORDER BY payment_method) AS payment_method_agg
+FROM customer_data
+GROUP BY customer_id
+```
+
+![BigQuery results: payment\_method\_agg is Card\~Cash\~Gift\_card for customer 1, Card\~Gift\_card for customer 2 and Cash\~Gift\_card for customer 3.](/images/a-closer-look-at-stringagg-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

@@ -26,7 +26,21 @@ If order to retrieve their manager's name, we'd need to perform a self join, usi
 
 By the way, this particular case can also be solved with a [recursive common-table expression](/recursive-ctes-in-bigquery).
 
-![SQL self-join on an employees table (employee\_id, name, manager\_id): employees emp LEFT JOIN employees man ON emp.manager\_id = man.employee\_id returns each employee with manager\_name, e.g. Jacob D reports to Andrew F, while Sabrina W has a null manager.](/images/self-joins-in-sql/1.jpg)
+![Input data: an employees table with employee\_id, name and manager\_id, six rows: 1 Jacob D (manager 3), 2 Jane D (4), 3 Andrew F (5), 4 Liz Q (5), 5 Matt O (6) and 6 Sabrina W (null).](/images/self-joins-in-sql/1-input.jpg)
+
+```sql
+SELECT
+  emp.employee_id,
+  emp.name AS employee_name,
+  man.employee_id AS manager_id,
+  man.name AS manager_name
+
+FROM employees emp
+
+LEFT JOIN employees man ON emp.manager_id = man.employee_id
+```
+
+![Output: each employee with their manager, Jacob D under Andrew F, Jane D under Liz Q, Andrew F and Liz Q under Matt O, Matt O under Sabrina W, and Sabrina W with a null manager\_id and manager\_name.](/images/self-joins-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

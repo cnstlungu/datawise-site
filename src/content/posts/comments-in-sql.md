@@ -28,6 +28,28 @@ With regards to the notation, we have:
 
 How much are you using comments in your SQL code and in what situations?
 
-![BigQuery SQL on an orderline\_updates CTE demonstrating comment styles: a full-line -- comment, inline -- and # comments after columns, an inline /\* \*/ comment followed by AS total\_quantity, and a multi-line /\* \*/ block before FROM; the query returns four order lines normally.](/images/comments-in-sql/1.jpg)
+```sql
+WITH orderline_updates AS (
+
+  SELECT 1 AS order_id, 'Apples' AS product, 10 AS quantity, '2021-01-01 12:00:12' AS last_updated UNION ALL
+  SELECT 1 AS order_id, 'Grapes' AS product, 3 AS quantity, '2021-01-01 12:00:12' AS last_updated UNION ALL
+  SELECT 2 AS order_id, 'Mangoes' AS product, 1 AS quantity, '2021-01-02 10:00:19' AS last_updated UNION ALL
+  SELECT 2 AS order_id, 'Kiwi' AS product, 6 AS quantity, '2021-01-03 12:24:33' AS last_updated
+)
+-- single line comment, taking the entire line
+
+SELECT
+  order_id, -- inline comment
+  product, # also an inline comment
+  quantity /* also an inline comment, but you can write code after it */ AS total_quantity,
+  last_updated
+/*
+comment spanning multiple lines:
+a multi-line comment
+*/
+FROM orderline_updates
+```
+
+![BigQuery results: four order lines, order 1 Apples 10 and Grapes 3 (2021-01-01 12:00:12), order 2 Mangoes 1 (2021-01-02 10:00:19) and Kiwi 6 (2021-01-03 12:24:33), with the quantity column named total\_quantity.](/images/comments-in-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

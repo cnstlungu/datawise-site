@@ -35,6 +35,36 @@ When values come from user input or external sources, parameters are the safer
 🚅 Performance  
 Parameters may allow the optimizer to reuse execution plans, while variables can sometimes prevent that.
 
-![BigQuery SQL comparing a query parameter and a variable on bigquery-public-data.samples.shakespeare: WHERE corpus = @corpus with corpus set to sonnets under Query parameters, versus DECLARE corpus\_var STRING DEFAULT 'sonnets'; both process 4.88 MB and return the same word counts.](/images/parameters-in-bigquery/1.png)
+![BigQuery query settings: a query parameter named corpus, type STRING, value sonnets.](/images/parameters-in-bigquery/1-input.png)
+
+```sql
+SELECT
+    word,
+    word_count
+  FROM
+    `bigquery-public-data.samples.shakespeare`
+  WHERE
+    corpus = @corpus
+
+  ORDER BY
+    word_count DESC;
+```
+
+```sql
+DECLARE corpus_var STRING DEFAULT 'sonnets';
+
+SELECT
+    word,
+    word_count
+  FROM
+    `bigquery-public-data.samples.shakespeare`
+  WHERE
+    corpus = corpus_var
+
+  ORDER BY
+    word_count DESC;
+```
+
+![BigQuery results of both queries, side by side and identical: the 363, of 351, I 342, my 335, to 335, in 287.](/images/parameters-in-bigquery/1-result.png)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

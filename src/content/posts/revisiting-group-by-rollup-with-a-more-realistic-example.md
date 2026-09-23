@@ -45,7 +45,42 @@ Here’s how it works in practice:
 • Cucumbers → No past sales, no Vegetables subcategory data → Uses Food category → AVG(quantity) = 4.67  
 • Washing Machine → No sales data, no relevant category → Uses overall average → AVG(quantity) = 6
 
-![BigQuery SQL building calculated\_averages from sales\_data with ROUND(AVG(quantity),2) and GROUP BY ROLLUP (category, subcategory, product\_id), then LEFT JOINs and COALESCE for a fallback average; results give Mangoes 4.67 from Fruits, Cucumbers 4.67 from Food and Washing Machine 6.0 overall.](/images/revisiting-group-by-rollup-with-a-more-realistic-example/1.jpg)
+![Input data: sales\_data with order\_id, product\_id, subcategory, category and quantity: Apples (5 and 7) and Pears (2) in Fruits, Food; Trainers (10) in Casual, and Ski (2) and Snowboard (10) in Winter sports, all Sports equipment.](/images/revisiting-group-by-rollup-with-a-more-realistic-example/1-input.jpg)
+
+```sql
+SELECT
+  category,
+  subcategory,
+  product_id,
+  ROUND(AVG(quantity),2) AS average_qty
+
+FROM sales_data
+
+GROUP BY ROLLUP (category, subcategory, product_id)
+```
+
+![Query results, the calculated\_averages table: average\_qty 6.0 overall, 4.67 for Food and for Fruits, 6.0 for Apples, 2.0 for Pears, 7.33 for Sports equipment, 10.0 for Casual and Trainers, 6.0 for Winter sports, 2.0 for Ski and 10.0 for Snowboard.](/images/revisiting-group-by-rollup-with-a-more-realistic-example/1-result.jpg)
+
+```sql
+SELECT
+  nd.product_id,
+  nd.subcategory,
+  nd.category,
+  COALESCE(cap.average_qty,
+           cas.average_qty,
+           cac.average_qty,
+           ct.average_qty) AS average_qty
+
+FROM new_data nd
+LEFT JOIN calculated_averages cap ON nd.product_id = cap.product_id --per product
+LEFT JOIN calculated_averages cas ON nd.subcategory = cas.subcategory AND
+                                     cas.product_id IS NULL --per subcategory
+LEFT JOIN calculated_averages cac ON nd.category = cac.category AND
+                                     cac.subcategory IS NULL --per category
+LEFT JOIN calculated_averages ct ON ct.category IS NULL --for all products
+```
+
+![Query results with the fallback average\_qty per product: Ski 2.0, Mangoes 4.67, Washing Machine 6.0, Cucumbers 4.67, Snowboard 10.0, Pears 2.0, Trainers 10.0 and Apples 6.0.](/images/revisiting-group-by-rollup-with-a-more-realistic-example/1-result-2.jpg)
 
 𝐈𝐧 𝐥𝐢𝐞𝐮 𝐨𝐟 𝐚 𝐜𝐨𝐧𝐜𝐥𝐮𝐬𝐢𝐨𝐧
 

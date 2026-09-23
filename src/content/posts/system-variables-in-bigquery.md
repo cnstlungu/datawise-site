@@ -23,6 +23,21 @@ Here's a couple of examples:
 
 Check out below an example with slot\_ms (returns slot time in millis), bytes\_billed and creation\_date.
 
-![BigQuery SQL script that runs a COUNT(DISTINCT value) GROUP BY ds\_date query on learning.data\_source, then selects system variables @@project\_id, @@script.slot\_ms, @@script.bytes\_billed and @@script.creation\_time; results show 636839 slot ms and 10485760 bytes billed.](/images/system-variables-in-bigquery/1.jpg)
+```sql
+SELECT ds_date,
+       COUNT(DISTINCT value) AS count_values
+
+FROM `learning.data_source`
+
+GROUP BY ds_date;
+
+SELECT
+  @@project_id AS project_id,
+  @@script.slot_ms AS script_slot_ms,
+  @@script.bytes_billed AS script_bytes_billed,
+  @@script.creation_time AS script_creation_time
+```
+
+![BigQuery results: script\_slot\_ms 636839, script\_bytes\_billed 10485760 and script\_creation\_time 2024-06-22 16:07:41.402000 (the UTC suffix is cut off); the project\_id value is hidden.](/images/system-variables-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

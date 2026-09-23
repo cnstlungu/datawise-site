@@ -18,7 +18,34 @@ Since changing filter values for different test cases / observations you are int
 
 Not a game changer but makes life a bit easier 😁
 
-![BigQuery SQL filtering customers with WHERE STRUCT(country, has\_paid, plan, service) IN (STRUCT('UK', FALSE, 'Premium', 'TV'), STRUCT('FR', FALSE, 'Basic', 'Internet')) as a shorter alternative to chained AND/OR conditions; it returns Catie Doe (UK) and Francesca Duchamp (FR).](/images/using-structs-for-quick-analysis-in-bigquery/1.jpg)
+```sql
+WITH input_data AS (
+  SELECT 'Catie Doe' AS name, 'UK' AS country, false AS has_paid, 'Premium' AS plan, 'TV' AS service
+  UNION ALL
+  SELECT 'Martin Bekker' AS name, 'DE' AS country, true AS has_paid, 'Premium' AS plan, 'TV' AS service
+  UNION ALL
+  SELECT 'Jerry Taylor' AS name, 'US' AS country, true AS has_paid, 'Basic' AS plan, 'Internet' AS service
+  UNION ALL
+  SELECT 'Francesca Duchamp' AS name, 'FR' AS country, false AS has_paid, 'Basic' AS plan, 'Internet' AS service
+  UNION ALL
+  SELECT 'Paolo Rossi' AS name, 'IT' AS country, true AS has_paid, 'Premium' AS plan, 'Internet' AS service
+)
+
+SELECT name, country, has_paid, plan, service FROM input_data
+
+-- Retrive UK customers on a TV Premium Plan or FR customers on Internet Basic plan that haven't paid yet
+
+WHERE STRUCT(country, has_paid, plan, service) IN (STRUCT('UK', FALSE, 'Premium', 'TV'),
+                                                   STRUCT('FR', FALSE, 'Basic', 'Internet'))
+
+--- alternative to:
+-- WHERE
+
+-- (country = 'FR' AND plan='Basic' AND NOT has_paid AND service = 'Internet') OR
+-- (country = 'UK' AND plan='Premium' AND NOT has_paid AND service = 'TV')
+```
+
+![BigQuery results: two rows, Catie Doe (UK, has\_paid false, Premium, TV) and Francesca Duchamp (FR, has\_paid false, Basic, Internet).](/images/using-structs-for-quick-analysis-in-bigquery/1-result.jpg)
 
 *Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

@@ -28,7 +28,40 @@ To do this, we:
 
 We can now see that, for example, for the period between \[2023-01-05, 2023-01-08), for id = 2, B was true and A was false.
 
-![BigQuery SQL merging SCD-2 attribute timelines: anchor dates via UNION DISTINCT, date ranges via LEAD(valid\_date) OVER (PARTITION BY id ORDER BY valid\_date), a LEFT JOIN on overlapping intervals and ARRAY\_AGG(STRUCT(dt.key, dt.value)); for id 2 from 2023-01-05 to 2023-01-08, B is true and A false.](/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1.jpg)
+![Input data: an ASCII table with valid\_from, valid\_to, id, key and value, five rows: id 1 has A true from 2021-01-01 to 2021-01-10 and B true from 2021-01-05 to 2021-01-15; id 2 has B true from 2022-01-05 to 2022-01-15, B true from 2023-01-05 to 2023-01-15 and A false from 2023-01-03 to 2023-01-08.](/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1-input.jpg)
+
+```sql
+WITH anchor_dates AS (
+
+SELECT id, valid_from AS valid_date FROM input_data
+UNION DISTINCT
+SELECT id, valid_to AS valid_date FROM input_data),
+
+date_ranges AS (
+SELECT
+  id,
+  valid_date AS valid_from,
+  LEAD(valid_date) OVER (PARTITION BY id ORDER BY valid_date) AS valid_to
+FROM anchor_dates
+)
+
+SELECT
+  dr.id,
+  dr.valid_from,
+  dr.valid_to,
+  ARRAY_AGG(STRUCT(dt.key, dt.value)) AS attributes
+
+FROM date_ranges dr
+LEFT JOIN input_data dt ON dr.id = dt.id  AND dr.valid_from < dt.valid_to AND dr.valid_to > dt.valid_from
+
+WHERE dr.valid_to IS NOT NULL
+
+GROUP BY dr.id,  dr.valid_from, dr.valid_to
+
+ORDER BY id,  valid_from
+```
+
+![BigQuery results: one row per id and date range with an attributes array of key/value pairs; for example id 1 from 2021-01-05 to 2021-01-10 has A true and B true, id 2 from 2022-01-15 to 2023-01-03 has null, and id 2 from 2023-01-05 to 2023-01-08 has B true and A false.](/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
 

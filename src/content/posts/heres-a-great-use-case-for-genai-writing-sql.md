@@ -34,6 +34,33 @@ Sometimes, it’s about knowing when and where to use the tools at your disposal
 
 What’s your experience? Do you use tools like ChatGPT regularly for your Data Engineering tasks?
 
-![BigQuery SQL with WITH RECURSIVE combinations generating every combination of the letters a to i: the base case UNNESTs the array, the recursive case CROSS JOINs it with CONCAT and WHERE e \> SPLIT(c.combination, ',') at OFFSET(c.size - 1); the result has 511 rows, ending with a,b,c,d,e,f,g,h,i.](/images/heres-a-great-use-case-for-genai-writing-sql/1.jpg)
+```sql
+WITH RECURSIVE combinations AS (
+    -- Base case: Start with each element as a single combination
+    SELECT
+        element,
+        CAST(element AS STRING) AS combination,
+        1 AS size
+    FROM UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS element
+
+    UNION ALL
+
+    -- Recursive case: Add elements to existing combinations
+    SELECT
+        e AS element,
+        CONCAT(c.combination, ',', e) AS combination,
+        c.size + 1 AS size
+    FROM combinations c
+    CROSS JOIN UNNEST(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']) AS e
+    WHERE e > SPLIT(c.combination, ',')[
+        OFFSET(c.size - 1)
+    ] -- Ensure uniqueness and order
+)
+SELECT combination
+FROM combinations
+ORDER BY size, combination;
+```
+
+![BigQuery results, last page (501 to 511 of 511): eight-letter combinations such as a,b,c,d,e,f,g,i and b,c,d,e,f,g,h,i, then row 511 with all nine letters, a,b,c,d,e,f,g,h,i.](/images/heres-a-great-use-case-for-genai-writing-sql/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

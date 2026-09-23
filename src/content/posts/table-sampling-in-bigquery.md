@@ -32,7 +32,13 @@ The simplest is the `PREVIEW` button, which allows us to see a subset of rows fr
 
 Another way would be leveraging partitions in a partitioned table. By selecting one particular partition in such a table we will achieve partition elimination - BigQuery will ignore all other partitions (dates) and process only the one we are providing, achieving a cost saving for us.
 
-![BigQuery SQL selecting all columns from learning.data\_source with a WHERE filter on ds\_date = 2022-01-01 so only one partition is read; the results grid lists rows with id, value and ds\_date, every row dated 2022-01-01.](/images/table-sampling-in-bigquery/3.png)
+```sql
+SELECT *
+FROM `learning.data_source`
+WHERE ds_date = "2022-01-01"
+```
+
+![BigQuery results: 10 rows of id, value and ds\_date, all with ds\_date 2022-01-01.](/images/table-sampling-in-bigquery/3-result.png)
 
 ### Sampling
 

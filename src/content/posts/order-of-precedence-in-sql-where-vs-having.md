@@ -28,7 +28,33 @@ In practice, I'd rename the aggregated column to something like total\_quantity 
 
 Depending what we need, we pick which approach we take, filtering out records before or after aggregation.
 
-![BigQuery SQL comparing two queries on a quantity and country table: SUM(quantity) AS quantity with HAVING quantity \> 0 returns UK 25 and US 10, while WHERE quantity \> 0 before GROUP BY country returns UK 25 and US 15; FR is dropped in both.](/images/order-of-precedence-in-sql-where-vs-having/1.jpg)
+![Input data: quantity and country rows 10 UK, 15 UK, 15 US, -5 US, -10 FR and -5 FR.](/images/order-of-precedence-in-sql-where-vs-having/1-input.jpg)
+
+```sql
+SELECT
+  country,
+  SUM(quantity) AS quantity
+
+FROM input_data
+
+GROUP BY country
+
+HAVING quantity > 0
+```
+
+```sql
+SELECT
+  country,
+  SUM(quantity) AS quantity
+
+FROM input_data
+
+WHERE quantity > 0
+
+GROUP BY country
+```
+
+![BigQuery results side by side: the HAVING query (left) returns UK 25 and US 10, the WHERE query (right) returns UK 25 and US 15.](/images/order-of-precedence-in-sql-where-vs-having/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
 

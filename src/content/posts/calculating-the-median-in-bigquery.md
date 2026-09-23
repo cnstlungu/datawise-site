@@ -21,6 +21,24 @@ Both of these are window functions, so if you want to simulate grouping, you nee
 
 Additionally, we can use the approximate aggregation function `APPROX_QUANTILES`, which allows grouping. This function splits the values into quantiles, from which we can select the 50th percentile to retrieve the median. Check out the comments for a quick into intro approximate aggregate functions.
 
-![Two BigQuery SQL queries for the median of an UNNEST of 1, 2, 2, 3, 4, NULL: PERCENTILE\_CONT and PERCENTILE\_DISC(x, 0.5 IGNORE NULLS) OVER() return median\_cont 2.0 and median\_disc 2, while APPROX\_QUANTILES(value, 100) with OFFSET(50) and GROUP BY id returns median 2.](/images/calculating-the-median-in-bigquery/1.jpg)
+```sql
+SELECT
+  1 AS id,
+  PERCENTILE_CONT(x, 0.5 IGNORE NULLS) OVER() AS median_cont,
+  PERCENTILE_DISC(x, 0.5 IGNORE NULLS) OVER() AS median_disc
+FROM
+  UNNEST([1,2,2,3,4,NULL]) as x
+LIMIT 1;
+```
+
+```sql
+SELECT
+  1 AS id,
+  APPROX_QUANTILES(value, 100)[OFFSET(50)] AS median
+FROM UNNEST([1,2,2,3,4,NULL]) AS value
+GROUP BY id
+```
+
+![BigQuery results: the first query returns median\_cont 2.0 and median\_disc 2, the APPROX\_QUANTILES query returns median 2.](/images/calculating-the-median-in-bigquery/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

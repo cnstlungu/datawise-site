@@ -18,7 +18,18 @@ I would run a series of quick COUNTs, testing key attributes of the data, such a
 
 A good way to ensure data quality in a data pipeline is to have a good look at it in the first place.
 
-![SQL data-quality check on input\_data (order\_id, is\_paid, product\_id): SELECT is\_paid IS NULL, product\_id IS NULL and COUNT(1) AS occurences with GROUP BY ALL; the result shows 4 clean rows, 1 row with a NULL product\_id and 1 with a NULL is\_paid.](/images/the-first-thing-i-do-when-analyzing-a-sql-table/1.jpg)
+![Input data: input\_data with order\_id, is\_paid and product\_id, six rows; order 1 has a NULL product\_id and order 6 a NULL is\_paid.](/images/the-first-thing-i-do-when-analyzing-a-sql-table/1-input.jpg)
+
+```sql
+SELECT
+  is_paid IS NULL AS is_paid_null,
+  product_id IS NULL AS product_id_null,
+  COUNT(1) AS occurences
+FROM input_data
+GROUP BY ALL
+```
+
+![Query results: is\_paid\_null false with product\_id\_null true occurs 1 time, both false 4 times, and is\_paid\_null true with product\_id\_null false 1 time.](/images/the-first-thing-i-do-when-analyzing-a-sql-table/1-result.jpg)
 
 *Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*
 
