@@ -12,7 +12,7 @@ series: "bigquery-json"
 hashnodeCuid: "clxpw3w43000f08l9dovqakvv"
 ---
 
-Here's a mildly interesting function if you're working with JSON in [BigQuery](https://www.linkedin.com/feed/hashtag/?keywords=bigquery&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7207023990232477698).
+Here's a mildly interesting function if you're working with JSON in BigQuery.
 
 JSON\_TYPE takes in a JSON value and returns the name of the respective JSON type (object, array, string, number, boolean, null) as a STRING.
 

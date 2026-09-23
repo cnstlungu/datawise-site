@@ -38,7 +38,7 @@ Check the 'Job Information' of your BigQuery. This will tell if you if an index 
 
 ### Further reading
 
-Check out [text analyzer options](https://cloud.google.com/bigquery/docs/reference/standard-sql/text-analysis) to see what different use case you can cover better. Maybe a future post about this 😁
+Check out [text analyzer options](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/text-analysis) to see what different use case you can cover better. Maybe a future post about this 😁
 
 ### Words of caution
 

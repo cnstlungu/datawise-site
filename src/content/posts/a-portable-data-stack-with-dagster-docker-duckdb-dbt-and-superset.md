@@ -15,19 +15,19 @@ So while ago I decided to spin off a previous proof of concept I've had ([portab
 
 Scenario:  
 Imagine a company selling postcards of European cities:  
-\- Their main system? A [#Postgres](https://www.linkedin.com/feed/hashtag/?keywords=postgres&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) OLTP for direct sales & customer data.  
-\- They collaborate with resellers, obtaining indirect sales data via [#JSON](https://www.linkedin.com/feed/hashtag/?keywords=json&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) & [#CSV](https://www.linkedin.com/feed/hashtag/?keywords=csv&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929).  
+\- Their main system? A Postgres OLTP for direct sales & customer data.  
+\- They collaborate with resellers, obtaining indirect sales data via JSON & CSV.  
 \- The need? A Data Warehouse to fuel their analytical insights and provide dashboards.
 
 Objective: Craft a completely portable system with every component containerized. The aim? Minimalism yet realistic functionality.
 
 The Build:  
-\- [#Python](https://www.linkedin.com/feed/hashtag/?keywords=python&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) scripts churn out sample data.  
-\- [#Dbt](https://www.linkedin.com/feed/hashtag/?keywords=dbt&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) Core for model building.  
-\- [#Dagster](https://www.linkedin.com/feed/hashtag/?keywords=dagster&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) for orchestration (bonus: used [#Polars](https://www.linkedin.com/feed/hashtag/?keywords=polars&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) backend).  
-\- [#DuckDB](https://www.linkedin.com/feed/hashtag/?keywords=duckdb&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) as our OLAP database for the Data Warehouse.  
-\- [#Superset](https://www.linkedin.com/feed/hashtag/?keywords=superset&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) for visualization, aiding the data analyst.  
-\- [#Docker](https://www.linkedin.com/feed/hashtag/?keywords=docker&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7097688173878652929) and Docker-compose for containerization
+\- Python scripts churn out sample data.  
+\- dbt Core for model building.  
+\- Dagster for orchestration (bonus: used Polars backend).  
+\- DuckDB as our OLAP database for the Data Warehouse.  
+\- Superset for visualization, aiding the data analyst.  
+\- Docker and Docker-compose for containerization
 
 Takeaways:  
 🌟 DuckDB: An OLAP gem! Think of it as Sqlite’s OLAP counterpart: versatile, user-friendly, and a powerhouse for these applications.  

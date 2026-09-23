@@ -25,7 +25,7 @@ WHEN NOT MATCHED BY source -- e.g., delete from target
 WHEN NOT MATCHED BY target -- e.g., insert in target
 ```
 
-But with ON FALSE in the merge\_condition? [BigQuery docs](https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#merge_statement) call it a "constant false predicate", perfect for atomic DELETEs on the target and INSERTs from a source. Essentially, a REPLACE operation.
+But with ON FALSE in the merge\_condition? [BigQuery docs](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#merge_statement) call it a "constant false predicate", perfect for atomic DELETEs on the target and INSERTs from a source. Essentially, a REPLACE operation.
 
 I tested this on some data, especially after my previous post on [Primary and Foreign Keys](/bigquery-primary-key-foreign-key-constraints). The outcomes are looking super promising.
 

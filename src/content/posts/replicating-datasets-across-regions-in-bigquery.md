@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "clxoa8kw6000209jy266offj9"
 ---
 
-So this has been up for almost a year, but I've just found out that [you can replicate datasets across regions in BigQuery](https://cloud.google.com/bigquery/docs/data-replication). Obligatory remark that this is still in preview.
+So this has been up for almost a year, but I've just found out that [you can replicate datasets across regions in BigQuery](https://docs.cloud.google.com/bigquery/docs/data-replication). Obligatory remark that this is still in preview.
 
 This should help quite a bit if you're working with data distributed across multiple BQ regions.
 

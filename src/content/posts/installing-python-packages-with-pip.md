@@ -18,7 +18,7 @@ Apart from the built-in modules that come by default with the Python installatio
 
 You do so with a package manager. Perhaps the most widely known is **pip**, but there are other options like **poetry** or **uv**.
 
-You can check more information about Python packages at [pypi.org](http://pypi.org)
+You can check more information about Python packages at [pypi.org](https://pypi.org)
 
 Here's a quick list of common use cases:
 

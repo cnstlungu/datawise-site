@@ -93,7 +93,7 @@ resource "google_bigquery_data_transfer_config" "query_config" {
 
 ### Creating a Scheduled Query using the API
 
-It's also possible to create a scheduled query using one of the BigQuery APIs or the bq CLI command - check the GCP documentation [here](https://cloud.google.com/bigquery/docs/scheduling-queries#python).
+It's also possible to create a scheduled query using one of the BigQuery APIs or the bq CLI command - check the GCP documentation [here](https://docs.cloud.google.com/bigquery/docs/scheduling-queries#python).
 
 ### Viewing scheduled queries
 

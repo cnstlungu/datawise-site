@@ -18,7 +18,7 @@ It essentially means you are joining a table with itself to retrieve some result
 
 Prior to the introduction of window functions, self-joins were much more prevalent - you would, for example, join the table to itself to retrieve the value for the previous day.
 
-When considering using a self-join, be mindful of the performance implications. BigQuery, for example, [explicitly lists self-joins as an anti-pattern](https://cloud.google.com/bigquery/docs/best-practices-performance-compute#avoid_self_joins). That is not to say that the need for self-tables has disappeared, there are still cases where we'd need it.
+When considering using a self-join, be mindful of the performance implications. BigQuery, for example, [explicitly lists self-joins as an anti-pattern](https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute#avoid_self_joins). That is not to say that the need for self-tables has disappeared, there are still cases where we'd need it.
 
 Let's look at an example. We have a table containing all the employee data, including the id of their manager.
 

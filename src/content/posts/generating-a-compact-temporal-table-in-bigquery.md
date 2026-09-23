@@ -82,7 +82,7 @@ Note that in both above implementations of the temporal tables the validity peri
 
 It’s obvious from the above input that we cannot use DISTINCT or any other de-duplication technique (e.g. with ROW\_NUMBER) since these are not duplicates. We’d need a way to look at the attribute values and determine if there is any change (at our grain, in this case by *id* ).
 
-For this, we’ll use the [**FARM\_FINGERPRINT**](https://cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions#farm_fingerprint) hashing function, applied to attribute values. Notice the **IFNULL** wrapper around each attribute, since a *NULL* value would render the entire hash output *NULL* as well.
+For this, we’ll use the [**FARM\_FINGERPRINT**](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions#farm_fingerprint) hashing function, applied to attribute values. Notice the **IFNULL** wrapper around each attribute, since a *NULL* value would render the entire hash output *NULL* as well.
 
 ```sql
 SELECT

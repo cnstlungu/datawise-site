@@ -50,7 +50,7 @@ Upon executing this query, the following results are produced:
 
 ![BigQuery result of rounding event\_time: columns event\_time, epoch milliseconds (header cut off), nearest\_second, nearest\_5seconds, nearest\_1minute and nearest\_5minutes; for example 10:00:34.757 rounds to 10:00:35, 10:00:35, 10:01:00 and 10:00:00 UTC respectively.](/images/rounding-timestamps-in-bigquery/2.png)
 
-The functions presented above and others relevant to working with timestamps are presented in the [documentation](https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions).
+The functions presented above and others relevant to working with timestamps are presented in the [documentation](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions).
 
 Thanks for reading and enjoy working with BigQuery!
 

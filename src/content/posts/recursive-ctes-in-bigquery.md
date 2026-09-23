@@ -72,7 +72,7 @@ Notice the **WHERE id &lt; 10** . This is very important as it tells when to st
 
 ![BigQuery query result from the recursive CTE number generator: a single id column holding the consecutive integers 1 through 10, one per row, in rows 1 to 10.](/images/recursive-ctes-in-bigquery/1.png)
 
-The same can be done to say generate a list of 100 consecutive days. In practice though, the same can be achieved using functions such as [GENERATE\_ARRAY or GENERATE\_DATE\_ARRAY.](https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions)
+The same can be done to say generate a list of 100 consecutive days. In practice though, the same can be achieved using functions such as [GENERATE\_ARRAY or GENERATE\_DATE\_ARRAY.](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/array_functions)
 
 Now where a recursive CTE would be really useful is where we have hierarchical data.
 
@@ -136,7 +136,7 @@ We start with the anchor record (top-level employee, our CEO) and then traverse 
 
 ## Performance considerations
 
-It should be noted that according to [BigQuery documentation](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_clause), as opposed to non-recursive CTEs, the recursive CTEs are materialized (so executed only once).
+It should be noted that according to [BigQuery documentation](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_clause), as opposed to non-recursive CTEs, the recursive CTEs are materialized (so executed only once).
 
 > GoogleSQL only materializes the results of recursive CTEs, but does not materialize the results of non-recursive CTEs inside the `WITH` clause. If a non-recursive CTE is referenced in multiple places in a query, then the CTE is executed once for each reference. The `WITH` clause with non-recursive CTEs is useful primarily for readability.
 

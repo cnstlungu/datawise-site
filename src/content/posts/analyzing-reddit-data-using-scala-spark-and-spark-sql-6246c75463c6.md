@@ -18,7 +18,7 @@ hashnodeCuid: "clfmmuiyh000h0amlcts7cy82"
 
 A while ago I was getting up to speed with Scala and Spark. Really powerful and interesting technology, I said to myself. So naturally, I’ve decided to test it out with a real use case.
 
-One interesting piece of data to look at is Reddit. Given it’s a huge social network there’s room for many interesting projects with that data. I also found out that a website called [Pushshift](https://files.pushshift.io/reddit/) is archiving Reddit data. So I gave it a spin.
+One interesting piece of data to look at is Reddit. Given it’s a huge social network there’s room for many interesting projects with that data. I also found out that a website called [Pushshift](https://web.archive.org/web/20190524213055/http://files.pushshift.io/reddit/) is archiving Reddit data. So I gave it a spin.
 
 I was interested in extracting some posts and the comments attached to them. The resource has them organized by folder and then by monthly or daily snapshots. In this post, we’re going to look at how we can read this data and analyze it, and how to do it using Scala, Spark and Spark-SQL.
 
@@ -26,7 +26,7 @@ As usual, please refer to the GitHub repository if you’d like to follow along.
 
 ### Getting started
 
-First, we’ve downloaded from the [Pushshift](https://files.pushshift.io/reddit/) website two daily extracts of data — one for the submissions and one for the comments associated with them. Another useful thing found there is the sample data, for both [submissions](https://files.pushshift.io/reddit/submissions/sample.json) and [comments](https://files.pushshift.io/reddit/comments/sample_data.json), which can be used to understand the structure of the data before processing it. As one could see from the files, these are JSONL (newline-delimited JSON files).
+First, we’ve downloaded from the [Pushshift](https://web.archive.org/web/20190524213055/http://files.pushshift.io/reddit/) website two daily extracts of data — one for the submissions and one for the comments associated with them. Another useful thing found there is the sample data, for both [submissions](https://web.archive.org/web/20190602174232/http://files.pushshift.io/reddit/submissions/sample.json) and [comments](https://web.archive.org/web/20190521132834/http://files.pushshift.io/reddit/comments/sample_data.json), which can be used to understand the structure of the data before processing it. As one could see from the files, these are JSONL (newline-delimited JSON files).
 
 Another thing to notice is that the files provided are compressed (GZ or ZSTD), so we need to provide the appropriate options to allow for on-the-fly decompression or extract the archives beforehand. In my case the files were gz-ecrypted, so I had to add the **hadoop-xz** library to my **build.sbt** file.
 

@@ -9,7 +9,7 @@ series: "data-ops"
 hashnodeCuid: "clfmn9zn5000p0amlcs0yd6jz"
 ---
 
-[Google Cloud Workflows](https://cloud.google.com/workflows/docs/overview) is a serverless orchestration platform that allows us to combine services into repeatable and observable sets of actions, connecting typically other GCP services. These are called, you guessed it, **workflows**.
+[Google Cloud Workflows](https://docs.cloud.google.com/workflows/docs/overview) is a serverless orchestration platform that allows us to combine services into repeatable and observable sets of actions, connecting typically other GCP services. These are called, you guessed it, **workflows**.
 
 While working as a Data Engineer and extensively using Apache Airflow (and its GCP implementation called Composer), I was a little skeptical in the beginning about what it is offering but came to appreciate its straightforwardness and simplicity.
 
@@ -74,7 +74,7 @@ We now have the Workflow development window, where we can write the definition f
 We now need the build the workflow logic. For this exercise, we’ll need to check the configuration options we can set up for the BigQuery job, documented at the following link
 
 [**Method: googleapis.bigquery.v2.jobs.insert | Workflows | Google Cloud**  
-\*Whether your business is early in its journey or well on its way to digital transformation, Google Cloud can help solve…\*cloud.google.com](https://cloud.google.com/workflows/docs/reference/googleapis/bigquery/v2/jobs/insert)
+\*Whether your business is early in its journey or well on its way to digital transformation, Google Cloud can help solve…\*cloud.google.com](https://docs.cloud.google.com/workflows/docs/reference/googleapis/bigquery/v2/jobs/insert)
 
 The easiest approach is to try to load data while using the schema auto-detect. Note the `autodetect: true` part in the load configuration.
 

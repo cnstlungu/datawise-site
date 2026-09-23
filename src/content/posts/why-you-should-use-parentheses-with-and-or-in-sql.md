@@ -20,7 +20,7 @@ You might also get unintended results based on how they are resolved:
 
 `... operators with the same precedence are left associative. This means that those operators are grouped together starting from the left and moving right.`
 
-AND [has a higher order of precedence](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#operator_precedence) than OR, therefore, in the example below:
+AND [has a higher order of precedence](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators#operator_precedence) than OR, therefore, in the example below:
 
 `is_paid AND is_shipped OR customer_is_on_contract AND is_first_time_buyer`
 

@@ -14,11 +14,11 @@ hashnodeCuid: "clnaa8qev000d08if0qzh22kl"
 
 🛠️ Here's a technique I frequently employ to streamline my query development process.
 
-Ever find yourself stuck in the complexity of writing non-trivial queries, especially with voluminous tables? 🤔 The amalgamation of query complexity and business problems can sometimes make writing your [#SQL](https://www.linkedin.com/feed/hashtag/?keywords=sql&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7114896527554195458) take more time than necessary.
+Ever find yourself stuck in the complexity of writing non-trivial queries, especially with voluminous tables? 🤔 The amalgamation of query complexity and business problems can sometimes make writing your SQL take more time than necessary.
 
 When exploring a new coding approach, utilizing an unfamiliar function, or navigating through unseen data, I create a simplified, representative example using dummy data and a few test cases.
 
-In a blank [#BigQuery](https://www.linkedin.com/feed/hashtag/?keywords=bigquery&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7114896527554195458) window, I write a couple of Common Table Expressions (CTEs) to simulate input, then focus on mimicking only the pivotal columns - maintaining the grain and incorporating one representative value, along with the join columns. A single value can often represent a surrogate key for the grain of the tables.
+In a blank BigQuery window, I write a couple of Common Table Expressions (CTEs) to simulate input, then focus on mimicking only the pivotal columns - maintaining the grain and incorporating one representative value, along with the join columns. A single value can often represent a surrogate key for the grain of the tables.
 
 🚀 This approach enables me to:
 

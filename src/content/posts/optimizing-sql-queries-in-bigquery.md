@@ -12,7 +12,7 @@ series: "bigquery-performance"
 hashnodeCuid: "cllj3sqry000f09mmaqp0agx7"
 ---
 
-When it comes to tuning a [#SQL](https://www.linkedin.com/feed/hashtag/?keywords=sql&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7098686521628581889) query in [#BigQuery](https://www.linkedin.com/feed/hashtag/?keywords=bigquery&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7098686521628581889) for top performance and cost-efficiency, here's my starting point:
+When it comes to tuning a SQL query in BigQuery for top performance and cost-efficiency, here's my starting point:
 
 🔍 1. Early Filtering:  
 \- Filter out unnecessary rows at the earliest.  
@@ -56,7 +56,7 @@ Aggregate large rowsets of the same type into one ARRAY using ARRAY\_AGG to capi
 The optimization journey is paved with trials and iterations. Aim for the best results by employing multiple strategies and seeing which one emerges as the most efficient in terms of runtime, slot time usage, and bytes processed. Often, hands-on experimentation reveals insights that theory might miss.  
 Always remember, each query is unique. While this checklist provides a solid foundation, fine-tuning will often be specific to your individual use case.
 
-Make sure to check out [BigQuery Documentation on the best practices](https://cloud.google.com/bigquery/docs/best-practices-performance-compute) and the [BigQuery Anti-pattern recognition tool](https://cloud.google.com/blog/products/data-analytics/bigquery-anti-pattern-recognition-tool-optimizes-performance).
+Make sure to check out [BigQuery Documentation on the best practices](https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute) and the [BigQuery Anti-pattern recognition tool](https://cloud.google.com/blog/products/data-analytics/bigquery-anti-pattern-recognition-tool-optimizes-performance).
 
 Happy querying! 💼🚀
 

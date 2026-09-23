@@ -21,7 +21,7 @@ After a good six months of late-night coding and learning by doing, I came up wi
 
 ![Apollo Enterprise Performance Management web app home page in Firefox, with menus for Performance Management, Ad-Hoc Query and Master Data, listing Business Intelligence features (Cubes analysis, drill-down, slicing, dicing, ad-hoc analysis) and EPM features (budgeting, controlling, data management).](/images/building-a-business-intelligence-suite-revisiting-an-old-idea-after-six-years-in-the-industry/1.png)
 
-This marvel of engineering was built using Python 2 with [Web2py](http://www.web2py.com/) as the web framework, MySQL using Infobright Community Edition engine as the Analytical Database, the [Cubes](http://cubes.databrewery.org/) Python framework to run OLAP queries and [Pygal](https://www.pygal.org/en/stable/) for charts and graphs. So what could one do with it?
+This marvel of engineering was built using Python 2 with [Web2py](https://github.com/web2py/web2py) as the web framework, MySQL using Infobright Community Edition engine as the Analytical Database, the [Cubes](https://github.com/DataBrewery/cubes) Python framework to run OLAP queries and [Pygal](https://www.pygal.org/en/stable/) for charts and graphs. So what could one do with it?
 
 You could select a store name to see sales charts.
 
@@ -53,7 +53,7 @@ Nowadays the need described above hasn’t gone anywhere and, if anything, has i
 
 I was looking for a quick and fun project to showcase what I currently know (a portfolio of sorts), but also to fill in some gaps about things I didn’t do at the moment, like **dbt**. So there is another chance to build a Business Intelligence application again, after six years spent in the industry, to illustrate a use case close to real-life. It’s also great if in the process we can create something portable, and modular that also uses open-source tools.
 
-> *If you’d like to inspect the code yourself, it’s available on*[*GitHub*](https://github.com/cnstlungu/demo-bi-docker)*.*
+> *If you’d like to inspect the code yourself, it’s available on*[*GitHub*](https://github.com/cnstlungu/portable-data-stack-airflow)*.*
 
 This time, the imaginary **Company** that we’re going to help is a postcard manufacturer that prints and distributes postcards to a wide number of cities in Europe.
 
@@ -93,7 +93,7 @@ we would need quite several tools to work together:
 
 * A database (simple yet powerful enough) to build our Data Warehouse in, like [PostgreS](https://www.postgresql.org/)QL
     
-* A data transformation and modeling tool, like [dbt core](https://github.com/dbt-labs/dbt-core)
+* A data transformation and modeling tool, like [dbt core](https://github.com/dbt-labs/dbt)
     
 * An orchestrator to coordinate ingestion and modeling processes together, like [Airflow](https://airflow.apache.org/)
     
@@ -110,6 +110,6 @@ Stay tuned for the next post in this series (will post a link here once done) to
 
 Thanks for reading!
 
-> *Reminder: if you’d like to inspect the code yourself, it’s available on* [*GitHub*](https://github.com/cnstlungu/portable-airflow-data-stack)*.*
+> *Reminder: if you’d like to inspect the code yourself, it’s available on* [*GitHub*](https://github.com/cnstlungu/portable-data-stack-airflow)*.*
 > 
 > *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

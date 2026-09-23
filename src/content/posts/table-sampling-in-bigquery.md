@@ -36,7 +36,7 @@ Another way would be leveraging partitions in a partitioned table. By selecting 
 
 ### Sampling
 
-A relatively new way would be using [Table Sampling](https://cloud.google.com/bigquery/docs/table-sampling). While this is still in Pre-GA (so not fit for production yet), it is still handy when doing exploratory work with data.
+A relatively new way would be using [Table Sampling](https://docs.cloud.google.com/bigquery/docs/table-sampling). While this is still in Pre-GA (so not fit for production yet), it is still handy when doing exploratory work with data.
 
 How does it work? Using the TABLESAMPLE SYSTEM command, you provide a percentage of rows that you'd like sampled and returned to you.
 

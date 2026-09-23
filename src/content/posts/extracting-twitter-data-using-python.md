@@ -30,7 +30,7 @@ But first, we’ll need to obtain the necessary credentials from Twitter. This i
 
 Once we have the *API key*, *API secret key*, *Access token* and *Access token secret*, we can process to extract data from Twitter. We’re going to use the Twitter Search API to get our data.
 
-Before we proceed, there’s another thing we should bear in mind though. This is an interface offered by Twitter that has [multiple tiers](https://developer.twitter.com/en/docs/tweets/search/overview), including the (free) Standard one we’re going to use. Its limitations are, as of writing this article, described as follows:
+Before we proceed, there’s another thing we should bear in mind though. This is an interface offered by Twitter that has [multiple tiers](https://web.archive.org/web/20190820135527/https://developer.twitter.com/en/docs/tweets/search/overview), including the (free) Standard one we’re going to use. Its limitations are, as of writing this article, described as follows:
 
 > This search API searches against a sampling of recent Tweets published in the past 7 days. Part of the ‘public’ set of APIs.
 

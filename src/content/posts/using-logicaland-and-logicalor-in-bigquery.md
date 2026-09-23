@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "clpyqt0sy000308iadnxv8608"
 ---
 
-Today I wanted to share another [BigQuery](https://www.linkedin.com/feed/hashtag/?keywords=bigquery) feature - maybe not the breathtaking - but definitely something to have in your toolbox. The occasion to use it might be around the corner.
+Today I wanted to share another BigQuery feature - maybe not the breathtaking - but definitely something to have in your toolbox. The occasion to use it might be around the corner.
 
 So, have you ever encountered LOGICAL\_AND() and LOGICAL\_OR()? Think of them as aggregation functions but for boolean values. As the name implies:  
 \- LOGICAL\_AND() returns True if all values as True  

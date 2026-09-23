@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "cllh5g1dc000u09mi9annb0jk"
 ---
 
-Today's short post is about using the [#ROLLUP](https://www.linkedin.com/feed/hashtag/?keywords=rollup&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7098295702987927552) command in [#BigQuery](https://www.linkedin.com/feed/hashtag/?keywords=bigquery&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7098295702987927552)[#SQL](https://www.linkedin.com/feed/hashtag/?keywords=sql&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7098295702987927552). Funnily enough, I haven't encountered it until recently, and not yet in the wild anyway. That doesn't mean it's not useful though.
+Today's short post is about using the ROLLUP command in BigQuery SQL. Funnily enough, I haven't encountered it until recently, and not yet in the wild anyway. That doesn't mean it's not useful though.
 
 🔍 What is ROLLUP? The ROLLUP function provides a way to do hierarchical aggregation in SQL. It allows us to create subtotals and grand totals in one query, rather than multiple queries.
 

@@ -129,7 +129,7 @@ SELECT * FROM region-eu.INFORMATION_SCHEMA.TABLE_STORAGE;
     
 * Want to see a list of Table Snapshots? There is a view for that too.
     
-* Be sure to check the [BigQuery documentation](https://cloud.google.com/bigquery/docs/information-schema-table-storage) for the latest list of INFORMATION SCHEMA views you can use
+* Be sure to check the [BigQuery documentation](https://docs.cloud.google.com/bigquery/docs/information-schema-table-storage) for the latest list of INFORMATION SCHEMA views you can use
     
 
 *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

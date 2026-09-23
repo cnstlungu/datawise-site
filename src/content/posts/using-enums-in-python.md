@@ -14,7 +14,7 @@ hashnodeCuid: "cln5603jp000109lg1ew81fbd"
 
 Crafting readable, maintainable, and organized code is a North Star of Software Engineering. Let's look at a quick tip that nudges us towards this ideal.
 
-Have you encountered Enums in [#Python](https://www.linkedin.com/feed/hashtag/?keywords=python&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7112758162511867904) yet?
+Have you encountered Enums in Python yet?
 
 Enums, short for "enumerations", represent a distinct set of values. They help enhance code quality in several ways:
 

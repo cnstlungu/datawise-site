@@ -10,7 +10,7 @@ tags: ["bigquery", "gcp", "data-engineering", "google-cloud", "sql"]
 hashnodeCuid: "cmog9mu2500a01qjp1lln6h5e"
 ---
 
-If you've worked with BigQuery [external tables](https://cloud.google.com/bigquery/docs/external-tables) before, you know the basic idea: a thin wrapper around data that resides somewhere else, but queryable from BigQuery. Sources include Cloud Storage, [Google Sheets](/importing-google-sheets-into-bigquery), or Google Drive.
+If you've worked with BigQuery [external tables](https://docs.cloud.google.com/bigquery/docs/external-tables) before, you know the basic idea: a thin wrapper around data that resides somewhere else, but queryable from BigQuery. Sources include Cloud Storage, [Google Sheets](/importing-google-sheets-into-bigquery), or Google Drive.
 
 Today I'd like to talk about a special variety of external table: the **BigLake table**. It's built to bridge data lakes and data warehouses.
 

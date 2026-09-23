@@ -18,7 +18,7 @@ Perhaps the most important thing you need to do before analyzing data is have a 
 
 Before any sound analysis a great deal of attention needs to be paid to cleaning the data.
 
-Take string columns for instance. In [hashtag#BigQuery, as with ot](https://www.linkedin.com/feed/hashtag/?keywords=bigquery&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7188500022613721089)her engines, there is a wealth of functions helping you to process strings, including:
+Take string columns for instance. In BigQuery, as with other engines, there is a wealth of functions helping you to process strings, including:
 
 \- TRIM/RTRIM/LTRIM for getting rid of the whitespace  
 \- REPLACE to replace a substring with another one  

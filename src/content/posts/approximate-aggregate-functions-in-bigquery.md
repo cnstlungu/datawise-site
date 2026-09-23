@@ -42,7 +42,7 @@ FROM `learning.data_source`
 
 ![BigQuery console result of APPROX\_COUNT\_DISTINCT(value): a single row in the approx\_distinct\_value\_count column, header truncated, with the value 11.](/images/approximate-aggregate-functions-in-bigquery/3.png)
 
-You can discover more approximate aggregate functions in the [documentation](https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions).
+You can discover more approximate aggregate functions in the [documentation](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions).
 
 Thanks for reading!
 

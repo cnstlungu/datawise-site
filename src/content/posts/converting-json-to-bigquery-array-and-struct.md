@@ -12,7 +12,7 @@ series: "bigquery-arrays-and-structs"
 hashnodeCuid: "clfmo7acj000009l6d2v6651z"
 ---
 
-Earlier in 2022 BigQuery introduced native support for the [JSON datatype](https://cloud.google.com/bigquery/docs/reference/standard-sql/json-data). Previously, one would have had to store the JSON data in a string column. This new development opens the door to a lot of interesting use cases, given the widespread adoption and flexibility that this format allows.
+Earlier in 2022 BigQuery introduced native support for the [JSON datatype](https://docs.cloud.google.com/bigquery/docs/json-data). Previously, one would have had to store the JSON data in a string column. This new development opens the door to a lot of interesting use cases, given the widespread adoption and flexibility that this format allows.
 
 Now, what are the trade-offs one would need to consider when choosing between storing the data using the JSON datatype versus the ARRAY and STRUCT data types commonly in BigQuery? I’ve recently come across [a great blog post](https://www.letmesqlthatforyou.com/2020/05/json-vs-structs-vs-columns-in-bigquery.html) comparing these approaches.
 

@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "cltekk2m6000209ld6pj044br"
 ---
 
-Featured in other database systems, the `GROUP BY ALL` has been [announced in preview](https://cloud.google.com/bigquery/docs/release-notes#February_26_2024) for BigQuery as well.
+Featured in other database systems, the `GROUP BY ALL` has been [announced in preview](https://docs.cloud.google.com/bigquery/docs/release-notes#February_26_2024) for BigQuery as well.
 
 This will allow us to **not** enumerate all the non-aggregated columns when performing aggregates.
 

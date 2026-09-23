@@ -305,7 +305,7 @@ De-duplicating data is undoubtedly very important, and DISTINCT and UNION keywor
 
 While SQL has a standard, individual database engine implementations do not follow it always in the same manner. Therefore, when trying to solve a problem, always seek to understand how to solve the problem.
 
-Regularly check your product’s documentation for new additions that might ease your life. I for one recently discovered that [recursive CTEs in BigQuery have now been added in Preview](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_clause).
+Regularly check your product’s documentation for new additions that might ease your life. I for one recently discovered that [recursive CTEs in BigQuery have now been added in Preview](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_clause).
 
 ### Conclusion
 

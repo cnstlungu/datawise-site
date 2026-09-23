@@ -12,7 +12,7 @@ series: "bigquery-performance"
 hashnodeCuid: "clfzgvj5j000909ldb4sy3b8c"
 ---
 
-In this practical BigQuery exercise, we’re going to look at [BigQuery Time Travel](https://cloud.google.com/bigquery/docs/time-travel) and see how it can help us when working with data. It’s not as powerful as Marty McFly’s DeLorean in Back to the Future (nobody knows what your future data will look like), but a useful tool in our toolset nevertheless.
+In this practical BigQuery exercise, we’re going to look at [BigQuery Time Travel](https://docs.cloud.google.com/bigquery/docs/time-travel) and see how it can help us when working with data. It’s not as powerful as Marty McFly’s DeLorean in Back to the Future (nobody knows what your future data will look like), but a useful tool in our toolset nevertheless.
 
 First of all, what is BigQuery Time Travel? It allows for retrieving the state of a particular table at a given point within a time window, which is set by default to 7 days.
 
@@ -55,7 +55,7 @@ Using the approach above we can query the table at any particular point in the t
 
 ## Changing the time travel window
 
-The time travel window is set at a dataset level, so affects all the tables in that dataset. The default time travel windows (7 days) can be overridden either at [dataset creation time](https://cloud.google.com/bigquery/docs/datasets#sql) or on [an existing dataset.](https://cloud.google.com/bigquery/docs/updating-datasets#update_time_travel_windows)
+The time travel window is set at a dataset level, so affects all the tables in that dataset. The default time travel windows (7 days) can be overridden either at [dataset creation time](https://docs.cloud.google.com/bigquery/docs/datasets#sql) or on [an existing dataset.](https://docs.cloud.google.com/bigquery/docs/updating-datasets#update_time_travel_windows)
 
 ```sql
 CREATE SCHEMA my_project.my_dataset

@@ -11,7 +11,7 @@ hashnodeCuid: "clfmnhnz6000309jt0wxo5r8z"
 
 A couple of years ago, inspired by some interesting Python courses I’ve followed online, I decided to embark on a mini-adventure — building my [blog engine](https://github.com/cnstlungu/samo-cms) from scratch for practice. I’ll delve more into the reasoning behind this choice in a later post, but let’s say for now that I wanted something common yet extensive enough so I could be exposed to as many challenges as a real project would pose.
 
-I’ve picked [Flask](https://palletsprojects.com/p/flask/) as my web application framework — I enjoyed its simplicity and light weight. Now, coming from a quite different background (Business Intelligence/Data Analytics) I was pleased to find out how rich the ecosystem was and how you can mix and match different components. One particular toolkit has proven a life savior: [SQLAlchemy](https://www.sqlalchemy.org/).
+I’ve picked [Flask](https://palletsprojects.com/projects/flask/) as my web application framework — I enjoyed its simplicity and light weight. Now, coming from a quite different background (Business Intelligence/Data Analytics) I was pleased to find out how rich the ecosystem was and how you can mix and match different components. One particular toolkit has proven a life savior: [SQLAlchemy](https://www.sqlalchemy.org/).
 
 SQLAchemy is, in its maintainers’ own words,
 

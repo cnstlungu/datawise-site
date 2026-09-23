@@ -28,6 +28,6 @@ Now WITH expressions give us a cleaner option and help avoid those 7-operand exp
 
 ![BigQuery SQL using a WITH expression inside SELECT to define discounted\_price and price\_incl\_tax as local variables, then compute quantity \* price\_incl\_tax AS sales\_amount from input\_data; results are 514.25, 255.552 and 163.35 for products 1 to 3.](/images/with-expressions-in-bigquery/1.jpg)
 
-Has anyone here used them already? Any thoughts? Docs [here](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression).
+Has anyone here used them already? Any thoughts? Docs [here](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression).
 
 *Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

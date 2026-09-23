@@ -24,7 +24,7 @@ I was looking into learning more about the cloud for some time now when I realiz
 
 So there are two reasons for that. First, it was the cloud provider I had the most experience with (of the little experience I’ve had). I had the opportunity to work with Redshift and S3 a while ago.
 
-Second, it’s the market leader. Though the gap between the market share of AWS and its main competitors (Google Cloud and Azure) is decreasing, Amazon Web Services remains the [biggest cloud services provider](https://www.parkmycloud.com/blog/aws-vs-azure-vs-google-cloud-market-share/). This reassures me that the demand (and the certification) will be continued to be sought-after.
+Second, it’s the market leader. Though the gap between the market share of AWS and its main competitors (Google Cloud and Azure) is decreasing, Amazon Web Services remains the [biggest cloud services provider](https://web.archive.org/web/20200109094058/https://www.parkmycloud.com/blog/aws-vs-azure-vs-google-cloud-market-share/). This reassures me that the demand (and the certification) will be continued to be sought-after.
 
 #### Is it worth it?
 
@@ -53,13 +53,13 @@ First of all, the book — the official study guide. I’m going to be hones
 
 A very useful feature, included with the book, is access to the “Comprehensive Online Learning Environment”, which is an [online test bank](https://www.wiley.com/WileyCDA/Section/id-827755.html) with hundreds of questions and flashcards to help you prepare.
 
-Now, what I found to be a great deal is having a membership with [O’Reilly](http://learning.oreilly.com). This will give you access to the said official study guide as well as other books and multiple video preparation courses — make sure just to sort them by published date so you would get the most updated ones. I’ve done two of them, one by [Nick Garner](https://www.oreilly.com/library/view/aws-certified-developer/9780134855158/) and the other one by [Malcolm Orr](https://learning.oreilly.com/videos/aws-certified-developer/9781789616118). They’re also great content. In case you’d need it, there’s also an O’Reilly mobile app that you can use.
+Now, what I found to be a great deal is having a membership with [O’Reilly](https://learning.oreilly.com). This will give you access to the said official study guide as well as other books and multiple video preparation courses — make sure just to sort them by published date so you would get the most updated ones. I’ve done two of them, one by [Nick Garner](https://www.oreilly.com/library/view/aws-certified-developer/9780134855158/) and the other one by [Malcolm Orr](https://learning.oreilly.com/videos/aws-certified-developer/9781789616118). They’re also great content. In case you’d need it, there’s also an O’Reilly mobile app that you can use.
 
 All in all, I would say that getting so much for the price of a single membership is pretty fabulous.
 
 #### LinuxAcademy
 
-The Linux Academy’s [AWS Certified Developer — Associate Level](http://AWS%20Certified%20Developer%20-%20Associate%20Level) course is one of the most comprehensive I’ve seen. At almost 30 hours of video content, it packs quite a punch. For my previous certification, I prepared with a [course on LinuxAcademy](https://linuxacademy.com/cp/modules/view/id/376) and it proved to be a good preparation that allowed me to pass the exam.
+The Linux Academy’s AWS Certified Developer — Associate Level course is one of the most comprehensive I’ve seen. At almost 30 hours of video content, it packs quite a punch. For my previous certification, I prepared with a course on LinuxAcademy and it proved to be a good preparation that allowed me to pass the exam.
 
 One of the great features of this option is the availability of labs. You don’t need to have an AWS account of your own but rather are offered a preconfigured environment that allows you the practice a particular topic learned in the lesson. It’s very useful to be able to focus on learning and not worry about the setup or the costs.
 

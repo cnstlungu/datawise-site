@@ -12,7 +12,7 @@ series: "practical-sql"
 hashnodeCuid: "clxmus99000060ajs1dfi2y2z"
 ---
 
-Another lesser known JOIN - the natural join. But maybe the NATURAL JOIN is not as obscure after all, since it has its own keyword, at least in a couple of [S](https://www.linkedin.com/feed/hashtag/?keywords=sql&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7205871620790317056)QL dialects - see PostgreSQL portrayed below (sorry, it's not supported in BigQuery, but it does recognize it).
+Another lesser known JOIN - the natural join. But maybe the NATURAL JOIN is not as obscure after all, since it has its own keyword, at least in a couple of SQL dialects - see PostgreSQL portrayed below (sorry, it's not supported in BigQuery, but it does recognize it).
 
 So what's special about it? Well, it joins the tables based on columns that have the same name (and datatype) in the two tables. That is, we don't need to specify any join conditions.
 

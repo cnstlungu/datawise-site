@@ -14,7 +14,7 @@ hashnodeCuid: "cltxhmkzp000208l587nigamf"
 
 How do you merge changes from staging tables into target tables in BigQuery?
 
-I've previously covered [swapping out partitions using bq command](/swapping-partitions-in-bigquery) and [using constant false predicate "MERGE on FALSE"](/merge-on-false-in-bigquery), but I've learned that you can [now DELETE entire partitions for free](https://cloud.google.com/bigquery/docs/release-notes#February_27_2024) (provided a filter on the partitioned column is used) from tables.
+I've previously covered [swapping out partitions using bq command](/swapping-partitions-in-bigquery) and [using constant false predicate "MERGE on FALSE"](/merge-on-false-in-bigquery), but I've learned that you can [now DELETE entire partitions for free](https://docs.cloud.google.com/bigquery/docs/release-notes#February_27_2024) (provided a filter on the partitioned column is used) from tables.
 
 That means that instead of merging your changes the old-fashioned way, it might be well worth DELETING the days you would like to update and INSERTING the entire days data back sourced from the staging table.
 
