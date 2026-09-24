@@ -47,5 +47,3 @@ SELECT *, _PARTITIONDATE, _PARTITIONTIME FROM `learning.weather_measurements`
 ```
 
 ![BigQuery results: New York (25.4, 65), Madrid (23.1, 41) and Rome (34.2, 27) all land in \_PARTITIONDATE 2024-06-21, with \_PARTITIONTIME 2024-06-21 00:00:00 UTC.](/images/ingestion-time-partitioning-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -50,8 +50,6 @@ SELECT * FROM last_events
 
 It turns out that the recommendation holds - slot time for the ARRAY\_AGG version was only 40% of the ROW\_NUMBER. Another day, another lesson learned.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

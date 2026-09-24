@@ -40,5 +40,3 @@ FROM input_data
 ```
 
 The query fails with the error `Error: surface must be strictly greater than 0, but is NULL`.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

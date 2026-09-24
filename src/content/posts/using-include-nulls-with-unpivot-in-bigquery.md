@@ -49,5 +49,3 @@ UNPIVOT INCLUDE NULLS (value FOR measurement IN (water_level, temperature, press
 ![BigQuery console result of UNPIVOT INCLUDE NULLS with columns measurement\_date, value and measurement: all 9 rows appear, including null values for water\_level on 2021-01-01 and temperature on 2021-01-02.](/images/using-include-nulls-with-unpivot-in-bigquery/3.png)
 
 Voila! The NULL entries are here now.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

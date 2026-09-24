@@ -88,5 +88,3 @@ GROUP BY IFNULL(country, 'N/A')
 ```
 
 ![BigQuery results for both queries: country N/A with total\_amount 4 and UK with 2.](/images/heres-how-group-by-works-differently-across-sql-dialects/1-result-3.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

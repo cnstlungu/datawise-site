@@ -55,5 +55,3 @@ example_list[1] = 4  # Valid
 Tuples are great in their domain of applications! But like every tool, they have their place. Know when to use them over lists and leverage their strengths.
 
 Happy coding! 🚀
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -44,8 +44,6 @@ ORDER BY CASE WHEN channel = 'direct' THEN 1 ELSE 0 END DESC, sales DESC
 
 ![BigQuery results: the direct rows first (FR 170, IT 150, US 100), then the partners rows (FR 200, US 125, IT 100).](/images/order-by-expressions-in-sql/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

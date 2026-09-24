@@ -55,5 +55,3 @@ JOIN schedule s ON UPPER(FORMAT_DATE('%a', d.calendar_date)) = s.day
 ```
 
 ![BigQuery results: 2023-04-01 is Sat (SAT, 11:00:00 to 20:00:00), 2023-04-02 is Sun (SUN, 11:00:00 to 16:00:00), and Mon to Thu, 2023-04-03 to 2023-04-06, are 10:00:00 to 22:00:00.](/images/using-formatdate-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -39,5 +39,3 @@ FROM
 ```
 
 ![BigQuery results: num -1 is in bucket 0, 2 in 1, 5 and 9 in 2, 10, 14, 14 and 15 in 3, 40 in 4, and null gives a null bucket.](/images/using-rangebucket-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -60,5 +60,3 @@ FROM input_data
 ```
 
 ![BigQuery JSON results: range\_a \[2021-01-01, 2021-04-01), range\_b \[2021-03-01, 2021-09-01), range\_c \[2021-02-01, 2021-03-01), do\_ranges\_a\_b\_overlap true, ranges\_a\_b\_intersection \[2021-03-01, 2021-04-01), range\_a\_start 2021-01-01, range\_a\_end 2021-04-01, range\_a\_contains\_c true and range\_a\_contains\_date true.](/images/range-data-type-in-bigquery/1-result.jpg)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

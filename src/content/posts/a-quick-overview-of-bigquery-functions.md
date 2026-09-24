@@ -120,5 +120,3 @@ Today, with modern transformation frameworks like dbt and Dataform, I find mysel
 ➡️ Do you prefer handling reusable logic in your SQL code or in external frameworks?
 
 ➡️ Any interesting use cases you've seen for remote functions for unusual/specialized processing needs?
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

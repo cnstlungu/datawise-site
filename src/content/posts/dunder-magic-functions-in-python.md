@@ -78,5 +78,3 @@ print(sorted([burj_khalifa, taipei_101, one_wtc]))
 ```
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

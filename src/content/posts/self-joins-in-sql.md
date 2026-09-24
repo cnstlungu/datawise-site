@@ -42,8 +42,6 @@ LEFT JOIN employees man ON emp.manager_id = man.employee_id
 
 ![Output: each employee with their manager, Jacob D under Andrew F, Jane D under Liz Q, Andrew F and Liz Q under Matt O, Matt O under Sabrina W, and Sabrina W with a null manager\_id and manager\_name.](/images/self-joins-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

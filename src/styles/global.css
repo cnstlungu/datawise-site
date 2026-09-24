@@ -541,6 +541,40 @@ picture {
   font-size: 1rem;
 }
 
+.newsletter {
+  margin-top: 3rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+}
+.page-head + .post > .newsletter:first-child {
+  margin-top: 0;
+}
+.newsletter h2 {
+  font-size: 1.2rem;
+  margin: 0 0 0.25rem;
+}
+.newsletter p {
+  margin: 0 0 1rem;
+}
+.newsletter iframe {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: 320px;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+}
+.newsletter .newsletter-alt {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 .author-box {
   display: flex;
   gap: 1rem;

@@ -35,8 +35,6 @@ print(square(5))  # Output: 25
 print(cube(5))    # Output: 125
 ```
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

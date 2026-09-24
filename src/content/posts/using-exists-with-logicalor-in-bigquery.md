@@ -52,5 +52,3 @@ We solve this by:
 ➡️ use LOGICAL\_OR aggregation function, grouped by order\_id, to check if there is at least one entry where the flag from the previous step was true for that grain.
 
 Happy querying!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/) *.*

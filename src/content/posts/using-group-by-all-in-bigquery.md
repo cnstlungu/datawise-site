@@ -34,5 +34,3 @@ GROUP BY ALL
 ```
 
 ![BigQuery console Results tab for the GROUP BY ALL query, with columns country, sell\_date and total\_sales and one row per country and date: UK 150 and 195, US 200 and 260 for 2021-01-01 and 2021-01-02.](/images/using-group-by-all-in-bigquery/1.png)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

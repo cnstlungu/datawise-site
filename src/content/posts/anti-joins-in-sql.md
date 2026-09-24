@@ -47,8 +47,6 @@ WHERE p.product_id IS NULL
 
 ![BigQuery results: one row, product\_id 4, product\_name sweater, price null.](/images/anti-joins-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

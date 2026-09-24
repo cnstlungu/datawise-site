@@ -216,5 +216,3 @@ from sqlalchemy.orm.exc import NoResultFounddb = SQLAlchemy(app)class Tag(db.Mod
 To conclude, these were some scenarios I’ve encountered while working with SQLAlchemy. There is more to learn about it, but it’s a great addition to every Python developer’s toolbox, even for beginners.
 
 Thank you for reading and I’m looking forward to hearing about your own experiences with SQLAlchemy or other Python ORMs.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

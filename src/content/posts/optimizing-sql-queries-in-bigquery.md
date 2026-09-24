@@ -60,8 +60,6 @@ Make sure to check out [BigQuery Documentation on the best practices](https://do
 
 Happy querying! 💼🚀
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

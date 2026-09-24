@@ -53,8 +53,6 @@ FILTER USING (country IN (
 
 ![Output: what the service account sees, only customer 4 Jane Springer (UK, 2022-03-01) and customer 1 John Doe (US, 2021-01-01).](/images/using-subqueries-with-row-level-security-in-bigquery/1-output.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

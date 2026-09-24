@@ -46,8 +46,6 @@ You can discover more approximate aggregate functions in the [documentation](htt
 
 Thanks for reading!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

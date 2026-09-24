@@ -47,8 +47,6 @@ WHERE STRUCT(country, has_paid, plan, service) IN (STRUCT('UK', FALSE, 'Premium'
 
 ![BigQuery results: two rows, Catie Doe (UK, has\_paid false, Premium, TV) and Francesca Duchamp (FR, has\_paid false, Basic, Internet).](/images/using-structs-for-quick-analysis-in-bigquery/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

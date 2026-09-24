@@ -36,5 +36,3 @@ SELECT SAFE_CAST('2024-01-01 12:00:00.1234567' AS TIMESTAMP)
 ```
 
 ![BigQuery results: one row, and f0\_ is null.](/images/watch-out-when-using-safecast-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

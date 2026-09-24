@@ -35,5 +35,3 @@ GROUP BY country
 ```
 
 ![BigQuery results: count\_salaries\_over\_80k is 1 for CA, 0 for IT, 1 for UK and 0 for FR.](/images/using-countif-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

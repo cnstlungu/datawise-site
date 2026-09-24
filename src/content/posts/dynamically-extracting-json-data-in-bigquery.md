@@ -39,8 +39,6 @@ LEFT JOIN UNNEST(SPLIT(REGEXP_REPLACE(data, r'[{}"]', ''))) kv;
 
 ![BigQuery results: id 1 gives key\_1 with value 1 and key\_3 with value 3; id 2 gives key\_99 with value 2 and key\_4 with value 4.](/images/dynamically-extracting-json-data-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

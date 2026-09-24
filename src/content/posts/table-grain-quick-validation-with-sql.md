@@ -57,8 +57,6 @@ HAVING count_duplicates > 1 OR count_grain > 1
 
 ![Results of the two queries. Incorrect grain (order\_id, product\_name): six groups with count\_grain 2, e.g. order 1 Apples 2/2 and order 3 Plums with count\_duplicates 4. Correct grain, but there are duplicates (adding order\_status): order 3 Plums ORDER\_PLACED and ORDER\_SENT, each count\_duplicates 2 and count\_grain 1.](/images/table-grain-quick-validation-with-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

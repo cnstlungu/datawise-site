@@ -41,8 +41,6 @@ ORDER BY order_amount DESC NULLS FIRST
 
 ![BigQuery results: orders 3 and 5 with a null order\_amount come first, then order 1 (100), orders 4 and 6 (90) and order 2 (50).](/images/controlling-ordering-of-null-values-in-the-order-by-clause/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

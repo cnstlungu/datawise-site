@@ -38,5 +38,3 @@ WHEN MATCHED THEN UPDATE SET t.value = s.value
 ![BigQuery query validator: This query will process 9.15 MB when run.](/images/delete-insert-vs-merge-in-bigquery/1-result-2.png)
 
 Happy querying!
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

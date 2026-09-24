@@ -69,5 +69,3 @@ Now, I might have barely scratched the surface of the above, and some of them mi
 In essence, while books and tutorials offer foundational knowledge, diving headfirst into a pet project can supercharge your learning journey. Whatever your dream project is – an app, website, or game – dive in!
 
 Remember: even if your creation isn't the next tech sensation, the skills you gain and the confidence you build is an unparalleled investment in yourself. Dive in, and let your creativity flow! 🌊
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

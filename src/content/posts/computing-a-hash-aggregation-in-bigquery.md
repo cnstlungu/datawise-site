@@ -43,5 +43,3 @@ GROUP BY id
 ```
 
 ![BigQuery results: group\_hash 2171288142330… for id 1 and 7271343146336… for id 2 (both truncated in the grid).](/images/computing-a-hash-aggregation-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

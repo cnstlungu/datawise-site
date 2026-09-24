@@ -56,8 +56,6 @@ GROUP BY country
 
 ![BigQuery results side by side: the HAVING query (left) returns UK 25 and US 10, the WHERE query (right) returns UK 25 and US 15.](/images/order-of-precedence-in-sql-where-vs-having/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

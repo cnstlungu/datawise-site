@@ -31,5 +31,3 @@ Next, you're adding `@@rowcount` to one of your stored procedure to print nicely
 Before you leave, you get a message about an SSRS report that you've just built, need to adjust a couple of e-mail subscriptions. Done - this report will be sent to your customers weekly Mondays at 9 AM.
 
 Some things about these past days that I miss, and other not so much.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

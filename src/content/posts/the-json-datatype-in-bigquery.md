@@ -62,8 +62,6 @@ FROM  input_data
 
 ![BigQuery results: json\_native, parsed\_json\_from\_string, json\_from\_key\_values and json\_object\_from\_key\_value\_pairs all hold {"city":"New York","name":"John Doe","sports":\["football","snooker","tennis"\]}, and json\_array\_from\_array is \[\["football","snooker","tennis"\]\].](/images/the-json-datatype-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

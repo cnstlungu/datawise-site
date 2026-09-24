@@ -39,8 +39,6 @@ SELECT my_column <> CAST(NULL AS INT64) FROM learning.my_table;
 
 ![BigQuery results: one row, f0\_ is null.](/images/not-all-nulls-are-the-same/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

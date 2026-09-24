@@ -33,5 +33,3 @@ SELECT
 ```
 
 ![BigQuery results: concat\_array and also\_concat\_array both hold 1, 2, 3, 4, 5, 6; concat\_string and also\_concat\_string are both Hello World.](/images/concatenation-operator-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

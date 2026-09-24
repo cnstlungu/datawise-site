@@ -43,8 +43,6 @@ SELECT
 
 ![BigQuery results: one row with f0\_ array, f1\_ object, f2\_ string, f3\_ number and f4\_ boolean.](/images/determining-json-types-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

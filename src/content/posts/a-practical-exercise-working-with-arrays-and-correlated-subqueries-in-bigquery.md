@@ -94,8 +94,6 @@ Step 3: We extract the flags from the above `STRUCT` .
 
 Are there any other ways you would approach this problem?
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

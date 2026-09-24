@@ -62,5 +62,3 @@ ORDER BY size, combination;
 ```
 
 ![BigQuery results, last page (501 to 511 of 511): eight-letter combinations such as a,b,c,d,e,f,g,i and b,c,d,e,f,g,h,i, then row 511 with all nine letters, a,b,c,d,e,f,g,h,i.](/images/heres-a-great-use-case-for-genai-writing-sql/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

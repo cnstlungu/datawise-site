@@ -51,5 +51,3 @@ FROM orderline_updates
 ```
 
 ![BigQuery results: four order lines, order 1 Apples 10 and Grapes 3 (2021-01-01 12:00:12), order 2 Mangoes 1 (2021-01-02 10:00:19) and Kiwi 6 (2021-01-03 12:24:33), with the quantity column named total\_quantity.](/images/comments-in-sql/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

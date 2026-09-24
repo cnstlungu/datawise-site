@@ -179,5 +179,3 @@ df['user_audience_category'].head()
 This part of the series presented ways in which we can transform the text retrieved from Twitter, perform basic sentiment analysis as well as build new simple features from the data we already have.
 
 In the following articles of this series, we’re going to look at ways we can analyze this data and present it to an interested group. Thanks for reading and stay tuned for the next posts.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

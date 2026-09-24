@@ -56,8 +56,6 @@ FULL OUTER JOIN source_b USING(order_id)
 
 ![BigQuery results: order\_id 1 is UK with apples and 2 is US with peaches; the NULL keys don't match, so row 3 is FR with a null product and row 4 is grapes with a null order\_id and country.](/images/a-couple-of-fun-things-about-null-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

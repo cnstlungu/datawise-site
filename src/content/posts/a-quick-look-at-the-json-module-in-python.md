@@ -56,8 +56,6 @@ json.dump(a_dict, open('exported_data.json', 'w'))
 
 ![Output: the exported\_data.json file written by json.dump contains {"x": 1, "y": 2, "z": \[1, 2, 3\]}.](/images/a-quick-look-at-the-json-module-in-python/1-output.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

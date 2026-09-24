@@ -40,5 +40,3 @@ With regards to the analogy I’ve used in the title, I believe that the we shou
 Surely, there are over-the-counter products, MDs and treatments. But every one of those comes with instructions and a number of dedicated professionals that can guide and help you when needed. And for some you need a prescription.
 
 I'm very happy when someone uses the data that I help deliver. We have a duty to act as stewards and custodians for the data we are entrusted to process, including the Analytical products it is feeding. Not restrict and keep exclusive to our silos, but inform, educate, collaborate and build for better business outcomes.
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

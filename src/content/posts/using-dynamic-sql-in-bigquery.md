@@ -80,5 +80,3 @@ EXECUTE IMMEDIATE FORMAT("""
 ```
 
 Thanks for reading and keep enjoying SQL!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

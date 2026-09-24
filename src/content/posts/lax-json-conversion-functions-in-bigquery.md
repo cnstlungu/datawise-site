@@ -42,8 +42,6 @@ FROM UNNEST(json_data) AS fruit
 
 ![BigQuery results: apple has is\_sweet true, is\_local true, price 7.1, pack\_size 4; lemon false, false, 12.5, 5; orange true, null, 9.99, 3.](/images/lax-json-conversion-functions-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

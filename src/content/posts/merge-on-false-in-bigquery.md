@@ -178,5 +178,3 @@ UPDATE SET target.value = source.value
 ![Execution details of the key-based merge with PK/FK constraints: elapsed time 2 sec, slot time consumed 11 sec, bytes shuffled 56.02 MB, bytes spilled to disk 0 B.](/images/merge-on-false-in-bigquery/4-result-2.jpg)
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -74,8 +74,6 @@ There's no difference indeed for on-demand pricing (same amount of data scanned)
 
 So use UNION DISTINCT (and any other DISTINCT) sparingly and when you actually need it.
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

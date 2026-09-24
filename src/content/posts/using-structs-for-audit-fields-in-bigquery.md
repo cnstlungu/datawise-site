@@ -119,8 +119,6 @@ Now, should we investigate why a particular result was obtained, we can just gra
 
 Thanks for reading and hope this was useful!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

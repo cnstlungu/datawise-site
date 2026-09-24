@@ -63,8 +63,6 @@ We're separating the templates and configuration and then leveraging dictionary 
 
 Stay tuned for more Python insights and best practices!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

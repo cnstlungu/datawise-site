@@ -89,5 +89,3 @@ This was a fun experiment, but let’s be honest—this could also be done with�
 Still, ROLLUP provides an perspective, and I’m on the lookout for an even better use case.
 
 Have you ever had an SQL feature suddenly “click” for you?
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

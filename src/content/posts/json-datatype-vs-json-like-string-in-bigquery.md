@@ -42,8 +42,6 @@ SELECT
 
 ![BigQuery results: value\_from\_native and value\_from\_json\_like\_string both return value.](/images/json-datatype-vs-json-like-string-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -40,8 +40,6 @@ Now, if you’ve ever tried to figure out the grain of an external data source w
 
 ➡️ PROFIT.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/) *.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

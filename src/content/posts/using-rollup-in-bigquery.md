@@ -95,5 +95,3 @@ ROLLUP BY (Product, Region) would produce sub-totals by Product instead of subto
 ```
 
 Thanks for reading and keep discovering BigQuery!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

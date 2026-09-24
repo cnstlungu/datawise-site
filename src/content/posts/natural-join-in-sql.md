@@ -37,8 +37,6 @@ NATURAL JOIN employees
 
 ![Output: employee 1 with store 1 Flagship store - NY, employee 2 with store 2 Main St. - LA, and employee 3 with store 3 Michigan Ave. - Chicago.](/images/natural-join-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

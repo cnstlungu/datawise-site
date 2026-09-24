@@ -43,8 +43,6 @@ On a big enough table, one could notice the query execution time difference betw
 
 P.S. This is not to say that LIMIT is completely irrelevant to performance in BigQuery. Check out [this post](/de-duplicating-with-rownumber-vs-arrayagg) for a case where LIMIT does make a difference!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

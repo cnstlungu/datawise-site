@@ -36,8 +36,6 @@ bq query --use_legacy_sql=false \
 
 ![Terminal output: an id column with six rows: 37, 94, 67, 60, 25 and 72.](/images/query-parameters-in-bigquery/1-output.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

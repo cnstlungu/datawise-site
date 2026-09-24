@@ -39,5 +39,3 @@ SELECT
 ```
 
 ![BigQuery results: script\_slot\_ms 636839, script\_bytes\_billed 10485760 and script\_creation\_time 2024-06-22 16:07:41.402000 (the UTC suffix is cut off); the project\_id value is hidden.](/images/system-variables-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -21,5 +21,4 @@
 /archive/* /archive 301
 /members / 301
 /recommendations / 301
-/newsletter https://www.notjustsql.com 301
 /tag/python-libraries /series/python 301

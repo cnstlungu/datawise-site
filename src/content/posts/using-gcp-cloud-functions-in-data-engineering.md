@@ -68,8 +68,6 @@ But overall, it felt like the setup was pretty straightforward and the first tim
 
 When used properly, a cloud function can be very useful for Real-Time and Batch ETL, automation and API Development, all while being scalable and flexible.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

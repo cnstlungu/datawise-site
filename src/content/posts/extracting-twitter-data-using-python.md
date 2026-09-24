@@ -101,5 +101,3 @@ df[['created_at', 'user.screen_name', 'text']].head()
 In this first post of the series we’ve looked at setting up our Twitter developer credentials, used the *TwitterSearch* Python package to extract tweets about Brexit and also used the *pandas* library to flatten (unpack) our results.
 
 In the upcoming articles in this series, we’ll do further transformations of the data we’ve extracted and touch on the notions of Natural Language Processing and Sentiment Analysis.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

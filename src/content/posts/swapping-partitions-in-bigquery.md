@@ -76,5 +76,3 @@ We can confirm that all the partitions have been loaded properly and see the lis
 ![BigQuery console screenshot: SELECT MAX(ds\_date) FROM learning.data\_source now returns 2023-09-30, and the Personal history tab below lists several successful COPY jobs from September 30, 2023 4:05 PM followed by one QUERY job.](/images/swapping-partitions-in-bigquery/4.png)
 
 Also, don’t forget—leveraging the INFORMATION\_SCHEMA PARTITIONS view can assist in constructing even more advanced functionalities.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

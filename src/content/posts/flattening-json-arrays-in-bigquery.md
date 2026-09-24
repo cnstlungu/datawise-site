@@ -31,8 +31,6 @@ SELECT JSON_FLATTEN(JSON '[1, [2,3,4],[[5,6],[7,8]]]' )
 
 ![BigQuery results: a single row whose f0\_ value is the flat array 1, 2, 3, 4, 5, 6, 7, 8.](/images/flattening-json-arrays-in-bigquery/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

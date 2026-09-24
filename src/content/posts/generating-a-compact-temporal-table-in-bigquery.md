@@ -259,8 +259,6 @@ FROM compacted
 
 *[View on GitHub Gist](https://gist.github.com/cnstlungu/732b9d64367b6eec012727d1d08151e5)* 
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

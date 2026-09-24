@@ -61,5 +61,3 @@ Using this, from my table of ~400k rows the query returned 4k rows.
 ![BigQuery console results pager showing Results per page 50 and 1 to 50 of 4000, meaning the TABLESAMPLE SYSTEM (1 PERCENT) query returned 4,000 rows from the roughly 400k-row table.](/images/table-sampling-in-bigquery/5.png)
 
 To summarize, employing these three strategies — Preview, Partition Filtering, and Sampling — together, significantly saves time, computational resources, and consequently, money during the exploratory stage, especially when handling big tables.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

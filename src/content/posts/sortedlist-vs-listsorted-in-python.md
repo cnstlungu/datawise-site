@@ -37,5 +37,3 @@ print(numbers)
 # check that the original list is sorted
 # [1, 2, 3, 4, 5, 5]
 ```
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -98,5 +98,3 @@ SELECT UNIX_MILLIS(TIMESTAMP('2023-04-02 11:00:00.000 UTC'))
 In this short practical exercise, we’ve looked at BigQuery Time Travel, a very handy tool to aid us in querying previous states of a particular table. I found it very helpful when debugging data pipelines.
 
 Thanks for reading and stay tuned for more practical BigQuery tips.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

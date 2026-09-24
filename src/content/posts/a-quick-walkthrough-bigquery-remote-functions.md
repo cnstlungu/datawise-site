@@ -118,5 +118,3 @@ FROM input
 ```
 
 ![BigQuery results: RO gets Next holiday is on 2025-04-18 and is called Easter, BE gets 2025-04-20 Easter Sunday, and VN gets 2025-04-07 Hung Kings' Commemoration Day.](/images/a-quick-walkthrough-bigquery-remote-functions/6-result.png)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

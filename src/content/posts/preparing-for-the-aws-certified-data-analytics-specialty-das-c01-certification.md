@@ -32,5 +32,3 @@ Also, be sure to check the free AWS-provided Exam Readiness course and the great
 4️⃣ It's of course recommended to review the AWS Exam guide and Sample question (why not). You need to know what you're up against. 🏁 The whitepapers are also there for deep dives into the AWS toolbox, right from its developers.
 
 Wishing you a productive study journey! 💡
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

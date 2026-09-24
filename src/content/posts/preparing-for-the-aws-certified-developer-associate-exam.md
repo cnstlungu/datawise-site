@@ -99,5 +99,3 @@ In conclusion, I would say preparing for this certification is pretty straightfo
 As for the next steps, after becoming an AWS Certified Developer-Associate, you can either get a deeper understanding by going for the professional certification (AWS Certified DevOps Engineer) or [one of the six currently available specializations](https://aws.amazon.com/certification/). I for one would like to get more experience first with AWS and achieve an AWS Certified Data Analytics (recently rebranded from AWS Certified Big Data ) specialization.
 
 Thanks for reading and good luck on your certification journey!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -64,5 +64,3 @@ def get_day_name(day_number: int) -> str:
 ```
 
 While the classic if-elif-else approach has its place and is compatible with older Python versions, the match statement ushers in a fresh, concise, and expressive method to manage multiple conditions. If you haven't tried it yet, I highly recommend giving it a spin!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

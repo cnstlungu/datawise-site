@@ -61,8 +61,6 @@ If you're not familiar with QUALIFY and other ways to de-duplicate, check out th
 
 Happy querying!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

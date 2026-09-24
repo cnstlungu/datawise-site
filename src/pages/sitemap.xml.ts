@@ -13,6 +13,7 @@ export const GET: APIRoute = async () => {
   const urls: { loc: string; lastmod?: Date }[] = [
     { loc: '/', lastmod: newest },
     { loc: '/archive', lastmod: newest },
+    { loc: '/newsletter' },
     ...Object.keys(series)
       .filter((slug) => posts.some((p) => p.data.series === slug))
       .map((slug) => ({ loc: `/series/${slug}` })),

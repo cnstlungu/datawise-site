@@ -42,8 +42,6 @@ JOIN discounts d ON o.amount >= value_from AND o.amount < value_to
 
 ![Results: order 4 (2022-12-01, Summer 2022, 80) gets 0.15 and pays 68; order 3 (2022-07-01, Summer 2022, 151) gets 0.2 and pays 120.8; order 2 (2022-03-01, Winter 2022, 45) gets 0.1 and pays 40.5; order 1 (2021-03-01, Winter 2021, 100) gets 0.2 and pays 80.](/images/non-equi-joins-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

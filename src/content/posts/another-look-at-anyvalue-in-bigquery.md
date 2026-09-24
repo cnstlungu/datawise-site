@@ -50,5 +50,3 @@ GROUP BY order_id
 ```
 
 ![BigQuery results: order 1 gives most\_expensive\_product Mango, any\_product\_except\_banana Mango and first\_expiring\_product Banana; order 2 gives Pears in all three columns.](/images/another-look-at-anyvalue-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

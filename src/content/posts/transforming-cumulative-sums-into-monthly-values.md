@@ -68,8 +68,6 @@ FROM input_data
 
 ![BigQuery results: fiscal\_year\_start 2020-07-01 through 2021-06, then 2021-07-01; current\_month\_sales 800, 300, 100, 150, 350, 200, 200, then 100, 300, 400, 300, 300, 400 and 300, with previous\_cumulative\_sales null at the start of each fiscal year.](/images/transforming-cumulative-sums-into-monthly-values/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

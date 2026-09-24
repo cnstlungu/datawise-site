@@ -26,5 +26,3 @@ SELECT
 ```
 
 ![BigQuery results with first\_element a, second\_element b and third\_element c, beside Excel, where =TEXTSPLIT(B1,", ") splits the text a, b, c into cells a, b and c.](/images/splitting-a-string-in-bigquery/1-result.jpg)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

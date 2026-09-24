@@ -31,8 +31,6 @@ SQL doesn’t “re-sum” the window function like I feared. Instead, it partit
 
 <!-- missing image, source no longer available: https://media.licdn.com/dms/image/v2/D4E22AQFbSlouY2_eng/feedshare-shrink_800/B4EZUoFw_jGYAg-/0/1740134355635?e=1743033600&v=beta&t=o7CElWZmK91L8ZF_O7APDU3TjUctBrwXGeikRN8htU8 -->
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

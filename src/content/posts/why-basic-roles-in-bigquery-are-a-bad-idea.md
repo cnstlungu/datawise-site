@@ -45,8 +45,6 @@ They make way for a number of problems:
 * use groups for easier management of privileges for a particular role (in a team) or function
     
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

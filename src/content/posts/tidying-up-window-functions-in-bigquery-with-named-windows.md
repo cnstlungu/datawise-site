@@ -97,8 +97,6 @@ As you've seen from the above, the named WINDOW approach is pretty handy and cle
 
 Thanks for reading!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

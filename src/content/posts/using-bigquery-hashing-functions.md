@@ -137,5 +137,3 @@ FROM learning.Customers AS t;
 ![BigQuery results listing the four customers with an extra row\_hash column of large signed integers, shown truncated.](/images/using-bigquery-hashing-functions/2-result.png)
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

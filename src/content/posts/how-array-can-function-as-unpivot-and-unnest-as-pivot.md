@@ -16,5 +16,3 @@ We start with separate timestamps for different lifecycle events. To analyze eve
 
 2️⃣ From rows back to columns (UNNEST as PIVOT):  
 If we have an array of events, we may need to do the opposite — bringing individual event types back into separate columns, similar to PIVOT. We achieve this by UNNESTing the array and using conditional aggregation (aggregation function + CASE WHEN).
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

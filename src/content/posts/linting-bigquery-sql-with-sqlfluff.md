@@ -105,5 +105,3 @@ A good part of people use a templating provided by something like dbt. Judging b
 For me, the next step would be trying it out in an actual project, and hopefully use it in production soon.
 
 Thanks for reading and keep enjoying SQL!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

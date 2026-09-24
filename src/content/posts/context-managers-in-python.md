@@ -61,8 +61,6 @@ with ExampleContextManager('example_host', '1000') as manager:
 
 ![Output: Initializing Context Manager, Setting up the connection, Do something with the connection, Connection closed.](/images/context-managers-in-python/1-output.png)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

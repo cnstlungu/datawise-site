@@ -58,5 +58,3 @@ GROUP BY customer_id
 ```
 
 ![BigQuery results: payment\_method\_agg is Card\~Cash\~Gift\_card for customer 1, Card\~Gift\_card for customer 2 and Cash\~Gift\_card for customer 3.](/images/a-closer-look-at-stringagg-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

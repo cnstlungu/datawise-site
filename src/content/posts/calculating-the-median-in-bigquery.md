@@ -40,5 +40,3 @@ GROUP BY id
 ```
 
 ![BigQuery results: the first query returns median\_cont 2.0 and median\_disc 2, the APPROX\_QUANTILES query returns median 2.](/images/calculating-the-median-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -42,5 +42,3 @@ This would produce the following output!
 ![Output table of SELECT \* EXCEPT(Salary) REPLACE(...) on the Customers data: the Salary column is gone and CustomerId values are rewritten as SystemA-1, SystemA-3, SystemA-4 and SystemA-2, while Age, FirstName, LastName, Country and FirstOrderDate are unchanged.](/images/using-select-with-except-and-replace/2.png)
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

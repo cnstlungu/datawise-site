@@ -47,5 +47,3 @@ SELECT 2 AS id, NULL AS first_name, 'Doe' AS last_name, '555-12345' AS phone_num
 ```
 
 The insert fails with the error `Required field first_name cannot be null`.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

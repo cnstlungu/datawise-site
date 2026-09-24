@@ -44,5 +44,3 @@ CROSS JOIN input_options
 ```
 
 ![BigQuery results: participant\_id 1 to 14, each with a randomly picked selected\_option, e.g. Option 3, Option 17, Option 14 and Option 2.](/images/generating-a-random-number-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*

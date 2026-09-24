@@ -51,8 +51,6 @@ LEFT JOIN UNNEST(order_lines) AS order_line
 
 ![BigQuery results of SELECT AS STRUCT: the same six rows, but the column headers keep the struct prefix (o... product\_id, order\_quantity, or... unit\_price), circled in red.](/images/select-as-struct-and-select-as-value/1-result-2.png)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

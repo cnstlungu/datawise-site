@@ -55,5 +55,3 @@ WHERE text LIKE ALL ('%dog%', '%fox%')
 Pair them with the NOT keyword to achieve the opposite effect, so NOT LIKE ANY/SOME means not even a partial match and NOT LIKE ALL means no full match.
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

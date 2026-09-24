@@ -30,8 +30,6 @@ Tucked into a table somewhere, it haunted me and wreaked havoc. I don’t know i
 
 ![Scooby-Doo unmasking meme: Fred asks why the report keeps changing at random, then pulls the mask off the ghost to reveal the villain, labelled ROW\_NUMBER with stochastic vibes.](/images/beware-of-rownumber-without-order-by/1.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

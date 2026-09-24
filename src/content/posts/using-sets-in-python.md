@@ -55,5 +55,3 @@ print(a.union(b))  # {1, 2, 3, 4, 5}
 In conclusion, the set container is a powerful tool in Python's arsenal. While it has its limitations, understanding when and how to use it can greatly enhance your coding efficiency!
 
 👉 Follow me for more insights on Python, SQL and analytics!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

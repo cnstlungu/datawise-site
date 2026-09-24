@@ -54,5 +54,3 @@ As with all things, take into consideration your context and business problem yo
     \- `FLOOR` - largest integer that is not greater than our value 1.7 =&gt; 1  
     \- `CEIL`/`CEILING` - smallest integer than is not smaller than our value 1.4 =&gt; 2
     
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

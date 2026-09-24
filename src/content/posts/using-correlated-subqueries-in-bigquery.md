@@ -220,5 +220,3 @@ It's also worth pointing out that using correlated subqueries, especially comple
 ## Conclusion
 
 In conclusion, keep correlated subqueries as part of your toolbox but use them sparingly, based on the situation and compare them with other approaches to pick the best way to go forward.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

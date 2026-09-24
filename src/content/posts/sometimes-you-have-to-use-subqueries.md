@@ -52,8 +52,6 @@ FROM input_data
 
 ![BigQuery results: order 1 has errors Payment and Delivery, order 2 an empty array (0 rows), order 3 Fulfilment, and order 4 Payment and Fulfilment.](/images/sometimes-you-have-to-use-subqueries/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

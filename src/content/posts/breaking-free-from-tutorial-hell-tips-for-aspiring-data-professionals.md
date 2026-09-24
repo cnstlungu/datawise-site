@@ -65,5 +65,3 @@ Here’s two such projects of my own:
 The key takeaway here is to get building. Start creating, experimenting, applying, and sharing what you learn. Whether it's an individual project stemming from your own idea or a guided project, the experience you gain from practical application is invaluable.
 
 Remember, the goal is to <s>become proficient</s> solve real-life problems and be confident in your skills, not just to collect certificates. So, get out there and start building your path to success in Analytics! Don't give in to tutorial hell.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

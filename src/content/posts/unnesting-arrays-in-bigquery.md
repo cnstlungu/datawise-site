@@ -49,8 +49,6 @@ LEFT JOIN UNNEST(activities) AS activity
 
 ![BigQuery results: eight rows, one per activity: Jeremy tennis 2023-01-06, Jeremy basketball 2022-11-01, Jane volleyball 2021-01-01, Jane cycling 2022-01-15, Jane snooker 2021-10-01, Joseph football 2022-01-01, Joseph chess 2022-06-01, and Joanna with null activity\_name and activity\_registered\_on.](/images/unnesting-arrays-in-bigquery/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

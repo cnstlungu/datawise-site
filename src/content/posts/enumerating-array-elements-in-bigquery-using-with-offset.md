@@ -50,8 +50,6 @@ WITH OFFSET AS offset
 
 ![BigQuery results: for customer 1 / order 100 and customer 2 / order 200, status\_update order\_created, order\_paid and order\_shipped with offset 0, 1 and 2.](/images/enumerating-array-elements-in-bigquery-using-with-offset/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

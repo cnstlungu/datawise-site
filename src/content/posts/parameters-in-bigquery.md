@@ -66,5 +66,3 @@ SELECT
 ```
 
 ![BigQuery results of both queries, side by side and identical: the 363, of 351, I 342, my 335, to 335, in 287.](/images/parameters-in-bigquery/1-result.png)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

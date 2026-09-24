@@ -73,8 +73,6 @@ def generate_squares(list_of_numbers):
 # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

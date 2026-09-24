@@ -1,0 +1,27 @@
+---
+import { SITE } from '../consts';
+
+interface Props {
+  // The /newsletter page has its own heading.
+  heading?: boolean;
+}
+
+const { heading = true } = Astro.props;
+const { name, url } = SITE.newsletter;
+---
+
+<section class="newsletter" aria-label={heading ? undefined : `Subscribe to ${name}`} aria-labelledby={heading ? 'newsletter-title' : undefined}>
+  {heading && (
+    <>
+      <h2 id="newsletter-title">Get new posts by email</h2>
+      <p>
+        Subscribe to <strong>{name}</strong>, my newsletter: new BigQuery and SQL tutorials from this site, plus my
+        take on data engineering and analytics.
+      </p>
+    </>
+  )}
+  <!-- Substack's own signup form. It only loads when scrolled into view, and it is always light, so it sits on a
+       white card in dark mode too. -->
+  <iframe src={`${url}/embed`} title={`Subscribe to ${name}`} width="480" height="320" loading="lazy"></iframe>
+  <p class="newsletter-alt">Form not showing? <a href={url}>Subscribe on {url.replace('https://www.', '')}</a>.</p>
+</section>

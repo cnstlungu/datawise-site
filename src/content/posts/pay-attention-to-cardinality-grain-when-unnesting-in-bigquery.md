@@ -44,8 +44,6 @@ LEFT JOIN UNNEST(allergies) AS food_allergy
 
 ![BigQuery results: 12 rows for Joe Doe, pairing each grade (90, 58, 50, 100) with each food\_allergy (gluten, milk, eggs).](/images/pay-attention-to-cardinality-grain-when-unnesting-in-bigquery/1-result-2.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

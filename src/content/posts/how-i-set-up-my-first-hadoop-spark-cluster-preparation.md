@@ -165,5 +165,3 @@ function clustercmd {
 #### Conclusion
 
 Now that we have a working set of machines on that we can execute commands, we can proceed to set up Hadoop and Spark. I will be detailing the problems I’ve encountered in the process in an upcoming article. Thank you for reading and see you soon.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

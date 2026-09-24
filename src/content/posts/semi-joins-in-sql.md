@@ -52,8 +52,6 @@ SELECT 1
 
 ![BigQuery results: two rows, product 1 Cherries and product 2 Tomatoes.](/images/semi-joins-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -38,8 +38,6 @@ SELECT JSON_KEYS(json_data, mode => 'lax') AS json_keys
 
 ![BigQuery results: json\_keys returns one row holding six keys: city, name, sports, sports.club, sports.name and sports.since.](/images/extracting-keys-from-json-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

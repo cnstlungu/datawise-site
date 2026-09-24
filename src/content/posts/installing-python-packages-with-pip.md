@@ -57,8 +57,6 @@ tzdata==2024.1
 
 ![Terminal output: source .venv/bin/activate adds a (test) prefix to the prompt and deactivate removes it; the user and host name are hidden.](/images/installing-python-packages-with-pip/1-output.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

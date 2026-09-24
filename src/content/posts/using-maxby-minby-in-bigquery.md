@@ -60,5 +60,3 @@ This would produce the following output:
 ![BigQuery result row comparing MAX\_BY and MIN\_BY with ANY\_VALUE HAVING: employee\_with\_highest\_gross\_salary and also\_employee\_with\_highest\_gross\_salary are both Emily Scott; employee\_hired\_earliest and also\_employee\_hired\_earliest are both Jack Dew.](/images/using-maxby-minby-in-bigquery/2.png)
 
 In our field, every day is a learning journey. Stay tuned for more insights on Analytics, SQL, Python and BigQuery. Follow along!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

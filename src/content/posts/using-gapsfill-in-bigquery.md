@@ -59,5 +59,3 @@ LEFT JOIN `learning.dates_with_gaps` dates ON filled_date = dates.transaction_da
 ```
 
 ![BigQuery results of the GENERATE\_DATE\_ARRAY query: the same five dates, 2021-01-01 through 2021-01-05.](/images/using-gapsfill-in-bigquery/1-result-2.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*

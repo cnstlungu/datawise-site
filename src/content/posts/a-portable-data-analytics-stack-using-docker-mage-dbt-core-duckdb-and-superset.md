@@ -31,5 +31,3 @@ I've previously set up similar projects with [Airflow](https://github.com/cnstlu
 It's pretty bare bones (somewhat as intended) and has some rough edges, but it should be a good starting point for a demo, template or learn how all these components works together.
 
 I would of course appreciate any feedback or suggestions on how to make it better.
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -49,8 +49,6 @@ FULL OUTER JOIN `learning_us.trends_us_dev` dev ON prod.refresh_date = dev.refre
 
 ![BigQuery results: cnt\_missing\_prod 3954227, distinct\_terms\_missing\_from\_prod 660, cnt\_missing\_dev 3956293, distinct\_terms\_missing\_from\_dev 660, total\_rows 43514223, total\_distinct\_terms 660 and rows\_different 7910520.](/images/comparing-tables-with-full-outer-join/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -58,8 +58,6 @@ ADD FOREIGN KEY(id) REFERENCES learning.ids(id) NOT ENFORCED;
 
 ![BigQuery results message: This statement altered the table named data\_source.](/images/cross-dataset-foreign-key-referencing-in-bigquery/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

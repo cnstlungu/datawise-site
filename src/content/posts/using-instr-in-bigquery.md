@@ -41,5 +41,3 @@ FROM input_data
 ```
 
 ![BigQuery results: apple,grapes,melon has comma\_first\_position 6 and semicolon\_first\_position 0 and splits into apple, grapes and melon; pear;mango;kiwi has 0 and 5 and stays one item; banana has 0 and 0.](/images/using-instr-in-bigquery/1-result.png)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -54,8 +54,6 @@ P.S. This would not work if you're trying to fill in a STRUCT for example. IGNOR
 
 Happy querying!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

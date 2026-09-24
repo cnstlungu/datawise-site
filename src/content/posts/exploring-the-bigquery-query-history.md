@@ -33,8 +33,6 @@ Also, please be reminded that the job data is also available via an INFORMATION 
 
 <!-- missing image, source no longer available: https://media.licdn.com/dms/image/v2/D4D22AQFGpdKJ6PunCA/feedshare-shrink_2048_1536/B4DZUZAbT4GcAo-/0/1739881298596?e=1743033600&v=beta&t=UHQg6L0vaIodzQ2HEuT0buNkNKY8Vd6U3VIVg71p9vw -->
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

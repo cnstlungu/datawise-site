@@ -52,8 +52,6 @@ Note that ARRAY\_AGG can be combined with:
 
 Thanks for reading!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

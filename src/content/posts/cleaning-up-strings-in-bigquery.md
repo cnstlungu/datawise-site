@@ -52,5 +52,3 @@ SELECT DISTINCT NULLIF(TRIM(city),'') AS city FROM input_data
 ```
 
 ![BigQuery results: SELECT DISTINCT city returns 7 rows (two that look blank, New York, Athens, New York with a leading space, New York again, and null), while the NULLIF(TRIM(city),'') query returns 3 rows: null, New York and Athens.](/images/cleaning-up-strings-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

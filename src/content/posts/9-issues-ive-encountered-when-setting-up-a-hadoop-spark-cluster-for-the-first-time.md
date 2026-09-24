@@ -208,5 +208,3 @@ Credits to the solution and explanation [here](https://stackoverflow.com/questio
 ### Conclusion
 
 This concludes our recap on some errors encountered during setting up Hadoop and Spark as a beginner. We’ll give our cluster a spin, test it out and report it in a future article. Thanks for reading and stay tuned!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -46,5 +46,3 @@ DATETIME( CURRENT_TIMESTAMP(), 'Europe/Bucharest') AS bucharest_datetime_from_ti
 ```
 
 ![BigQuery results: local\_time\_bucharest 2024-01-12T18:09:21.870935, local\_time\_new\_york 2024-01-12T11:09:21.870935, utc\_timestamp and timestamp\_converted\_from\_datetime both 2024-01-12 16:09:21.870935 (the UTC suffix is cut off), and bucharest\_datetime\_from\_timestamp 2024-01-12T18:09:21.870935.](/images/datetime-vs-timestamp-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

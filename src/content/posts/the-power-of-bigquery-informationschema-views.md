@@ -131,5 +131,3 @@ SELECT * FROM region-eu.INFORMATION_SCHEMA.TABLE_STORAGE;
     
 * Be sure to check the [BigQuery documentation](https://docs.cloud.google.com/bigquery/docs/information-schema-table-storage) for the latest list of INFORMATION SCHEMA views you can use
     
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

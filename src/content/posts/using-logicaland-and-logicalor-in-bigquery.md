@@ -64,5 +64,3 @@ Here's our output of our query.
 ```
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

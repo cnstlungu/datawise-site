@@ -53,5 +53,3 @@ Upon executing this query, the following results are produced:
 The functions presented above and others relevant to working with timestamps are presented in the [documentation](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions).
 
 Thanks for reading and enjoy working with BigQuery!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

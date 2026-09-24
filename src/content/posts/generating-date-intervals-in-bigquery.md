@@ -36,5 +36,3 @@ FROM UNNEST(GENERATE_DATE_ARRAY('2021-01-01', '2021-01-31', INTERVAL 1 DAY)) AS 
 ```
 
 ![BigQuery results: 31 rows of valid\_date, one per day from 2021-01-01 to 2021-01-31.](/images/generating-date-intervals-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

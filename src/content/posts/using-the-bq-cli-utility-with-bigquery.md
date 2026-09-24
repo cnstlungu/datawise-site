@@ -32,8 +32,6 @@ bq query --use_legacy_sql=false "SELECT * FROM learning.employee_data"
 
 ![Terminal output: an ASCII table of nine employees with employee\_id, first\_name, last\_name and manager\_id: John Smith has manager\_id NULL, Jane Doe and Bob Johnson report to 1, Alice Lee and Tom Wilson to 2, Mike Brown and Sarah Kim to 3, David Lee and Emily Davis to 4.](/images/using-the-bq-cli-utility-with-bigquery/1-output.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

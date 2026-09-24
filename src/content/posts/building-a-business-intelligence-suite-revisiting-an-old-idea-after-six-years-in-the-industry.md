@@ -133,5 +133,3 @@ Stay tuned for the next post in this series (will post a link here once done) to
 Thanks for reading!
 
 > *Reminder: if you’d like to inspect the code yourself, it’s available on* [*GitHub*](https://github.com/cnstlungu/portable-data-stack-airflow)*.*
-> 
-> *Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

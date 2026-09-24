@@ -48,5 +48,3 @@ Here's how the output would look with NULLS excluded.
 And with them included:
 
 ![Mode query output with NULLs included, columns country, value and times\_seen: UK returns 1 and NULL, US returns 2 and NULL, all tied at 2 occurrences, so RANK keeps two rows per country.](/images/calculating-the-mode-in-bigquery/4.png)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

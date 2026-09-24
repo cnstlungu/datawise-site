@@ -46,8 +46,6 @@ print(get_first_n_squares(5))  # [0, 1, 4, 9, 16]
 
 TL;DR When handling large, streaming or single-use collections, consider using generators. 💡
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

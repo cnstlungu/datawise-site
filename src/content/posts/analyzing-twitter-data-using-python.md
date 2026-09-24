@@ -331,5 +331,3 @@ bigramseries[:10].plot(kind='bar')
 This post concludes our series about exploring Twitter data with Python. While it wasn’t supposed to be an exhaustive list of what you can do with it, it was meant to give the reader a glimpse into the sheer possibilities the Python toolkit gives about extracting, processing and presenting data. It’s straightforward, well-documented and downright fun. The full Jupyter Notebook for this series is available [here](https://github.com/cnstlungu/incubator/tree/master/Python/Exploring%20Twitter%20Data%20using%20Python).
 
 Thank you for reading and feel free to share some examples of your own.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

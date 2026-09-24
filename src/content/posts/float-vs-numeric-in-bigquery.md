@@ -61,5 +61,3 @@ FROM input_data
 ```
 
 ![BigQuery results in the JSON tab: float\_sum "0.30000000000000004", not\_a\_number\_float "NaN", minus\_infinity "-Infinity" and plus\_infinity "Infinity".](/images/float-vs-numeric-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

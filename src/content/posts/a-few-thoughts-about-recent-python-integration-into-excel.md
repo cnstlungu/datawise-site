@@ -33,5 +33,3 @@ But, a word of caution is in order:
 \- There might be an inclination to bypass conventional Software Engineering/Data Analytics channels, thinking, "We can manage in Excel now." But let's be judicious in our tool selection. We shouldn't revert to those dark days of endless tabs driven by opaque macros (with shady VBA, written a decade ago, that no one knows how it works anymore) - the ones where you're advised, "Just click this, and it works."
 
 Python to the people! 🚀📊
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -46,8 +46,6 @@ RANGE comes with a limitation though - you can only order by a single numerical 
 
 Hope this was interesting!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

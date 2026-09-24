@@ -46,8 +46,6 @@ LEFT JOIN UNNEST(orders) AS _order
 
 ![BigQuery results of the UNNEST query: the four flat rows again, customer 1 with 101 apples and 102 tomatoes, customer 2 with 201 cherries and 202 cucumbers.](/images/the-relationship-between-arrayagg-and-unnest/1-result-2.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

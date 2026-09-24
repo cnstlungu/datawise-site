@@ -53,5 +53,3 @@ WHERE label.key = 'cost_center'
 If you haven't explored labels in BigQuery yet, I urge you to do so. They offer a straightforward approach to instill organization and transparency in your data workspace.
 
 Enjoy your data exploration! 📊
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

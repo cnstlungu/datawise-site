@@ -94,5 +94,3 @@ SELECT customer_id, order_id FROM input_a
 ![BigQuery result of EXCEPT DISTINCT: two rows, customer 5 with order 1010 and customer 6 with order 1012.](/images/intersect-and-except-in-bigquery/4-result.png)
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

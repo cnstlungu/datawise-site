@@ -35,8 +35,6 @@ for pair in zip(integers, letters):
 # (4, 'd')
 ```
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

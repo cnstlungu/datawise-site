@@ -41,8 +41,6 @@ SELECT start_timestamp, another_timestamp, fruits;
 
 ![BigQuery results: start\_timestamp 2024-06-17 13:03:42 UTC, another\_timestamp 2021-01-01 17:00:00 UTC, and the fruits array as two rows, apple/sweet and lemon/sour.](/images/declare-and-set-variables-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -38,8 +38,6 @@ Let's run a quick query to test the performance of these two. In this particular
 
 I'm definitely not saying this is a "one size fits all" approach, depending of course on data structure, size, querying patterns and other constraints. But whenever you have a challenge like that, it's good to know your options, try out different strategies and pick the one that suits your use case best.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

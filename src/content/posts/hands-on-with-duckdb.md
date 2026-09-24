@@ -88,5 +88,3 @@ In the example below I'm using it to query a sample 9.3M row CSV file.
 ![Spreadsheet view of the sample e-commerce CSV used with DuckDB, with columns id, f\_orderquantity, f\_productprice, f\_employeeid, f\_storeid, f\_vatrateid, f\_orderdate, f\_productid, f\_campaignid, f\_NetAmountEUR, f\_GrossAmountEUR and audit columns.](/images/hands-on-with-duckdb/4.jpg)
 
 Since competition in the analytics space is a driving force for progress, I'm enthusiastic about what's to come next. Hopefully, further democratization of this space can happen, so that even smaller companies are empowered by analytics.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

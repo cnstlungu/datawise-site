@@ -59,5 +59,3 @@ HAVING COUNT(order_line) = 1 AND
 ```
 
 ![BigQuery results: order\_id 2 with count\_order\_lines 1 and product\_name grapes, and order\_id 3 with count\_order\_lines 1 and product\_name oranges.](/images/combining-anyvalue-with-having-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

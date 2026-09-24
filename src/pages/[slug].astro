@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import comments from '../data/comments.json';
+import Newsletter from '../components/Newsletter.astro';
 import PostList from '../components/PostList.astro';
 import Base from '../layouts/Base.astro';
 import { AUTHOR, SITE } from '../consts';
@@ -171,6 +172,8 @@ const jsonLd: object[] = [
       </nav>
     )}
 
+    <Newsletter />
+
     {related.length > 0 && (
       <section class="related" aria-labelledby="related-title">
         <h2 id="related-title">Related posts</h2>
@@ -183,7 +186,6 @@ const jsonLd: object[] = [
       <div>
         <p><strong><a href={AUTHOR.url}>{AUTHOR.name}</a></strong></p>
         <p class="bio">{AUTHOR.bio}</p>
-        <p>Get new posts by email: <a href={SITE.newsletter.url}>{SITE.newsletter.name}</a>, my analytics newsletter.</p>
       </div>
     </aside>
 

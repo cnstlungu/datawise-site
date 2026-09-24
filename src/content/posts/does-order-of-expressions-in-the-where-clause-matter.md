@@ -30,8 +30,6 @@ The results have shown almost no difference between the two approaches (across s
 
 In any case, I'll keep this in mind next time I'm working with a very big table and check it out again.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

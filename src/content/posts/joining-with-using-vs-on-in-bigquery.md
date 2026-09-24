@@ -63,8 +63,6 @@ LEFT JOIN products p ON o.product_id = p.product_id AND
 
 ![Result of both queries, with columns order\_id, product\_id, variant, country\_code, quantity, color and size: orders 1 to 8 get the color and size of their variant (XL-Green is Green, XL; L-White is White, L), and order 9 is NULL in every column.](/images/joining-with-using-vs-on-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

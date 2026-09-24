@@ -46,8 +46,6 @@ ORDER BY ABS(IFNULL(sales_a, 0) - IFNULL(sales_b, 0)) DESC
 
 ![BigQuery results, biggest difference first: shoes 2021-01-01 (sales\_a null, sales\_b 3000, difference 3000), shoes 2021-01-03 (1400, null, 1400), clothing 2021-01-01 (1500, 1400, 100), shoes 2021-01-02 (1500, 1550, 50), then clothing 2021-01-02 and 2021-01-03 with difference 0.](/images/a-simple-data-validation-scenario-using-full-outer-join-order-by/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

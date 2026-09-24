@@ -40,8 +40,6 @@ Nowadays, here's how I think about the same situation in BigQuery:
 
 How does your decision tree look like? Which one do you use in which cases?
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -28,5 +28,3 @@ With this setup, my laptop is essentially just the "control center"—all the pr
 In short, all the development happens on my laptop, but the resource consumption is offloaded to my server.
 
 ![VS Code window connected over Remote SSH to a mini-PC, editing app.py, a FastAPI hello world with an async root route; the Ports panel shows port 8000 auto-forwarded to 127.0.0.1:8000 on the laptop.](/images/why-you-should-care-about-vs-code-remote-development/1.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/) *.*

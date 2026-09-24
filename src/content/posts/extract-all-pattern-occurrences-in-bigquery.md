@@ -31,5 +31,3 @@ FROM input_data
 ```
 
 ![BigQuery results: one row whose extracted\_dates array holds 2021-01-01, 2021-01-02, 2021-01-03 and 2021-01-04.](/images/extract-all-pattern-occurrences-in-bigquery/1-result.jpg)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

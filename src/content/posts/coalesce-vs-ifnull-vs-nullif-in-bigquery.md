@@ -43,8 +43,6 @@ FROM input_data
 
 ![BigQuery results: ifnull\_example and coalesce\_example are both 'default value', nullif\_example is null.](/images/coalesce-vs-ifnull-vs-nullif-in-bigquery/1-result.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -27,8 +27,6 @@ I've used it before to load data from Google Cloud Storage into BigQuery tables 
   
 See [my previous post](/loading-data-from-google-cloud-storage-into-bigquery-using-cloud-workflows) for a short walk through showcasing how BQ and Workflows play together.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

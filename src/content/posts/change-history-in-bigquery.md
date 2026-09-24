@@ -79,5 +79,3 @@ Key things to note:
 📦 Enabling Change History means extra storage costs for metadata.
 
 Has anyone tried using these in real-life scenarios?
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

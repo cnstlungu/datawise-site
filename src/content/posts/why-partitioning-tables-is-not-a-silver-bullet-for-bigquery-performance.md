@@ -64,8 +64,6 @@ USING (order_id)
 
 ![Execution details, left to right for the three queries: 7 sec elapsed and 10 min 13 sec slot time (unpartitioned order\_amounts\_unpartitioned), 7 sec and 27 min 13 sec (order\_amounts USING order\_date, order\_id), 9 sec and 41 min 47 sec (order\_amounts USING order\_id).](/images/why-partitioning-tables-is-not-a-silver-bullet-for-bigquery-performance/1-result.png)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

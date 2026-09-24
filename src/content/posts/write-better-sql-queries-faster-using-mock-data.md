@@ -30,5 +30,3 @@ In a blank BigQuery window, I write a couple of Common Table Expressions (CTEs) 
 👀 So, the next time you have to write a big query (pun unintended), especially when dealing with unfamiliar data or functions, take a moment to code a swift example in a blank BigQuery window. It pays off to think simply first.
 
 🔄 Is this Test-Driven Development (TDD) for BigQuery? Perhaps. I like to term it *Iterative Development*.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

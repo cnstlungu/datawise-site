@@ -46,8 +46,6 @@ FROM input_data
 
 ![BigQuery results: second\_with\_ordinal, second\_with\_index and second\_with\_offest are all b; sixth\_with\_safe\_offset and sixth\_with\_safe\_ordinal are null.](/images/accessing-array-elements-in-bigquery/1-result.png)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

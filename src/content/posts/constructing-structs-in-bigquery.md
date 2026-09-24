@@ -39,8 +39,6 @@ won't match fields according to names!
 
 <!-- missing image, source no longer available: https://media.licdn.com/dms/image/v2/D4D22AQGuwPsLsBbj-w/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1713343102449?e=1742428800&v=beta&t=SYAdTDN081i7i8TTHFdSQGW0akSoegTMxz79F9NEQiY -->
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

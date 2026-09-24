@@ -55,5 +55,3 @@ FROM input_data
 ![BigQuery results: sales\_amount 514.25 for product 1, 255.552 for product 2 and 163.35 for product 3.](/images/with-expressions-in-bigquery/1-result.jpg)
 
 Has anyone here used them already? Any thoughts? Docs [here](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression).
-
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*

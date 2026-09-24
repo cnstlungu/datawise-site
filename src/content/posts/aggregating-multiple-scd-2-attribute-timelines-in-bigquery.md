@@ -63,8 +63,6 @@ ORDER BY id,  valid_from
 
 ![BigQuery results: one row per id and date range with an attributes array of key/value pairs; for example id 1 from 2021-01-05 to 2021-01-10 has A true and B true, id 2 from 2022-01-15 to 2023-01-03 has null, and id 2 from 2023-01-05 to 2023-01-08 has B true and A false.](/images/aggregating-multiple-scd-2-attribute-timelines-in-bigquery/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

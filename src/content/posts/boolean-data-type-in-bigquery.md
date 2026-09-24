@@ -79,5 +79,3 @@ WHERE
 ```
 
 ![SQL Server results: one row with val\_a 1, val\_b 2 and is\_val\_b\_higher 1.](/images/boolean-data-type-in-bigquery/1-result-2.jpg)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -80,5 +80,3 @@ Here's what the results would look like:
 ![BigQuery console result of ANY\_VALUE with HAVING MAX and HAVING MIN, grouped by country: Germany has highest\_selling\_by\_value productC and lowest\_selling\_by\_quantity productB, while Spain has productD and productE.](/images/using-anyvalue-in-bigquery/4.png)
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

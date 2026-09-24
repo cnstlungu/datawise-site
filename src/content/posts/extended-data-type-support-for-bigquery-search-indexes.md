@@ -43,5 +43,3 @@ WHERE index_status = 'ACTIVE';
 ```
 
 ![BigQuery results: table sample\_logs with index test\_index, its DDL (partly visible), coverage\_percentage 0 and analyzer LOG\_ANALYZER.](/images/extended-data-type-support-for-bigquery-search-indexes/1-result-2.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [https://www.notjustsql.com](https://www.notjustsql.com/)*.*

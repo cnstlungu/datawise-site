@@ -36,5 +36,3 @@ Developing quality software is not an easy task, and aligning people's interests
 Establishing a culture of openness and transparency, alongside appropriate incentives, should be a priority for anyone leading a team.
 
 In life and software, mishaps occur. However, when people's motivations are aligned, we can collectively work better towards the same goal.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

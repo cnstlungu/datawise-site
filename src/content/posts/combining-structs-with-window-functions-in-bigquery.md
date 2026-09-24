@@ -84,8 +84,6 @@ This way, you can use LEAD or LAG only once, regardless of how many attributes y
 
 There are of course other interesting use cases for STRUCTs, which we will explore in upcoming posts. Stay tuned!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

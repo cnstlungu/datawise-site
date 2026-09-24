@@ -43,8 +43,6 @@ retrieve_data()
 
 ![Terminal output: retrieve\_data runs on 2024-07-27 at 12:42:16, 12:42:20, 12:42:24, 12:42:32, 12:42:44, 12:42:56 and 12:43:08, waiting 4, 4, 8, 12, 12 and 12 seconds; the first six runs print An error has occurred. and the last prints All good!](/images/retrying-in-python-using-tenacity/1-output.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

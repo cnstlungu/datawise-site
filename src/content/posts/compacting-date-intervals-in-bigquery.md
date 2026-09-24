@@ -89,8 +89,6 @@ Here's a breakdown of how it all works:
 
 We can now see that in our example that several intervals were merged into bigger ones.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -145,5 +145,3 @@ It should be noted that according to [BigQuery documentation](https://docs.cloud
 In today’s exercise, we’ve looked at recursive Common Table Expressions, or CTEs as yet another valuable tool on our belt when working with data in BigQuery.
 
 Thanks for reading and stay tuned for more BigQuery topics.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -44,5 +44,3 @@ Check out [text analyzer options](https://docs.cloud.google.com/bigquery/docs/re
 
 \- works best when you have a lot of distinct values (high query selectivity)  
 \- if you've indexed all the columns any new compatible (STRING, JSON) column in that table will be indexed as well
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

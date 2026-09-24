@@ -44,5 +44,3 @@ FROM input_data
 ```
 
 ![BigQuery results: highest 20, also\_highest 20, lowest 10, also\_lowest 10 and greatest\_of\_all 30.](/images/greatest-least-in-bigquery/1-result.jpg)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -75,5 +75,3 @@ Trying to optimize something can be interesting. Time will fly by. Don't get you
 Perhaps you should prioritize improving a scheduled query running every 2 hours than a vastly bigger one that is used for yearly reporting?
 
 After all, the smaller one runs 12 \* 365 = 4380 times a year, so a small saving here might mean a big difference in the grand scheme of things.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

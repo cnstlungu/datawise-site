@@ -40,5 +40,3 @@ ORDER BY second_to_last_order_update_ts DESC
 ```
 
 ![BigQuery results: order 2 with second\_to\_last\_order\_update\_ts 2021-01-01 13:15:00 UTC and order 1 with 2021-01-01 11:30:00 UTC, both order\_updated.](/images/where-does-qualify-fit-in-the-order-of-execution-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

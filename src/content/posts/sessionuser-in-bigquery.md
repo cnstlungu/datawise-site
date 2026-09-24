@@ -29,5 +29,3 @@ SELECT SESSION_USER()
 ```
 
 It returns one row with the email address of the user running the query.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

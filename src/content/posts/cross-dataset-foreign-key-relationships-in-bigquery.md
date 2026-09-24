@@ -45,8 +45,6 @@ ALTER TABLE `auxiliary.products` ADD PRIMARY KEY(id) NOT ENFORCED;
 
 ![Table details for auxiliary.products: Primary key(s) id.](/images/cross-dataset-foreign-key-relationships-in-bigquery/1-schema-2.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [***notjustsql.com***](https://www.notjustsql.com/)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

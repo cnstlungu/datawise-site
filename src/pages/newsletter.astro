@@ -1,0 +1,24 @@
+---
+import Newsletter from '../components/Newsletter.astro';
+import { SITE } from '../consts';
+import Base from '../layouts/Base.astro';
+
+const { name, url } = SITE.newsletter;
+---
+
+<Base
+  title={`Newsletter | ${SITE.name}`}
+  description={`Get new BigQuery and SQL tutorials by email, plus my take on data engineering and analytics, in ${name}.`}
+>
+  <header class="page-head">
+    <h1>Newsletter</h1>
+    <p>
+      {name} is my newsletter. Each issue brings the new BigQuery and SQL tutorials from this site, plus my take on
+      data engineering, analytics and the tools around them. It's free, and you can unsubscribe at any time.
+    </p>
+  </header>
+  <div class="post">
+    <Newsletter heading={false} />
+    <p>Past issues are on <a href={url}>{url.replace('https://www.', '')}</a>.</p>
+  </div>
+</Base>

@@ -29,5 +29,3 @@ The data teams working with such information must have fascinating day-to-day ta
 Whenever I see the events being collected in real life, I'm already thinking about someone analyzing them with SQL somewhere. 😁
 
 So, as a Data Analyst, Data Engineer, or Data Scientist, it might be beneficial to consider how the data was collected the next time you work on a data task.
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

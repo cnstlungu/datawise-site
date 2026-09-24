@@ -48,8 +48,6 @@ FROM input_data
 
 Bonus point: You can also use a [named window declaration](/tidying-up-window-functions-in-bigquery-with-named-windows) for cleaner code.
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

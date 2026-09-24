@@ -31,8 +31,6 @@ GROUP BY ALL
 
 ![Query results: is\_paid\_null false with product\_id\_null true occurs 1 time, both false 4 times, and is\_paid\_null true with product\_id\_null false 1 time.](/images/the-first-thing-i-do-when-analyzing-a-sql-table/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at*[*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

@@ -375,8 +375,6 @@ FROM results
 
 *[View on GitHub Gist](https://gist.github.com/cnstlungu/742c5f606d53d9258c2c97fa697d48e1)* 
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

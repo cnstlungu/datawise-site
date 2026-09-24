@@ -51,8 +51,6 @@ WHERE
 
 ![BigQuery results: orders 1 and 2 are returned; order 1 has is\_paid true and is\_shipped false, order 2 has is\_paid false and is\_shipped true, and both have customer\_is\_on\_contract and is\_first\_time\_buyer true.](/images/why-you-should-use-parentheses-with-and-or-in-sql/1-result.jpg)
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

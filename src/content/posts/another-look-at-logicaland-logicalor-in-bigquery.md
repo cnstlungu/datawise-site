@@ -51,5 +51,3 @@ GROUP BY customer_id
 ```
 
 ![Query results: Customer 1 has all\_orders\_paid true, outstanding\_orders true and ordered\_olives\_last\_3\_months true; Customer 2 has false, true and false.](/images/another-look-at-logicaland-logicalor-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*https://www.notjustsql.com*](https://www.notjustsql.com/)*.*

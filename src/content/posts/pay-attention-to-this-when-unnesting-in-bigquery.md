@@ -71,8 +71,6 @@ In this case, the first approach would miss out on the people without a bank acc
 
 Have fun writing good SQL!
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

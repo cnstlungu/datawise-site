@@ -52,8 +52,6 @@ with tempfile.TemporaryDirectory() as temp_dir:
 # Temporary file created at /var/folders/0_/00hs4my104l9tl0x2y386b3c0000gn/T/tmprgxjwmsj/tempfile.txt
 ```
 
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

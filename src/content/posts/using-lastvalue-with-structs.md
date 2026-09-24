@@ -60,8 +60,6 @@ FROM cte
 
 ![BigQuery results: with all three fixes, 2025-01-02 stays null while 2025-01-07 and 2025-01-10 both carry 123 and 235 forward in the struct, JSON-string and regex columns.](/images/using-lastvalue-with-structs/1-result-2.jpg)
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

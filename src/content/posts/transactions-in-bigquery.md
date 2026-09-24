@@ -45,5 +45,3 @@ END;
 ```
 
 ![BigQuery script results: 5 statements processed in 4 sec; BEGIN TRANSACTION, INSERT INTO learning.some\_table, SELECT @@error.message and ROLLBACK TRANSACTION succeed, while SELECT ERROR("Some VERY unexpected error") fails.](/images/transactions-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

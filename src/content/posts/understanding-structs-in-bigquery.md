@@ -59,8 +59,6 @@ ARRAY = a list of things (0, 1 or more) that are related to this observation, fo
 ARRAY of STRUCTS = you have a list of "things" that you know multiple things about and want to keep the together i.e. certifications =&gt; (name, from\_date).  
 Would also be good to store all them addresses a person ever had. `TYPE = RECORD, MODE = REPEATED`
 
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
-
 ---
 
 *Enjoyed this? Here are some related articles you might find useful:*

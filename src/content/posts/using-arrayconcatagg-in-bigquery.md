@@ -67,5 +67,3 @@ Here's what the result would look like:
 ![BigQuery console result after ARRAY\_CONCAT\_AGG(offices) with GROUP BY country: two rows, US with six offices from New York to San Francisco and CA with six from Calgary to Toronto, listed in offices.city\_name and offices.staff\_count.](/images/using-arrayconcatagg-in-bigquery/2.png)
 
 Thanks for reading!
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

@@ -31,5 +31,3 @@ They even offer a quick way to convert a group of date-sharded tables to a regul
 Have you ever encountered any interesting use cases for sharding?
 
 ![BigQuery console screenshot of date-sharded tables: the explorer groups them as sharded\_table\_ (2), the sharded\_table\_20240102 page has a shard picker listing 2024 01-01 and 01-02, and SELECT \* FROM learning.sharded\_table\_\* returns rows from both shards.](/images/sharded-tables-in-bigquery/1.jpg)
-
-*Found it useful? Check out to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

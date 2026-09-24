@@ -157,5 +157,3 @@ ss.sql(
 In this short post, we’ve looked at leveraging Scala with Spark to read and process Reddit data using good old SQL, paving the way to an array of interesting applications. Thanks for reading!
 
 *A kind reminder that the companion source code for this post is available on* [*Github*](https://github.com/cnstlungu/scala-spark-reddit-example)*.*
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*

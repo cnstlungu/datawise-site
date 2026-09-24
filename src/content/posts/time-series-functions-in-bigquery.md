@@ -28,5 +28,3 @@ FROM input_data
 ```
 
 ![BigQuery results: eight 2021-01-01 events and their 15-minute buckets; 10:01:00 and 10:13:20 fall in 10:00:00, 10:22:15 and 10:22:40 in 10:15:00, 10:31:30 and 10:38:15 in 10:30:00, and 10:51:33 and 10:59:12 in 10:45:00.](/images/time-series-functions-in-bigquery/1-result.jpg)
-
-*Found it useful? Subscribe to my Analytics newsletter at* [*notjustsql.com*](https://www.notjustsql.com)*.*
