@@ -15,3 +15,6 @@ dist/
 public/images/**/*.png.webp
 public/images/**/*.jpg.webp
 public/images/**/*.jpeg.webp
+
+# Python bytecode
+__pycache__/
