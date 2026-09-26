@@ -188,7 +188,7 @@ When running Spark in a clustered mode on top of a YARN cluster, the Spark .jar
 Creating the archive:
 
 ```bash
-jar cv0f spark-libs.jar -C $SPARK_HOME/jars/ .
+jar cv0f spark-libs.jar -C $SPARK_HOME/jars/ .
 ```
 
 Upload to HDFS

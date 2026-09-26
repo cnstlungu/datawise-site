@@ -29,9 +29,7 @@ Here's how we can solve it:
 Here's how it would look in SQL:
 
 ```sql
-  SELECT
-
-
+SELECT
   sensor_id,
   temperature,
   humidity_percentage,

@@ -14,7 +14,7 @@ hashnodeCuid: "cm6wa6ta2000k08l83bbpaib4"
 
 Modern SQL engines have a wealth of aggregation functions.
 
-Here's a quick example that makes use ofBigQuery STRING\_AGG.
+Here's a quick example that makes use of BigQuery STRING\_AGG.
 
 What does it do?
 

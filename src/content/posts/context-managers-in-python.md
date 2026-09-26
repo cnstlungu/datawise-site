@@ -18,7 +18,7 @@ You might've used it without realizing it, especially while working with files. 
 
 ```python
 with open('test.txt', 'w') as f:
-   f.write('Test')
+   f.write('Test')
 ```
 
 Why do we need a Context Manager in Python anyway?

@@ -21,7 +21,6 @@ It's definitely better than `GROUP BY 1,2,3` which would fail once we'd change t
 Here's an example of how it looks.
 
 ```sql
-
 SELECT country, sell_date, SUM(sales) AS total_sales
 
 FROM input_data
