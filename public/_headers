@@ -1,6 +1,9 @@
+# Access-Control-Allow-Origin is temporary: it lets the Medium editor read posts while the Medium copies
+# are synced with this site. Remove it afterwards.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  Access-Control-Allow-Origin: https://medium.com
 
 /*.md
   Content-Type: text/markdown; charset=utf-8
