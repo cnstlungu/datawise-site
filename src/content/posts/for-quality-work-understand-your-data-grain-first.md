@@ -14,10 +14,6 @@ There’s one concept that is central when working with data and goes beyond spe
 
 It’s essentially answering the question: what does one row of this data represent? Is it an order, a line item in an order, or a status update for a line item?
 
-Thanks for reading Not just SQL! Subscribe for free to receive new posts and support my work.
-
-Subscribed
-
 This is so important because you need to know it to query and ETL data correctly. If not, you’ll end up guessing, and might never be 100% sure you made the right choice. Misunderstanding the grain of a table is how you get faulty joins and duplicates—and why DISTINCT is often slapped on indiscriminately to try and fix the problem.
 
 You need to understand the grain to know whether you should COUNT or COUNT DISTINCT, and whether it’s safe to SUM or JOIN data.
@@ -34,7 +30,7 @@ Now, if you’ve ever tried to figure out the grain of an external data source w
 
 ➡️ Leverage ranking functions like ROW\_NUMBER() and DENSE\_RANK().
 
-➡️ Use COUNT(1) and GROUP BY to test your hypothesis.
+➡️ Use COUNT(1) and GROUP BY to test your hypothesis. I share a quick SQL pattern for this, which also catches duplicate rows, in [Table grain quick validation with SQL](/table-grain-quick-validation-with-sql).
 
 ➡️ ????
 
