@@ -14,8 +14,6 @@ Starting your journey in Analytics can feel like standing at the base of a big m
 
 As a Finance undergraduate transitioning into Analytics, I was confused about where to start learning. I signed up for every platform I could find – Coursera, Team Treehouse, Pluralsight, Linux Academy, Cloud Guru, you name it. At first, I learned a lot of things, picked up the basics on Python, brushed up my SQL, learned about what git was. But then, as I was going through them, it felt increasingly like the goal was collecting the certificates at the end, not the journey itself.
 
-Thanks for reading Not just SQL! Subscribe for free to receive new posts and support my work.
-
 ### **Don't Fall into the Trap**
 
 It's easy to fall into the trap of this "tutorial hell" – a cycle where you keep consuming courses without ever applying what you've learned. Sure, I’d want a course to learn the basics of Python or how a Data Engineering stack on GCP looks like, but don’t overdo it. Practice &gt; theory.

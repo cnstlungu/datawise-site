@@ -17,8 +17,6 @@ Growing up in post-Soviet Moldova, I was repeatedly reminded of the Chernobyl di
 
 The Chernobyl disaster stands out as one of the most horrific technological failures in history. I was struck by how a technology meant for good could cause such devastation when things went wrong. This sparked my interest, leading me to delve deeper into the details. There's even an [exceptional TV miniseries](https://www.imdb.com/title/tt7366338/) that captures the event.
 
-Thanks for reading Not just SQL! Subscribe for free to receive new posts and support my work.
-
 Like many catastrophic events, Chernobyl was a result of a dark combination of factors and coincidences—design flaws, human errors, negligence, technical oversights, flawed processes, and conflicting motivations.
 
 Conflicting motivations? Yes! Despite knowing about the reactor's design flaws, people remained silent for fear of reprisal. Construction shortcuts were taken to meet deadlines and secure bonuses.

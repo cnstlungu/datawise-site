@@ -38,8 +38,6 @@ If you're working with nested data and proceed to unpack it i.e. UNNEST an ARRAY
 
 ### What should I do? How can I debug a problem with duplicates?
 
-Thanks for reading Not just SQL! Subscribe for free to receive new posts and support my work.
-
 * Pick a subset of data that you can simply analyze at a glance: a day, a single store, a product or one single order.
     
 * Filter the data for just that. Are you getting the expected amount or rows? Is the granularity what you expected?
