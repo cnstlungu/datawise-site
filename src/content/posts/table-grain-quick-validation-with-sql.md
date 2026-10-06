@@ -14,6 +14,8 @@ hashnodeCuid: "cmgc8udua000f02kv63z0c0l9"
 
 I was doing some exploratory data analysis on a number of tables I didn’t have much information about and, unfortunately, didn’t know their grain.
 
+The grain is what one row of a table represents. I wrote about why it matters so much, and how I approach an undocumented table, in [For quality work, understand your data grain first](https://www.notjustsql.com/p/for-quality-work-understand-your).
+
 I needed a quick way to validate my assumptions about the table grain, identify contradicting observations (rows), and check for duplicates at the same time.
 
 Therefore I decided to use a combination of TO\_JSON\_STRING and FARM\_FINGERPRINT. The first creates a JSON representation of the entire row (given a table alias), while the second converts the resulting string into a INT64 hash.
